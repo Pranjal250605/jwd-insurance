@@ -1,0 +1,58 @@
+import { useEffect, useState } from 'react';
+import Nav from '@/components/Nav';
+import Hero from '@/components/Hero';
+import Promo from '@/components/Promo';
+import Products from '@/components/Products';
+import Money from '@/components/Money';
+import Explore from '@/components/Explore';
+import ClosingCTA from '@/components/ClosingCTA';
+import Footer from '@/components/Footer';
+import AnimationsInit from '@/components/AnimationsInit';
+import TweaksPanel from '@/components/TweaksPanel';
+import type { TweakValues, SetTweak } from '@/types/tweaks';
+
+const DEFAULTS: TweakValues = {
+  accentHue: 250,
+  accentChroma: 0.08,
+  altSurfaceTone: 'cool',
+  heroEyebrow: 'JWD INVESTMENT · TRUSTED SINCE 2014',
+  heroHeadline: 'Building lasting wealth, generation after generation',
+};
+
+export default function App() {
+  const [tweaks, setTweaks] = useState<TweakValues>(DEFAULTS);
+
+  const setTweak: SetTweak = (key, value) => {
+    setTweaks((prev) => ({ ...prev, [key]: value }));
+  };
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const { accentHue: h, accentChroma: c } = tweaks;
+    root.style.setProperty('--accent', `oklch(0.32 ${c} ${h})`);
+    root.style.setProperty('--accent-deep', `oklch(0.20 ${c} ${h})`);
+    root.style.setProperty('--accent-soft', `oklch(0.94 ${Math.min(c, 0.04)} ${h})`);
+    const altMap: Record<string, string> = {
+      neutral: '#F5F5F4',
+      warm: '#F8F6F1',
+      cool: '#F4F6F9',
+      mint: `oklch(0.96 0.015 ${h})`,
+    };
+    root.style.setProperty('--surface-alt', altMap[tweaks.altSurfaceTone] ?? '#F4F6F9');
+  }, [tweaks.accentHue, tweaks.accentChroma, tweaks.altSurfaceTone]);
+
+  return (
+    <div className="min-h-screen bg-white">
+      <Nav />
+      <Hero eyebrow={tweaks.heroEyebrow} headline={tweaks.heroHeadline} />
+      <Promo />
+      <Products />
+      <Money />
+      <Explore />
+      <ClosingCTA />
+      <Footer />
+      <AnimationsInit />
+      <TweaksPanel tweaks={tweaks} setTweak={setTweak} />
+    </div>
+  );
+}

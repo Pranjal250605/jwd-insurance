@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #ffffff;
+  color: #0B1830;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-jp {
+  font-family: 'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
+}
+
+:root {
+  --accent: #1A2C4F;
+  --accent-deep: #0B1830;
+  --accent-soft: #E8EDF5;
+  --gold: #B89968;
+  --surface-alt: #F4F6F9;
+  --surface-warm: #F8F6F1;
+}
