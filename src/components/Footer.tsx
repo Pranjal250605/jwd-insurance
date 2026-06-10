@@ -12,7 +12,7 @@ export default function Footer() {
         <div className="grid lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-12 mb-12">
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-9 h-9 rounded-md flex items-center justify-center" style={{ background: 'var(--accent)' }}>
+              <div className="w-9 h-9 rounded-md flex items-center justify-center" style={{ background: 'var(--logo-bg)' }}>
                 <span className="text-white font-serif font-semibold text-[16px]">J</span>
               </div>
               <div className="flex flex-col leading-none">

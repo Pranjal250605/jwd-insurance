@@ -33,7 +33,7 @@ export default function Nav() {
 
       <div className="max-w-[1280px] mx-auto px-8 h-[76px] flex items-center justify-between">
         <a href="#" className="flex items-center gap-3 select-none">
-          <div className="w-9 h-9 rounded-md flex items-center justify-center" style={{ background: 'var(--accent)' }}>
+          <div className="w-9 h-9 rounded-md flex items-center justify-center" style={{ background: 'var(--logo-bg)' }}>
             <span className="text-white font-serif font-semibold text-[16px] tracking-tight">J</span>
           </div>
           <div className="flex flex-col leading-none">
@@ -70,7 +70,7 @@ export default function Nav() {
           <a href="#" className="px-4 h-10 flex items-center text-[14px] font-medium text-slate-700 hover:text-slate-900">Contact</a>
         </nav>
 
-        <button className="px-5 h-10 rounded-sm text-[12px] font-bold tracking-[0.14em] text-white transition-all hover:brightness-110 border" style={{ background: 'var(--accent)', borderColor: 'var(--accent)' }}>
+        <button className="cta-primary px-5 h-10 rounded-sm text-[12px] font-bold tracking-[0.14em]">
           SCHEDULE CONSULTATION
         </button>
       </div>

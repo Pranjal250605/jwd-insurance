@@ -3,25 +3,220 @@
 @tailwind utilities;
 
 html, body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: #ffffff;
-  color: #0B1830;
+  font-family: var(--font-body, 'Inter'), system-ui, sans-serif;
+  background: var(--page-bg, #ffffff);
+  color: var(--page-text, #0B1830);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 280ms ease, color 280ms ease;
 }
 
 .font-serif {
-  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-display, 'Playfair Display'), 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: var(--font-display-tracking, 0);
 }
 
 .font-jp {
   font-family: 'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
 }
 
-:root {
-  --accent: #1A2C4F;
-  --accent-deep: #0B1830;
-  --accent-soft: #E8EDF5;
-  --gold: #B89968;
-  --surface-alt: #F4F6F9;
-  --surface-warm: #F8F6F1;
+/* ---------- Heritage (default) — navy + gold + classical serif ---------- */
+:root,
+[data-theme='heritage'] {
+  --accent:           #1A2C4F;
+  --accent-deep:      #0B1830;
+  --accent-soft:      #E8EDF5;
+  --accent-rgb:       26, 44, 79;
+
+  --secondary:        #B89968;
+  --secondary-soft:   rgba(184, 153, 104, 0.12);
+  --secondary-rgb:    184, 153, 104;
+
+  --surface-alt:      #F4F6F9;
+  --surface-warm:     #F8F6F1;
+  --page-bg:          #ffffff;
+  --page-text:        #0B1830;
+
+  --gradient-dark:        linear-gradient(135deg, #0B1830 0%, #1A2C4F 100%);
+  --gradient-radial-dark: radial-gradient(circle at 30% 30%, #1A2C4F, #0B1830);
+  --gradient-soft:        linear-gradient(135deg, #FAFAF7 0%, #F4F6F9 100%);
+  --shadow-rgb:           11, 24, 48;
+
+  --on-dark-text:         #ffffff;
+  --on-dark-text-muted:   rgba(255, 255, 255, 0.6);
+
+  --photo-tint-rgb:       11, 24, 48;
+
+  /* — typography — */
+  --font-display:          'Playfair Display';
+  --font-display-tracking: 0;
+  --font-body:             'Inter';
+
+  /* — buttons & cards — */
+  --btn-shadow:            0 6px 18px -10px rgba(11, 24, 48, 0.45);
+  --btn-shadow-hover:      0 10px 26px -10px rgba(11, 24, 48, 0.55);
+  --card-hover-glow:       0 16px 50px -16px rgba(11, 24, 48, 0.18);
+  --logo-bg:               #0ABAB5;
+
+  /* — decorative — */
+  --orb-opacity:           0;
+  --dark-mesh-overlay:     none;
+  --dark-grid-overlay:     none;
+}
+
+/* ---------- Equiti — Tiffany Blue + Turquoise scheme ---------- */
+[data-theme='equiti'] {
+  --accent:           #0ABAB5;
+  --accent-deep:      #07807C;
+  --accent-soft:      #E0F7F6;
+  --accent-rgb:       10, 186, 181;
+
+  --secondary:        #40E0D0;
+  --secondary-soft:   rgba(64, 224, 208, 0.14);
+  --secondary-rgb:    64, 224, 208;
+
+  --surface-alt:      #F0F7FA;
+  --surface-warm:     #F5FAFB;
+  --page-bg:          #ffffff;
+  --page-text:        #0A1A2F;
+
+  --gradient-dark:        radial-gradient(120% 80% at 80% 0%, rgba(10,186,181,0.22) 0%, transparent 55%),
+                          radial-gradient(80% 90% at 0% 100%, rgba(64,224,208,0.16) 0%, transparent 60%),
+                          linear-gradient(135deg, #06121E 0%, #0E2138 55%, #0A2E47 100%);
+  --gradient-radial-dark: radial-gradient(circle at 30% 30%, #103A57, #06121E 70%);
+  --gradient-soft:        linear-gradient(135deg, #F5FBFC 0%, #E6F4F7 100%);
+  --shadow-rgb:           6, 18, 38;
+
+  --on-dark-text:         #ffffff;
+  --on-dark-text-muted:   rgba(224, 247, 250, 0.62);
+
+  --photo-tint-rgb:       3, 90, 120;
+
+  /* — typography swap — */
+  --font-display:          'Sora';
+  --font-display-tracking: -0.022em;
+  --font-body:             'Inter';
+
+  /* — glowing CTAs & cards — */
+  --btn-shadow:            0 10px 30px -10px rgba(10, 186, 181, 0.55),
+                           0 0 0 1px rgba(10, 186, 181, 0.18);
+  --btn-shadow-hover:      0 14px 40px -10px rgba(10, 186, 181, 0.7),
+                           0 0 0 1px rgba(10, 186, 181, 0.28);
+  --card-hover-glow:       0 18px 60px -18px rgba(10, 186, 181, 0.28),
+                           0 0 0 1px rgba(10, 186, 181, 0.08);
+  --logo-bg:               #0ABAB5;
+
+  /* — decorative shapes & overlays — */
+  --orb-opacity:           1;
+  --dark-mesh-overlay:     radial-gradient(60% 60% at 80% 20%, rgba(10,186,181,0.18), transparent 60%),
+                           radial-gradient(50% 70% at 10% 90%, rgba(64,224,208,0.12), transparent 60%);
+  --dark-grid-overlay:     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><path d='M40 0H0v40' fill='none' stroke='rgba(10,186,181,0.08)' stroke-width='1'/></svg>");
+}
+
+/* ---------- Component primitives that read theme tokens ---------- */
+.cta-primary {
+  background: #0ABAB5;
+  color: #ffffff;
+  box-shadow: var(--btn-shadow);
+  transition: box-shadow 220ms ease, transform 220ms ease, filter 220ms ease;
+}
+.cta-primary:hover {
+  box-shadow: var(--btn-shadow-hover);
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.cta-secondary {
+  background: #0ABAB5;
+  color: #ffffff;
+  box-shadow: 0 6px 18px -10px rgba(10, 186, 181, 0.45);
+  transition: box-shadow 220ms ease, transform 220ms ease, filter 220ms ease;
+}
+[data-theme='equiti'] .cta-secondary {
+  color: #ffffff;
+  box-shadow: 0 10px 30px -10px rgba(10, 186, 181, 0.6),
+              0 0 0 1px rgba(10, 186, 181, 0.22);
+}
+.cta-secondary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+/* Soft card with theme-aware hover lift — opt-in via className */
+.theme-card {
+  transition: box-shadow 280ms ease, transform 280ms ease, border-color 220ms ease;
+}
+.theme-card:hover {
+  box-shadow: var(--card-hover-glow);
+  transform: translateY(-2px);
+}
+[data-theme='equiti'] .theme-card:hover {
+  border-color: rgba(10, 186, 181, 0.25);
+}
+
+/* Decorative glowing orb — invisible in heritage, visible in equiti */
+.glow-orb {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  opacity: var(--orb-opacity);
+  filter: blur(80px);
+  transition: opacity 600ms ease;
+  z-index: 0;
+}
+.glow-orb--cyan {
+  background: radial-gradient(circle, rgba(10, 186, 181, 0.55), transparent 70%);
+}
+.glow-orb--aqua {
+  background: radial-gradient(circle, rgba(64, 224, 208, 0.50), transparent 70%);
+}
+
+/* Dark section mesh + grid overlay — only renders in equiti via the vars */
+.dark-section-mesh {
+  position: relative;
+  isolation: isolate;
+}
+.dark-section-mesh::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--dark-mesh-overlay);
+  pointer-events: none;
+  opacity: 1;
+  z-index: 0;
+}
+.dark-section-mesh::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--dark-grid-overlay);
+  background-size: 40px 40px;
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 0;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 75%);
+}
+.dark-section-mesh > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Floating UI-mockup cards (hero, advisor, portal) — Equiti gives them a soft cyan rim glow,
+   echoing the brokerage's trading-platform mockup look. Heritage stays neutral. */
+.equiti-card-rim {
+  transition: box-shadow 280ms ease, border-color 280ms ease;
+}
+[data-theme='equiti'] .equiti-card-rim {
+  box-shadow: 0 18px 40px -16px rgba(10, 186, 181, 0.35),
+              0 0 0 1px rgba(10, 186, 181, 0.18),
+              0 0 36px -12px rgba(64, 224, 208, 0.25);
+}
+
+/* Hero in equiti: brighten the eyebrow with a subtle gradient text */
+[data-theme='equiti'] .accent-text-gradient {
+  background: linear-gradient(90deg, var(--accent) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }

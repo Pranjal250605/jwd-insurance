@@ -26,9 +26,9 @@ const RESEARCH_CARDS = [
 ];
 
 const accentBg = (a: string) => {
-  if (a === 'gold')  return 'linear-gradient(135deg, #C9A961, #8B7340)';
+  if (a === 'gold')  return 'linear-gradient(135deg, var(--secondary), var(--accent-deep))';
   if (a === 'slate') return 'linear-gradient(135deg, #475569, #1E293B)';
-  return 'linear-gradient(135deg, #1A2C4F, #0B1830)';
+  return 'var(--gradient-dark)';
 };
 
 const accentMark = (a: string) => {
@@ -88,7 +88,7 @@ export default function Explore() {
           </div>
           <div className="relative h-[380px]">
             {RESEARCH_CARDS.map((c, i) => (
-              <div key={i} className="absolute right-0 bg-white rounded-xl shadow-[0_14px_40px_-12px_rgba(11,24,48,0.18)] border border-slate-100 p-4 flex items-center gap-4 w-[420px]"
+              <div key={i} className="absolute right-0 bg-white rounded-xl shadow-[0_14px_40px_-12px_rgba(var(--shadow-rgb),0.18)] border border-slate-100 p-4 flex items-center gap-4 w-[420px]"
                 style={{ transform: `translate(${c.x}px, ${c.y}px) rotate(${c.rot}deg)` }}>
                 <div className="w-16 h-20 rounded-md flex-shrink-0 flex items-center justify-center text-white font-serif font-medium text-[24px]"
                   style={{ background: accentBg(c.accent) }}>
@@ -116,10 +116,10 @@ export default function Explore() {
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
           {FEATURE_CARDS.map((c, i) => (
-            <div key={i} className="bg-white border border-slate-100 rounded-xl overflow-hidden hover:shadow-[0_16px_50px_-16px_rgba(11,24,48,0.16)] hover:-translate-y-0.5 transition-all">
+            <div key={i} className="bg-white border border-slate-100 rounded-xl overflow-hidden hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
               <div className="relative h-[220px] overflow-hidden">
                 <img src={c.image} alt={c.title} className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 50%, rgba(11,24,48,0.35) 100%)' }} />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 50%, rgba(var(--photo-tint-rgb),0.35) 100%)' }} />
               </div>
               <div className="p-8">
                 <div className="text-[10px] font-semibold tracking-[0.22em] text-slate-400 mb-1">{c.sub}</div>

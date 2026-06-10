@@ -76,7 +76,7 @@ export default function Products() {
 
         <div className="grid md:grid-cols-2 gap-6">
           {SOLUTIONS.map((s, i) => (
-            <div key={i} className="bg-white rounded-xl border border-slate-100 overflow-hidden hover:shadow-[0_16px_50px_-16px_rgba(11,24,48,0.16)] hover:-translate-y-0.5 transition-all">
+            <div key={i} className="bg-white rounded-xl border border-slate-100 overflow-hidden hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
               <div className="grid grid-cols-[1fr_180px]">
                 <div className="p-8">
                   <div className="text-[10px] font-semibold tracking-[0.22em] text-slate-400 mb-2">{s.sub}</div>
@@ -105,17 +105,17 @@ export default function Products() {
 
       <div className="max-w-[1280px] mx-auto px-8 pb-20">
         <div className="rounded-[20px] p-12 lg:p-20 text-center relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #0B1830 0%, #1A2C4F 100%)' }}>
+          style={{ background: 'var(--gradient-dark)' }}>
           <div className="absolute inset-0 opacity-25 pointer-events-none">
             <img
               src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1600&q=80&auto=format&fit=crop"
               alt=""
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(11,24,48,0.92), rgba(26,44,79,0.85))' }} />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(var(--photo-tint-rgb), 0.92), rgba(var(--photo-tint-rgb), 0.85))' }} />
           </div>
           <div className="relative">
-            <div className="text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: '#B89968' }}>SERVICE IN SIX LANGUAGES</div>
+            <div className="text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>SERVICE IN SIX LANGUAGES</div>
             <div className="font-jp text-[13px] tracking-[0.18em] mb-7 text-white/60">6か国語による専任サポート</div>
             <h2 className="font-serif text-[36px] lg:text-[52px] leading-[1.1] font-medium text-white tracking-[-0.015em] max-w-3xl mx-auto">
               Local advisors, fluent in your language and your markets
@@ -144,7 +144,7 @@ export default function Products() {
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
           {STEPS.map((s, i) => (
-            <div key={i} className="bg-white border border-slate-100 rounded-xl p-9 hover:shadow-[0_16px_50px_-16px_rgba(11,24,48,0.16)] hover:-translate-y-0.5 transition-all">
+            <div key={i} className="bg-white border border-slate-100 rounded-xl p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
               <div className="flex items-start justify-between mb-7">
                 <div className="font-serif text-[40px] font-medium leading-none" style={{ color: 'var(--accent-deep)' }}>{s.n}</div>
                 <div className="text-[10px] font-semibold tracking-[0.22em] text-slate-300">STEP</div>

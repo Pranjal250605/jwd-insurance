@@ -1,4 +1,7 @@
+export type Variant = 'heritage' | 'equiti';
+
 export interface TweakValues {
+  variant: Variant;
   accentHue: number;
   accentChroma: number;
   altSurfaceTone: 'neutral' | 'warm' | 'cool' | 'mint';

@@ -43,7 +43,7 @@ export default function Promo() {
     <section className="bg-white">
       <div className="max-w-[1280px] mx-auto px-8 pb-12">
         <div className="rounded-[20px] p-12 lg:p-16 grid lg:grid-cols-[1.1fr_1fr] gap-10 items-center relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #0B1830 0%, #1A2C4F 100%)' }}>
+          style={{ background: 'var(--gradient-dark)' }}>
           <div className="absolute top-0 right-0 w-[480px] h-[480px] opacity-[0.08] pointer-events-none">
             <svg viewBox="0 0 200 200" className="w-full h-full">
               <defs>
@@ -55,7 +55,7 @@ export default function Promo() {
             </svg>
           </div>
           <div className="relative">
-            <div className="text-[11px] font-semibold tracking-[0.28em] mb-5" style={{ color: '#B89968' }}>PRIVATE WEALTH ADVISORY</div>
+            <div className="text-[11px] font-semibold tracking-[0.28em] mb-5" style={{ color: 'var(--secondary)' }}>PRIVATE WEALTH ADVISORY</div>
             <div className="font-jp text-[13px] tracking-[0.18em] mb-7 text-white/60">プライベート・ウェルス・アドバイザリー</div>
             <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.1] font-medium text-white mb-5 tracking-[-0.01em]">
               Tailored portfolios, built around your life&apos;s work
@@ -63,7 +63,7 @@ export default function Promo() {
             <p className="text-[15px] text-slate-300 leading-[1.65] mb-8 max-w-md">
               Discretionary management for individuals and families with $5M+ in investable assets. Bespoke strategies, integrated tax and estate planning, and direct access to a dedicated senior advisor.
             </p>
-            <button className="px-7 h-12 rounded-sm text-[12px] font-bold tracking-[0.14em] transition-all hover:brightness-110" style={{ background: '#B89968', color: '#0B1830' }}>
+            <button className="cta-secondary px-7 h-12 rounded-sm text-[12px] font-bold tracking-[0.14em]">
               REQUEST INTRODUCTION
             </button>
           </div>
@@ -74,8 +74,8 @@ export default function Promo() {
                 alt="Senior advisors meeting with private wealth client"
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(11,24,48,0.45) 0%, transparent 60%)' }} />
-              <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur rounded-lg p-4">
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(var(--photo-tint-rgb),0.45) 0%, transparent 60%)' }} />
+              <div className="equiti-card-rim absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur rounded-lg p-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-serif font-semibold text-[14px]" style={{ color: 'var(--accent-deep)' }}>HM</div>
                   <div className="flex-1">
@@ -101,7 +101,7 @@ export default function Promo() {
       <div className="max-w-[1280px] mx-auto px-8 pb-24">
         <div className="grid md:grid-cols-3 gap-6">
           {PILLARS.map((p, i) => (
-            <div key={i} className="bg-white border border-slate-100 rounded-xl p-9 hover:shadow-[0_16px_50px_-16px_rgba(11,24,48,0.18)] hover:-translate-y-0.5 transition-all">
+            <div key={i} className="bg-white border border-slate-100 rounded-xl p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.18)] hover:-translate-y-0.5 transition-all">
               <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-7" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>
                 {p.icon}
               </div>

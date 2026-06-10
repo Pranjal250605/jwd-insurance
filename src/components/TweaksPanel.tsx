@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { TweakValues, SetTweak } from '@/types/tweaks';
+import type { TweakValues, SetTweak, Variant } from '@/types/tweaks';
 
 interface Props {
   tweaks: TweakValues;
@@ -7,6 +7,21 @@ interface Props {
 }
 
 const ALT_SURFACE_OPTIONS: TweakValues['altSurfaceTone'][] = ['neutral', 'warm', 'cool', 'mint'];
+
+const VARIANTS: { id: Variant; label: string; jp: string; chips: [string, string, string] }[] = [
+  {
+    id: 'heritage',
+    label: 'Heritage',
+    jp: 'ヘリテージ',
+    chips: ['#0B1830', '#1A2C4F', '#B89968'],
+  },
+  {
+    id: 'equiti',
+    label: 'Equiti',
+    jp: 'エクイティ',
+    chips: ['#06121E', '#00B8D4', '#3DDCE0'],
+  },
+];
 
 export default function TweaksPanel({ tweaks, setTweak }: Props) {
   const [open, setOpen] = useState(false);
@@ -25,54 +40,100 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
       </button>
 
       {open && (
-        <div className="fixed bottom-16 right-4 z-50 w-72 bg-white/90 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="fixed bottom-16 right-4 z-50 w-80 bg-white/95 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl overflow-hidden">
           <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
             <span className="text-[12px] font-semibold text-slate-700 tracking-wide">TWEAKS</span>
             <button onClick={() => setOpen(false)} className="text-slate-400 hover:text-slate-700 text-[16px] leading-none">✕</button>
           </div>
           <div className="p-4 flex flex-col gap-5">
             <div>
-              <div className="text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Brand accent</div>
-              <label className="flex items-center justify-between text-[12px] text-slate-600 mb-1">
-                <span>Hue</span>
-                <span className="text-slate-400 font-mono">{tweaks.accentHue}</span>
-              </label>
-              <input
-                type="range" min={0} max={360} step={1}
-                value={tweaks.accentHue}
-                onChange={(e) => setTweak('accentHue', Number(e.target.value))}
-                className="w-full h-1.5 rounded-full appearance-none bg-slate-200 accent-teal-400"
-              />
-              <label className="flex items-center justify-between text-[12px] text-slate-600 mb-1 mt-3">
-                <span>Saturation</span>
-                <span className="text-slate-400 font-mono">{tweaks.accentChroma.toFixed(2)}</span>
-              </label>
-              <input
-                type="range" min={0} max={0.2} step={0.01}
-                value={tweaks.accentChroma}
-                onChange={(e) => setTweak('accentChroma', Number(e.target.value))}
-                className="w-full h-1.5 rounded-full appearance-none bg-slate-200 accent-teal-400"
-              />
-            </div>
-
-            <div>
-              <div className="text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Alt surface</div>
-              <div className="flex gap-1.5">
-                {ALT_SURFACE_OPTIONS.map((opt) => (
-                  <button
-                    key={opt}
-                    onClick={() => setTweak('altSurfaceTone', opt)}
-                    className={`flex-1 py-1 rounded-lg text-[11px] font-medium transition-all ${
-                      tweaks.altSurfaceTone === opt
-                        ? 'bg-slate-900 text-white'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                    }`}
-                  >
-                    {opt}
-                  </button>
-                ))}
+              <div className="text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Brand variant</div>
+              <div className="grid grid-cols-2 gap-2">
+                {VARIANTS.map((v) => {
+                  const active = tweaks.variant === v.id;
+                  return (
+                    <button
+                      key={v.id}
+                      onClick={() => setTweak('variant', v.id)}
+                      className={`group text-left rounded-xl border p-3 transition-all ${
+                        active
+                          ? 'border-slate-900 shadow-[0_4px_14px_-6px_rgba(15,23,42,0.25)]'
+                          : 'border-slate-200 hover:border-slate-400'
+                      }`}
+                    >
+                      <div className="flex items-center gap-1 mb-2">
+                        {v.chips.map((c, i) => (
+                          <span
+                            key={i}
+                            className="w-4 h-4 rounded-full border border-slate-200/70"
+                            style={{ background: c }}
+                          />
+                        ))}
+                      </div>
+                      <div className="text-[12px] font-semibold text-slate-900 leading-tight">{v.label}</div>
+                      <div className="font-jp text-[10px] tracking-[0.16em] text-slate-500 mt-0.5">{v.jp}</div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
+
+            {tweaks.variant === 'heritage' && (
+              <>
+                <div>
+                  <div className="text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Brand accent</div>
+                  <label className="flex items-center justify-between text-[12px] text-slate-600 mb-1">
+                    <span>Hue</span>
+                    <span className="text-slate-400 font-mono">{tweaks.accentHue}</span>
+                  </label>
+                  <input
+                    type="range" min={0} max={360} step={1}
+                    value={tweaks.accentHue}
+                    onChange={(e) => setTweak('accentHue', Number(e.target.value))}
+                    className="w-full h-1.5 rounded-full appearance-none bg-slate-200 accent-teal-400"
+                  />
+                  <label className="flex items-center justify-between text-[12px] text-slate-600 mb-1 mt-3">
+                    <span>Saturation</span>
+                    <span className="text-slate-400 font-mono">{tweaks.accentChroma.toFixed(2)}</span>
+                  </label>
+                  <input
+                    type="range" min={0} max={0.2} step={0.01}
+                    value={tweaks.accentChroma}
+                    onChange={(e) => setTweak('accentChroma', Number(e.target.value))}
+                    className="w-full h-1.5 rounded-full appearance-none bg-slate-200 accent-teal-400"
+                  />
+                </div>
+
+                <div>
+                  <div className="text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Alt surface</div>
+                  <div className="flex gap-1.5">
+                    {ALT_SURFACE_OPTIONS.map((opt) => (
+                      <button
+                        key={opt}
+                        onClick={() => setTweak('altSurfaceTone', opt)}
+                        className={`flex-1 py-1 rounded-lg text-[11px] font-medium transition-all ${
+                          tweaks.altSurfaceTone === opt
+                            ? 'bg-slate-900 text-white'
+                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        }`}
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {tweaks.variant === 'equiti' && (
+              <div className="rounded-lg bg-slate-50 border border-slate-100 px-3 py-2.5">
+                <div className="text-[10px] font-bold tracking-[0.16em] text-slate-500 uppercase mb-1">Equiti palette</div>
+                <p className="text-[11.5px] leading-[1.5] text-slate-600">
+                  Brand-matched cyan + midnight navy, modelled on{' '}
+                  <span className="font-medium text-slate-800">equiti.com</span>. Sliders are disabled — switch back to Heritage to fine-tune.
+                </p>
+              </div>
+            )}
 
             <div>
               <div className="text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Hero copy</div>

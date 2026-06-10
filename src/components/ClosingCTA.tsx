@@ -18,16 +18,16 @@ export default function ClosingCTA() {
       <div className="max-w-[1280px] mx-auto px-8 pb-20">
         <div
           className="rounded-[20px] py-24 px-12 text-center relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #FAFAF7 0%, #F4F6F9 100%)' }}
+          style={{ background: 'var(--gradient-soft)' }}
         >
           <div className="absolute inset-0 pointer-events-none opacity-50">
             <div
               className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full"
-              style={{ background: 'radial-gradient(circle, rgba(184,153,104,0.12), transparent 70%)' }}
+              style={{ background: 'radial-gradient(circle, rgba(var(--secondary-rgb),0.12), transparent 70%)' }}
             />
             <div
               className="absolute -bottom-40 -right-40 w-[600px] h-[600px] rounded-full"
-              style={{ background: 'radial-gradient(circle, rgba(11,24,48,0.08), transparent 70%)' }}
+              style={{ background: 'radial-gradient(circle, rgba(var(--shadow-rgb),0.08), transparent 70%)' }}
             />
           </div>
           <div className="relative max-w-3xl mx-auto">
@@ -47,12 +47,11 @@ export default function ClosingCTA() {
             </p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
               <button
-                className="px-8 py-4 rounded-sm text-[12px] font-bold tracking-[0.14em] text-white transition-all hover:brightness-110"
-                style={{ background: 'var(--accent)' }}
+                className="cta-primary px-8 py-4 rounded-sm text-[12px] font-bold tracking-[0.14em]"
               >
                 SCHEDULE CONSULTATION
               </button>
-              <button className="px-8 py-4 rounded-sm text-[12px] font-bold tracking-[0.14em] text-slate-900 transition-all hover:bg-slate-50 border border-slate-300">
+              <button className="px-8 py-4 rounded-sm text-[12px] font-bold tracking-[0.14em] text-[#0ABAB5] transition-all hover:bg-[#0ABAB5]/5 border border-[#0ABAB5]">
                 REQUEST CAPABILITIES BROCHURE
               </button>
             </div>
@@ -80,8 +79,8 @@ export default function ClosingCTA() {
         <div className="border-t border-slate-100 pt-12 grid md:grid-cols-3 gap-8">
           {RECOGNITION.map((r) => (
             <div key={r.award} className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(184,153,104,0.12)' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B89968" strokeWidth="1.6">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(var(--secondary-rgb),0.12)' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" strokeWidth="1.6" style={{ stroke: 'var(--secondary)' }}>
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
               </div>
