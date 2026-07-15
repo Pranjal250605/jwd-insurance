@@ -97,17 +97,17 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
           <h1 className={`font-serif ${lang === 'ja' ? 'text-[44px] lg:text-[54px] leading-[1.2]' : 'text-[52px] lg:text-[64px] leading-[1.05]'} font-medium text-slate-900 tracking-[-0.015em] mb-5`} style={{ textWrap: 'balance' } as React.CSSProperties}>
             {headlineText}
           </h1>
-          <p className={`${lang === 'ja' ? '' : 'font-jp'} text-[18px] leading-[1.7] text-slate-700 mb-7 max-w-xl tracking-wide`}>
+          <p className={`${lang === 'ja' ? '' : 'font-jp'} text-[21.5px] leading-[1.7] text-slate-700 mb-7 max-w-xl tracking-wide`}>
             {t.hero.tagline}
           </p>
-          <p className="text-[17px] leading-[1.65] text-slate-600 max-w-xl mb-10">
+          <p className="text-[20.5px] leading-[1.65] text-slate-600 max-w-xl mb-10">
             {t.hero.body}
           </p>
           <div className="flex items-center gap-4 flex-wrap">
             <button data-magnetic className="cta-primary px-7 h-12 rounded-sm text-[12px] font-bold tracking-[0.14em]">
               {t.hero.ctaPrimary}
             </button>
-            <button className="px-2 h-12 text-[14px] font-medium text-slate-700 hover:text-slate-900 flex items-center gap-2 group">
+            <button className="px-2 h-12 text-[17px] font-medium text-slate-700 hover:text-slate-900 flex items-center gap-2 group">
               {t.hero.ctaSecondary}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </button>

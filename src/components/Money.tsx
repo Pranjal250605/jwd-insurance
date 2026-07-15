@@ -17,17 +17,17 @@ export default function Money() {
         <div data-spotlight className="spotlight rounded-[20px] bg-white border border-slate-100 p-12 lg:p-16 grid lg:grid-cols-[1fr_1.05fr] gap-14 items-center">
           <div>
             <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.money.reachEyebrow}</div>
-            <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">{t.money.reachSub}</div>
+            <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.money.reachSub}</div>
             <h2 className="font-serif text-[40px] lg:text-[48px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-6">
               {t.money.reachTitle}
             </h2>
-            <p className="text-[16px] leading-[1.65] text-slate-600 mb-4 max-w-md">
+            <p className="text-[19px] leading-[1.65] text-slate-600 mb-4 max-w-md">
               {t.money.reachBody}
             </p>
-            <p className="font-jp text-[14.5px] leading-[1.85] text-slate-600 mb-9 max-w-md tracking-wide">
+            <p className="font-jp text-[17.5px] leading-[1.85] text-slate-600 mb-9 max-w-md tracking-wide">
               {t.money.reachBody2}
             </p>
-            <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+            <a href="#" className="link-underline text-[15.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
               {t.money.reachCta}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </a>
@@ -68,7 +68,7 @@ export default function Money() {
                 className={`absolute bg-white rounded-lg shadow-[0_12px_30px_-12px_rgba(var(--shadow-rgb),0.25)] px-4 py-2.5 ${OFFICE_POS[i].lead ? 'border-l-2' : ''}`}
                 style={{ transform: `translate(${OFFICE_POS[i].x}px, ${OFFICE_POS[i].y}px) rotate(${OFFICE_POS[i].rot}deg)`, borderLeftColor: OFFICE_POS[i].lead ? 'var(--secondary)' : undefined, zIndex: 10 + i }}>
                 <div className="text-[10px] font-semibold tracking-[0.18em] text-slate-400">{OFFICE_POS[i].lead ? t.money.hq : t.money.office}</div>
-                <div className="font-serif text-[15px] font-semibold text-slate-900 leading-tight">{o.city}</div>
+                <div className="font-serif text-[18px] font-semibold text-slate-900 leading-tight">{o.city}</div>
                 <div className="font-jp text-[10px] text-slate-500 tracking-wide">{o.sub}</div>
               </div>
             ))}
@@ -81,19 +81,19 @@ export default function Money() {
           style={{ background: 'var(--gradient-dark)' }}>
           <div className="relative z-10">
             <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>{t.money.portalEyebrow}</div>
-            <div className="font-jp text-[13px] tracking-[0.18em] mb-7 text-white/60">{t.money.portalSub}</div>
+            <div className="font-jp text-[15.5px] tracking-[0.18em] mb-7 text-white/60">{t.money.portalSub}</div>
             <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.15] font-medium text-white tracking-[-0.015em] mb-6">
               {t.money.portalTitle}
             </h2>
-            <p className="text-[15px] leading-[1.65] text-slate-300 mb-3 max-w-md">
+            <p className="text-[18px] leading-[1.65] text-slate-300 mb-3 max-w-md">
               {t.money.portalBody}
             </p>
-            <p className="font-jp text-[14px] leading-[1.85] text-slate-400 mb-9 max-w-md tracking-wide">
+            <p className="font-jp text-[17px] leading-[1.85] text-slate-400 mb-9 max-w-md tracking-wide">
               {t.money.portalBody2}
             </p>
             <div className="flex flex-col gap-3 max-w-sm">
               {t.money.features.map((f) => (
-                <div key={f.l} className="flex items-center gap-3 text-[14px] text-white/85">
+                <div key={f.l} className="flex items-center gap-3 text-[17px] text-white/85">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ stroke: 'var(--secondary)' }} strokeWidth="2"><path d="M5 12l5 5L20 7" /></svg>
                   <span className="flex-1">{f.l}</span>
                   <span className="font-jp text-[11px] text-white/40">{f.sub}</span>
@@ -116,7 +116,7 @@ export default function Money() {
                 </div>
                 <div className="text-right">
                   <div className="text-[9px] font-semibold tracking-[0.2em] text-slate-400">{t.money.qtr}</div>
-                  <div className="text-[14px] font-semibold text-emerald-700">+ 2.84%</div>
+                  <div className="text-[17px] font-semibold text-emerald-700">+ 2.84%</div>
                 </div>
               </div>
             </div>

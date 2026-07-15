@@ -33,17 +33,17 @@ export default function Explore() {
         <div data-spotlight className="spotlight rounded-[20px] bg-white border border-slate-100 p-12 lg:p-16 grid lg:grid-cols-[1fr_1.1fr] gap-14 items-center">
           <div>
             <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.explore.insightsEyebrow}</div>
-            <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">{t.explore.insightsSub}</div>
+            <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.explore.insightsSub}</div>
             <h2 className="font-serif text-[40px] lg:text-[48px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-6">
               {t.explore.insightsTitle}
             </h2>
-            <p className="text-[16px] leading-[1.65] text-slate-600 mb-3 max-w-md">
+            <p className="text-[19px] leading-[1.65] text-slate-600 mb-3 max-w-md">
               {t.explore.insightsBody}
             </p>
-            <p className="font-jp text-[14.5px] leading-[1.85] text-slate-600 mb-9 max-w-md tracking-wide">
+            <p className="font-jp text-[17.5px] leading-[1.85] text-slate-600 mb-9 max-w-md tracking-wide">
               {t.explore.insightsBody2}
             </p>
-            <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+            <a href="#" className="link-underline text-[15.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
               {t.explore.insightsCta}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </a>
@@ -58,7 +58,7 @@ export default function Explore() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-[9px] font-semibold tracking-[0.22em] text-slate-400 mb-1">{c.tag}</div>
-                  <div className="font-serif text-[16px] font-semibold text-slate-900 leading-tight mb-1 truncate">{c.title}</div>
+                  <div className="font-serif text-[19px] font-semibold text-slate-900 leading-tight mb-1 truncate">{c.title}</div>
                   <div className="text-[11px] text-slate-500">{c.meta} · <span className="font-jp">{c.sub}</span></div>
                 </div>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-300 flex-shrink-0">
@@ -72,7 +72,7 @@ export default function Explore() {
 
       <div className="max-w-[1280px] mx-auto px-8 pb-24">
         <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.explore.apartEyebrow}</div>
-        <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">{t.explore.apartSub}</div>
+        <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.explore.apartSub}</div>
         <h2 className="font-serif text-[40px] lg:text-[52px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-14 max-w-3xl">
           {t.explore.apartTitle}
         </h2>
@@ -87,8 +87,8 @@ export default function Explore() {
                 <div className="text-[10px] font-semibold tracking-[0.22em] text-slate-400 mb-1">{c.tag}</div>
                 <div className="font-jp text-[12px] tracking-[0.16em] text-slate-500 mb-3">{c.sub}</div>
                 <h3 className="font-serif text-[22px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{c.title}</h3>
-                <p className="text-[14.5px] leading-[1.6] text-slate-600 mb-7">{c.body}</p>
-                <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+                <p className="text-[17.5px] leading-[1.6] text-slate-600 mb-7">{c.body}</p>
+                <a href="#" className="link-underline text-[15.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                   {c.cta}
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                 </a>

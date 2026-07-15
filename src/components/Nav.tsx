@@ -39,7 +39,7 @@ export default function Nav() {
         <nav className="hidden lg:flex items-center gap-1" onMouseLeave={() => setOpenMenu(null)}>
           {Object.entries(t.nav.menus).map(([key, menu]) => (
             <div key={key} className="relative" onMouseEnter={() => setOpenMenu(key)}>
-              <button className="flex items-center gap-1 px-4 h-10 text-[14px] font-medium text-slate-700 hover:text-slate-900">
+              <button className="flex items-center gap-1 px-4 h-10 text-[17px] font-medium text-slate-700 hover:text-slate-900">
                 {menu.label}
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
                   className={`transition-transform ${openMenu === key ? 'rotate-180' : ''}`}>
@@ -54,14 +54,14 @@ export default function Nav() {
                       <div className="text-[11px] font-jp text-slate-500 mt-0.5">{menu.sub}</div>
                     </div>
                     {menu.items.map((item) => (
-                      <a key={item} href="#" className="block px-4 py-2 text-[13.5px] text-slate-700 hover:bg-slate-50 hover:text-slate-900">{item}</a>
+                      <a key={item} href="#" className="block px-4 py-2 text-[16px] text-slate-700 hover:bg-slate-50 hover:text-slate-900">{item}</a>
                     ))}
                   </div>
                 </div>
               )}
             </div>
           ))}
-          <a href="#" className="px-4 h-10 flex items-center text-[14px] font-medium text-slate-700 hover:text-slate-900">{t.nav.contact}</a>
+          <a href="#" className="px-4 h-10 flex items-center text-[17px] font-medium text-slate-700 hover:text-slate-900">{t.nav.contact}</a>
         </nav>
 
         <button data-magnetic className="cta-primary px-5 h-10 rounded-sm text-[12px] font-bold tracking-[0.14em]">

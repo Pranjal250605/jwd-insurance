@@ -23,17 +23,17 @@ export default function ClosingCTA() {
           </div>
           <div className="relative max-w-3xl mx-auto">
             <div className="eyebrow-rule justify-center text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.closing.eyebrow}</div>
-            <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-7">{t.closing.sub}</div>
+            <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-7">{t.closing.sub}</div>
             <h2
               className="font-serif text-[44px] lg:text-[60px] leading-[1.1] font-medium text-slate-900 tracking-[-0.015em] mb-6"
               style={{ textWrap: 'balance' } as React.CSSProperties}
             >
               {t.closing.title}
             </h2>
-            <p className="font-jp text-[16px] leading-[1.85] text-slate-700 mb-4 tracking-wide">
+            <p className="font-jp text-[19px] leading-[1.85] text-slate-700 mb-4 tracking-wide">
               {t.closing.tagline}
             </p>
-            <p className="text-[16px] leading-[1.7] text-slate-600 mb-10 max-w-xl mx-auto">
+            <p className="text-[19px] leading-[1.7] text-slate-600 mb-10 max-w-xl mx-auto">
               {t.closing.body}
             </p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
@@ -77,7 +77,7 @@ export default function ClosingCTA() {
                 </svg>
               </div>
               <div>
-                <div className="font-serif text-[16px] font-semibold text-slate-900 leading-tight">{r.award}</div>
+                <div className="font-serif text-[19px] font-semibold text-slate-900 leading-tight">{r.award}</div>
                 <div className="text-[12px] text-slate-500 mt-1">{r.pub} · {r.yr}</div>
               </div>
             </div>

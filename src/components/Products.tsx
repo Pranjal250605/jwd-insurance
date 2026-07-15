@@ -18,12 +18,12 @@ export default function Products() {
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 mb-16 items-end">
           <div>
             <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.eyebrow}</div>
-            <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">{t.products.sub}</div>
+            <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.sub}</div>
             <h2 className="font-serif text-[40px] lg:text-[52px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
               {t.products.title}
             </h2>
           </div>
-          <p className="text-[16px] leading-[1.65] text-slate-600 max-w-lg lg:justify-self-end">
+          <p className="text-[19px] leading-[1.65] text-slate-600 max-w-lg lg:justify-self-end">
             {t.products.intro}
           </p>
         </div>
@@ -36,11 +36,11 @@ export default function Products() {
                   <div className="text-[10px] font-semibold tracking-[0.22em] text-slate-400 mb-2">{s.tag}</div>
                   <h3 className="font-serif text-[24px] font-semibold text-slate-900 mb-1 tracking-[-0.01em]">{s.label}</h3>
                   <div className="font-jp text-[12px] tracking-[0.16em] text-slate-500 mb-4">{s.sub2}</div>
-                  <p className="text-[14px] leading-[1.6] text-slate-600 mb-6">{s.body}</p>
+                  <p className="text-[17px] leading-[1.6] text-slate-600 mb-6">{s.body}</p>
                   <div className="flex items-center justify-between pt-5 border-t border-slate-100">
                     <div>
                       <div className="text-[10px] font-semibold tracking-[0.18em] text-slate-400 uppercase">{t.products.aumLabel}</div>
-                      <div className="font-serif text-[18px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{SOLUTION_META[i].aum}</div>
+                      <div className="font-serif text-[21.5px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{SOLUTION_META[i].aum}</div>
                     </div>
                     <a href="#" className="link-underline text-[12px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                       {t.products.detailCta}
@@ -70,13 +70,13 @@ export default function Products() {
           </div>
           <div className="relative">
             <div className="eyebrow-rule justify-center text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>{t.products.langEyebrow}</div>
-            <div className="font-jp text-[13px] tracking-[0.18em] mb-7 text-white/60">{t.products.langSub}</div>
+            <div className="font-jp text-[15.5px] tracking-[0.18em] mb-7 text-white/60">{t.products.langSub}</div>
             <h2 className="font-serif text-[36px] lg:text-[52px] leading-[1.15] font-medium text-white tracking-[-0.015em] max-w-3xl mx-auto">
               {t.products.langTitle}
             </h2>
             <div className="mt-12 flex items-center justify-center gap-3 flex-wrap">
               {LANG_CHIPS.map((l) => (
-                <span key={l} className="px-5 h-10 rounded-full bg-white/5 border border-white/10 text-white/85 text-[13px] flex items-center font-medium transition-all duration-300 hover:bg-white/12 hover:border-white/30 hover:text-white hover:-translate-y-0.5 cursor-default">{l}</span>
+                <span key={l} className="px-5 h-10 rounded-full bg-white/5 border border-white/10 text-white/85 text-[15.5px] flex items-center font-medium transition-all duration-300 hover:bg-white/12 hover:border-white/30 hover:text-white hover:-translate-y-0.5 cursor-default">{l}</span>
               ))}
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function Products() {
 
       <div className="max-w-[1280px] mx-auto px-8 pb-24">
         <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.stepsEyebrow}</div>
-        <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">{t.products.stepsSub}</div>
+        <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.stepsSub}</div>
         <h2 className="font-serif text-[40px] lg:text-[52px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-14 max-w-3xl">
           {t.products.stepsTitle}
         </h2>
@@ -98,8 +98,8 @@ export default function Products() {
               </div>
               <div className="font-jp text-[12px] tracking-[0.16em] text-slate-500 mb-1">{s.sub}</div>
               <h3 className="font-serif text-[22px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{s.title}</h3>
-              <p className="text-[14.5px] leading-[1.6] text-slate-600 mb-8">{s.body}</p>
-              <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+              <p className="text-[17.5px] leading-[1.6] text-slate-600 mb-8">{s.body}</p>
+              <a href="#" className="link-underline text-[15.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                 {s.cta}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
               </a>

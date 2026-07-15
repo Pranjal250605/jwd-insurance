@@ -11,10 +11,10 @@ export default function Footer() {
             <div className="flex items-center mb-6">
               <img src="/jwd-logo.png" alt="JWD Investment" className="h-10 w-auto" />
             </div>
-            <p className="text-[13.5px] text-slate-600 leading-[1.7] max-w-xs mb-3">
+            <p className="text-[16px] text-slate-600 leading-[1.7] max-w-xs mb-3">
               {t.footer.blurb}
             </p>
-            <p className="font-jp text-[12.5px] text-slate-500 leading-[1.85] tracking-wide max-w-xs mb-7">
+            <p className="font-jp text-[15px] text-slate-500 leading-[1.85] tracking-wide max-w-xs mb-7">
               {t.footer.blurb2}
             </p>
             <div className="flex items-center gap-2">
@@ -42,7 +42,7 @@ export default function Footer() {
               <ul className="space-y-3">
                 {col.links.map((l) => (
                   <li key={l}>
-                    <a href="#" className="link-underline text-[13.5px] text-slate-600 hover:text-slate-900">{l}</a>
+                    <a href="#" className="link-underline text-[16px] text-slate-600 hover:text-slate-900">{l}</a>
                   </li>
                 ))}
               </ul>
@@ -60,7 +60,7 @@ export default function Footer() {
             ))}
           </div>
           <div className="flex flex-col lg:flex-row gap-6 lg:items-start lg:justify-between">
-            <p className="text-[11.5px] text-slate-500 leading-[1.7] max-w-3xl">
+            <p className="text-[14px] text-slate-500 leading-[1.7] max-w-3xl">
               <strong className="text-slate-700">{t.footer.importantLabel}</strong> {t.footer.disclaimer}
             </p>
             <div className="flex items-center gap-6 text-[12px] text-slate-500 flex-shrink-0">
