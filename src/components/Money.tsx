@@ -16,9 +16,9 @@ export default function Money() {
   return (
     <section className="bg-white">
       <div className="max-w-[1280px] mx-auto px-8 py-24">
-        <div className="rounded-[20px] bg-white border border-slate-100 p-12 lg:p-16 grid lg:grid-cols-[1fr_1.05fr] gap-14 items-center">
+        <div data-spotlight className="spotlight rounded-[20px] bg-white border border-slate-100 p-12 lg:p-16 grid lg:grid-cols-[1fr_1.05fr] gap-14 items-center">
           <div>
-            <div className="text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>GLOBAL REACH</div>
+            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>GLOBAL REACH</div>
             <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">グローバル・リーチ</div>
             <h2 className="font-serif text-[40px] lg:text-[48px] leading-[1.08] font-medium text-slate-900 tracking-[-0.015em] mb-6">
               Local insight, global perspective
@@ -29,7 +29,7 @@ export default function Money() {
             <p className="font-jp text-[14.5px] leading-[1.85] text-slate-600 mb-9 max-w-md tracking-wide">
               世界11拠点のチームが、お客様の地域に根ざした視点とグローバルな運用力をお届けします。
             </p>
-            <a href="#" className="text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+            <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
               View our office network
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </a>
@@ -79,10 +79,10 @@ export default function Money() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-8 pb-24">
-        <div className="rounded-[20px] p-12 lg:p-16 grid lg:grid-cols-[1fr_1fr] gap-12 items-center relative overflow-hidden"
+        <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-12 lg:p-16 grid lg:grid-cols-[1fr_1fr] gap-12 items-center relative overflow-hidden"
           style={{ background: 'var(--gradient-dark)' }}>
           <div className="relative z-10">
-            <div className="text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>CLIENT EXPERIENCE</div>
+            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>CLIENT EXPERIENCE</div>
             <div className="font-jp text-[13px] tracking-[0.18em] mb-7 text-white/60">クライアント・エクスペリエンス</div>
             <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.1] font-medium text-white tracking-[-0.015em] mb-6">
               The JWD Client Portal — clarity, on every device
@@ -104,7 +104,7 @@ export default function Money() {
             </div>
           </div>
           <div className="relative h-[360px] flex items-center justify-center">
-            <div className="relative w-full h-full rounded-xl overflow-hidden shadow-2xl">
+            <div className="img-zoom relative w-full h-full rounded-xl overflow-hidden shadow-2xl">
               <img
                 src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&q=85&auto=format&fit=crop"
                 alt="JWD Investment client portal — wealth management dashboard"
@@ -114,7 +114,7 @@ export default function Money() {
               <div className="equiti-card-rim absolute top-4 left-4 right-4 bg-white/95 backdrop-blur rounded-lg p-3 flex items-center justify-between">
                 <div>
                   <div className="text-[9px] font-semibold tracking-[0.2em] text-slate-400">TOTAL WEALTH</div>
-                  <div className="font-serif text-[20px] font-semibold text-slate-900">$84.2M</div>
+                  <div data-count="$84.2M" className="font-serif text-[20px] font-semibold text-slate-900">$84.2M</div>
                 </div>
                 <div className="text-right">
                   <div className="text-[9px] font-semibold tracking-[0.2em] text-slate-400">QTR</div>

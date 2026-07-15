@@ -11,14 +11,8 @@ export default function Footer() {
       <div className="max-w-[1280px] mx-auto px-8 py-20">
         <div className="grid lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-12 mb-12">
           <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-9 h-9 rounded-md flex items-center justify-center" style={{ background: 'var(--logo-bg)' }}>
-                <span className="text-white font-serif font-semibold text-[16px]">J</span>
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="font-serif text-[22px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>JWD</span>
-                <span className="text-[9px] font-medium text-slate-500 tracking-[0.28em] mt-1">INVESTMENT</span>
-              </div>
+            <div className="flex items-center mb-6">
+              <img src="/jwd-logo.png" alt="JWD Investment" className="h-10 w-auto" />
             </div>
             <p className="text-[13.5px] text-slate-600 leading-[1.7] max-w-xs mb-3">
               JWD Investment is an independently-owned wealth management and investment advisory firm, serving private clients, family offices and institutions across global markets since 2014.
@@ -51,7 +45,7 @@ export default function Footer() {
               <ul className="space-y-3">
                 {col.links.map((l) => (
                   <li key={l}>
-                    <a href="#" className="text-[13.5px] text-slate-600 hover:text-slate-900">{l}</a>
+                    <a href="#" className="link-underline text-[13.5px] text-slate-600 hover:text-slate-900">{l}</a>
                   </li>
                 ))}
               </ul>

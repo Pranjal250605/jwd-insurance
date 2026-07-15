@@ -8,6 +8,7 @@ import Explore from '@/components/Explore';
 import ClosingCTA from '@/components/ClosingCTA';
 import Footer from '@/components/Footer';
 import AnimationsInit from '@/components/AnimationsInit';
+import Interactions from '@/components/Interactions';
 import TweaksPanel from '@/components/TweaksPanel';
 import type { TweakValues, SetTweak } from '@/types/tweaks';
 
@@ -77,6 +78,7 @@ export default function App() {
       <ClosingCTA />
       <Footer />
       <AnimationsInit />
+      <Interactions />
       {!BARE && <TweaksPanel tweaks={tweaks} setTweak={setTweak} />}
     </div>
   );

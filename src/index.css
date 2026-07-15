@@ -220,3 +220,181 @@ html, body {
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
+
+/* ============================================================
+   PREMIUM INTERACTION LAYER
+   Cursor-tracked spotlight borders, button sheen, scroll
+   progress, drifting orbs, grain texture, animated eyebrows.
+   All additive — never alters the GSAP class hooks.
+   ============================================================ */
+
+html { scroll-behavior: smooth; }
+
+::selection {
+  background: rgba(var(--accent-rgb), 0.18);
+  color: var(--accent-deep);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(var(--accent-rgb), 0.55);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* — Tactile film grain: barely-there premium texture over the whole page — */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* — Scroll progress bar (pinned above everything) — */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 60;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--scroll, 0));
+  background: linear-gradient(90deg, var(--accent) 0%, var(--secondary) 100%);
+  box-shadow: 0 0 12px -2px rgba(var(--accent-rgb), 0.55);
+  pointer-events: none;
+}
+
+/* — Cursor-tracked spotlight border: a glowing rim segment that
+     follows the pointer. Mask-composite keeps it to the border only,
+     so it never covers card content (works on opaque + dark cards). — */
+.spotlight { position: relative; }
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.25px;
+  background: radial-gradient(
+    180px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(var(--secondary-rgb), 0.85),
+    rgba(var(--accent-rgb), 0.45) 35%,
+    transparent 65%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 350ms ease;
+  pointer-events: none;
+  z-index: 3;
+}
+.spotlight:hover::before { opacity: 1; }
+/* Soft inner wash that pools toward the cursor on dark panels only */
+.spotlight--wash::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(var(--secondary-rgb), 0.10),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 350ms ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.spotlight--wash:hover::after { opacity: 1; }
+
+/* — Sheen sweep on primary CTAs — */
+.cta-primary, .cta-secondary { position: relative; overflow: hidden; }
+.cta-primary::after, .cta-secondary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.38) 50%, transparent 75%);
+  transform: translateX(-130%);
+  transition: transform 750ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.cta-primary:hover::after, .cta-secondary:hover::after { transform: translateX(130%); }
+
+/* — Magnetic button easing (JS sets --mx-pull / --my-pull) — */
+[data-magnetic] {
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translate(var(--mx-pull, 0), var(--my-pull, 0));
+  will-change: transform;
+}
+
+/* — Animated sliding underline for inline "→" text links — */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1.5px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* — Animated leading rule before section eyebrows — */
+.eyebrow-rule {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.eyebrow-rule::before {
+  content: '';
+  width: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--accent), var(--secondary));
+  transition: width 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.eyebrow-rule.is-in::before { width: 34px; }
+
+/* — Drifting glow orbs (premium ambient motion) — */
+.glow-orb--cyan { animation: orb-drift-a 14s ease-in-out infinite; }
+.glow-orb--aqua { animation: orb-drift-b 18s ease-in-out infinite; }
+@keyframes orb-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-26px, 30px) scale(1.08); }
+}
+@keyframes orb-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(24px, -22px) scale(1.06); }
+}
+
+/* — Count-up numerals: tabular figures so width never jitters — */
+[data-count] { font-variant-numeric: tabular-nums; }
+
+/* — Media zoom on hover for image-topped cards — */
+.img-zoom { overflow: hidden; }
+.img-zoom img {
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.img-zoom:hover img { transform: scale(1.06); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .glow-orb--cyan, .glow-orb--aqua { animation: none; }
+  .cta-primary::after, .cta-secondary::after,
+  .spotlight::before, .spotlight--wash::after,
+  .img-zoom img, [data-magnetic] { transition: none; }
+  [data-magnetic] { transform: none !important; }
+}

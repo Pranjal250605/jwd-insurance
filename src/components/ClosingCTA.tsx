@@ -17,7 +17,8 @@ export default function ClosingCTA() {
     <section className="bg-white">
       <div className="max-w-[1280px] mx-auto px-8 pb-20">
         <div
-          className="rounded-[20px] py-24 px-12 text-center relative overflow-hidden"
+          data-spotlight
+          className="spotlight rounded-[20px] py-24 px-12 text-center relative overflow-hidden"
           style={{ background: 'var(--gradient-soft)' }}
         >
           <div className="absolute inset-0 pointer-events-none opacity-50">
@@ -31,7 +32,7 @@ export default function ClosingCTA() {
             />
           </div>
           <div className="relative max-w-3xl mx-auto">
-            <div className="text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>BEGIN YOUR PARTNERSHIP</div>
+            <div className="eyebrow-rule justify-center text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>BEGIN YOUR PARTNERSHIP</div>
             <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-7">パートナーシップの始まり</div>
             <h2
               className="font-serif text-[44px] lg:text-[60px] leading-[1.05] font-medium text-slate-900 tracking-[-0.015em] mb-6"
@@ -47,11 +48,12 @@ export default function ClosingCTA() {
             </p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
               <button
+                data-magnetic
                 className="cta-primary px-8 py-4 rounded-sm text-[12px] font-bold tracking-[0.14em]"
               >
                 SCHEDULE CONSULTATION
               </button>
-              <button className="px-8 py-4 rounded-sm text-[12px] font-bold tracking-[0.14em] text-[#0ABAB5] transition-all hover:bg-[#0ABAB5]/5 border border-[#0ABAB5]">
+              <button data-magnetic className="px-8 py-4 rounded-sm text-[12px] font-bold tracking-[0.14em] text-[#0ABAB5] transition-all hover:bg-[#0ABAB5]/5 border border-[#0ABAB5]">
                 REQUEST CAPABILITIES BROCHURE
               </button>
             </div>
@@ -64,7 +66,7 @@ export default function ClosingCTA() {
         <div className="font-jp text-[12px] tracking-[0.16em] text-slate-400 mb-10 text-center">世界各国の規制当局による認可</div>
         <div className="flex items-center justify-center flex-wrap gap-3 lg:gap-4">
           {REGULATORS.map((r) => (
-            <div key={r.code} className="px-6 py-4 bg-white rounded-md border border-slate-200 flex items-center gap-4 hover:border-slate-300 transition-all">
+            <div key={r.code} data-spotlight className="spotlight px-6 py-4 bg-white rounded-md border border-slate-200 flex items-center gap-4 hover:border-slate-300 hover:-translate-y-0.5 transition-all">
               <div className="font-serif text-[22px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{r.code}</div>
               <div className="border-l border-slate-200 pl-4">
                 <div className="text-[12px] font-medium text-slate-700 leading-tight">{r.name}</div>

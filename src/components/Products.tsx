@@ -63,7 +63,7 @@ export default function Products() {
       <div className="max-w-[1280px] mx-auto px-8 py-24">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 mb-16 items-end">
           <div>
-            <div className="text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>INVESTMENT SOLUTIONS</div>
+            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>INVESTMENT SOLUTIONS</div>
             <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">投資ソリューション</div>
             <h2 className="font-serif text-[40px] lg:text-[52px] leading-[1.08] font-medium text-slate-900 tracking-[-0.015em]">
               From core portfolios to private markets
@@ -76,7 +76,7 @@ export default function Products() {
 
         <div className="grid md:grid-cols-2 gap-6">
           {SOLUTIONS.map((s, i) => (
-            <div key={i} className="bg-white rounded-xl border border-slate-100 overflow-hidden hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
+            <div key={i} data-spotlight className="spotlight group bg-white rounded-xl border border-slate-100 overflow-hidden hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
               <div className="grid grid-cols-[1fr_180px]">
                 <div className="p-8">
                   <div className="text-[10px] font-semibold tracking-[0.22em] text-slate-400 mb-2">{s.sub}</div>
@@ -88,13 +88,13 @@ export default function Products() {
                       <div className="text-[10px] font-semibold tracking-[0.18em] text-slate-400 uppercase">AUM</div>
                       <div className="font-serif text-[18px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{s.aum}</div>
                     </div>
-                    <a href="#" className="text-[12px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+                    <a href="#" className="link-underline text-[12px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                       Strategy detail
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                     </a>
                   </div>
                 </div>
-                <div className="relative">
+                <div className="img-zoom relative">
                   <img src={s.image} alt={s.label} className="absolute inset-0 w-full h-full object-cover" />
                 </div>
               </div>
@@ -104,7 +104,7 @@ export default function Products() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-8 pb-20">
-        <div className="rounded-[20px] p-12 lg:p-20 text-center relative overflow-hidden"
+        <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-12 lg:p-20 text-center relative overflow-hidden"
           style={{ background: 'var(--gradient-dark)' }}>
           <div className="absolute inset-0 opacity-25 pointer-events-none">
             <img
@@ -115,7 +115,7 @@ export default function Products() {
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(var(--photo-tint-rgb), 0.92), rgba(var(--photo-tint-rgb), 0.85))' }} />
           </div>
           <div className="relative">
-            <div className="text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>SERVICE IN SIX LANGUAGES</div>
+            <div className="eyebrow-rule justify-center text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>SERVICE IN SIX LANGUAGES</div>
             <div className="font-jp text-[13px] tracking-[0.18em] mb-7 text-white/60">6か国語による専任サポート</div>
             <h2 className="font-serif text-[36px] lg:text-[52px] leading-[1.1] font-medium text-white tracking-[-0.015em] max-w-3xl mx-auto">
               Local advisors, fluent in your language and your markets
@@ -129,7 +129,7 @@ export default function Products() {
                 { l: 'Français',  jp: 'French' },
                 { l: 'Español',   jp: 'Spanish' },
               ].map((lang) => (
-                <span key={lang.l} className="px-5 h-10 rounded-full bg-white/5 border border-white/10 text-white/85 text-[13px] flex items-center font-medium">{lang.l}</span>
+                <span key={lang.l} className="px-5 h-10 rounded-full bg-white/5 border border-white/10 text-white/85 text-[13px] flex items-center font-medium transition-all duration-300 hover:bg-white/12 hover:border-white/30 hover:text-white hover:-translate-y-0.5 cursor-default">{lang.l}</span>
               ))}
             </div>
           </div>
@@ -137,22 +137,22 @@ export default function Products() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-8 pb-24">
-        <div className="text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>BEGIN YOUR PARTNERSHIP</div>
+        <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>BEGIN YOUR PARTNERSHIP</div>
         <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">パートナーシップの開始</div>
         <h2 className="font-serif text-[40px] lg:text-[52px] leading-[1.1] font-medium text-slate-900 tracking-[-0.015em] mb-14 max-w-3xl">
           A considered process, designed to last decades
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
           {STEPS.map((s, i) => (
-            <div key={i} className="bg-white border border-slate-100 rounded-xl p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
+            <div key={i} data-spotlight className="spotlight group bg-white border border-slate-100 rounded-xl p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
               <div className="flex items-start justify-between mb-7">
-                <div className="font-serif text-[40px] font-medium leading-none" style={{ color: 'var(--accent-deep)' }}>{s.n}</div>
+                <div className="font-serif text-[40px] font-medium leading-none transition-transform duration-500 ease-out group-hover:scale-110 origin-left" style={{ color: 'var(--accent-deep)' }}>{s.n}</div>
                 <div className="text-[10px] font-semibold tracking-[0.22em] text-slate-300">STEP</div>
               </div>
               <div className="font-jp text-[12px] tracking-[0.16em] text-slate-500 mb-1">{s.jp}</div>
               <h3 className="font-serif text-[22px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{s.title}</h3>
               <p className="text-[14.5px] leading-[1.6] text-slate-600 mb-8">{s.body}</p>
-              <a href="#" className="text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+              <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                 {s.cta}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
               </a>

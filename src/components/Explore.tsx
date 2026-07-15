@@ -68,9 +68,9 @@ export default function Explore() {
   return (
     <section className="bg-white">
       <div className="max-w-[1280px] mx-auto px-8 py-24">
-        <div className="rounded-[20px] bg-white border border-slate-100 p-12 lg:p-16 grid lg:grid-cols-[1fr_1.1fr] gap-14 items-center">
+        <div data-spotlight className="spotlight rounded-[20px] bg-white border border-slate-100 p-12 lg:p-16 grid lg:grid-cols-[1fr_1.1fr] gap-14 items-center">
           <div>
-            <div className="text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>INSIGHTS & RESEARCH</div>
+            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>INSIGHTS & RESEARCH</div>
             <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">市場洞察・リサーチ</div>
             <h2 className="font-serif text-[40px] lg:text-[48px] leading-[1.08] font-medium text-slate-900 tracking-[-0.015em] mb-6">
               Considered thinking, delivered with discipline
@@ -81,14 +81,14 @@ export default function Explore() {
             <p className="font-jp text-[14.5px] leading-[1.85] text-slate-600 mb-9 max-w-md tracking-wide">
               運用チームが執筆する、信頼性の高い市場分析と長期的な視点の調査資料。
             </p>
-            <a href="#" className="text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+            <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
               View research library
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </a>
           </div>
           <div className="relative h-[380px]">
             {RESEARCH_CARDS.map((c, i) => (
-              <div key={i} className="absolute right-0 bg-white rounded-xl shadow-[0_14px_40px_-12px_rgba(var(--shadow-rgb),0.18)] border border-slate-100 p-4 flex items-center gap-4 w-[420px]"
+              <div key={i} data-spotlight className="spotlight absolute right-0 bg-white rounded-xl shadow-[0_14px_40px_-12px_rgba(var(--shadow-rgb),0.18)] border border-slate-100 p-4 flex items-center gap-4 w-[420px] hover:shadow-[0_22px_55px_-14px_rgba(var(--shadow-rgb),0.28)] transition-shadow"
                 style={{ transform: `translate(${c.x}px, ${c.y}px) rotate(${c.rot}deg)` }}>
                 <div className="w-16 h-20 rounded-md flex-shrink-0 flex items-center justify-center text-white font-serif font-medium text-[24px]"
                   style={{ background: accentBg(c.accent) }}>
@@ -109,15 +109,15 @@ export default function Explore() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-8 pb-24">
-        <div className="text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>WHAT SETS US APART</div>
+        <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>WHAT SETS US APART</div>
         <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">JWDの強み</div>
         <h2 className="font-serif text-[40px] lg:text-[52px] leading-[1.1] font-medium text-slate-900 tracking-[-0.015em] mb-14 max-w-3xl">
           A firm built on conviction
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
           {FEATURE_CARDS.map((c, i) => (
-            <div key={i} className="bg-white border border-slate-100 rounded-xl overflow-hidden hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
-              <div className="relative h-[220px] overflow-hidden">
+            <div key={i} data-spotlight className="spotlight group bg-white border border-slate-100 rounded-xl overflow-hidden hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
+              <div className="img-zoom relative h-[220px] overflow-hidden">
                 <img src={c.image} alt={c.title} className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 50%, rgba(var(--photo-tint-rgb),0.35) 100%)' }} />
               </div>
@@ -126,7 +126,7 @@ export default function Explore() {
                 <div className="font-jp text-[12px] tracking-[0.16em] text-slate-500 mb-3">{c.jp}</div>
                 <h3 className="font-serif text-[22px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{c.title}</h3>
                 <p className="text-[14.5px] leading-[1.6] text-slate-600 mb-7">{c.body}</p>
-                <a href="#" className="text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+                <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                   {c.cta}
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                 </a>
