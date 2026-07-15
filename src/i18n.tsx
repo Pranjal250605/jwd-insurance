@@ -57,6 +57,7 @@ export const STRINGS = {
       body: 'Comprehensive wealth management and investment advisory for institutions, family offices and private clients across global markets — guided by disciplined process and long-term conviction.',
       ctaPrimary: 'SCHEDULE A CONSULTATION',
       ctaSecondary: 'Download capabilities brochure',
+      platformsLabel: 'EXECUTION VIA',
       stats: [
         ['$48B', 'Assets under management'],
         ['1,200+', 'Client relationships'],
@@ -238,6 +239,7 @@ export const STRINGS = {
       body: '機関投資家、ファミリーオフィス、個人富裕層のお客様へ。規律ある運用プロセスと長期的な確信に基づく、総合的な資産運用・投資助言サービスを世界の市場でご提供します。',
       ctaPrimary: 'ご相談のご予約',
       ctaSecondary: '会社案内をダウンロード',
+      platformsLabel: '提携プラットフォーム',
       stats: [
         ['$48B', '運用資産残高'],
         ['1,200+', 'お客様数'],

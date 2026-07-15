@@ -113,7 +113,24 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             </button>
           </div>
 
-          <div className="mt-16 pt-10 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-8">
+          <div className="mt-8 flex items-center gap-4 flex-wrap">
+            <span className="text-[11px] font-semibold tracking-[0.22em] text-slate-400">{t.hero.platformsLabel}</span>
+            {t.products.platforms.map((p) => (
+              <a
+                key={p.name}
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-underline inline-flex items-center gap-1.5 text-[16px] font-semibold hover:opacity-80 transition-opacity"
+                style={{ color: 'var(--accent-deep)' }}
+              >
+                {p.name}
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M9 7h8v8" /></svg>
+              </a>
+            ))}
+          </div>
+
+          <div className="mt-14 pt-10 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-8">
             {t.hero.stats.map(([a, b]) => (
               <div key={b}>
                 <div data-count={a} className="font-serif text-[28px] font-medium tracking-tight" style={{ color: 'var(--accent-deep)' }}>{a}</div>
