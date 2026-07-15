@@ -58,6 +58,40 @@ export default function Products() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-8 pb-20">
+        <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.platformsEyebrow}</div>
+        <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.platformsSub}</div>
+        <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-10 max-w-3xl">
+          {t.products.platformsTitle}
+        </h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          {t.products.platforms.map((p) => (
+            <a
+              key={p.name}
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-spotlight
+              className="spotlight group bg-white border border-slate-100 rounded-xl p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.18)] hover:-translate-y-0.5 transition-all block"
+            >
+              <div className="flex items-start justify-between mb-5">
+                <span className="text-[10px] font-semibold tracking-[0.22em] px-3 py-1.5 rounded-full" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>{p.tag}</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-slate-300 transition-all group-hover:text-slate-900 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                  <path d="M7 17L17 7M9 7h8v8" />
+                </svg>
+              </div>
+              <h3 className="font-serif text-[26px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{p.name}</h3>
+              <p className="text-[17px] leading-[1.6] text-slate-600 mb-7">{p.desc}</p>
+              <span className="link-underline text-[15.5px] font-semibold inline-flex items-center gap-1.5 group-hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+                {t.products.platformsVisit}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </span>
+            </a>
+          ))}
+        </div>
+        <p className="text-[13px] text-slate-400 mt-5">{t.products.platformsNote}</p>
+      </div>
+
+      <div className="max-w-[1280px] mx-auto px-8 pb-20">
         <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-12 lg:p-20 text-center relative overflow-hidden"
           style={{ background: 'var(--gradient-dark)' }}>
           <div className="absolute inset-0 opacity-25 pointer-events-none">

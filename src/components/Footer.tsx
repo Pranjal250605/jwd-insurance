@@ -17,6 +17,20 @@ export default function Footer() {
             <p className="font-jp text-[15px] text-slate-500 leading-[1.85] tracking-wide max-w-xs mb-7">
               {t.footer.blurb2}
             </p>
+            <div className="flex flex-col gap-2 mb-7">
+              {t.products.platforms.map((p) => (
+                <a
+                  key={p.name}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-underline inline-flex items-center gap-1.5 text-[16px] font-medium text-slate-600 hover:text-slate-900 self-start"
+                >
+                  {p.name}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M9 7h8v8" /></svg>
+                </a>
+              ))}
+            </div>
             <div className="flex items-center gap-2">
               {[
                 { label: 'LinkedIn', code: 'in' },
