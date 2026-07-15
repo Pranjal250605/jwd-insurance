@@ -113,21 +113,28 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             </button>
           </div>
 
-          <div className="mt-8 flex items-center gap-4 flex-wrap">
-            <span className="text-[11px] font-semibold tracking-[0.22em] text-slate-400">{t.hero.platformsLabel}</span>
-            {t.products.platforms.map((p) => (
-              <a
-                key={p.name}
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-underline inline-flex items-center gap-1.5 text-[16px] font-semibold hover:opacity-80 transition-opacity"
-                style={{ color: 'var(--accent-deep)' }}
-              >
-                {p.name}
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M9 7h8v8" /></svg>
-              </a>
-            ))}
+          <div className="mt-10">
+            <div className="text-[11px] font-bold tracking-[0.22em] text-slate-400 mb-3">{t.hero.platformsLabel}</div>
+            <div className="grid sm:grid-cols-2 gap-4 max-w-xl">
+              {t.products.platforms.map((p) => (
+                <a
+                  key={p.name}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between rounded-lg px-5 py-4 border-2 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)]"
+                  style={{ borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
+                >
+                  <div>
+                    <div className="text-[10px] font-bold tracking-[0.18em] mb-1 opacity-70" style={{ color: 'var(--accent-deep)' }}>{p.tag}</div>
+                    <div className="font-serif text-[22px] font-semibold tracking-tight leading-none" style={{ color: 'var(--accent-deep)' }}>{p.name}</div>
+                  </div>
+                  <span className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ background: 'var(--accent-deep)' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2"><path d="M7 17L17 7M9 7h8v8" /></svg>
+                  </span>
+                </a>
+              ))}
+            </div>
           </div>
 
           <div className="mt-14 pt-10 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-8">

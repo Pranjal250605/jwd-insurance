@@ -64,9 +64,26 @@ export default function Nav() {
           <a href="#" className="px-4 h-10 flex items-center text-[17px] font-medium text-slate-700 hover:text-slate-900">{t.nav.contact}</a>
         </nav>
 
-        <button data-magnetic className="cta-primary px-5 h-10 rounded-sm text-[12px] font-bold tracking-[0.14em]">
-          {t.nav.cta}
-        </button>
+        <div className="flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2">
+            {t.products.platforms.map((p) => (
+              <a
+                key={p.name}
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-4 h-10 rounded-full border text-[15px] font-bold transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_25px_-10px_rgba(10,186,181,0.5)]"
+                style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
+              >
+                {p.name === 'AIX Investment' ? 'AIX' : p.name}
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M9 7h8v8" /></svg>
+              </a>
+            ))}
+          </div>
+          <button data-magnetic className="cta-primary px-5 h-10 rounded-sm text-[12px] font-bold tracking-[0.14em]">
+            {t.nav.cta}
+          </button>
+        </div>
       </div>
     </div>
   );

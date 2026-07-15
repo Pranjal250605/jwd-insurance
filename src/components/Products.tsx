@@ -71,7 +71,8 @@ export default function Products() {
               target="_blank"
               rel="noopener noreferrer"
               data-spotlight
-              className="spotlight group bg-white border border-slate-100 rounded-xl p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.18)] hover:-translate-y-0.5 transition-all block"
+              className="spotlight group bg-white border-2 rounded-xl p-9 shadow-[0_10px_35px_-14px_rgba(10,186,181,0.35)] hover:shadow-[0_20px_55px_-16px_rgba(10,186,181,0.55)] hover:-translate-y-1 transition-all block"
+              style={{ borderColor: 'var(--accent-deep)' }}
             >
               <div className="flex items-start justify-between mb-5">
                 <span className="text-[10px] font-semibold tracking-[0.22em] px-3 py-1.5 rounded-full" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>{p.tag}</span>
