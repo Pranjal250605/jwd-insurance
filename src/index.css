@@ -270,7 +270,10 @@ body::after {
 /* — Cursor-tracked spotlight border: a glowing rim segment that
      follows the pointer. Mask-composite keeps it to the border only,
      so it never covers card content (works on opaque + dark cards). — */
-.spotlight { position: relative; }
+/* Only establish a positioning context when the element isn't already
+   positioned by a utility (e.g. Tailwind `absolute`/`fixed`); otherwise this
+   would override those and knock floating cards back into normal flow. */
+.spotlight:not(.absolute):not(.fixed) { position: relative; }
 .spotlight::before {
   content: '';
   position: absolute;
