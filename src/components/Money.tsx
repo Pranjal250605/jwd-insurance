@@ -1,36 +1,34 @@
-const OFFICES = [
-  { city: 'Tokyo',     jp: '東京',         rot: -3,  x: -160, y: -40, lead: true },
-  { city: 'London',    jp: 'ロンドン',     rot: 2,   x: 60,   y: -90 },
-  { city: 'New York',  jp: 'ニューヨーク', rot: -2,  x: 120,  y: 20 },
-  { city: 'Singapore', jp: 'シンガポール', rot: 4,   x: -80,  y: 90 },
-  { city: 'Zürich',    jp: 'チューリッヒ', rot: -4,  x: 70,   y: 130 },
-];
+import { useT } from '@/i18n';
 
-const PLATFORM_FEATURES = [
-  { l: 'Performance reporting', jp: 'パフォーマンス報告' },
-  { l: 'Tax-aware analytics',   jp: '税務分析' },
-  { l: 'Secure document vault', jp: 'ドキュメント保管' },
+const OFFICE_POS = [
+  { rot: -3, x: -160, y: -40, lead: true },
+  { rot: 2, x: 60, y: -90 },
+  { rot: -2, x: 120, y: 20 },
+  { rot: 4, x: -80, y: 90 },
+  { rot: -4, x: 70, y: 130 },
 ];
 
 export default function Money() {
+  const { t } = useT();
+
   return (
     <section className="bg-white">
       <div className="max-w-[1280px] mx-auto px-8 py-24">
         <div data-spotlight className="spotlight rounded-[20px] bg-white border border-slate-100 p-12 lg:p-16 grid lg:grid-cols-[1fr_1.05fr] gap-14 items-center">
           <div>
-            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>GLOBAL REACH</div>
-            <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">グローバル・リーチ</div>
-            <h2 className="font-serif text-[40px] lg:text-[48px] leading-[1.08] font-medium text-slate-900 tracking-[-0.015em] mb-6">
-              Local insight, global perspective
+            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.money.reachEyebrow}</div>
+            <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">{t.money.reachSub}</div>
+            <h2 className="font-serif text-[40px] lg:text-[48px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-6">
+              {t.money.reachTitle}
             </h2>
             <p className="text-[16px] leading-[1.65] text-slate-600 mb-4 max-w-md">
-              Eleven offices across Asia, Europe and the Americas — each staffed by senior advisors who live in the markets they cover, supported by a single global research platform.
+              {t.money.reachBody}
             </p>
             <p className="font-jp text-[14.5px] leading-[1.85] text-slate-600 mb-9 max-w-md tracking-wide">
-              世界11拠点のチームが、お客様の地域に根ざした視点とグローバルな運用力をお届けします。
+              {t.money.reachBody2}
             </p>
             <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
-              View our office network
+              {t.money.reachCta}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </a>
           </div>
@@ -65,13 +63,13 @@ export default function Money() {
               </svg>
             </div>
 
-            {OFFICES.map((o, i) => (
-              <div key={o.city}
-                className={`absolute bg-white rounded-lg shadow-[0_12px_30px_-12px_rgba(var(--shadow-rgb),0.25)] px-4 py-2.5 ${o.lead ? 'border-l-2' : ''}`}
-                style={{ transform: `translate(${o.x}px, ${o.y}px) rotate(${o.rot}deg)`, borderLeftColor: o.lead ? 'var(--secondary)' : undefined, zIndex: 10 + i }}>
-                <div className="text-[10px] font-semibold tracking-[0.18em] text-slate-400">{o.lead ? 'HEADQUARTERS' : 'OFFICE'}</div>
+            {t.money.offices.map((o, i) => (
+              <div key={i}
+                className={`absolute bg-white rounded-lg shadow-[0_12px_30px_-12px_rgba(var(--shadow-rgb),0.25)] px-4 py-2.5 ${OFFICE_POS[i].lead ? 'border-l-2' : ''}`}
+                style={{ transform: `translate(${OFFICE_POS[i].x}px, ${OFFICE_POS[i].y}px) rotate(${OFFICE_POS[i].rot}deg)`, borderLeftColor: OFFICE_POS[i].lead ? 'var(--secondary)' : undefined, zIndex: 10 + i }}>
+                <div className="text-[10px] font-semibold tracking-[0.18em] text-slate-400">{OFFICE_POS[i].lead ? t.money.hq : t.money.office}</div>
                 <div className="font-serif text-[15px] font-semibold text-slate-900 leading-tight">{o.city}</div>
-                <div className="font-jp text-[10px] text-slate-500 tracking-wide">{o.jp}</div>
+                <div className="font-jp text-[10px] text-slate-500 tracking-wide">{o.sub}</div>
               </div>
             ))}
           </div>
@@ -82,23 +80,23 @@ export default function Money() {
         <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-12 lg:p-16 grid lg:grid-cols-[1fr_1fr] gap-12 items-center relative overflow-hidden"
           style={{ background: 'var(--gradient-dark)' }}>
           <div className="relative z-10">
-            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>CLIENT EXPERIENCE</div>
-            <div className="font-jp text-[13px] tracking-[0.18em] mb-7 text-white/60">クライアント・エクスペリエンス</div>
-            <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.1] font-medium text-white tracking-[-0.015em] mb-6">
-              The JWD Client Portal — clarity, on every device
+            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>{t.money.portalEyebrow}</div>
+            <div className="font-jp text-[13px] tracking-[0.18em] mb-7 text-white/60">{t.money.portalSub}</div>
+            <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.15] font-medium text-white tracking-[-0.015em] mb-6">
+              {t.money.portalTitle}
             </h2>
             <p className="text-[15px] leading-[1.65] text-slate-300 mb-3 max-w-md">
-              A consolidated view of every account, position and document — with institutional-grade encryption and seamless access for principals, family members and authorised advisors.
+              {t.money.portalBody}
             </p>
             <p className="font-jp text-[14px] leading-[1.85] text-slate-400 mb-9 max-w-md tracking-wide">
-              すべての資産情報を一元管理。安全で直感的なクライアント・ポータル。
+              {t.money.portalBody2}
             </p>
             <div className="flex flex-col gap-3 max-w-sm">
-              {PLATFORM_FEATURES.map((f) => (
+              {t.money.features.map((f) => (
                 <div key={f.l} className="flex items-center gap-3 text-[14px] text-white/85">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ stroke: 'var(--secondary)' }} strokeWidth="2"><path d="M5 12l5 5L20 7" /></svg>
                   <span className="flex-1">{f.l}</span>
-                  <span className="font-jp text-[11px] text-white/40">{f.jp}</span>
+                  <span className="font-jp text-[11px] text-white/40">{f.sub}</span>
                 </div>
               ))}
             </div>
@@ -113,11 +111,11 @@ export default function Money() {
               <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(var(--photo-tint-rgb),0.5) 0%, transparent 60%)' }} />
               <div className="equiti-card-rim absolute top-4 left-4 right-4 bg-white/95 backdrop-blur rounded-lg p-3 flex items-center justify-between">
                 <div>
-                  <div className="text-[9px] font-semibold tracking-[0.2em] text-slate-400">TOTAL WEALTH</div>
+                  <div className="text-[9px] font-semibold tracking-[0.2em] text-slate-400">{t.money.totalWealth}</div>
                   <div data-count="$84.2M" className="font-serif text-[20px] font-semibold text-slate-900">$84.2M</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[9px] font-semibold tracking-[0.2em] text-slate-400">QTR</div>
+                  <div className="text-[9px] font-semibold tracking-[0.2em] text-slate-400">{t.money.qtr}</div>
                   <div className="text-[14px] font-semibold text-emerald-700">+ 2.84%</div>
                 </div>
               </div>

@@ -1,12 +1,23 @@
+import { useT } from '@/i18n';
+
 interface HeroProps {
   eyebrow?: string;
   headline?: string;
 }
 
-export default function Hero({
-  eyebrow = 'JWD INVESTMENT · TRUSTED SINCE 2014',
-  headline = 'Building lasting wealth, generation after generation',
-}: HeroProps) {
+const ALLOC = [
+  { v: 52, c: 'var(--accent-deep)' },
+  { v: 28, c: '#5C7BA8' },
+  { v: 14, c: 'var(--secondary)' },
+  { v: 6,  c: '#CBD5E1' },
+];
+
+export default function Hero({ eyebrow, headline }: HeroProps) {
+  const { lang, t } = useT();
+  // Tweaks-panel overrides only apply in English; Japanese always uses the dictionary.
+  const eyebrowText = lang === 'ja' ? t.hero.eyebrow : (eyebrow ?? t.hero.eyebrow);
+  const headlineText = lang === 'ja' ? t.hero.headline : (headline ?? t.hero.headline);
+
   return (
     <section className="relative bg-white overflow-hidden">
       <div className="glow-orb glow-orb--cyan" style={{ width: 560, height: 560, top: -200, right: -120 }} />
@@ -82,34 +93,29 @@ export default function Hero({
 
       <div className="relative max-w-[1280px] mx-auto px-8 py-20 lg:py-24 grid lg:grid-cols-[1.05fr_1fr] gap-14 items-center">
         <div className="relative z-10">
-          <div className="eyebrow-rule text-[12px] font-semibold tracking-[0.22em] mb-7" style={{ color: 'var(--accent-deep)' }}>{eyebrow}</div>
-          <h1 className="font-serif text-[52px] lg:text-[64px] leading-[1.05] font-medium text-slate-900 tracking-[-0.015em] mb-5" style={{ textWrap: 'balance' } as React.CSSProperties}>
-            {headline}
+          <div className="eyebrow-rule text-[12px] font-semibold tracking-[0.22em] mb-7" style={{ color: 'var(--accent-deep)' }}>{eyebrowText}</div>
+          <h1 className={`font-serif ${lang === 'ja' ? 'text-[44px] lg:text-[54px] leading-[1.2]' : 'text-[52px] lg:text-[64px] leading-[1.05]'} font-medium text-slate-900 tracking-[-0.015em] mb-5`} style={{ textWrap: 'balance' } as React.CSSProperties}>
+            {headlineText}
           </h1>
-          <p className="font-jp text-[18px] leading-[1.7] text-slate-700 mb-7 max-w-xl tracking-wide">
-            次世代へつなぐ、確かな資産運用を。
+          <p className={`${lang === 'ja' ? '' : 'font-jp'} text-[18px] leading-[1.7] text-slate-700 mb-7 max-w-xl tracking-wide`}>
+            {t.hero.tagline}
           </p>
           <p className="text-[17px] leading-[1.65] text-slate-600 max-w-xl mb-10">
-            Comprehensive wealth management and investment advisory for institutions, family offices and private clients across global markets — guided by disciplined process and long-term conviction.
+            {t.hero.body}
           </p>
           <div className="flex items-center gap-4 flex-wrap">
             <button data-magnetic className="cta-primary px-7 h-12 rounded-sm text-[12px] font-bold tracking-[0.14em]">
-              SCHEDULE A CONSULTATION
+              {t.hero.ctaPrimary}
             </button>
             <button className="px-2 h-12 text-[14px] font-medium text-slate-700 hover:text-slate-900 flex items-center gap-2 group">
-              Download capabilities brochure
+              {t.hero.ctaSecondary}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </button>
           </div>
 
           <div className="mt-16 pt-10 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-8">
-            {[
-              ['$48B', 'Assets under management'],
-              ['1,200+', 'Client relationships'],
-              ['11', 'Global offices'],
-              ['10 yrs', 'Median tenure'],
-            ].map(([a, b]) => (
-              <div key={a}>
+            {t.hero.stats.map(([a, b]) => (
+              <div key={b}>
                 <div data-count={a} className="font-serif text-[28px] font-medium tracking-tight" style={{ color: 'var(--accent-deep)' }}>{a}</div>
                 <div className="text-[12px] text-slate-500 leading-tight mt-1">{b}</div>
               </div>
@@ -128,22 +134,18 @@ export default function Hero({
 
             <div className="absolute top-6 left-6 right-6 flex items-start justify-between">
               <div className="text-white">
-                <div className="text-[10px] font-semibold tracking-[0.22em] opacity-80 mb-1">FLAGSHIP STRATEGY</div>
-                <div className="font-serif text-[22px] font-medium leading-tight">Global Balanced Composite</div>
+                <div className="text-[10px] font-semibold tracking-[0.22em] opacity-80 mb-1">{t.hero.flagship}</div>
+                <div className="font-serif text-[22px] font-medium leading-tight">{t.hero.flagshipName}</div>
               </div>
               <div className="bg-white/90 backdrop-blur px-3 py-1.5 rounded-full">
-                <span className="text-[11px] font-semibold tracking-wider" style={{ color: 'var(--accent-deep)' }}>SINCE 2014</span>
+                <span className="text-[11px] font-semibold tracking-wider" style={{ color: 'var(--accent-deep)' }}>{t.hero.since}</span>
               </div>
             </div>
 
             <div className="absolute bottom-0 left-0 right-0 p-5">
               <div className="grid grid-cols-3 gap-3">
-                {[
-                  { l: '5Y Return', v: '+9.4%', s: 'annualised' },
-                  { l: 'Sharpe', v: '1.18',   s: 'net of fees' },
-                  { l: 'Drawdown', v: '−7.2%', s: '5y maximum' },
-                ].map((m) => (
-                  <div key={m.l} className="bg-white/95 backdrop-blur rounded-lg p-3">
+                {t.hero.metrics.map((m) => (
+                  <div key={m.v} className="bg-white/95 backdrop-blur rounded-lg p-3">
                     <div className="text-[9px] font-semibold tracking-[0.18em] text-slate-500 uppercase">{m.l}</div>
                     <div className="font-serif text-[20px] font-semibold tracking-tight text-slate-900 mt-0.5">{m.v}</div>
                     <div className="text-[10px] text-slate-500 mt-0.5">{m.s}</div>
@@ -160,26 +162,21 @@ export default function Hero({
                   <path d="M3 3v18h18" /><path d="M7 14l4-4 4 4 6-6" />
                 </svg>
               </div>
-              <div className="text-[11px] font-semibold tracking-[0.18em] text-slate-500">PORTFOLIO</div>
+              <div className="text-[11px] font-semibold tracking-[0.18em] text-slate-500">{t.hero.portfolio}</div>
             </div>
             <div data-count="¥2,847,500,000" className="font-serif text-[24px] font-semibold tracking-tight text-slate-900">¥2,847,500,000</div>
             <div className="flex items-center gap-1.5 mt-1">
               <span className="text-[12px] font-semibold text-emerald-700">+ ¥38.4M</span>
-              <span className="text-[11px] text-slate-500">YTD · +1.36%</span>
+              <span className="text-[11px] text-slate-500">{t.hero.ytd}</span>
             </div>
           </div>
 
           <div data-spotlight className="spotlight equiti-card-rim absolute -right-4 bottom-32 bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-[220px] z-10">
-            <div className="text-[10px] font-semibold tracking-[0.2em] text-slate-500 mb-2">ASSET ALLOCATION</div>
-            {[
-              { k: 'Global Equities',  v: 52, c: 'var(--accent-deep)' },
-              { k: 'Fixed Income',     v: 28, c: '#5C7BA8' },
-              { k: 'Alternatives',     v: 14, c: 'var(--secondary)' },
-              { k: 'Cash',             v: 6,  c: '#CBD5E1' },
-            ].map((row) => (
-              <div key={row.k} className="mb-2 last:mb-0">
+            <div className="text-[10px] font-semibold tracking-[0.2em] text-slate-500 mb-2">{t.hero.allocation}</div>
+            {ALLOC.map((row, i) => (
+              <div key={i} className="mb-2 last:mb-0">
                 <div className="flex items-center justify-between text-[11px] mb-0.5">
-                  <span className="text-slate-700">{row.k}</span>
+                  <span className="text-slate-700">{t.hero.allocRows[i]}</span>
                   <span className="font-mono font-semibold text-slate-900">{row.v}%</span>
                 </div>
                 <div className="h-1 rounded-full bg-slate-100 overflow-hidden">

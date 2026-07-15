@@ -1,44 +1,24 @@
-const PILLARS = [
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
-        <path d="M12 2l9 5v6c0 5-4 8-9 9-5-1-9-4-9-9V7l9-5z" />
-        <path d="M9 12l2 2 4-4" />
-      </svg>
-    ),
-    title: 'Disciplined process',
-    jp: '徹底した投資プロセス',
-    body: 'A multi-stage investment committee, rigorous fundamental research and global risk oversight underpin every portfolio decision.',
-    cta: 'Our process',
-  },
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 7v5l3 3" />
-      </svg>
-    ),
-    title: 'Long-term horizon',
-    jp: '長期的な視点',
-    body: 'We invest with conviction across market cycles — building portfolios that compound over decades, not quarters.',
-    cta: 'Investment philosophy',
-  },
-  {
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M22 11l-3 3-2-2" />
-      </svg>
-    ),
-    title: 'Personal access',
-    jp: '専任担当者',
-    body: 'Direct relationships with senior advisors and portfolio managers — every client supported by a dedicated, multi-disciplinary team.',
-    cta: 'Meet our advisors',
-  },
+import { useT } from '@/i18n';
+
+const PILLAR_ICONS = [
+  <svg key="shield" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+    <path d="M12 2l9 5v6c0 5-4 8-9 9-5-1-9-4-9-9V7l9-5z" />
+    <path d="M9 12l2 2 4-4" />
+  </svg>,
+  <svg key="clock" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 3" />
+  </svg>,
+  <svg key="people" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M22 11l-3 3-2-2" />
+  </svg>,
 ];
 
 export default function Promo() {
+  const { t } = useT();
+
   return (
     <section className="bg-white">
       <div className="max-w-[1280px] mx-auto px-8 pb-12">
@@ -55,16 +35,16 @@ export default function Promo() {
             </svg>
           </div>
           <div className="relative">
-            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-5" style={{ color: 'var(--secondary)' }}>PRIVATE WEALTH ADVISORY</div>
-            <div className="font-jp text-[13px] tracking-[0.18em] mb-7 text-white/60">プライベート・ウェルス・アドバイザリー</div>
-            <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.1] font-medium text-white mb-5 tracking-[-0.01em]">
-              Tailored portfolios, built around your life&apos;s work
+            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-5" style={{ color: 'var(--secondary)' }}>{t.promo.advisoryEyebrow}</div>
+            <div className="font-jp text-[13px] tracking-[0.18em] mb-7 text-white/60">{t.promo.advisorySub}</div>
+            <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.15] font-medium text-white mb-5 tracking-[-0.01em]">
+              {t.promo.advisoryTitle}
             </h2>
             <p className="text-[15px] text-slate-300 leading-[1.65] mb-8 max-w-md">
-              Discretionary management for individuals and families with $5M+ in investable assets. Bespoke strategies, integrated tax and estate planning, and direct access to a dedicated senior advisor.
+              {t.promo.advisoryBody}
             </p>
             <button data-magnetic className="cta-secondary px-7 h-12 rounded-sm text-[12px] font-bold tracking-[0.14em]">
-              REQUEST INTRODUCTION
+              {t.promo.advisoryCta}
             </button>
           </div>
           <div className="relative h-[320px] flex items-center justify-center">
@@ -79,8 +59,8 @@ export default function Promo() {
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-serif font-semibold text-[14px]" style={{ color: 'var(--accent-deep)' }}>HM</div>
                   <div className="flex-1">
-                    <div className="text-[13px] font-semibold text-slate-900">Hiroshi Matsuda, CFA</div>
-                    <div className="text-[11px] text-slate-500">Senior Wealth Advisor · Tokyo</div>
+                    <div className="text-[13px] font-semibold text-slate-900">{t.promo.advisorName}</div>
+                    <div className="text-[11px] text-slate-500">{t.promo.advisorRole}</div>
                   </div>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--accent-deep)' }}><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                 </div>
@@ -91,21 +71,21 @@ export default function Promo() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-8 pt-20 pb-10">
-        <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>WHY PARTNER WITH JWD</div>
-        <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">JWDが選ばれる理由</div>
-        <h2 className="font-serif text-[40px] lg:text-[52px] leading-[1.1] font-medium text-slate-900 tracking-[-0.015em] max-w-3xl">
-          Three pillars of stewardship
+        <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.promo.whyEyebrow}</div>
+        <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-6">{t.promo.whySub}</div>
+        <h2 className="font-serif text-[40px] lg:text-[52px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] max-w-3xl">
+          {t.promo.whyTitle}
         </h2>
       </div>
 
       <div className="max-w-[1280px] mx-auto px-8 pb-24">
         <div className="grid md:grid-cols-3 gap-6">
-          {PILLARS.map((p, i) => (
+          {t.promo.pillars.map((p, i) => (
             <div key={i} data-spotlight className="spotlight group bg-white border border-slate-100 rounded-xl p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.18)] hover:-translate-y-0.5 transition-all">
               <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-7 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-rotate-6" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>
-                {p.icon}
+                {PILLAR_ICONS[i]}
               </div>
-              <div className="font-jp text-[12px] tracking-[0.18em] text-slate-500 mb-1">{p.jp}</div>
+              <div className="font-jp text-[12px] tracking-[0.18em] text-slate-500 mb-1">{p.sub}</div>
               <h3 className="font-serif text-[24px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{p.title}</h3>
               <p className="text-[15px] leading-[1.6] text-slate-600 mb-7">{p.body}</p>
               <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>

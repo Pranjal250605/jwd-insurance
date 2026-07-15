@@ -15,6 +15,16 @@ html, body {
   letter-spacing: var(--font-display-tracking, 0);
 }
 
+/* In Japanese mode, body text falls back to a JP gothic stack and serif
+   display headings to the JP serif (mincho) stack, so kanji/kana render in
+   matching faces instead of the browser default. */
+:root[lang='ja'] body {
+  font-family: var(--font-body, 'Inter'), 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans JP', system-ui, sans-serif;
+}
+:root[lang='ja'] .font-serif {
+  font-family: var(--font-display, 'Playfair Display'), 'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', Georgia, serif;
+}
+
 .font-jp {
   font-family: 'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', serif;
 }

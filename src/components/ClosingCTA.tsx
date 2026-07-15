@@ -1,18 +1,8 @@
-const REGULATORS = [
-  { code: 'FCA',   name: 'Financial Conduct Authority',  region: 'United Kingdom' },
-  { code: 'SEC',   name: 'Securities & Exchange Comm.',  region: 'United States' },
-  { code: 'FSA',   name: 'Financial Services Agency',    region: 'Japan · 金融庁' },
-  { code: 'FINMA', name: 'Swiss Financial Markets',      region: 'Switzerland' },
-  { code: 'MAS',   name: 'Monetary Authority',           region: 'Singapore' },
-];
-
-const RECOGNITION = [
-  { award: 'Wealth Manager of the Year',     pub: 'Asia Private Banker',     yr: '2025' },
-  { award: 'Best Discretionary Portfolio',   pub: 'Euromoney',                yr: '2024' },
-  { award: 'Outstanding ESG Integration',    pub: 'PRI Awards',               yr: '2024' },
-];
+import { useT } from '@/i18n';
 
 export default function ClosingCTA() {
+  const { t } = useT();
+
   return (
     <section className="bg-white">
       <div className="max-w-[1280px] mx-auto px-8 pb-20">
@@ -32,29 +22,29 @@ export default function ClosingCTA() {
             />
           </div>
           <div className="relative max-w-3xl mx-auto">
-            <div className="eyebrow-rule justify-center text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>BEGIN YOUR PARTNERSHIP</div>
-            <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-7">パートナーシップの始まり</div>
+            <div className="eyebrow-rule justify-center text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.closing.eyebrow}</div>
+            <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-7">{t.closing.sub}</div>
             <h2
-              className="font-serif text-[44px] lg:text-[60px] leading-[1.05] font-medium text-slate-900 tracking-[-0.015em] mb-6"
+              className="font-serif text-[44px] lg:text-[60px] leading-[1.1] font-medium text-slate-900 tracking-[-0.015em] mb-6"
               style={{ textWrap: 'balance' } as React.CSSProperties}
             >
-              Plan your wealth journey with JWD
+              {t.closing.title}
             </h2>
             <p className="font-jp text-[16px] leading-[1.85] text-slate-700 mb-4 tracking-wide">
-              お客様の100年先の未来を、確かな運用でお支えします。
+              {t.closing.tagline}
             </p>
             <p className="text-[16px] leading-[1.7] text-slate-600 mb-10 max-w-xl mx-auto">
-              Speak with a senior advisor about your goals, your portfolio and how JWD&apos;s disciplined approach can serve your family or institution for decades to come.
+              {t.closing.body}
             </p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
               <button
                 data-magnetic
                 className="cta-primary px-8 py-4 rounded-sm text-[12px] font-bold tracking-[0.14em]"
               >
-                SCHEDULE CONSULTATION
+                {t.closing.ctaPrimary}
               </button>
               <button data-magnetic className="px-8 py-4 rounded-sm text-[12px] font-bold tracking-[0.14em] text-[#0ABAB5] transition-all hover:bg-[#0ABAB5]/5 border border-[#0ABAB5]">
-                REQUEST CAPABILITIES BROCHURE
+                {t.closing.ctaSecondary}
               </button>
             </div>
           </div>
@@ -62,10 +52,10 @@ export default function ClosingCTA() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-8 pb-12">
-        <div className="text-[11px] font-semibold tracking-[0.28em] mb-2 text-slate-400 text-center">REGULATED & LICENSED ACROSS GLOBAL JURISDICTIONS</div>
-        <div className="font-jp text-[12px] tracking-[0.16em] text-slate-400 mb-10 text-center">世界各国の規制当局による認可</div>
+        <div className="text-[11px] font-semibold tracking-[0.28em] mb-2 text-slate-400 text-center">{t.closing.regulatedTitle}</div>
+        <div className="font-jp text-[12px] tracking-[0.16em] text-slate-400 mb-10 text-center">{t.closing.regulatedSub}</div>
         <div className="flex items-center justify-center flex-wrap gap-3 lg:gap-4">
-          {REGULATORS.map((r) => (
+          {t.closing.regulators.map((r) => (
             <div key={r.code} data-spotlight className="spotlight px-6 py-4 bg-white rounded-md border border-slate-200 flex items-center gap-4 hover:border-slate-300 hover:-translate-y-0.5 transition-all">
               <div className="font-serif text-[22px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{r.code}</div>
               <div className="border-l border-slate-200 pl-4">
@@ -79,7 +69,7 @@ export default function ClosingCTA() {
 
       <div className="max-w-[1280px] mx-auto px-8 pb-20">
         <div className="border-t border-slate-100 pt-12 grid md:grid-cols-3 gap-8">
-          {RECOGNITION.map((r) => (
+          {t.closing.recognition.map((r) => (
             <div key={r.award} className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(var(--secondary-rgb),0.12)' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" strokeWidth="1.6" style={{ stroke: 'var(--secondary)' }}>
