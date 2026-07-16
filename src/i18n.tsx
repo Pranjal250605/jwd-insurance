@@ -95,6 +95,35 @@ export const STRINGS = {
       ],
       viewAllUrl: 'https://www.equiti.com/sc-en/products/',
     },
+    realEstate: {
+      eyebrow: 'REAL ESTATE PORTFOLIO',
+      sub: '不動産ポートフォリオ',
+      title: 'Dubai real estate, held for generations',
+      intro: 'Not thousands of listings — only assets selected for investment merit, managed through ANAWAK Real Estate L.L.C, the JWD Group’s Dubai property arm.',
+      note: 'Links open external sites. Property investments involve risk; values can fall as well as rise.',
+      items: [
+        {
+          name: 'Dubai Property Portfolio',
+          tag: 'ANAWAK REAL ESTATE L.L.C',
+          desc: 'Dubai property investment, acquisition and management — the search structured by five axes: area, budget, property type, yield and developer.',
+          image: 'https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=1200&q=80',
+          links: [
+            { label: 'Bayut', url: 'https://www.bayut.com/' },
+            { label: 'Property Finder', url: 'https://www.propertyfinder.ae/' },
+          ],
+        },
+        {
+          name: 'The Heart of Europe',
+          tag: 'FLAGSHIP PROJECT',
+          desc: 'Four kilometres off the Dubai coast, at the heart of the man-made archipelago “The World,” a Europe is rising — the JWD Group’s flagship resort development.',
+          image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1200&q=80',
+          links: [
+            { label: 'Official site', url: 'https://theheartofeurope.emirates.expert/' },
+            { label: 'The World Islands', url: 'https://theworld-dubai.com/' },
+          ],
+        },
+      ],
+    },
     promo: {
       advisoryEyebrow: 'PRIVATE WEALTH ADVISORY',
       advisorySub: 'プライベート・ウェルス・アドバイザリー',
@@ -294,6 +323,35 @@ export const STRINGS = {
         { name: '金オプションCFD', desc: '金オプションでヘッジ・取引。', url: 'https://www.equiti.com/sc-en/products/gold-option/' },
       ],
       viewAllUrl: 'https://www.equiti.com/sc-en/products/',
+    },
+    realEstate: {
+      eyebrow: '不動産ポートフォリオ',
+      sub: 'REAL ESTATE PORTFOLIO',
+      title: '世代を超えて保有する、ドバイ不動産',
+      intro: '数千件の在庫ではなく、投資価値で選び抜いた物件だけを。JWDグループの不動産部門、ANAWAK Real Estate L.L.C.が運営します。',
+      note: 'リンクは外部サイトに移動します。不動産投資にはリスクがあり、資産価値は下落する場合があります。',
+      items: [
+        {
+          name: 'ドバイ不動産ポートフォリオ',
+          tag: 'ANAWAK REAL ESTATE L.L.C',
+          desc: 'ドバイ不動産の投資・取得・管理。エリア、予算、物件タイプ、利回り、デベロッパーの5つの軸で検索を構造化します。',
+          image: 'https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=1200&q=80',
+          links: [
+            { label: 'Bayut', url: 'https://www.bayut.com/' },
+            { label: 'Property Finder', url: 'https://www.propertyfinder.ae/' },
+          ],
+        },
+        {
+          name: 'ハート・オブ・ヨーロッパ',
+          tag: '旗艦プロジェクト',
+          desc: 'ドバイ沖4キロ、人工島群「ザ・ワールド」の中心に、ヨーロッパが立ち上がる。JWDグループの旗艦リゾート開発プロジェクト。',
+          image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1200&q=80',
+          links: [
+            { label: '公式サイト', url: 'https://theheartofeurope.emirates.expert/' },
+            { label: 'ザ・ワールド諸島', url: 'https://theworld-dubai.com/' },
+          ],
+        },
+      ],
     },
     promo: {
       advisoryEyebrow: 'プライベート・ウェルス・アドバイザリー',

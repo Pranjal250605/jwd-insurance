@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Nav from '@/components/Nav';
 import Hero from '@/components/Hero';
 import Markets from '@/components/Markets';
+import RealEstate from '@/components/RealEstate';
 import Promo from '@/components/Promo';
 import Products from '@/components/Products';
 import Money from '@/components/Money';
@@ -73,6 +74,7 @@ export default function App() {
       <Nav />
       <Hero eyebrow={tweaks.heroEyebrow} headline={tweaks.heroHeadline} />
       <Markets />
+      <RealEstate />
       <Promo />
       <Products />
       <Money />
