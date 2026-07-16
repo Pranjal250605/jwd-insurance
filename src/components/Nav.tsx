@@ -61,6 +61,7 @@ export default function Nav() {
               )}
             </div>
           ))}
+          <a href="#/properties" className="px-4 h-10 flex items-center text-[17px] font-medium text-slate-700 hover:text-slate-900">{t.nav.portfolio}</a>
           <a href="#" className="px-4 h-10 flex items-center text-[17px] font-medium text-slate-700 hover:text-slate-900">{t.nav.contact}</a>
         </nav>
 

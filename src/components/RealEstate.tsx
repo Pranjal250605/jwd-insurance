@@ -14,9 +14,15 @@ export default function RealEstate() {
               {t.realEstate.title}
             </h2>
           </div>
-          <p className="text-[17px] leading-[1.65] text-slate-600 max-w-lg lg:justify-self-end">
-            {t.realEstate.intro}
-          </p>
+          <div className="lg:justify-self-end lg:text-right">
+            <p className="text-[17px] leading-[1.65] text-slate-600 max-w-lg mb-4">
+              {t.realEstate.intro}
+            </p>
+            <a href="#/properties" className="link-underline text-[15.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+              {t.realEstate.portfolioCta}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">

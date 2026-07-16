@@ -3,6 +3,7 @@ import Nav from '@/components/Nav';
 import Hero from '@/components/Hero';
 import Markets from '@/components/Markets';
 import RealEstate from '@/components/RealEstate';
+import PropertiesPage from '@/components/PropertiesPage';
 import Promo from '@/components/Promo';
 import Products from '@/components/Products';
 import Money from '@/components/Money';
@@ -69,20 +70,38 @@ export default function App() {
     root.style.setProperty('--surface-alt', altMap[tweaks.altSurfaceTone] ?? '#F4F6F9');
   }, [tweaks.variant, tweaks.accentHue, tweaks.accentChroma, tweaks.altSurfaceTone]);
 
+  // Lightweight hash routing: '#/properties' shows the client portfolio page.
+  const [route, setRoute] = useState(typeof window !== 'undefined' ? window.location.hash : '');
+  useEffect(() => {
+    const onHash = () => {
+      setRoute(window.location.hash);
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+  const isPortfolio = route.startsWith('#/properties');
+
   return (
     <div className="min-h-screen bg-white">
       <Nav />
-      <Hero eyebrow={tweaks.heroEyebrow} headline={tweaks.heroHeadline} />
-      <Markets />
-      <RealEstate />
-      <Promo />
-      <Products />
-      <Money />
-      <Explore />
-      <ClosingCTA />
+      {isPortfolio ? (
+        <PropertiesPage />
+      ) : (
+        <>
+          <Hero eyebrow={tweaks.heroEyebrow} headline={tweaks.heroHeadline} />
+          <Markets />
+          <RealEstate />
+          <Promo />
+          <Products />
+          <Money />
+          <Explore />
+          <ClosingCTA />
+        </>
+      )}
       <Footer />
-      <AnimationsInit />
-      <Interactions />
+      <AnimationsInit key={`anim-${isPortfolio}`} />
+      <Interactions key={`int-${isPortfolio}`} />
       {!BARE && <TweaksPanel tweaks={tweaks} setTweak={setTweak} />}
     </div>
   );
