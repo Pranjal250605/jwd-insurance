@@ -115,3 +115,26 @@ export function irr(cf: number[]): number {
 
 export const fmtAed = (n: number) =>
   new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Math.round(n));
+
+export const FX_JPY = 41; // AED → JPY (illustrative, matches jwd-web fallback)
+export const JP_CGT = 0.20315; // Japan capital-gains / financial-income tax
+
+/** Short area names for chart labels. */
+export const AREA_SHORT: Record<string, { en: string; ja: string }> = {
+  'Downtown Dubai': { en: 'Downtown', ja: 'ダウンタウン' },
+  'Dubai Marina': { en: 'Marina', ja: 'マリーナ' },
+  'Palm Jumeirah': { en: 'Palm Jumeirah', ja: 'パーム・ジュメイラ' },
+  'Jumeirah Village Circle': { en: 'JVC', ja: 'JVC' },
+};
+
+/** Validated categorical palette for the allocation donut (fixed entity order). */
+export const SERIES_COLORS = ['#0A9A93', '#3E6FB8', '#C08A2D', '#9D5FB4'];
+
+/** Indicative price per sq ft by area — from jwd-web dubai-properties.ts. */
+export const AREA_PRICES = [
+  { en: 'JVC', ja: 'JVC', value: 950, highlight: true },
+  { en: 'Business Bay', ja: 'ビジネスベイ', value: 1600 },
+  { en: 'Marina', ja: 'マリーナ', value: 1750 },
+  { en: 'Downtown', ja: 'ダウンタウン', value: 2100 },
+  { en: 'Palm', ja: 'パーム', value: 3200 },
+];
