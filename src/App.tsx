@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Nav from '@/components/Nav';
 import Hero from '@/components/Hero';
+import Markets from '@/components/Markets';
 import Promo from '@/components/Promo';
 import Products from '@/components/Products';
 import Money from '@/components/Money';
@@ -71,6 +72,7 @@ export default function App() {
     <div className="min-h-screen bg-white">
       <Nav />
       <Hero eyebrow={tweaks.heroEyebrow} headline={tweaks.heroHeadline} />
+      <Markets />
       <Promo />
       <Products />
       <Money />
