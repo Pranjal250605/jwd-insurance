@@ -4,8 +4,8 @@ export default function RealEstate() {
   const { t } = useT();
 
   return (
-    <section className="bg-white">
-      <div className="max-w-[1280px] mx-auto px-8 pb-20">
+    <section style={{ background: 'var(--surface-alt)' }}>
+      <div className="max-w-[1280px] mx-auto px-8 py-24">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 mb-12 items-end">
           <div>
             <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.realEstate.eyebrow}</div>
