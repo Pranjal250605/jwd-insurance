@@ -12,6 +12,7 @@ import ClosingCTA from '@/components/ClosingCTA';
 import Footer from '@/components/Footer';
 import AnimationsInit from '@/components/AnimationsInit';
 import Interactions from '@/components/Interactions';
+import Advisor from '@/components/Advisor';
 import TweaksPanel from '@/components/TweaksPanel';
 import type { TweakValues, SetTweak } from '@/types/tweaks';
 
@@ -102,6 +103,7 @@ export default function App() {
       <Footer />
       <AnimationsInit key={`anim-${isPortfolio}`} />
       <Interactions key={`int-${isPortfolio}`} />
+      <Advisor />
       {!BARE && <TweaksPanel tweaks={tweaks} setTweak={setTweak} />}
     </div>
   );
