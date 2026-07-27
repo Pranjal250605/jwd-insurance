@@ -161,21 +161,39 @@ export default function AnimationsInit() {
       setTimeout(() => ScrollTrigger.refresh(), 300);
     });
 
-    // Mobile browsers resize the viewport when the URL bar/toolbar
-    // collapses on scroll, and rotating the device changes it outright —
-    // both can leave ScrollTrigger's cached trigger positions stale, which
-    // is exactly the "engine quirk" case where a reveal could fail to fire
-    // and leave content at opacity:0. Re-sync on both. (Declared outside
-    // gsap.context because it's a plain DOM listener, not a GSAP tween —
-    // ctx.revert() only tracks the latter, so this needs its own cleanup.)
-    const onResize = () => ScrollTrigger.refresh();
+    // Rotating the device changes the viewport outright, which can leave
+    // ScrollTrigger's cached trigger positions stale. Re-sync on that —
+    // but NOT on every 'resize', because iOS Safari fires 'resize'
+    // continuously while its address bar collapses/expands during normal
+    // scrolling (a height-only change, width unchanged). A naive
+    // resize->refresh() listener turns that into a feedback loop — refresh()
+    // can itself perturb layout enough to fire more resize events — that
+    // pegs the main thread and gets the tab killed by Safari's "a problem
+    // repeatedly occurred" watchdog. So: only refresh when the WIDTH
+    // actually changes (real rotation/resize), and debounce on top of that
+    // as a second guard. (Declared outside gsap.context because it's a
+    // plain DOM listener, not a GSAP tween — ctx.revert() only tracks the
+    // latter, so this needs its own cleanup.)
+    let lastWidth = window.innerWidth;
+    let debounceId: ReturnType<typeof setTimeout> | undefined;
+    const onResize = () => {
+      if (window.innerWidth === lastWidth) return; // height-only (toolbar) change — ignore
+      lastWidth = window.innerWidth;
+      clearTimeout(debounceId);
+      debounceId = setTimeout(() => ScrollTrigger.refresh(), 250);
+    };
+    const onOrientation = () => {
+      clearTimeout(debounceId);
+      debounceId = setTimeout(() => ScrollTrigger.refresh(), 250);
+    };
     window.addEventListener('resize', onResize);
-    window.addEventListener('orientationchange', onResize);
+    window.addEventListener('orientationchange', onOrientation);
 
     return () => {
       ctx.revert();
+      clearTimeout(debounceId);
       window.removeEventListener('resize', onResize);
-      window.removeEventListener('orientationchange', onResize);
+      window.removeEventListener('orientationchange', onOrientation);
     };
   }, []);
 
