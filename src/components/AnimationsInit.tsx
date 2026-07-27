@@ -6,6 +6,16 @@ const SNAP = { ease: 'power4.out', clearProps: 'opacity,transform' } as const;
 
 export default function AnimationsInit() {
   useEffect(() => {
+    // GSAP's .from() sets the "from" state (opacity:0, etc.) via inline
+    // style the instant it's called — independent of whether the
+    // ScrollTrigger/timeline ever actually plays. A reduced-motion user's
+    // content must already be visible at rest, so skip entrance animations
+    // entirely rather than trying to instantly-complete them: this is the
+    // only way to guarantee nothing is ever set to opacity:0 for them.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
 
@@ -27,28 +37,34 @@ export default function AnimationsInit() {
         heroTl.from(heroCTAs, { y: 20, opacity: 0, duration: 0.8, stagger: 0.1, ...SNAP }, '-=0.5');
       }
 
-      const heroStats = document.querySelectorAll<HTMLElement>('section .mt-16.pt-10 > *');
+      const heroStats = document.querySelectorAll<HTMLElement>('[data-anim="hero-stats"] > *');
       if (heroStats.length) {
         heroTl.from(heroStats, { y: 20, opacity: 0, duration: 0.8, stagger: 0.1, ...SNAP }, '-=0.6');
       }
 
       // ── Hero visual entrance ─────────────────────────────────────────
-      const heroVisual = document.querySelector<HTMLElement>('section .relative.h-\\[620px\\]');
+      const heroVisual = document.querySelector<HTMLElement>('[data-anim="hero-visual"]');
       if (heroVisual) {
         heroTl.from(heroVisual, { y: 40, opacity: 0, duration: 1.2, ease: 'power4.out', clearProps: 'opacity,transform' }, 0.1);
       }
 
       // ── Floating idle on hero overlay cards ──────────────────────────
-      document.querySelectorAll<HTMLElement>('section .relative.h-\\[620px\\] .absolute.bg-white.rounded-xl').forEach((el, i) => {
-        gsap.to(el, {
-          y: `+=${5 + (i % 2) * 3}`,
-          duration: 3.2 + i * 0.5,
-          yoyo: true,
-          repeat: -1,
-          ease: 'sine.inOut',
-          delay: i * 0.3,
+      // Only at `lg`+, where the cards are absolutely floated over the
+      // photo — below that they sit in normal document flow (stacked under
+      // the image), and bobbing a static-flow element up and down would
+      // just look like a layout jitter rather than a premium float.
+      if (window.matchMedia('(min-width: 1024px)').matches) {
+        document.querySelectorAll<HTMLElement>('[data-anim="hero-cards"] > .equiti-card-rim').forEach((el, i) => {
+          gsap.to(el, {
+            y: `+=${5 + (i % 2) * 3}`,
+            duration: 3.2 + i * 0.5,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut',
+            delay: i * 0.3,
+          });
         });
-      });
+      }
 
       // ── Section text reveals ─────────────────────────────────────────
       document.querySelectorAll<HTMLElement>('section .max-w-\\[1280px\\]').forEach((panel, idx) => {
@@ -84,7 +100,7 @@ export default function AnimationsInit() {
       });
 
       // ── Office cards (Money component globe markers) ─────────────────
-      const officeCards = document.querySelectorAll<HTMLElement>('section .relative.h-\\[440px\\] > .absolute.bg-white.rounded-lg');
+      const officeCards = document.querySelectorAll<HTMLElement>('[data-anim="office-diagram"] > .absolute.bg-white.rounded-lg');
       if (officeCards.length) {
         gsap.from(officeCards, {
           scrollTrigger: { trigger: officeCards[0].parentElement!, start: 'top 78%', toggleActions: 'play none none reverse' },
@@ -94,17 +110,29 @@ export default function AnimationsInit() {
       }
 
       // ── Research / lesson cards (Explore) ────────────────────────────
-      const researchCards = document.querySelectorAll<HTMLElement>('section .rounded-\\[20px\\] .absolute.right-0.bg-white.rounded-xl');
+      // Only the lg+ absolute cascade gets the slide-in; the mobile stacked
+      // list uses the generic card-grid-style reveal below instead (it
+      // isn't a `.grid`, so it needs its own rule).
+      const researchCards = document.querySelectorAll<HTMLElement>('[data-anim="research-cards"] > .absolute.right-0.bg-white.rounded-xl');
       if (researchCards.length) {
         gsap.from(researchCards, {
           scrollTrigger: { trigger: researchCards[0].parentElement!, start: 'top 80%', toggleActions: 'play none none reverse' },
           x: 40, opacity: 0, duration: 1.0, stagger: 0.14,
           ease: 'power4.out', clearProps: 'opacity',
         });
+      } else {
+        const stackedResearchCards = document.querySelectorAll<HTMLElement>('[data-anim="research-cards"].flex > *');
+        if (stackedResearchCards.length) {
+          gsap.from(stackedResearchCards, {
+            scrollTrigger: { trigger: stackedResearchCards[0].parentElement!, start: 'top 82%', toggleActions: 'play none none reverse' },
+            y: 20, opacity: 0, duration: 0.8, stagger: 0.1,
+            ease: 'power4.out', clearProps: 'opacity,transform',
+          });
+        }
       }
 
       // ── Language chips ────────────────────────────────────────────────
-      const langChips = document.querySelectorAll<HTMLElement>('section .px-5.h-10.rounded-full');
+      const langChips = document.querySelectorAll<HTMLElement>('[data-anim="lang-chips"] > *');
       if (langChips.length) {
         gsap.from(langChips, {
           scrollTrigger: { trigger: langChips[0].parentElement!, start: 'top 82%', toggleActions: 'play none none reverse' },
@@ -133,7 +161,22 @@ export default function AnimationsInit() {
       setTimeout(() => ScrollTrigger.refresh(), 300);
     });
 
-    return () => ctx.revert();
+    // Mobile browsers resize the viewport when the URL bar/toolbar
+    // collapses on scroll, and rotating the device changes it outright —
+    // both can leave ScrollTrigger's cached trigger positions stale, which
+    // is exactly the "engine quirk" case where a reveal could fail to fire
+    // and leave content at opacity:0. Re-sync on both. (Declared outside
+    // gsap.context because it's a plain DOM listener, not a GSAP tween —
+    // ctx.revert() only tracks the latter, so this needs its own cleanup.)
+    const onResize = () => ScrollTrigger.refresh();
+    window.addEventListener('resize', onResize);
+    window.addEventListener('orientationchange', onResize);
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('orientationchange', onResize);
+    };
   }, []);
 
   return null;

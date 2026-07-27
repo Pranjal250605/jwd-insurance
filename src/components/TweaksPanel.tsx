@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { TweakValues, SetTweak, Variant } from '@/types/tweaks';
 
 interface Props {
@@ -30,7 +31,8 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
     <>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-4 right-4 z-50 w-10 h-10 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-slate-600 hover:text-slate-900 hover:shadow-xl transition-all"
+        className="fixed right-4 z-50 w-11 h-11 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-slate-600 hover:text-slate-900 hover:shadow-xl transition-all"
+        style={{ bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}
         title="Tweaks"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -39,13 +41,16 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
         </svg>
       </button>
 
-      {open && (
-        <div className="fixed bottom-16 right-4 z-50 w-80 bg-white/95 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl overflow-hidden">
-          <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+      {open && createPortal(
+        <div
+          className="fixed z-[60] w-[calc(100vw-2rem)] max-w-80 max-h-[70vh] bg-white/95 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+          style={{ right: '1rem', bottom: 'calc(4.5rem + env(safe-area-inset-bottom, 0px))' }}
+        >
+          <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between flex-shrink-0">
             <span className="text-[12px] font-semibold text-slate-700 tracking-wide">TWEAKS</span>
-            <button onClick={() => setOpen(false)} className="text-slate-400 hover:text-slate-700 text-[16px] leading-none">✕</button>
+            <button onClick={() => setOpen(false)} className="flex items-center justify-center w-8 h-8 -mr-1 text-slate-400 hover:text-slate-700 text-[16px] leading-none">✕</button>
           </div>
-          <div className="p-4 flex flex-col gap-5">
+          <div className="p-4 flex flex-col gap-5 overflow-y-auto">
             <div>
               <div className="text-[10px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Brand variant</div>
               <div className="grid grid-cols-2 gap-2">
@@ -90,7 +95,8 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
                     type="range" min={0} max={360} step={1}
                     value={tweaks.accentHue}
                     onChange={(e) => setTweak('accentHue', Number(e.target.value))}
-                    className="w-full h-1.5 rounded-full appearance-none bg-slate-200 accent-teal-400"
+                    className="range-touch w-full"
+                    style={{ ['--range-thumb-color' as string]: '#2dd4bf' }}
                   />
                   <label className="flex items-center justify-between text-[12px] text-slate-600 mb-1 mt-3">
                     <span>Saturation</span>
@@ -100,7 +106,8 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
                     type="range" min={0} max={0.2} step={0.01}
                     value={tweaks.accentChroma}
                     onChange={(e) => setTweak('accentChroma', Number(e.target.value))}
-                    className="w-full h-1.5 rounded-full appearance-none bg-slate-200 accent-teal-400"
+                    className="range-touch w-full"
+                    style={{ ['--range-thumb-color' as string]: '#2dd4bf' }}
                   />
                 </div>
 
@@ -142,18 +149,19 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
                 type="text"
                 value={tweaks.heroEyebrow}
                 onChange={(e) => setTweak('heroEyebrow', e.target.value)}
-                className="w-full text-[12px] px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 bg-white text-slate-700 mb-3"
+                className="w-full text-[16px] sm:text-[12px] px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 bg-white text-slate-700 mb-3"
               />
               <label className="text-[12px] text-slate-600 block mb-1">Headline</label>
               <input
                 type="text"
                 value={tweaks.heroHeadline}
                 onChange={(e) => setTweak('heroHeadline', e.target.value)}
-                className="w-full text-[12px] px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 bg-white text-slate-700"
+                className="w-full text-[16px] sm:text-[12px] px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 bg-white text-slate-700"
               />
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );

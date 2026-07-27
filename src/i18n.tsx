@@ -44,6 +44,8 @@ export const STRINGS = {
       contact: 'Contact',
       portfolio: 'Portfolio',
       cta: 'SCHEDULE CONSULTATION',
+      openMenu: 'Open menu',
+      closeMenu: 'Close menu',
       menus: {
         Solutions: { label: 'Solutions', sub: 'ソリューション', items: ['Wealth Management', 'Private Banking', 'Asset Management', 'Family Office', 'Corporate Advisory'] },
         Insights:  { label: 'Insights',  sub: '市場洞察',       items: ['Market Outlook', 'Research Papers', 'Quarterly Letters', 'Economic Calendar', 'Webinars'] },
@@ -355,6 +357,8 @@ export const STRINGS = {
       contact: 'お問い合わせ',
       portfolio: '保有物件',
       cta: 'ご相談のご予約',
+      openMenu: 'メニューを開く',
+      closeMenu: 'メニューを閉じる',
       menus: {
         Solutions: { label: 'ソリューション', sub: 'Solutions', items: ['ウェルス・マネジメント', 'プライベート・バンキング', 'アセット・マネジメント', 'ファミリーオフィス', 'コーポレート・アドバイザリー'] },
         Insights:  { label: '市場洞察', sub: 'Insights', items: ['マーケット・アウトルック', 'リサーチペーパー', '四半期レター', '経済カレンダー', 'ウェビナー'] },

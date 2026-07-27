@@ -5,12 +5,12 @@ export default function RealEstate() {
 
   return (
     <section style={{ background: 'var(--surface-alt)' }}>
-      <div className="max-w-[1280px] mx-auto px-8 py-24">
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 mb-12 items-end">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-16 sm:py-24">
+        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-10 mb-10 sm:mb-12 items-end">
           <div>
             <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.realEstate.eyebrow}</div>
             <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.realEstate.sub}</div>
-            <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
+            <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
               {t.realEstate.title}
             </h2>
           </div>

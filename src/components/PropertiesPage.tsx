@@ -39,7 +39,7 @@ function AllocationDonut() {
   const focus = active != null ? slices[active] : null;
 
   return (
-    <div className="border border-slate-200 rounded-2xl bg-white p-7 h-full">
+    <div className="border border-slate-200 rounded-2xl bg-white p-5 sm:p-7 h-full">
       <div className="text-[11px] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.alloc.kicker}</div>
       <h3 className="font-serif text-[22px] font-semibold text-slate-900 mb-6 tracking-[-0.01em]">{t.propsPage.alloc.title}</h3>
       <div className="flex items-center gap-8 flex-wrap">
@@ -56,6 +56,7 @@ function AllocationDonut() {
                 style={{ transition: 'opacity 200ms ease', cursor: 'pointer' }}
                 onMouseEnter={() => setActive(s.i)}
                 onMouseLeave={() => setActive(null)}
+                onClick={() => setActive(active === s.i ? null : s.i)}
               />
             ))}
           </svg>
@@ -78,10 +79,11 @@ function AllocationDonut() {
           {slices.map((s) => (
             <div
               key={s.i}
-              className="flex items-center gap-3 cursor-pointer rounded-md px-2 py-1 -mx-2 transition-colors"
+              className="flex items-center gap-3 cursor-pointer rounded-md px-2 py-2 -mx-2 min-h-[44px] transition-colors"
               style={{ background: active === s.i ? 'var(--accent-soft)' : 'transparent' }}
               onMouseEnter={() => setActive(s.i)}
               onMouseLeave={() => setActive(null)}
+              onClick={() => setActive(active === s.i ? null : s.i)}
             >
               <span className="w-3 h-3 rounded-sm flex-shrink-0" style={{ background: s.color }} />
               <span className="flex-1 text-[14.5px] text-slate-700">{s.short}</span>
@@ -103,13 +105,13 @@ function AreaBars() {
   const max = Math.max(...AREA_PRICES.map((a) => a.value));
 
   return (
-    <div className="border border-slate-200 rounded-2xl bg-white p-7 h-full">
+    <div className="border border-slate-200 rounded-2xl bg-white p-5 sm:p-7 h-full">
       <div className="text-[11px] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.areas.kicker}</div>
       <h3 className="font-serif text-[22px] font-semibold text-slate-900 mb-6 tracking-[-0.01em]">{t.propsPage.areas.title}</h3>
       <div className="flex flex-col gap-4">
         {AREA_PRICES.map((a) => (
-          <div key={a.en} className="grid grid-cols-[110px_1fr_74px] items-center gap-3">
-            <span className="text-[14px] text-slate-600 truncate">{ja ? a.ja : a.en}</span>
+          <div key={a.en} className="grid grid-cols-[64px_1fr_54px] sm:grid-cols-[110px_1fr_74px] items-center gap-2 sm:gap-3">
+            <span className="text-[12px] sm:text-[14px] text-slate-600 truncate">{ja ? a.ja : a.en}</span>
             <div className="h-5 rounded-r-[4px] relative" style={{ width: `${(a.value / max) * 100}%`, background: 'var(--accent-deep)', opacity: a.highlight ? 1 : 0.45 }}>
               {a.highlight && (
                 <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 text-[10px] font-bold tracking-wider whitespace-nowrap px-2 py-0.5 rounded-full" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>
@@ -139,8 +141,7 @@ function Slider({ label, value, display, min, max, step, onChange }: {
       <input
         type="range" min={min} max={max} step={step} value={value}
         onChange={(e) => onChange(+e.target.value)}
-        className="h-1 w-full cursor-pointer appearance-none rounded-full bg-slate-200"
-        style={{ accentColor: '#07807C' }}
+        className="range-touch w-full"
       />
     </div>
   );
@@ -190,7 +191,7 @@ function GrowthSimulator() {
   const jPts = toXY(sim.japan);
 
   return (
-    <div className="border border-slate-200 rounded-2xl bg-white p-8 lg:p-10">
+    <div className="border border-slate-200 rounded-2xl bg-white p-5 sm:p-8 lg:p-10">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
           <div className="text-[11px] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: 'var(--accent-deep)' }}>{s.kicker}</div>
@@ -208,7 +209,7 @@ function GrowthSimulator() {
           <button
             key={l.id}
             onClick={() => setIdx(i)}
-            className="px-4 h-9 rounded-full border text-[13.5px] font-semibold transition-all"
+            className="px-4 h-11 rounded-full border text-[13.5px] font-semibold transition-all"
             style={idx === i
               ? { background: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', color: 'white' }
               : { background: 'white', borderColor: '#CBD5E1', color: '#475569' }}
@@ -363,8 +364,15 @@ function PriceChart({ listing, series }: { listing: Listing; series: Point[] }) 
           )}
         </svg>
         {h != null && hover != null && (
+          // Anchor left/right instead of centering near the chart edges —
+          // a centered tooltip at hover index 0 or the last index would push
+          // roughly half its width past the wrapper, and the property card
+          // this chart sits in has overflow-hidden, so it would silently
+          // clip rather than just look slightly off-center.
           <div
-            className="absolute -translate-x-1/2 pointer-events-none bg-slate-900 text-white rounded-md px-3 py-2 shadow-lg z-10"
+            className={`absolute pointer-events-none bg-slate-900 text-white rounded-md px-3 py-2 shadow-lg z-10 ${
+              hover <= 1 ? '' : hover >= series.length - 2 ? '-translate-x-full' : '-translate-x-1/2'
+            }`}
             style={{ left: `${(xy[hover][0] / W) * 100}%`, top: -8 }}
           >
             <div className="text-[11px] font-semibold whitespace-nowrap">
@@ -416,16 +424,16 @@ export default function PropertiesPage() {
   return (
     <main className="bg-white">
       {/* page header */}
-      <div className="max-w-[1280px] mx-auto px-8 pt-16 pb-12">
-        <div className="mb-10">
-          <a href="#" className="inline-flex items-center gap-2 text-[15.5px] font-medium text-slate-500 hover:text-slate-900">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-10 sm:pt-16 pb-10 sm:pb-12">
+        <div className="mb-8 sm:mb-10">
+          <a href="#" className="relative inline-flex items-center gap-2 min-h-[44px] text-[15.5px] font-medium text-slate-500 hover:text-slate-900">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
             {t.propsPage.backHome}
           </a>
         </div>
         <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.eyebrow}</div>
         <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.propsPage.sub}</div>
-        <h1 className={`font-serif ${ja ? 'text-[38px] lg:text-[48px] leading-[1.2]' : 'text-[44px] lg:text-[56px] leading-[1.1]'} font-medium text-slate-900 tracking-[-0.015em] mb-6 max-w-3xl`}>
+        <h1 className={`font-serif ${ja ? 'fluid-props-h1-ja leading-[1.2]' : 'fluid-props-h1-en leading-[1.1]'} font-medium text-slate-900 tracking-[-0.015em] mb-6 max-w-3xl`}>
           {t.propsPage.title}
         </h1>
         <p className="text-[18px] leading-[1.65] text-slate-600 max-w-2xl mb-12">{t.propsPage.intro}</p>
@@ -439,7 +447,7 @@ export default function PropertiesPage() {
             [`+${growthPct.toFixed(0)}%`, t.propsPage.summary.growth],
           ].map(([v, l]) => (
             <div key={l} className="bg-white p-6">
-              <div className="font-serif text-[30px] font-medium tracking-tight" style={{ color: 'var(--accent-deep)' }}>{v}</div>
+              <div className="font-serif text-[19px] sm:text-[30px] font-medium tracking-tight leading-tight" style={{ color: 'var(--accent-deep)' }}>{v}</div>
               <div className="text-[13px] text-slate-500 mt-1">{l}</div>
             </div>
           ))}
@@ -453,7 +461,7 @@ export default function PropertiesPage() {
       </div>
 
       {/* property cards */}
-      <div className="max-w-[1280px] mx-auto px-8 pb-16 flex flex-col gap-10">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 flex flex-col gap-8 sm:gap-10">
         {rows.map(({ p, series, netYield, exitPrice, irrPct, roi5, payback, valueHistory, totalGrowth }) => (
           <article key={p.id} className="border border-slate-200 rounded-2xl overflow-hidden bg-white">
             <div className="grid lg:grid-cols-[1fr_1.15fr]">
@@ -470,7 +478,7 @@ export default function PropertiesPage() {
                     <div className="font-serif text-[24px] font-semibold leading-tight">{ja ? p.nameJa : p.nameEn}</div>
                   </div>
                 </div>
-                <div className="p-7">
+                <div className="p-5 sm:p-7">
                   <div className="flex items-center gap-4 flex-wrap mb-4 text-[14px] text-slate-500">
                     <span>{ja ? p.typeJa : p.typeEn}</span><span className="text-slate-300">·</span>
                     <span>{p.beds}</span><span className="text-slate-300">·</span>
@@ -490,7 +498,7 @@ export default function PropertiesPage() {
                   <div className="flex items-center gap-3 flex-wrap">
                     {[{ label: 'Bayut', url: p.bayut }, { label: 'Property Finder', url: p.pf }].map((l) => (
                       <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-4 h-10 rounded-full border text-[14px] font-bold transition-all hover:-translate-y-0.5"
+                        className="inline-flex items-center gap-1.5 px-4 h-11 rounded-full border text-[14px] font-bold transition-all hover:-translate-y-0.5"
                         style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}>
                         {l.label}
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M9 7h8v8" /></svg>
@@ -501,7 +509,7 @@ export default function PropertiesPage() {
               </div>
 
               {/* right: chart + metrics */}
-              <div className="p-7 lg:border-l border-t lg:border-t-0 border-slate-100 flex flex-col gap-7">
+              <div className="p-5 sm:p-7 lg:border-l border-t lg:border-t-0 border-slate-100 flex flex-col gap-7">
                 <PriceChart listing={p} series={series} />
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-px rounded-xl overflow-hidden border border-slate-200 bg-slate-200">
                   {[
@@ -546,7 +554,7 @@ export default function PropertiesPage() {
         <GrowthSimulator />
 
         {/* risks & hedges */}
-        <div className="border border-slate-200 rounded-2xl bg-white p-8 lg:p-10">
+        <div className="border border-slate-200 rounded-2xl bg-white p-5 sm:p-8 lg:p-10">
           <div className="text-[11px] font-semibold tracking-[0.24em] uppercase mb-6" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.risksTitle}</div>
           <div className="grid md:grid-cols-2 gap-4">
             {t.propsPage.risks.map((r, i) => (

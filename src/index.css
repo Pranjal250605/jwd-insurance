@@ -10,6 +10,13 @@ html, body {
   transition: background-color 280ms ease, color 280ms ease;
 }
 
+/* No `overflow-x: hidden` backstop on html/body by design: older iOS Safari
+   turns `position: fixed` descendants into `absolute`-like behavior when
+   `overflow` is non-visible on the root element, which would silently break
+   every fixed overlay (nav drawer, chat, sticky header). Horizontal overflow
+   is fixed at the source per component instead, and verified by measuring
+   scrollWidth vs clientWidth — see the mobile QA pass. */
+
 .font-serif {
   font-family: var(--font-display, 'Playfair Display'), 'Cormorant Garamond', Georgia, serif;
   letter-spacing: var(--font-display-tracking, 0);
@@ -402,6 +409,129 @@ body::after {
   will-change: transform;
 }
 .img-zoom:hover img { transform: scale(1.06); }
+
+/* ============================================================
+   PHONE-FIRST FOUNDATIONS
+
+   Documented z-index scale (rule: don't fix overlap by escalating
+   z-index blindly):
+     40  sticky header (Nav)
+     50  floating single-purpose trigger buttons (TweaksPanel cog, Advisor
+         launcher)
+     60  their overlay panels (TweaksPanel panel, Advisor chat panel), and
+         the pinned scroll-progress bar (a 2px strip, never overlaps panels)
+     70  mobile nav drawer — full-screen primary navigation, always wins
+   ============================================================ */
+
+/* — Safari backdrop-filter fix: Tailwind composites backdrop-blur via a CSS
+     custom property (var(--tw-backdrop-blur)), which autoprefixer cannot
+     safely duplicate into -webkit-backdrop-filter. Without this, the frosted
+     glass on the hero/portal/advisory mockup cards silently disappears on
+     Safari < 18 (rule: every backdrop-filter needs a -webkit- twin). Values
+     match Tailwind's default (backdrop-blur = 8px) and xl (24px) steps. — */
+.backdrop-blur {
+  -webkit-backdrop-filter: blur(8px);
+}
+.backdrop-blur-xl {
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* — Fluid heading scale: phone-first clamp() from a new mobile floor up to
+     the EXISTING pre-lg size (reached by ~768px, i.e. today's tablet look is
+     unchanged), then the existing lg: utility takes over at 1024px+ exactly
+     as before. Only the <768px range is new — desktop and tablet render
+     pixel-identical to the prior fixed sizes. One class per (base,max) pair
+     actually used in the type scale; see the components for the mapping. — */
+.fluid-40-48 { font-size: clamp(30px, 21.2px + 2.45vw, 40px); }
+@media (min-width: 1024px) { .fluid-40-48 { font-size: 48px; } }
+
+.fluid-40-52 { font-size: clamp(30px, 21.2px + 2.45vw, 40px); }
+@media (min-width: 1024px) { .fluid-40-52 { font-size: 52px; } }
+
+.fluid-36-44 { font-size: clamp(27px, 19.1px + 2.21vw, 36px); }
+@media (min-width: 1024px) { .fluid-36-44 { font-size: 44px; } }
+
+.fluid-36-52 { font-size: clamp(27px, 19.1px + 2.21vw, 36px); }
+@media (min-width: 1024px) { .fluid-36-52 { font-size: 52px; } }
+
+.fluid-44-60 { font-size: clamp(32px, 21.4px + 2.94vw, 44px); }
+@media (min-width: 1024px) { .fluid-44-60 { font-size: 60px; } }
+
+.fluid-hero-en { font-size: clamp(34px, 18.1px + 4.41vw, 52px); }
+@media (min-width: 1024px) { .fluid-hero-en { font-size: 64px; } }
+
+.fluid-hero-ja { font-size: clamp(30px, 17.6px + 3.43vw, 44px); }
+@media (min-width: 1024px) { .fluid-hero-ja { font-size: 54px; } }
+
+.fluid-props-h1-en { font-size: clamp(32px, 21.4px + 2.94vw, 44px); }
+@media (min-width: 1024px) { .fluid-props-h1-en { font-size: 56px; } }
+
+.fluid-props-h1-ja { font-size: clamp(28px, 19.2px + 2.45vw, 38px); }
+@media (min-width: 1024px) { .fluid-props-h1-ja { font-size: 48px; } }
+
+/* — Safe-area helpers for fixed/full-screen overlays (nav drawer, chat,
+     sticky bars) so content and tap targets clear the notch / home
+     indicator. Requires viewport-fit=cover in index.html's meta tag. — */
+.pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.pl-safe { padding-left: env(safe-area-inset-left, 0px); }
+.pr-safe { padding-right: env(safe-area-inset-right, 0px); }
+
+/* — Range slider with a real ≥44px touch target: the visible track stays a
+     thin 4px bar (matching the existing look), but the input's own box (and
+     therefore its hit area) is 44px tall, centered on the track. Native
+     `<input type=range>` hit-testing follows the element's box, so without
+     this a slider styled with a thin `h-1` utility is only ~4px tappable —
+     unusable on a phone. Applies to the properties-page growth simulator
+     and the tweaks-panel color sliders. */
+.range-touch {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 44px;
+  background: transparent;
+  cursor: pointer;
+}
+.range-touch::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: #e2e8f0;
+}
+.range-touch::-moz-range-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: #e2e8f0;
+}
+.range-touch::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--range-thumb-color, #07807C);
+  border: 2px solid white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  margin-top: -7px;
+}
+.range-touch::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--range-thumb-color, #07807C);
+  border: 2px solid white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+}
+
+/* — Body scroll lock (applied via JS when an overlay is open). Combined
+     with the position:fixed + top-offset technique in useScrollLock so it
+     also holds on iOS Safari, where plain `overflow:hidden` on body can
+     still let the page rubber-band underneath a full-screen overlay. — */
+.scroll-locked {
+  overflow: hidden;
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

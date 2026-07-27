@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { useT } from '@/i18n';
+import { useScrollLock } from '@/hooks/useScrollLock';
+import { useIsPhone } from '@/hooks/useMediaQuery';
 
 /**
  * AI Advisor chat — ported from jwd-web's ChatWidget/ChatPanel, adapted to
@@ -91,10 +94,23 @@ export default function Advisor() {
   const [busy, setBusy] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const isPhone = useIsPhone();
+
+  // Below `sm` the panel is a full-screen takeover (see the `inset-0`
+  // className below), so the page behind it must not scroll. At `sm`+ it's
+  // a small floating widget and the page should keep scrolling normally.
+  useScrollLock(open && isPhone);
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
   }, [msgs, open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   const newChat = () => {
     abortRef.current?.abort();
@@ -165,29 +181,30 @@ export default function Advisor() {
 
   return (
     <>
-      {/* floating trigger — sits left of the tweaks cog */}
+      {/* floating trigger — sits left of the tweaks cog; safe-area-aware so
+          it clears the home-indicator gesture bar on notched iPhones */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
           aria-label={a.label}
-          className="fixed bottom-4 right-16 z-50 flex items-center gap-2 rounded-full py-2.5 pl-3 pr-5 text-white shadow-[0_12px_34px_-8px_rgba(7,128,124,0.6)] transition-transform hover:scale-[1.04]"
-          style={{ background: 'var(--gradient-dark)' }}
+          className="fixed right-16 z-50 flex items-center gap-2 rounded-full py-2.5 pl-3 pr-5 text-white shadow-[0_12px_34px_-8px_rgba(7,128,124,0.6)] transition-transform hover:scale-[1.04]"
+          style={{ background: 'var(--gradient-dark)', bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}
         >
           <AiSpark className="h-6 w-6" />
           <span className="text-[14px] font-semibold tracking-wide">{a.label}</span>
         </button>
       )}
 
-      {open && (
+      {open && createPortal(
         <div
           className="fixed z-[60] flex flex-col overflow-hidden bg-white shadow-2xl border border-slate-200
             inset-0 sm:inset-auto sm:bottom-4 sm:right-4 sm:h-[620px] sm:w-[400px] sm:rounded-2xl"
         >
           {/* header */}
-          <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3">
+          <div className="pt-safe flex items-center justify-between border-b border-slate-100 px-4 py-3 flex-shrink-0">
             <div className="flex items-center gap-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full text-white" style={{ background: 'var(--accent-deep)' }}>
-                <AiSpark className="h-4.5 w-4.5 h-[18px] w-[18px]" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-full text-white flex-shrink-0" style={{ background: 'var(--accent-deep)' }}>
+                <AiSpark className="h-[18px] w-[18px]" />
               </div>
               <div>
                 <div className="text-[14px] font-semibold text-slate-900 leading-tight">{a.title}</div>
@@ -199,18 +216,21 @@ export default function Advisor() {
             </div>
             <div className="flex items-center gap-1">
               <button onClick={newChat} title={a.newChat} aria-label={a.newChat}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                className="flex h-11 w-11 items-center justify-center rounded-full text-slate-400 hover:bg-slate-50 hover:text-slate-900 active:bg-slate-100 transition-colors">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z" /></svg>
               </button>
               <button onClick={() => setOpen(false)} aria-label="Close"
-                className="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                className="flex h-11 w-11 items-center justify-center rounded-full text-slate-400 hover:bg-slate-50 hover:text-slate-900 active:bg-slate-100 transition-colors">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
               </button>
             </div>
           </div>
 
-          {/* messages */}
-          <div ref={listRef} className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3">
+          {/* messages — min-h-0 is required: a flex item's default
+              min-height:auto (content-based) otherwise wins over flex-1,
+              so the list grows to fit every message instead of scrolling
+              and pushes the input off the bottom of the screen. */}
+          <div ref={listRef} className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-4 flex flex-col gap-3">
             <div className="text-[14px] leading-[1.6] text-slate-700 bg-slate-50 rounded-2xl rounded-tl-md px-4 py-3 max-w-[92%]">
               {a.greeting}
             </div>
@@ -218,7 +238,7 @@ export default function Advisor() {
               <div className="flex flex-col items-start gap-2 mt-1">
                 {a.suggestions.map((s) => (
                   <button key={s} onClick={() => send(s)}
-                    className="px-3.5 py-2 rounded-full border text-[13px] font-medium transition-all hover:-translate-y-0.5"
+                    className="px-3.5 min-h-[44px] rounded-full border text-[13px] font-medium transition-all hover:-translate-y-0.5 text-left"
                     style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}>
                     {s}
                   </button>
@@ -246,29 +266,34 @@ export default function Advisor() {
             ))}
           </div>
 
-          {/* input */}
-          <form
-            className="border-t border-slate-100 p-3 flex items-center gap-2"
-            onSubmit={(e) => { e.preventDefault(); send(input); }}
-          >
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder={a.placeholder}
-              className="flex-1 h-11 px-4 rounded-full border border-slate-200 text-[14px] outline-none focus:border-slate-400 bg-white"
-            />
-            <button
-              type="submit"
-              disabled={busy || !input.trim()}
-              aria-label="Send"
-              className="h-11 w-11 rounded-full flex items-center justify-center text-white disabled:opacity-40 transition-opacity flex-shrink-0"
-              style={{ background: 'var(--accent-deep)' }}
+          {/* input — flex-shrink-0 keeps it (and the safe-area padding below
+              it) pinned above the iOS home indicator, never pushed off the
+              bottom of a full-screen panel taller than the content */}
+          <div className="flex-shrink-0">
+            <form
+              className="border-t border-slate-100 p-3 flex items-center gap-2"
+              onSubmit={(e) => { e.preventDefault(); send(input); }}
             >
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>
-            </button>
-          </form>
-          <div className="px-4 pb-2 text-[10.5px] text-slate-400 text-center">{a.disclaimer}</div>
-        </div>
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={a.placeholder}
+                className="flex-1 h-11 px-4 rounded-full border border-slate-200 text-[16px] outline-none focus:border-slate-400 bg-white"
+              />
+              <button
+                type="submit"
+                disabled={busy || !input.trim()}
+                aria-label="Send"
+                className="h-11 w-11 rounded-full flex items-center justify-center text-white disabled:opacity-40 transition-opacity flex-shrink-0"
+                style={{ background: 'var(--accent-deep)' }}
+              >
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>
+              </button>
+            </form>
+            <div className="pb-safe px-4 pb-2 text-[10.5px] text-slate-400 text-center">{a.disclaimer}</div>
+          </div>
+        </div>,
+        document.body,
       )}
     </>
   );

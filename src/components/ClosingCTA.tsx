@@ -5,10 +5,10 @@ export default function ClosingCTA() {
 
   return (
     <section className="bg-white">
-      <div className="max-w-[1280px] mx-auto px-8 pb-20">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-20">
         <div
           data-spotlight
-          className="spotlight rounded-[20px] py-24 px-12 text-center relative overflow-hidden"
+          className="spotlight rounded-[20px] py-14 px-6 sm:py-24 sm:px-12 text-center relative overflow-hidden"
           style={{ background: 'var(--gradient-soft)' }}
         >
           <div className="absolute inset-0 pointer-events-none opacity-50">
@@ -25,7 +25,7 @@ export default function ClosingCTA() {
             <div className="eyebrow-rule justify-center text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.closing.eyebrow}</div>
             <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-7">{t.closing.sub}</div>
             <h2
-              className="font-serif text-[44px] lg:text-[60px] leading-[1.1] font-medium text-slate-900 tracking-[-0.015em] mb-6"
+              className="font-serif fluid-44-60 leading-[1.1] font-medium text-slate-900 tracking-[-0.015em] mb-6"
               style={{ textWrap: 'balance' } as React.CSSProperties}
             >
               {t.closing.title}
@@ -51,7 +51,7 @@ export default function ClosingCTA() {
         </div>
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-8 pb-12">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-12">
         <div className="text-[11px] font-semibold tracking-[0.28em] mb-2 text-slate-400 text-center">{t.closing.regulatedTitle}</div>
         <div className="font-jp text-[12px] tracking-[0.16em] text-slate-400 mb-10 text-center">{t.closing.regulatedSub}</div>
         <div className="flex items-center justify-center flex-wrap gap-3 lg:gap-4">
@@ -67,7 +67,7 @@ export default function ClosingCTA() {
         </div>
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-8 pb-20">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-20">
         <div className="border-t border-slate-100 pt-12 grid md:grid-cols-3 gap-8">
           {t.closing.recognition.map((r) => (
             <div key={r.award} className="flex items-start gap-4">

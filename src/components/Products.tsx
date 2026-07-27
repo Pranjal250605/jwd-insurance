@@ -14,12 +14,12 @@ export default function Products() {
 
   return (
     <section style={{ background: 'var(--surface-alt)' }}>
-      <div className="max-w-[1280px] mx-auto px-8 py-24">
-        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 mb-16 items-end">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-16 sm:py-24">
+        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-12 mb-10 sm:mb-16 items-end">
           <div>
             <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.eyebrow}</div>
             <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.sub}</div>
-            <h2 className="font-serif text-[40px] lg:text-[52px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
+            <h2 className="font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
               {t.products.title}
             </h2>
           </div>
@@ -31,8 +31,12 @@ export default function Products() {
         <div className="grid md:grid-cols-2 gap-6">
           {t.products.solutions.map((s, i) => (
             <div key={i} data-spotlight className="spotlight group bg-white rounded-xl border border-slate-100 overflow-hidden hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
-              <div className="grid grid-cols-[1fr_180px]">
-                <div className="p-8">
+              {/* grid-cols-1 sm:grid-cols-[1fr_180px]: the fixed 180px image
+                  column only applies from `sm` up — unconditionally it left
+                  ~120px for the text column on a 360px phone. Below `sm` the
+                  image becomes a normal-flow strip above the text instead. */}
+              <div className="grid grid-cols-1 sm:grid-cols-[1fr_180px]">
+                <div className="p-6 sm:p-8 order-2 sm:order-1">
                   <div className="text-[10px] font-semibold tracking-[0.22em] text-slate-400 mb-2">{s.tag}</div>
                   <h3 className="font-serif text-[24px] font-semibold text-slate-900 mb-1 tracking-[-0.01em]">{s.label}</h3>
                   <div className="font-jp text-[12px] tracking-[0.16em] text-slate-500 mb-4">{s.sub2}</div>
@@ -48,7 +52,7 @@ export default function Products() {
                     </a>
                   </div>
                 </div>
-                <div className="img-zoom relative">
+                <div className="img-zoom relative h-[160px] sm:h-auto order-1 sm:order-2">
                   <img src={SOLUTION_META[i].image} alt={s.label} className="absolute inset-0 w-full h-full object-cover" />
                 </div>
               </div>
@@ -57,10 +61,10 @@ export default function Products() {
         </div>
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-8 pb-20">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-20">
         <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.platformsEyebrow}</div>
         <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.platformsSub}</div>
-        <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-10 max-w-3xl">
+        <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-8 sm:mb-10 max-w-3xl">
           {t.products.platformsTitle}
         </h2>
         <div className="grid md:grid-cols-2 gap-6">
@@ -71,12 +75,12 @@ export default function Products() {
               target="_blank"
               rel="noopener noreferrer"
               data-spotlight
-              className="spotlight group bg-white border-2 rounded-xl p-9 shadow-[0_10px_35px_-14px_rgba(10,186,181,0.35)] hover:shadow-[0_20px_55px_-16px_rgba(10,186,181,0.55)] hover:-translate-y-1 transition-all block"
+              className="spotlight group bg-white border-2 rounded-xl p-6 sm:p-9 shadow-[0_10px_35px_-14px_rgba(10,186,181,0.35)] hover:shadow-[0_20px_55px_-16px_rgba(10,186,181,0.55)] hover:-translate-y-1 transition-all block"
               style={{ borderColor: 'var(--accent-deep)' }}
             >
               <div className="flex items-start justify-between mb-5">
                 <span className="text-[10px] font-semibold tracking-[0.22em] px-3 py-1.5 rounded-full" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>{p.tag}</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-slate-300 transition-all group-hover:text-slate-900 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-slate-300 transition-all group-hover:text-slate-900 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 flex-shrink-0">
                   <path d="M7 17L17 7M9 7h8v8" />
                 </svg>
               </div>
@@ -92,8 +96,8 @@ export default function Products() {
         <p className="text-[13px] text-slate-400 mt-5">{t.products.platformsNote}</p>
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-8 pb-20">
-        <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-12 lg:p-20 text-center relative overflow-hidden"
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-20">
+        <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-8 sm:p-12 lg:p-20 text-center relative overflow-hidden"
           style={{ background: 'var(--gradient-dark)' }}>
           <div className="absolute inset-0 opacity-25 pointer-events-none">
             <img
@@ -106,27 +110,27 @@ export default function Products() {
           <div className="relative">
             <div className="eyebrow-rule justify-center text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>{t.products.langEyebrow}</div>
             <div className="font-jp text-[15.5px] tracking-[0.18em] mb-7 text-white/60">{t.products.langSub}</div>
-            <h2 className="font-serif text-[36px] lg:text-[52px] leading-[1.15] font-medium text-white tracking-[-0.015em] max-w-3xl mx-auto">
+            <h2 className="font-serif fluid-36-52 leading-[1.15] font-medium text-white tracking-[-0.015em] max-w-3xl mx-auto">
               {t.products.langTitle}
             </h2>
-            <div className="mt-12 flex items-center justify-center gap-3 flex-wrap">
+            <div data-anim="lang-chips" className="mt-10 sm:mt-12 flex items-center justify-center gap-2.5 sm:gap-3 flex-wrap">
               {LANG_CHIPS.map((l) => (
-                <span key={l} className="px-5 h-10 rounded-full bg-white/5 border border-white/10 text-white/85 text-[15.5px] flex items-center font-medium transition-all duration-300 hover:bg-white/12 hover:border-white/30 hover:text-white hover:-translate-y-0.5 cursor-default">{l}</span>
+                <span key={l} className="px-4 sm:px-5 h-10 rounded-full bg-white/5 border border-white/10 text-white/85 text-[14px] sm:text-[15.5px] flex items-center font-medium transition-all duration-300 hover:bg-white/12 hover:border-white/30 hover:text-white hover:-translate-y-0.5 cursor-default">{l}</span>
               ))}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-8 pb-24">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-24">
         <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.stepsEyebrow}</div>
         <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.stepsSub}</div>
-        <h2 className="font-serif text-[40px] lg:text-[52px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-14 max-w-3xl">
+        <h2 className="font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-10 sm:mb-14 max-w-3xl">
           {t.products.stepsTitle}
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
           {t.products.steps.map((s, i) => (
-            <div key={i} data-spotlight className="spotlight group bg-white border border-slate-100 rounded-xl p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
+            <div key={i} data-spotlight className="spotlight group bg-white border border-slate-100 rounded-xl p-6 sm:p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
               <div className="flex items-start justify-between mb-7">
                 <div className="font-serif text-[40px] font-medium leading-none transition-transform duration-500 ease-out group-hover:scale-110 origin-left" style={{ color: 'var(--accent-deep)' }}>{`0${i + 1}`}</div>
                 <div className="text-[10px] font-semibold tracking-[0.22em] text-slate-300">{t.products.stepLabel}</div>

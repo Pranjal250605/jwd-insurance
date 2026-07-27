@@ -91,10 +91,10 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
         })}
       </svg>
 
-      <div className="relative max-w-[1280px] mx-auto px-8 py-20 lg:py-24 grid lg:grid-cols-[1.05fr_1fr] gap-14 items-center">
+      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20 lg:py-24 grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-center">
         <div className="relative z-10">
           <div className="eyebrow-rule text-[12px] font-semibold tracking-[0.22em] mb-7" style={{ color: 'var(--accent-deep)' }}>{eyebrowText}</div>
-          <h1 className={`font-serif ${lang === 'ja' ? 'text-[44px] lg:text-[54px] leading-[1.2]' : 'text-[52px] lg:text-[64px] leading-[1.05]'} font-medium text-slate-900 tracking-[-0.015em] mb-5`} style={{ textWrap: 'balance' } as React.CSSProperties}>
+          <h1 className={`font-serif ${lang === 'ja' ? 'fluid-hero-ja leading-[1.2]' : 'fluid-hero-en leading-[1.05]'} font-medium text-slate-900 tracking-[-0.015em] mb-5`} style={{ textWrap: 'balance' } as React.CSSProperties}>
             {headlineText}
           </h1>
           <p className={`${lang === 'ja' ? '' : 'font-jp'} text-[21.5px] leading-[1.7] text-slate-700 mb-7 max-w-xl tracking-wide`}>
@@ -137,7 +137,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             </div>
           </div>
 
-          <div className="mt-14 pt-10 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-8">
+          <div data-anim="hero-stats" className="mt-14 pt-10 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-8">
             {t.hero.stats.map(([a, b]) => (
               <div key={b}>
                 <div data-count={a} className="font-serif text-[28px] font-medium tracking-tight" style={{ color: 'var(--accent-deep)' }}>{a}</div>
@@ -147,8 +147,16 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
           </div>
         </div>
 
-        <div className="relative h-[620px] flex items-center justify-center">
-          <div className="img-zoom relative w-full h-full rounded-2xl overflow-hidden shadow-[0_30px_80px_-30px_rgba(var(--shadow-rgb),0.4)]">
+        {/* Visual column: below `lg`, the photo gets a fixed-but-responsive
+            height and the two info cards stack in normal document flow
+            beneath it (side by side from `sm`). At `lg`+ they switch back to
+            the original absolute-floating mockup treatment — the negative
+            offsets (-left-6/-right-4) and 220px fixed width only ever
+            applied at that width in the desktop design anyway. This is what
+            prevents the guaranteed horizontal overflow those offsets caused
+            on a full-viewport-width mobile column. */}
+        <div data-anim="hero-visual" className="relative lg:h-[620px] flex flex-col lg:block">
+          <div className="img-zoom relative w-full h-[300px] sm:h-[400px] lg:h-full rounded-2xl overflow-hidden shadow-[0_30px_80px_-30px_rgba(var(--shadow-rgb),0.4)]">
             <img
               src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=85&auto=format&fit=crop"
               alt="JWD Investment global headquarters — modern corporate office"
@@ -156,58 +164,61 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, rgba(var(--photo-tint-rgb),0.55) 0%, rgba(var(--photo-tint-rgb),0.15) 50%, transparent 100%)' }} />
 
-            <div className="absolute top-6 left-6 right-6 flex items-start justify-between">
+            <div className="absolute top-5 left-5 right-5 sm:top-6 sm:left-6 sm:right-6 flex items-start justify-between">
               <div className="text-white">
                 <div className="text-[10px] font-semibold tracking-[0.22em] opacity-80 mb-1">{t.hero.flagship}</div>
-                <div className="font-serif text-[22px] font-medium leading-tight">{t.hero.flagshipName}</div>
+                <div className="font-serif text-[19px] sm:text-[22px] font-medium leading-tight">{t.hero.flagshipName}</div>
               </div>
-              <div className="bg-white/90 backdrop-blur px-3 py-1.5 rounded-full">
+              <div className="bg-white/90 backdrop-blur px-3 py-1.5 rounded-full flex-shrink-0">
                 <span className="text-[11px] font-semibold tracking-wider" style={{ color: 'var(--accent-deep)' }}>{t.hero.since}</span>
               </div>
             </div>
 
-            <div className="absolute bottom-0 left-0 right-0 p-5">
-              <div className="grid grid-cols-3 gap-3">
+            <div className="absolute bottom-0 left-0 right-0 p-3.5 sm:p-5">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3">
                 {t.hero.metrics.map((m) => (
-                  <div key={m.v} className="bg-white/95 backdrop-blur rounded-lg p-3">
-                    <div className="text-[9px] font-semibold tracking-[0.18em] text-slate-500 uppercase">{m.l}</div>
-                    <div className="font-serif text-[20px] font-semibold tracking-tight text-slate-900 mt-0.5">{m.v}</div>
-                    <div className="text-[10px] text-slate-500 mt-0.5">{m.s}</div>
+                  <div key={m.v} className="bg-white/95 backdrop-blur rounded-lg p-2 sm:p-3">
+                    <div className="text-[8px] sm:text-[9px] font-semibold tracking-[0.14em] sm:tracking-[0.18em] text-slate-500 uppercase truncate">{m.l}</div>
+                    <div className="font-serif text-[15px] sm:text-[20px] font-semibold tracking-tight text-slate-900 mt-0.5">{m.v}</div>
+                    <div className="text-[9px] sm:text-[10px] text-slate-500 mt-0.5 truncate">{m.s}</div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          <div data-spotlight className="spotlight equiti-card-rim absolute -left-6 top-24 bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-[220px] z-10">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: 'var(--accent-soft)' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" style={{ color: 'var(--accent-deep)' }}>
-                  <path d="M3 3v18h18" /><path d="M7 14l4-4 4 4 6-6" />
-                </svg>
+          {/* card cluster: static + stacked below lg, absolute-floating at lg+ */}
+          <div data-anim="hero-cards" className="mt-4 flex flex-col sm:flex-row lg:block gap-4 lg:gap-0">
+            <div data-spotlight className="spotlight equiti-card-rim relative lg:absolute lg:-left-6 lg:top-24 bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 lg:w-[220px] lg:z-10">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-soft)' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" style={{ color: 'var(--accent-deep)' }}>
+                    <path d="M3 3v18h18" /><path d="M7 14l4-4 4 4 6-6" />
+                  </svg>
+                </div>
+                <div className="text-[11px] font-semibold tracking-[0.18em] text-slate-500">{t.hero.portfolio}</div>
               </div>
-              <div className="text-[11px] font-semibold tracking-[0.18em] text-slate-500">{t.hero.portfolio}</div>
+              <div data-count="¥2,847,500,000" className="font-serif text-[22px] sm:text-[24px] font-semibold tracking-tight text-slate-900">¥2,847,500,000</div>
+              <div className="flex items-center gap-1.5 mt-1">
+                <span className="text-[12px] font-semibold text-emerald-700">+ ¥38.4M</span>
+                <span className="text-[11px] text-slate-500">{t.hero.ytd}</span>
+              </div>
             </div>
-            <div data-count="¥2,847,500,000" className="font-serif text-[24px] font-semibold tracking-tight text-slate-900">¥2,847,500,000</div>
-            <div className="flex items-center gap-1.5 mt-1">
-              <span className="text-[12px] font-semibold text-emerald-700">+ ¥38.4M</span>
-              <span className="text-[11px] text-slate-500">{t.hero.ytd}</span>
-            </div>
-          </div>
 
-          <div data-spotlight className="spotlight equiti-card-rim absolute -right-4 bottom-32 bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-[220px] z-10">
-            <div className="text-[10px] font-semibold tracking-[0.2em] text-slate-500 mb-2">{t.hero.allocation}</div>
-            {ALLOC.map((row, i) => (
-              <div key={i} className="mb-2 last:mb-0">
-                <div className="flex items-center justify-between text-[11px] mb-0.5">
-                  <span className="text-slate-700">{t.hero.allocRows[i]}</span>
-                  <span className="font-mono font-semibold text-slate-900">{row.v}%</span>
+            <div data-spotlight className="spotlight equiti-card-rim relative lg:absolute lg:-right-4 lg:bottom-32 bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 lg:w-[220px] lg:z-10">
+              <div className="text-[10px] font-semibold tracking-[0.2em] text-slate-500 mb-2">{t.hero.allocation}</div>
+              {ALLOC.map((row, i) => (
+                <div key={i} className="mb-2 last:mb-0">
+                  <div className="flex items-center justify-between text-[11px] mb-0.5">
+                    <span className="text-slate-700">{t.hero.allocRows[i]}</span>
+                    <span className="font-mono font-semibold text-slate-900">{row.v}%</span>
+                  </div>
+                  <div className="h-1 rounded-full bg-slate-100 overflow-hidden">
+                    <div className="h-full rounded-full" style={{ width: `${row.v}%`, background: row.c }} />
+                  </div>
                 </div>
-                <div className="h-1 rounded-full bg-slate-100 overflow-hidden">
-                  <div className="h-full rounded-full" style={{ width: `${row.v}%`, background: row.c }} />
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

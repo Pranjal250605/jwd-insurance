@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-slate-50 border-t border-slate-100">
-      <div className="max-w-[1280px] mx-auto px-8 py-20">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20">
         <div className="grid lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-12 mb-12">
           <div>
             <div className="flex items-center mb-6">
@@ -41,7 +41,7 @@ export default function Footer() {
                   key={s.label}
                   href="#"
                   aria-label={s.label}
-                  className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:border-slate-400 hover:text-slate-900 transition"
+                  className="w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:border-slate-400 hover:text-slate-900 transition"
                 >
                   <span className="text-[11px] font-bold">{s.code}</span>
                 </a>
@@ -77,7 +77,7 @@ export default function Footer() {
             <p className="text-[14px] text-slate-500 leading-[1.7] max-w-3xl">
               <strong className="text-slate-700">{t.footer.importantLabel}</strong> {t.footer.disclaimer}
             </p>
-            <div className="flex items-center gap-6 text-[12px] text-slate-500 flex-shrink-0">
+            <div className="flex items-center flex-wrap gap-x-6 gap-y-2 text-[12px] text-slate-500">
               {t.footer.links.map((l) => (
                 <a key={l} href="#" className="hover:text-slate-900">{l}</a>
               ))}

@@ -21,8 +21,8 @@ export default function Promo() {
 
   return (
     <section className="bg-white">
-      <div className="max-w-[1280px] mx-auto px-8 pb-12">
-        <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-12 lg:p-16 grid lg:grid-cols-[1.1fr_1fr] gap-10 items-center relative overflow-hidden"
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-12">
+        <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-6 sm:p-10 lg:p-16 grid lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-10 items-center relative overflow-hidden"
           style={{ background: 'var(--gradient-dark)' }}>
           <div className="absolute top-0 right-0 w-[480px] h-[480px] opacity-[0.08] pointer-events-none">
             <svg viewBox="0 0 200 200" className="w-full h-full">
@@ -37,7 +37,7 @@ export default function Promo() {
           <div className="relative">
             <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-5" style={{ color: 'var(--secondary)' }}>{t.promo.advisoryEyebrow}</div>
             <div className="font-jp text-[15.5px] tracking-[0.18em] mb-7 text-white/60">{t.promo.advisorySub}</div>
-            <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.15] font-medium text-white mb-5 tracking-[-0.01em]">
+            <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-white mb-5 tracking-[-0.01em]">
               {t.promo.advisoryTitle}
             </h2>
             <p className="text-[18px] text-slate-300 leading-[1.65] mb-8 max-w-md">
@@ -47,7 +47,7 @@ export default function Promo() {
               {t.promo.advisoryCta}
             </button>
           </div>
-          <div className="relative h-[320px] flex items-center justify-center">
+          <div className="relative h-[240px] sm:h-[320px] flex items-center justify-center">
             <div className="img-zoom relative w-full h-full rounded-xl overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=900&q=85&auto=format&fit=crop"
@@ -70,18 +70,18 @@ export default function Promo() {
         </div>
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-8 pt-20 pb-10">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-14 sm:pt-20 pb-8 sm:pb-10">
         <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.promo.whyEyebrow}</div>
         <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.promo.whySub}</div>
-        <h2 className="font-serif text-[40px] lg:text-[52px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] max-w-3xl">
+        <h2 className="font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] max-w-3xl">
           {t.promo.whyTitle}
         </h2>
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-8 pb-24">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-24">
         <div className="grid md:grid-cols-3 gap-6">
           {t.promo.pillars.map((p, i) => (
-            <div key={i} data-spotlight className="spotlight group bg-white border border-slate-100 rounded-xl p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.18)] hover:-translate-y-0.5 transition-all">
+            <div key={i} data-spotlight className="spotlight group bg-white border border-slate-100 rounded-xl p-6 sm:p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.18)] hover:-translate-y-0.5 transition-all">
               <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-7 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-rotate-6" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>
                 {PILLAR_ICONS[i]}
               </div>

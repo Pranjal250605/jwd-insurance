@@ -1,6 +1,7 @@
 import { useT } from '@/i18n';
+import { useIsBelowLg } from '@/hooks/useMediaQuery';
 
-const OFFICE_POS = [
+const OFFICE_POS_DESKTOP = [
   { rot: -3, x: -160, y: -40, lead: true },
   { rot: 2, x: 60, y: -90 },
   { rot: -2, x: 120, y: 20 },
@@ -8,17 +9,32 @@ const OFFICE_POS = [
   { rot: -4, x: 70, y: 130 },
 ];
 
+// Same relative arrangement, scaled down so the cluster fits inside a
+// full-viewport-width mobile/tablet column instead of the ~600px desktop
+// column it was designed for — the un-scaled +-160px offsets otherwise
+// push cards off both edges of the screen (guaranteed horizontal overflow).
+const OFFICE_SCALE_COMPACT = 0.56;
+const OFFICE_POS_COMPACT = OFFICE_POS_DESKTOP.map((o) => ({
+  ...o,
+  x: Math.round(o.x * OFFICE_SCALE_COMPACT),
+  y: Math.round(o.y * OFFICE_SCALE_COMPACT),
+}));
+
 export default function Money() {
   const { t } = useT();
+  const compact = useIsBelowLg();
+  const OFFICE_POS = compact ? OFFICE_POS_COMPACT : OFFICE_POS_DESKTOP;
+  const circleSize = compact ? 220 : 340;
+  const wrapHeight = compact ? 300 : 440;
 
   return (
     <section className="bg-white">
-      <div className="max-w-[1280px] mx-auto px-8 py-24">
-        <div data-spotlight className="spotlight rounded-[20px] bg-white border border-slate-100 p-12 lg:p-16 grid lg:grid-cols-[1fr_1.05fr] gap-14 items-center">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-16 sm:py-24">
+        <div data-spotlight className="spotlight rounded-[20px] bg-white border border-slate-100 p-6 sm:p-10 lg:p-16 grid lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-14 items-center">
           <div>
             <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.money.reachEyebrow}</div>
             <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.money.reachSub}</div>
-            <h2 className="font-serif text-[40px] lg:text-[48px] leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-6">
+            <h2 className="font-serif fluid-40-48 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-6">
               {t.money.reachTitle}
             </h2>
             <p className="text-[19px] leading-[1.65] text-slate-600 mb-4 max-w-md">
@@ -33,9 +49,9 @@ export default function Money() {
             </a>
           </div>
 
-          <div className="relative h-[440px] flex items-center justify-center">
-            <div className="relative w-[340px] h-[340px] rounded-full flex items-center justify-center overflow-hidden"
-              style={{ background: 'var(--gradient-radial-dark)' }}>
+          <div data-anim="office-diagram" className="relative flex items-center justify-center" style={{ height: wrapHeight }}>
+            <div className="relative rounded-full flex items-center justify-center overflow-hidden"
+              style={{ width: circleSize, height: circleSize, background: 'var(--gradient-radial-dark)' }}>
               <svg viewBox="0 0 340 340" className="absolute inset-0 w-full h-full">
                 {[60,120,180,240,300].map((y) => (
                   <ellipse key={y} cx="170" cy={y} rx="168" ry={Math.sqrt(170*170-(y-170)*(y-170))*0.28} fill="none" stroke="white" strokeOpacity="0.14" strokeWidth="1" />
@@ -65,24 +81,24 @@ export default function Money() {
 
             {t.money.offices.map((o, i) => (
               <div key={i}
-                className={`absolute bg-white rounded-lg shadow-[0_12px_30px_-12px_rgba(var(--shadow-rgb),0.25)] px-4 py-2.5 ${OFFICE_POS[i].lead ? 'border-l-2' : ''}`}
+                className={`absolute bg-white rounded-lg shadow-[0_12px_30px_-12px_rgba(var(--shadow-rgb),0.25)] px-3.5 py-2 sm:px-4 sm:py-2.5 ${OFFICE_POS[i].lead ? 'border-l-2' : ''}`}
                 style={{ transform: `translate(${OFFICE_POS[i].x}px, ${OFFICE_POS[i].y}px) rotate(${OFFICE_POS[i].rot}deg)`, borderLeftColor: OFFICE_POS[i].lead ? 'var(--secondary)' : undefined, zIndex: 10 + i }}>
-                <div className="text-[10px] font-semibold tracking-[0.18em] text-slate-400">{OFFICE_POS[i].lead ? t.money.hq : t.money.office}</div>
-                <div className="font-serif text-[18px] font-semibold text-slate-900 leading-tight">{o.city}</div>
-                <div className="font-jp text-[10px] text-slate-500 tracking-wide">{o.sub}</div>
+                <div className="text-[9px] sm:text-[10px] font-semibold tracking-[0.18em] text-slate-400">{OFFICE_POS[i].lead ? t.money.hq : t.money.office}</div>
+                <div className="font-serif text-[15px] sm:text-[18px] font-semibold text-slate-900 leading-tight">{o.city}</div>
+                <div className="font-jp text-[9px] sm:text-[10px] text-slate-500 tracking-wide">{o.sub}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-8 pb-24">
-        <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-12 lg:p-16 grid lg:grid-cols-[1fr_1fr] gap-12 items-center relative overflow-hidden"
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-24">
+        <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-6 sm:p-10 lg:p-16 grid lg:grid-cols-[1fr_1fr] gap-10 lg:gap-12 items-center relative overflow-hidden"
           style={{ background: 'var(--gradient-dark)' }}>
           <div className="relative z-10">
             <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>{t.money.portalEyebrow}</div>
             <div className="font-jp text-[15.5px] tracking-[0.18em] mb-7 text-white/60">{t.money.portalSub}</div>
-            <h2 className="font-serif text-[36px] lg:text-[44px] leading-[1.15] font-medium text-white tracking-[-0.015em] mb-6">
+            <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-white tracking-[-0.015em] mb-6">
               {t.money.portalTitle}
             </h2>
             <p className="text-[18px] leading-[1.65] text-slate-300 mb-3 max-w-md">
@@ -101,7 +117,7 @@ export default function Money() {
               ))}
             </div>
           </div>
-          <div className="relative h-[360px] flex items-center justify-center">
+          <div className="relative h-[280px] sm:h-[360px] flex items-center justify-center">
             <div className="img-zoom relative w-full h-full rounded-xl overflow-hidden shadow-2xl">
               <img
                 src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&q=85&auto=format&fit=crop"
