@@ -13,24 +13,32 @@ const VALID_ROLES = new Set(['user', 'assistant']);
 /** Static knowledge base describing this site and the JWD Group. */
 export const KNOWLEDGE_BASE = `
 # JWD INVESTMENT (this site)
-Independently-owned wealth management and investment advisory firm, serving private clients, family offices and institutions across global markets since 2014. Part of the JWD Group ("Japan WorldLink"), the bridge between Japan and Dubai wealth creation.
-Key figures: $48B assets under management, 1,200+ client relationships, 11 global offices, 10-year median client tenure.
-Offices: Tokyo (headquarters), London, New York, Singapore, Zürich and six more.
-Regulated by: FCA (UK), SEC (US), FSA 金融庁 (Japan), FINMA (Switzerland), MAS (Singapore).
-Awards: Wealth Manager of the Year (Asia Private Banker 2025), Best Discretionary Portfolio (Euromoney 2024), Outstanding ESG Integration (PRI Awards 2024).
-Flagship strategy: Global Balanced Composite (since 2014) — +9.4% 5y annualised return, 1.18 Sharpe net of fees, −7.2% max 5y drawdown. Allocation: 52% global equities, 28% fixed income, 14% alternatives, 6% cash.
-Service in six languages: English, Japanese, Chinese, German, French, Spanish. The site itself is bilingual — the EN / 日本語 toggle is in the top bar.
+JWD Investment (Japan WorldLink DWC) is a cross-border advisory bridging real estate and wealth creation between Japan and Dubai. Founded in 2020 by Tomo Kawana (川名智), representative. Consultations are by introduction only.
+Key figures (real): 5+ years operating in Dubai, ¥10B+ transaction volume, 120+ investors and families advised, 2 markets bridged. Average target yield on Dubai property: 7%.
+Presence: Nagoya, Japan (headquarters — NK Marunouchi Bldg. 2F, 2-17-13 Marunouchi, Naka-ku, Nagoya, Aichi) and Dubai (DWC and free zones). NOT a global multi-office wealth manager — just these two markets.
+Founder: Tomo Kawana lives, invests and raises his family in Dubai — a personal investor in the Heart of Europe, not a spectator. "Every failure and every success becomes a signpost for the next investor."
+Consultation channels: WhatsApp, LINE, Zoom — all by introduction only.
+Bilingual: Japanese and English (NOT six languages — that was an earlier draft error). The site toggle is EN / 日本語 in the top bar.
+JWD is NOT a regulated wealth manager/asset manager with AUM, and is NOT regulated by FCA/SEC/FSA/FINMA/MAS — it is a cross-border advisory and consulting firm. Do not claim otherwise.
+
+# WHAT JWD DOES (real services)
+1. Dubai Real Estate — properties curated for investment merit (not thousands of listings), acquisition through rental management.
+2. The Heart of Europe — flagship resort development on The World Islands, 4km off the Dubai coast; Tomo's personal investment.
+3. Investment Funds — Equiti (regulated equity platform) and AIX Investment (alternative fund, real assets).
+4. Family Office — cross-border asset protection, succession and inheritance planning across Japan and UAE systems.
+5. Japan Properties — weak-yen opportunities, akiya (vacant house) revival investing, inheritance-linked property planning for overseas investors.
+6. Consulting (8 core services): Company Formation (mainland/free-zone/offshore), License Acquisition, Visa Acquisition (Golden Visa etc.), Emirates ID, Corporate Banking, Personal Banking, Tax Registration (VAT/corporate tax, FTA-compliant), Accounting & Audit (IFRS).
 
 # SITE MAP (what is on each part of this site)
-- Home hero: headline, consultation CTA, brochure download, Equiti & AIX partner cards, key stats.
+- Home hero: "Two horizons, one golden bridge" headline, consultation CTA, investment guide download, Equiti & AIX partner cards, real stats (5 yrs / ¥10B+ / 120+ / 7%), a Heart of Europe flagship spotlight with Dubai facts (0% tax, 7% yield, 6%+ population growth, 100% freehold ownership).
 - "Trade with Equiti" section: 7 tradable markets, each linking to the official Equiti product page.
-- "Real Estate Portfolio" section: Dubai Property Portfolio (ANAWAK Real Estate L.L.C) with Bayut / Property Finder links, and The Heart of Europe flagship project.
-- Private Wealth Advisory: discretionary management for $5M+ investable assets; senior advisor Hiroshi Matsuda, CFA (Tokyo).
-- Why partner with JWD: disciplined process, long-term horizon, personal access.
-- Investment Solutions: Global Equities ($18.4B AUM), Fixed Income ($11.2B), Private Markets ($9.6B), Sustainable/ESG ($5.8B).
-- Partnership process: 1 Discovery, 2 Strategy & alignment (IPS), 3 Implementation & stewardship with quarterly reviews.
-- Global reach, JWD Client Portal (performance reporting, tax-aware analytics, secure document vault), Insights & research, closing consultation CTA, footer.
-- PORTFOLIO PAGE at /properties ("Portfolio" in the navbar): client-acquired Dubai properties with charts — allocation donut, price-per-sqft bars, per-property price history & 5-yr projection, metrics (gross/net yield, ROI, IRR, payback), an interactive growth simulator (this property vs keeping capital in Japan, 20.315% Japan CGT vs Dubai 0%), and risks & hedges.
+- "Real Estate Portfolio" section: Dubai Property Portfolio (curated properties) with Bayut / Property Finder links, and The Heart of Europe flagship project.
+- Founder-led advisory: Tomo Kawana's direct involvement, by-introduction consultations.
+- Why partner with JWD: fluent in both markets, first-hand as an owner, one desk for everything.
+- What we do: Dubai Real Estate, Heart of Europe, Investment Funds, Family Office — one coordinated team, not separate specialists per deal.
+- Two markets, one team: Nagoya HQ + Dubai presence (not a global office network).
+- AI Property Advisor (this chat), Knowledge Center highlights, "how we are organised" (founder / corporate & compliance / family office), closing consultation CTA, footer.
+- PORTFOLIO PAGE at /properties ("Portfolio" in the navbar): DRAFT SAMPLE client-acquired Dubai properties with charts — allocation donut, price-per-sqft bars, per-property price history & 5-yr projection, metrics (gross/net yield, ROI, IRR, payback), an interactive growth simulator (this property vs keeping capital in Japan, 20.315% Japan CGT vs Dubai 0%), and risks & hedges. Explicitly illustrative/draft data, not real transactions, until real client inventory is published.
 
 # INVESTMENT PLATFORMS (partners)
 Equiti (equiti.com/sc-en): global multi-asset trading platform — institutional-grade execution.
@@ -62,7 +70,7 @@ Indicative price per sqft by area (AED): JVC 950, Business Bay 1,600, Marina 1,7
 0% personal income tax, 0% capital gains tax (Japan: 20.315% financial-income tax), average rental yield 7%+ (JVC 8%+, Downtown 6-7%, Marina 7%+), 100% foreign ownership in freehold areas, Golden Visa from AED 2M+ property, AED pegged to USD, corporate tax 9% with free-zone exemptions.
 
 # CONTACT / NEXT STEPS
-"Schedule a consultation" buttons throughout the site. Consultations with a senior advisor about goals, portfolio and long-term planning. Capabilities brochure available for download.
+"Book a Consultation" buttons throughout the site. Consultations are by introduction only — via WhatsApp, LINE or Zoom. An investment guide is available for download. There is no walk-up/public booking; a warm introduction or contact-form outreach starts the relationship.
 `;
 
 /**
@@ -75,7 +83,7 @@ export function buildSystemPrompt(locale) {
       ? 'The user is viewing the Japanese version of the site. Default to Japanese unless they write in English.'
       : 'The user is viewing the English version of the site. Default to English unless they write in Japanese.';
 
-  return `You are the JWD Investment AI Advisor — a knowledgeable, friendly and professional wealth-management consultant embedded in the JWD Investment website. Your job is to explain the site, the JWD Group's services and platforms, and help visitors find what they need.
+  return `You are JWD's AI Property Advisor — a knowledgeable, friendly and professional cross-border real estate and wealth advisory consultant embedded in the JWD Investment website. Your job is to explain the site, JWD's real services and platforms, and help visitors find what they need.
 
 ## YOUR KNOWLEDGE BASE
 Ground ALL answers in this data. Do NOT invent figures, properties or services that are not here; if a figure is missing, say so.
@@ -92,7 +100,7 @@ Read intent first and size the answer to it; lean SHORTER when unsure. Users may
 ### DETAILED answers (~200–500 words) only when the user asks for analysis, a comparison, planning or "should I…". Then: direct answer first, bold lead lines (no big headers), "-" bullets, NEVER Markdown tables (narrow chat window). Show worked figures (e.g. "6.8% on AED 1,850,000 ≈ AED 125,800/yr"). Include risks AND hedges, then assumptions — flag that portfolio figures are illustrative/modelled.
 
 ### Always:
-1. NEVER give personalised financial advice — for tailored recommendations say a consultation with a JWD senior advisor can be scheduled from the site.
+1. NEVER give personalised financial advice — for tailored recommendations say a consultation can be booked from the site (by introduction only, via WhatsApp/LINE/Zoom).
 2. Match the user's language (Japanese or English).
 3. Format numbers clearly: AED 1,850,000 / ¥75,850,000 / 6.8%.
 4. This site's own pages are / (home) and /properties (client portfolio). Site sections live on the home page.

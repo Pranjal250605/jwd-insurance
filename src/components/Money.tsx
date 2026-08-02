@@ -1,12 +1,11 @@
 import { useT } from '@/i18n';
 import { useIsBelowLg } from '@/hooks/useMediaQuery';
 
+// Real presence: Nagoya (HQ) and Dubai only — not the fabricated 5-office
+// network this diagram originally showed.
 const OFFICE_POS_DESKTOP = [
-  { rot: -3, x: -160, y: -40, lead: true },
-  { rot: 2, x: 60, y: -90 },
-  { rot: -2, x: 120, y: 20 },
-  { rot: 4, x: -80, y: 90 },
-  { rot: -4, x: 70, y: 130 },
+  { rot: -3, x: -150, y: -70, lead: true },
+  { rot: 3, x: 130, y: 90 },
 ];
 
 // Same relative arrangement, scaled down so the cluster fits inside a
@@ -59,23 +58,17 @@ export default function Money() {
                 {[0,30,60,90,120,150].map((deg) => (
                   <ellipse key={deg} cx="170" cy="170" rx={Math.abs(Math.cos(deg*Math.PI/180))*168} ry="168" fill="none" stroke="white" strokeOpacity="0.14" strokeWidth="1" />
                 ))}
+                {/* Nagoya + Dubai — the two real points on the map, bridged by one arc */}
                 {[
-                  { cx: 110, cy: 130, r: 4 },
-                  { cx: 200, cy: 95,  r: 4 },
-                  { cx: 230, cy: 170, r: 4 },
-                  { cx: 145, cy: 215, r: 4 },
-                  { cx: 195, cy: 235, r: 4 },
+                  { cx: 115, cy: 120, r: 4 },
+                  { cx: 225, cy: 220, r: 4 },
                 ].map((p, i) => (
                   <g key={i}>
                     <circle cx={p.cx} cy={p.cy} r={p.r + 4} style={{ fill: 'var(--secondary)' }} fillOpacity="0.25" />
                     <circle cx={p.cx} cy={p.cy} r={p.r} style={{ fill: 'var(--secondary)' }} />
                   </g>
                 ))}
-                <path d="M110 130 Q160 100 200 95" fill="none" style={{ stroke: 'var(--secondary)' }} strokeOpacity="0.6" strokeWidth="1" strokeDasharray="2 3" />
-                <path d="M200 95 Q230 130 230 170" fill="none" style={{ stroke: 'var(--secondary)' }} strokeOpacity="0.6" strokeWidth="1" strokeDasharray="2 3" />
-                <path d="M230 170 Q210 210 195 235" fill="none" style={{ stroke: 'var(--secondary)' }} strokeOpacity="0.6" strokeWidth="1" strokeDasharray="2 3" />
-                <path d="M195 235 Q165 230 145 215" fill="none" style={{ stroke: 'var(--secondary)' }} strokeOpacity="0.6" strokeWidth="1" strokeDasharray="2 3" />
-                <path d="M145 215 Q120 175 110 130" fill="none" style={{ stroke: 'var(--secondary)' }} strokeOpacity="0.6" strokeWidth="1" strokeDasharray="2 3" />
+                <path d="M115 120 Q170 130 225 220" fill="none" style={{ stroke: 'var(--secondary)' }} strokeOpacity="0.6" strokeWidth="1" strokeDasharray="2 3" />
               </svg>
             </div>
 
@@ -128,11 +121,11 @@ export default function Money() {
               <div className="equiti-card-rim absolute top-4 left-4 right-4 bg-white/95 backdrop-blur rounded-lg p-3 flex items-center justify-between">
                 <div>
                   <div className="text-[9px] font-semibold tracking-[0.2em] text-slate-400">{t.money.totalWealth}</div>
-                  <div data-count="$84.2M" className="font-serif text-[20px] font-semibold text-slate-900">$84.2M</div>
+                  <div className="font-serif text-[20px] font-semibold text-slate-900">2020</div>
                 </div>
                 <div className="text-right">
                   <div className="text-[9px] font-semibold tracking-[0.2em] text-slate-400">{t.money.qtr}</div>
-                  <div className="text-[17px] font-semibold text-emerald-700">+ 2.84%</div>
+                  <div className="text-[17px] font-semibold" style={{ color: 'var(--accent-deep)' }}>Japan × UAE</div>
                 </div>
               </div>
             </div>

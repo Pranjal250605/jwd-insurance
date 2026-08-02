@@ -50,14 +50,14 @@ export default function Promo() {
           <div className="relative h-[240px] sm:h-[320px] flex items-center justify-center">
             <div className="img-zoom relative w-full h-full rounded-xl overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=900&q=85&auto=format&fit=crop"
-                alt="Senior advisors meeting with private wealth client"
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=85&auto=format&fit=crop"
+                alt="Tomo Kawana, founder of JWD Investment"
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(var(--photo-tint-rgb),0.45) 0%, transparent 60%)' }} />
               <div className="equiti-card-rim absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur rounded-lg p-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-serif font-semibold text-[17px]" style={{ color: 'var(--accent-deep)' }}>HM</div>
+                  <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-serif font-semibold text-[17px]" style={{ color: 'var(--accent-deep)' }}>TK</div>
                   <div className="flex-1">
                     <div className="text-[15.5px] font-semibold text-slate-900">{t.promo.advisorName}</div>
                     <div className="text-[11px] text-slate-500">{t.promo.advisorRole}</div>

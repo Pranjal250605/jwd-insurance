@@ -1,16 +1,20 @@
 import { useT } from '@/i18n';
 
+// Real per-solution facts (replacing invented AUM figures — JWD is not
+// an asset manager reporting AUM per product line).
 const SOLUTION_META = [
-  { image: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=600&q=80&auto=format&fit=crop', aum: '$18.4B' },
-  { image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80&auto=format&fit=crop', aum: '$11.2B' },
-  { image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80&auto=format&fit=crop', aum: '$9.6B' },
-  { image: 'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=600&q=80&auto=format&fit=crop', aum: '$5.8B' },
+  { image: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=600&q=80&auto=format&fit=crop', fact: '6–8%', factJa: '6〜8%' },
+  { image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=600&q=80&auto=format&fit=crop', fact: '4km offshore', factJa: '沖合4km' },
+  { image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80&auto=format&fit=crop', fact: '2 platforms', factJa: '2プラットフォーム' },
+  { image: 'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=600&q=80&auto=format&fit=crop', fact: '2 markets', factJa: '2市場' },
 ];
 
-const LANG_CHIPS = ['English', '日本語', '中文', 'Deutsch', 'Français', 'Español'];
+// Real bilingual capability + real consultation channels (WhatsApp/LINE/Zoom,
+// by introduction only) — replaces a fabricated six-language claim.
+const LANG_CHIPS = ['日本語', 'English', 'WhatsApp', 'LINE', 'Zoom'];
 
 export default function Products() {
-  const { t } = useT();
+  const { t, lang } = useT();
 
   return (
     <section style={{ background: 'var(--surface-alt)' }}>
@@ -44,7 +48,7 @@ export default function Products() {
                   <div className="flex items-center justify-between pt-5 border-t border-slate-100">
                     <div>
                       <div className="text-[10px] font-semibold tracking-[0.18em] text-slate-400 uppercase">{t.products.aumLabel}</div>
-                      <div className="font-serif text-[21.5px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{SOLUTION_META[i].aum}</div>
+                      <div className="font-serif text-[21.5px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{lang === 'ja' ? SOLUTION_META[i].factJa : SOLUTION_META[i].fact}</div>
                     </div>
                     <a href="#" className="link-underline text-[12px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                       {t.products.detailCta}

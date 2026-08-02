@@ -65,13 +65,10 @@ export default function Footer() {
         </div>
 
         <div className="pt-10 border-t border-slate-200 flex flex-col gap-6">
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-[10px] tracking-[0.16em] text-slate-400">
-            {t.footer.regLine.map((r, i) => (
-              <span key={r} className="contents">
-                {i > 0 && <span className="text-slate-200">·</span>}
-                <span>{r}</span>
-              </span>
-            ))}
+          <div className="text-[11.5px] tracking-[0.04em] text-slate-400">
+            <span className="font-medium text-slate-600">{t.footer.company}</span>
+            <span className="mx-2 text-slate-200">·</span>
+            {t.footer.address}
           </div>
           <div className="flex flex-col lg:flex-row gap-6 lg:items-start lg:justify-between">
             <p className="text-[14px] text-slate-500 leading-[1.7] max-w-3xl">

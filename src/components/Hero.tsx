@@ -5,13 +5,6 @@ interface HeroProps {
   headline?: string;
 }
 
-const ALLOC = [
-  { v: 52, c: 'var(--accent-deep)' },
-  { v: 28, c: '#5C7BA8' },
-  { v: 14, c: 'var(--secondary)' },
-  { v: 6,  c: '#CBD5E1' },
-];
-
 export default function Hero({ eyebrow, headline }: HeroProps) {
   const { lang, t } = useT();
   // Tweaks-panel overrides only apply in English; Japanese always uses the dictionary.
@@ -189,7 +182,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
 
           {/* card cluster: static + stacked below lg, absolute-floating at lg+ */}
           <div data-anim="hero-cards" className="mt-4 flex flex-col sm:flex-row lg:block gap-4 lg:gap-0">
-            <div data-spotlight className="spotlight equiti-card-rim relative lg:absolute lg:-left-6 lg:top-24 bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 lg:w-[220px] lg:z-10">
+            <div data-spotlight className="spotlight equiti-card-rim relative lg:absolute lg:-left-6 lg:top-24 bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 sm:min-w-0 lg:w-[220px] lg:z-10">
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-soft)' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" style={{ color: 'var(--accent-deep)' }}>
@@ -198,24 +191,19 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                 </div>
                 <div className="text-[11px] font-semibold tracking-[0.18em] text-slate-500">{t.hero.portfolio}</div>
               </div>
-              <div data-count="¥2,847,500,000" className="font-serif text-[22px] sm:text-[24px] font-semibold tracking-tight text-slate-900">¥2,847,500,000</div>
+              <div className="font-serif text-[22px] sm:text-[24px] font-semibold tracking-tight text-slate-900">AED 1 = ¥41</div>
               <div className="flex items-center gap-1.5 mt-1">
-                <span className="text-[12px] font-semibold text-emerald-700">+ ¥38.4M</span>
+                <span className="h-1.5 w-1.5 rounded-full bg-slate-300 flex-shrink-0" />
                 <span className="text-[11px] text-slate-500">{t.hero.ytd}</span>
               </div>
             </div>
 
-            <div data-spotlight className="spotlight equiti-card-rim relative lg:absolute lg:-right-4 lg:bottom-32 bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 lg:w-[220px] lg:z-10">
+            <div data-spotlight className="spotlight equiti-card-rim relative lg:absolute lg:-right-4 lg:bottom-32 bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 sm:min-w-0 lg:w-[220px] lg:z-10">
               <div className="text-[10px] font-semibold tracking-[0.2em] text-slate-500 mb-2">{t.hero.allocation}</div>
-              {ALLOC.map((row, i) => (
-                <div key={i} className="mb-2 last:mb-0">
-                  <div className="flex items-center justify-between text-[11px] mb-0.5">
-                    <span className="text-slate-700">{t.hero.allocRows[i]}</span>
-                    <span className="font-mono font-semibold text-slate-900">{row.v}%</span>
-                  </div>
-                  <div className="h-1 rounded-full bg-slate-100 overflow-hidden">
-                    <div className="h-full rounded-full" style={{ width: `${row.v}%`, background: row.c }} />
-                  </div>
+              {t.hero.allocRows.map((row, i) => (
+                <div key={i} className="flex items-center justify-between gap-2 text-[11px] py-1 first:pt-0 last:pb-0 border-t first:border-t-0 border-slate-50">
+                  <span className="text-slate-600 leading-tight min-w-0 break-words">{row.label}</span>
+                  <span className="font-mono font-semibold text-slate-900 flex-shrink-0">{row.value}</span>
                 </div>
               ))}
             </div>

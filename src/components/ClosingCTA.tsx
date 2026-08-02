@@ -57,7 +57,7 @@ export default function ClosingCTA() {
         <div className="flex items-center justify-center flex-wrap gap-3 lg:gap-4">
           {t.closing.regulators.map((r) => (
             <div key={r.code} data-spotlight className="spotlight px-6 py-4 bg-white rounded-md border border-slate-200 flex items-center gap-4 hover:border-slate-300 hover:-translate-y-0.5 transition-all">
-              <div className="font-serif text-[22px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{r.code}</div>
+              <div className="font-serif text-[18px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{r.code}</div>
               <div className="border-l border-slate-200 pl-4">
                 <div className="text-[12px] font-medium text-slate-700 leading-tight">{r.name}</div>
                 <div className="text-[10px] text-slate-500 mt-0.5">{r.region}</div>
@@ -73,12 +73,12 @@ export default function ClosingCTA() {
             <div key={r.award} className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(var(--secondary-rgb),0.12)' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" strokeWidth="1.6" style={{ stroke: 'var(--secondary)' }}>
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  <path d="M5 12l5 5L20 7" />
                 </svg>
               </div>
               <div>
-                <div className="font-serif text-[19px] font-semibold text-slate-900 leading-tight">{r.award}</div>
-                <div className="text-[12px] text-slate-500 mt-1">{r.pub} · {r.yr}</div>
+                <div className="font-serif text-[19px] font-semibold text-slate-900 leading-tight mb-1">{r.award}</div>
+                <div className="text-[13.5px] leading-[1.55] text-slate-500">{r.pub}</div>
               </div>
             </div>
           ))}

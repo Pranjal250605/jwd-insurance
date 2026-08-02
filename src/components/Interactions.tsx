@@ -78,7 +78,7 @@ export default function Interactions() {
     }
 
     // ── Count-up stats ────────────────────────────────────────────────
-    // Parses "$48B", "1,200+", "10 yrs", "¥2,847,500,000" into
+    // Parses "5 yrs", "120+", "¥10B+", "7%" into
     // prefix / number / suffix and animates the numeric part on first view.
     const animateCount = (el: HTMLElement) => {
       const raw = el.dataset.count ?? el.textContent ?? '';
