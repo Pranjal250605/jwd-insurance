@@ -367,8 +367,35 @@ export const STRINGS = {
       disclaimer: 'Figures shown across this site are illustrative samples for demonstration only and do not constitute financial advice, an offer, or a solicitation. Contact JWD for verified, current data. Consultations are by introduction only.',
       links: ['Legal', 'Privacy', 'Cookies', 'Disclosures'],
       copyright: '© 2026 Japan WorldLink DWC Group',
-      company: 'Japan WorldLink DWC Group',
-      address: 'NK Marunouchi Bldg. 2F, 2-17-13 Marunouchi, Naka-ku, Nagoya, Aichi, Japan',
+      officesLabel: 'COMPANY INFORMATION',
+      officesSub: '会社情報',
+      offices: [
+        {
+          name: 'Japan Worldlink DWC-LLC',
+          lines: [
+            'DWC Business Center',
+            'Level -3, Building - A3',
+            'Dubai South Business Park',
+            'P.O. Box 390667 Dubai, U.A.E.',
+          ],
+        },
+        {
+          name: 'JWD Investment LLC',
+          lines: [
+            'Property Investment Office 4 - G01',
+            'Dubai Investment Park First 516-0',
+            'P.O. Box 676-598 Dubai, U.A.E.',
+          ],
+        },
+        {
+          name: 'Japan Office',
+          lines: [
+            'NK Marunouchi Bldg. 2F',
+            '2-17-13 Marunouchi, Naka-ku',
+            'Nagoya, Aichi, Japan',
+          ],
+        },
+      ],
     },
   },
 
@@ -695,8 +722,34 @@ export const STRINGS = {
       disclaimer: '本サイトに掲載の数値は説明を目的としたサンプルであり、投資助言・勧誘・申込みを構成するものではありません。最新の確定データはJWDにお問い合わせください。ご相談は完全紹介制です。',
       links: ['法的事項', 'プライバシー', 'クッキー', '開示事項'],
       copyright: '© 2026 Japan WorldLink DWC Group',
-      company: 'Japan WorldLink DWC Group',
-      address: '愛知県名古屋市中区丸の内2丁目17-13 NK丸の内ビル2階',
+      officesLabel: '会社情報',
+      officesSub: 'COMPANY INFORMATION',
+      offices: [
+        {
+          name: 'Japan Worldlink DWC-LLC',
+          lines: [
+            'DWC Business Center',
+            'Level -3, Building - A3',
+            'Dubai South Business Park',
+            'P.O. Box 390667 Dubai, U.A.E.',
+          ],
+        },
+        {
+          name: 'JWD Investment LLC',
+          lines: [
+            'Property Investment Office 4 - G01',
+            'Dubai Investment Park First 516-0',
+            'P.O. Box 676-598 Dubai, U.A.E.',
+          ],
+        },
+        {
+          name: '日本オフィス',
+          lines: [
+            '愛知県名古屋市中区丸の内2丁目17-13',
+            'NK丸の内ビル2階',
+          ],
+        },
+      ],
     },
   },
 } as const;

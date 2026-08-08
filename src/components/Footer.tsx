@@ -65,10 +65,21 @@ export default function Footer() {
         </div>
 
         <div className="pt-10 border-t border-slate-200 flex flex-col gap-6">
-          <div className="text-[11.5px] tracking-[0.04em] text-slate-400">
-            <span className="font-medium text-slate-600">{t.footer.company}</span>
-            <span className="mx-2 text-slate-200">·</span>
-            {t.footer.address}
+          <div>
+            <h4 className="text-[11px] font-bold tracking-[0.22em] text-slate-900 uppercase">{t.footer.officesLabel}</h4>
+            <div className="font-jp text-[10px] tracking-[0.16em] text-slate-400 mt-1 mb-6">{t.footer.officesSub}</div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-7">
+              {t.footer.offices.map((o) => (
+                <div key={o.name}>
+                  <div className="text-[12.5px] font-medium text-slate-700 mb-1.5">{o.name}</div>
+                  <address className="not-italic text-[11.5px] leading-[1.75] tracking-[0.04em] text-slate-500">
+                    {o.lines.map((line) => (
+                      <div key={line}>{line}</div>
+                    ))}
+                  </address>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="flex flex-col lg:flex-row gap-6 lg:items-start lg:justify-between">
             <p className="text-[14px] text-slate-500 leading-[1.7] max-w-3xl">
