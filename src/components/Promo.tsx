@@ -50,9 +50,9 @@ export default function Promo() {
           <div className="relative h-[240px] sm:h-[320px] flex items-center justify-center">
             <div className="img-zoom relative w-full h-full rounded-xl overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=85&auto=format&fit=crop"
+                src="/tomo-kawana.jpg"
                 alt="Tomo Kawana, founder of JWD Investment"
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover object-top"
               />
               <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(var(--photo-tint-rgb),0.45) 0%, transparent 60%)' }} />
               <div className="equiti-card-rim absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur rounded-lg p-4">

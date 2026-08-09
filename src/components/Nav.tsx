@@ -11,6 +11,15 @@ export default function Nav() {
 
   useScrollLock(mobileOpen);
 
+  // Japanese labels run far wider than the English ones this row was sized
+  // for (コンサルティング vs "Consulting"), which pushed the row past the
+  // 1280px container and wrapped every item onto a second line. JA gets
+  // tighter padding/type; nothing wraps in either language.
+  const isJa = lang === 'ja';
+  const navItem = `flex items-center h-10 whitespace-nowrap font-medium text-slate-700 hover:text-slate-900 ${
+    isJa ? 'px-2 xl:px-3 text-[15px] xl:text-[16px]' : 'px-3 xl:px-4 text-[17px]'
+  }`;
+
   // Close the drawer on Escape and on route change (hash nav).
   useEffect(() => {
     if (!mobileOpen) return;
@@ -53,17 +62,18 @@ export default function Nav() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-[76px] flex items-center justify-between">
-        <a href="#" className="flex items-center select-none">
+        <a href="#" className="flex items-center select-none flex-shrink-0">
           <img src="/jwd-logo.png" alt="JWD Investment" className="h-9 w-auto" />
         </a>
 
         {/* px-3 (not px-4) below xl: at exactly 1024px the six nav items +
             the Equiti/AIX pills + CTA button don't quite fit at px-4,
-            overflowing the header by a few px — this closes that gap. */}
+            overflowing the header by a few px — this closes that gap.
+            See `navItem` above for the per-language sizing. */}
         <nav className="hidden lg:flex items-center gap-1" onMouseLeave={() => setOpenMenu(null)}>
           {Object.entries(t.nav.menus).map(([key, menu]) => (
-            <div key={key} className="relative" onMouseEnter={() => setOpenMenu(key)}>
-              <button className="flex items-center gap-1 px-3 xl:px-4 h-10 text-[17px] font-medium text-slate-700 hover:text-slate-900">
+            <div key={key} className="relative flex-shrink-0" onMouseEnter={() => setOpenMenu(key)}>
+              <button className={`${navItem} gap-1`}>
                 {menu.label}
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
                   className={`transition-transform ${openMenu === key ? 'rotate-180' : ''}`}>
@@ -85,12 +95,18 @@ export default function Nav() {
               )}
             </div>
           ))}
-          <a href="#/properties" className="px-3 xl:px-4 h-10 flex items-center text-[17px] font-medium text-slate-700 hover:text-slate-900">{t.nav.portfolio}</a>
-          <a href="#" className="px-3 xl:px-4 h-10 flex items-center text-[17px] font-medium text-slate-700 hover:text-slate-900">{t.nav.contact}</a>
+          <a href="#/properties" className={`${navItem} flex-shrink-0`}>{t.nav.portfolio}</a>
+          <a href="#" className={`${navItem} flex-shrink-0`}>{t.nav.contact}</a>
         </nav>
 
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="hidden md:flex items-center gap-2">
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          {/* The six nav labels fill the row at lg in both languages, so the
+              Equiti/AIX pills step aside for that band only — they return at
+              xl, and below lg the desktop nav is hidden so there is room
+              anyway. Previously the row still overflowed here and the logo
+              (the one shrinkable child) was silently squashed to 0px wide.
+              Both platforms are still linked from the hero and footer. */}
+          <div className="hidden md:flex lg:hidden xl:flex items-center gap-2 flex-shrink-0">
             {t.products.platforms.map((p) => (
               <a
                 key={p.name}
@@ -105,7 +121,12 @@ export default function Nav() {
               </a>
             ))}
           </div>
-          <button data-magnetic className="hidden sm:inline-flex cta-primary px-5 h-11 rounded-sm text-[12px] font-bold tracking-[0.14em]">
+          <button
+            data-magnetic
+            className={`hidden sm:inline-flex items-center justify-center cta-primary h-11 rounded-sm text-[12px] font-bold whitespace-nowrap ${
+              isJa ? 'px-4 tracking-[0.06em]' : 'px-5 tracking-[0.14em]'
+            }`}
+          >
             {t.nav.cta}
           </button>
 
