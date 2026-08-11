@@ -16,6 +16,15 @@ const PILLAR_ICONS = [
   </svg>,
 ];
 
+/* The supplied copy carries markdown bold markers around 「レジリエンス」 —
+   Word has no ** syntax, so they came from a markdown source and mean
+   emphasis. Render them rather than dropping the emphasis on the floor. */
+function withEmphasis(text: string) {
+  return text.split('**').map((part, i) =>
+    i % 2 ? <strong key={i} className="font-semibold text-slate-900">{part}</strong> : part,
+  );
+}
+
 export default function Promo() {
   const { lang, t } = useT();
   const c = t.promo.chairman;
@@ -64,7 +73,7 @@ export default function Promo() {
                 )}
                 {block.paragraphs.map((p, j) => (
                   <p key={j} className="text-[16.5px] leading-[1.9] text-slate-600 mb-4 last:mb-0">
-                    {p}
+                    {withEmphasis(p)}
                   </p>
                 ))}
               </div>

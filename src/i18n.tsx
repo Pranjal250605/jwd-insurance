@@ -239,7 +239,7 @@ export const STRINGS = {
             paragraphs: [
               'When the problem is your own misjudgement or a management issue, you can right the ship through your own capacity to correct course. But a pandemic — a situation in which the infrastructure of society physically halts — was of another order entirely.',
               'The postponement was announced just as we were pouring all our energy into EXPO 2020. Hotel and lodging reservations were cancelled two years out; lockdowns, stay-at-home orders, halted construction, the collapse of business partners. Revenue quite literally went to zero, and I watched the moment the lifeblood of a business stops flowing. It was a lonely, brutal time in which even the basic tactic of rallying our people and standing together was not permitted.',
-              'The goal of a NASDAQ listing was one we once had to abandon. That we came close to losing everything then is not, however, a memory of defeat. Rather, it engraved in us the most important asset a family office and investment company can hold — resilience: the ability to survive, however deep the crisis, and rise again.',
+              'The goal of a NASDAQ listing was one we once had to abandon. That we came close to losing everything then is not, however, a memory of defeat. Rather, it engraved in us the most important asset a family office and investment company can hold — **resilience** — the ability to survive, however deep the crisis, and rise again.',
             ],
           },
           {
@@ -623,7 +623,7 @@ export const STRINGS = {
             paragraphs: [
               '自分の判断ミスや経営上の課題であれば、自らの修正能力で立て直すことができます。しかし、パンデミックという、社会のインフラが物理的に停止する状況は別次元でした。',
               '「EXPO 2020」に向けて全精力を傾けていた矢先の開催延期。ホテルや民泊の予約は2年先までキャンセルとなり、ロックダウン、外出禁止令、建設停止、取引先の倒産と、まさに「売上がゼロ」になり、ビジネスの血流が止まる瞬間を目の当たりにしました。社員を鼓舞し、団結して立ち向かうという経営の基本戦術すら許されない、孤独で過酷な時間でした。',
-              'かつて一度は断念せざるを得なかった「NASDAQ上場」という目標。あの時、全てを失いかけたという事実は、決して挫折の記憶ではありません。むしろ、どれほどの危機にあっても「生き残り、再び立ち上がる」という、私たちファミリーオフィスおよび投資会社にとって最も重要な「レジリエンス」という財産を刻み込みました。',
+              'かつて一度は断念せざるを得なかった「NASDAQ上場」という目標。あの時、全てを失いかけたという事実は、決して挫折の記憶ではありません。むしろ、どれほどの危機にあっても「生き残り、再び立ち上がる」という、私たちファミリーオフィスおよび投資会社にとって最も重要な**「レジリエンス」**という財産を刻み込みました。',
             ],
           },
           {
