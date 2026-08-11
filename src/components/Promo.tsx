@@ -17,54 +17,65 @@ const PILLAR_ICONS = [
 ];
 
 export default function Promo() {
-  const { t } = useT();
+  const { lang, t } = useT();
+  const c = t.promo.chairman;
 
   return (
     <section className="bg-white">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-12">
-        <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-6 sm:p-10 lg:p-16 grid lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-10 items-center relative overflow-hidden"
-          style={{ background: 'var(--gradient-dark)' }}>
-          <div className="absolute top-0 right-0 w-[480px] h-[480px] opacity-[0.08] pointer-events-none">
-            <svg viewBox="0 0 200 200" className="w-full h-full">
-              <defs>
-                <pattern id="weave" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                  <path d="M0 10h20M10 0v20" stroke="white" strokeWidth="0.5" />
-                </pattern>
-              </defs>
-              <rect width="200" height="200" fill="url(#weave)" />
-            </svg>
-          </div>
+        {/* Chairman's message. The portrait floats into the running text at
+            lg+ (as in the approved layout) and stacks above it below that. */}
+        <div
+          data-spotlight
+          className="spotlight rounded-[20px] p-6 sm:p-10 lg:p-14 relative overflow-hidden"
+          style={{ background: 'var(--gradient-soft)' }}
+        >
           <div className="relative">
-            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-5" style={{ color: 'var(--secondary)' }}>{t.promo.advisoryEyebrow}</div>
-            <div className="font-jp text-[15.5px] tracking-[0.18em] mb-7 text-white/60">{t.promo.advisorySub}</div>
-            <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-white mb-5 tracking-[-0.01em]">
-              {t.promo.advisoryTitle}
+            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>
+              {c.eyebrow}
+            </div>
+            <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-7">{c.sub}</div>
+            <h2 className="font-serif fluid-36-44 leading-[1.25] font-medium text-slate-900 mb-8 tracking-[-0.01em] max-w-3xl" style={{ textWrap: 'balance' } as React.CSSProperties}>
+              {c.title}
             </h2>
-            <p className="text-[18px] text-slate-300 leading-[1.65] mb-8 max-w-md">
-              {t.promo.advisoryBody}
-            </p>
-            <button data-magnetic className="cta-secondary px-7 h-12 rounded-sm text-[12px] font-bold tracking-[0.14em]">
-              {t.promo.advisoryCta}
-            </button>
-          </div>
-          <div className="relative h-[240px] sm:h-[320px] flex items-center justify-center">
-            <div className="img-zoom relative w-full h-full rounded-xl overflow-hidden">
-              <img
-                src="/tomo-kawana.jpg"
-                alt="Tomo Kawana, founder of JWD Investment"
-                className="absolute inset-0 w-full h-full object-cover object-top"
-              />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(var(--photo-tint-rgb),0.45) 0%, transparent 60%)' }} />
-              <div className="equiti-card-rim absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur rounded-lg p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-serif font-semibold text-[17px]" style={{ color: 'var(--accent-deep)' }}>TK</div>
-                  <div className="flex-1">
-                    <div className="text-[15.5px] font-semibold text-slate-900">{t.promo.advisorName}</div>
-                    <div className="text-[11px] text-slate-500">{t.promo.advisorRole}</div>
-                  </div>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--accent-deep)' }}><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-                </div>
+
+            <figure className="lg:float-left lg:w-[340px] lg:mr-10 lg:mb-8 mb-8 m-0">
+              <div className="img-zoom relative rounded-xl overflow-hidden aspect-[4/5]">
+                <img
+                  src="/tomo-kawana.jpg"
+                  alt={`${c.name}, ${c.role}, ${c.company}`}
+                  className="absolute inset-0 w-full h-full object-cover object-top"
+                />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 50%, rgba(var(--photo-tint-rgb),0.72) 100%)' }} />
+                <figcaption className="absolute bottom-0 left-0 right-0 p-5">
+                  <div className="text-white/70 text-[11px] tracking-[0.12em] mb-1.5">{c.company}</div>
+                  <div className="text-white font-serif text-[19px] font-semibold leading-tight">{c.name}</div>
+                  <div className="text-white/80 text-[12.5px] mt-0.5">{c.role}</div>
+                </figcaption>
               </div>
+            </figure>
+
+            <p className="text-[18px] leading-[1.75] font-medium text-slate-800 mb-6">{c.lead}</p>
+
+            {c.blocks.map((block, i) => (
+              <div key={i}>
+                {block.heading && (
+                  <h3 className="text-[16.5px] font-semibold text-slate-900 mt-8 mb-4">{block.heading}</h3>
+                )}
+                {block.paragraphs.map((p, j) => (
+                  <p key={j} className="text-[16.5px] leading-[1.9] text-slate-600 mb-4 last:mb-0">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            ))}
+
+            <div className="clear-both flex justify-end pt-10">
+              <img
+                src={lang === 'ja' ? '/signature-ja.png' : '/signature-en.png'}
+                alt={c.name}
+                className={lang === 'ja' ? 'h-[68px] w-auto' : 'h-[46px] w-auto'}
+              />
             </div>
           </div>
         </div>

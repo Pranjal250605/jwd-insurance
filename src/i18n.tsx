@@ -67,6 +67,7 @@ export const STRINGS = {
       body: 'The rare partner fluent in both markets — guiding your wealth to its next horizon. Cross-border advisory bridging real estate and wealth creation between Japan and Dubai, by introduction only.',
       ctaPrimary: 'BOOK A CONSULTATION',
       ctaSecondary: 'Download Investment Guide',
+      support: '※弊社は日本人スタッフによる日本語サポートにも対応しておりますので、ご安心ください。',
       platformsLabel: 'EXECUTION VIA',
       stats: [
         ['5 yrs', 'Years operating in Dubai'],
@@ -219,13 +220,41 @@ export const STRINGS = {
       ],
     },
     promo: {
-      advisoryEyebrow: 'FOUNDER-LED ADVISORY',
-      advisorySub: 'トップ・リーダーからの直接のご案内',
-      advisoryTitle: 'Every failure and every success becomes a signpost for the next investor',
-      advisoryBody: 'Our founder lives, invests and raises a family in Dubai — a personal stake in the Heart of Europe, not a spectator’s recommendation. Consultations are by introduction; reach out and we’ll take it from there.',
-      advisoryCta: 'BOOK A CONSULTATION',
-      advisorName: 'Tomo Kawana',
-      advisorRole: 'JWD Investment',
+      chairman: {
+        eyebrow: 'A MESSAGE FROM OUR CHAIRMAN',
+        sub: '会長からのご挨拶',
+        title: 'Weathering an era of upheaval, creating the asset value of the next generation',
+        lead: '“An unshakeable eye for investment and an indomitable spirit, forged in the rough seas of the Middle East.”',
+        blocks: [
+          {
+            heading: '',
+            paragraphs: [
+              'Thirty-five turbulent years, beginning with the Gulf War of 1990. In 2006 I moved my base to Dubai, and I have continued to take on the challenge of doing business here at this crossroads of the world.',
+              'The business environment of the Middle East is always dynamic. From the Iraq War and the airstrikes on Syria, to the Russia–Ukraine war and the war in Gaza in recent years, and on to the situation surrounding Iran in 2026, we live constantly alongside geopolitical risk. The great economic reversals too — the Lehman shock, the Dubai shock — we have felt first-hand in this place.',
+              'And yet what struck me most deeply as a business owner was the experience of the COVID pandemic in 2020.',
+            ],
+          },
+          {
+            heading: '— The true strength an unseen threat taught us',
+            paragraphs: [
+              'When the problem is your own misjudgement or a management issue, you can right the ship through your own capacity to correct course. But a pandemic — a situation in which the infrastructure of society physically halts — was of another order entirely.',
+              'The postponement was announced just as we were pouring all our energy into EXPO 2020. Hotel and lodging reservations were cancelled two years out; lockdowns, stay-at-home orders, halted construction, the collapse of business partners. Revenue quite literally went to zero, and I watched the moment the lifeblood of a business stops flowing. It was a lonely, brutal time in which even the basic tactic of rallying our people and standing together was not permitted.',
+              'The goal of a NASDAQ listing was one we once had to abandon. That we came close to losing everything then is not, however, a memory of defeat. Rather, it engraved in us the most important asset a family office and investment company can hold — resilience: the ability to survive, however deep the crisis, and rise again.',
+            ],
+          },
+          {
+            heading: '— To the next stage: beyond trust and challenge',
+            paragraphs: [
+              'What we aim at now is not the pursuit of profit alone. It is robust protection of assets and investment in the next generation, drawing capital from around the world to this turbulent ground of the Middle East and putting to work the knowledge we have gained crossing the rough seas of history.',
+              'As it was for us, a crisis always turns into an opportunity. Precisely because the world is uncertain, we intend to hold to the transparency and discipline of a global standard — NASDAQ — and to become the bridge that carries the assets entrusted to us into the future.',
+              'Tomoyuki Kawana, who has come through twenty years of upheaval, and our team will once again aim for the great summit of a NASDAQ listing. From the Middle East to the world. With sound strategy and an indomitable spirit that turns adversity into sustenance, let us create the asset value of the future together.',
+            ],
+          },
+        ],
+        company: 'Japan Worldlink DWC-LLC',
+        name: 'Tomoyuki Kawana',
+        role: 'Representative Director & Chairman',
+      },
       whyEyebrow: 'WHY PARTNER WITH JWD',
       whySub: 'JWDが選ばれる理由',
       whyTitle: 'Two markets, bridged in your language',
@@ -422,6 +451,7 @@ export const STRINGS = {
       body: '日本とドバイ、その両方を母語で、一貫した視点で語れる数少ないパートナー。ご相談は完全紹介制。あとは私たちが導きます。',
       ctaPrimary: 'ご相談のご予約',
       ctaSecondary: '投資ガイドをダウンロード',
+      support: '※弊社は日本人スタッフによる日本語サポートにも対応しておりますので、ご安心ください。',
       platformsLabel: '提携プラットフォーム',
       stats: [
         ['5年', 'ドバイでの活動年数'],
@@ -574,13 +604,41 @@ export const STRINGS = {
       ],
     },
     promo: {
-      advisoryEyebrow: 'トップ・リーダーからの直接のご案内',
-      advisorySub: 'FOUNDER-LED ADVISORY',
-      advisoryTitle: '失敗も成功も、次の投資家への道しるべに。',
-      advisoryBody: 'JWDインベストメント・川名智はドバイに住み、投資し、子を育てる。ハート・オブ・ヨーロッパへの個人投資家として、当事者の視点で語ります。ご相談は完全紹介制。まずはお問い合わせください。',
-      advisoryCta: 'ご相談のご予約',
-      advisorName: '川名 智 (Tomo Kawana)',
-      advisorRole: 'JWDインベストメント',
+      chairman: {
+        eyebrow: '会長からのご挨拶',
+        sub: 'A MESSAGE FROM OUR CHAIRMAN',
+        title: '激動の時代を乗り越え、次代の資産価値を創る',
+        lead: '「中東という荒波の中で培った、揺るぎない投資眼と不屈の精神」',
+        blocks: [
+          {
+            heading: '',
+            paragraphs: [
+              '1990年の湾岸戦争から始まった激動の35年間。私は2006年にドバイへ拠点を移し、この中東という「世界の交差点」でビジネスの挑戦を続けてまいりました。',
+              '中東のビジネス環境は常にダイナミックです。イラク戦争やシリア空爆、そして近年のロシア・ウクライナ戦争やガザ戦争、さらには2026年のイランを巡る情勢に至るまで、私たちは常に地政学的リスクと隣り合わせにあります。また、リーマンショックやドバイショックといった経済の大きな揺り戻しも、この地で肌で感じてきました。',
+              'しかし、私が経営者として最も痛感したのは、2020年のコロナ・パンデミックの経験です。',
+            ],
+          },
+          {
+            heading: '――見えない脅威が教えてくれた「本当の強さ」',
+            paragraphs: [
+              '自分の判断ミスや経営上の課題であれば、自らの修正能力で立て直すことができます。しかし、パンデミックという、社会のインフラが物理的に停止する状況は別次元でした。',
+              '「EXPO 2020」に向けて全精力を傾けていた矢先の開催延期。ホテルや民泊の予約は2年先までキャンセルとなり、ロックダウン、外出禁止令、建設停止、取引先の倒産と、まさに「売上がゼロ」になり、ビジネスの血流が止まる瞬間を目の当たりにしました。社員を鼓舞し、団結して立ち向かうという経営の基本戦術すら許されない、孤独で過酷な時間でした。',
+              'かつて一度は断念せざるを得なかった「NASDAQ上場」という目標。あの時、全てを失いかけたという事実は、決して挫折の記憶ではありません。むしろ、どれほどの危機にあっても「生き残り、再び立ち上がる」という、私たちファミリーオフィスおよび投資会社にとって最も重要な「レジリエンス」という財産を刻み込みました。',
+            ],
+          },
+          {
+            heading: '――次のステージへ：信頼と挑戦のその先へ',
+            paragraphs: [
+              '私たちが現在目指しているのは、単なる利益の追求ではありません。中東という激動の地で、世界中の資本を呼び込み、歴史の荒波を越えてきた私たちの知見を活かした「強固な資産防衛」と「次代への投資」です。',
+              'かつての私たちがそうであったように、危機は必ずチャンスに転じます。不確実な世界情勢だからこそ、私たちは世界基準（NASDAQ）の透明性と規律を持ち、皆様の大切な資産を未来へつなぐ架け橋となりたいと考えています。',
+              '激動の20年を乗り越えてきた川名智之と、我々のチームは、再びNASDAQ上場という大いなる頂を目指します。中東の地から世界へ。確かな戦略と、逆境を糧にする不屈の精神で、共に未来の資産価値を創造してまいりましょう。',
+            ],
+          },
+        ],
+        company: 'Japan Worldlink DWC-LLC',
+        name: '川名 智之（Tomoyuki Kawana）',
+        role: '代表取締役会長',
+      },
       whyEyebrow: 'JWDが選ばれる理由',
       whySub: 'WHY PARTNER WITH JWD',
       whyTitle: '二つの市場を、母語で結ぶ',

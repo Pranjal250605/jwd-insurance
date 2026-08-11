@@ -33,7 +33,7 @@ JWD is NOT a regulated wealth manager/asset manager with AUM, and is NOT regulat
 - Home hero: "Two horizons, one golden bridge" headline, consultation CTA, investment guide download, Equiti & AIX partner cards, real stats (5 yrs / ¥10B+ / 120+ / 7%), a Heart of Europe flagship spotlight with Dubai facts (0% tax, 7% yield, 6%+ population growth, 100% freehold ownership).
 - "Trade with Equiti" section: 7 tradable markets, each linking to the official Equiti product page.
 - "Real Estate Portfolio" section: Dubai Property Portfolio (curated properties) with Bayut / Property Finder links, and The Heart of Europe flagship project.
-- Founder-led advisory: Tomo Kawana's direct involvement, by-introduction consultations.
+- Chairman's message ("A message from our chairman"): Tomoyuki Kawana (川名 智之), Representative Director & Chairman of Japan Worldlink DWC-LLC, on 35 years in the Middle East since the 1990 Gulf War, moving to Dubai in 2006, the COVID/EXPO 2020 shock, resilience, and aiming again at a NASDAQ listing.
 - Why partner with JWD: fluent in both markets, first-hand as an owner, one desk for everything.
 - What we do: Dubai Real Estate, Heart of Europe, Investment Funds, Family Office — one coordinated team, not separate specialists per deal.
 - Two markets, one team: Nagoya HQ + Dubai presence (not a global office network).

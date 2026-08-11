@@ -93,8 +93,11 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
           <p className={`${lang === 'ja' ? '' : 'font-jp'} text-[21.5px] leading-[1.7] text-slate-700 mb-7 max-w-xl tracking-wide`}>
             {t.hero.tagline}
           </p>
-          <p className="text-[20.5px] leading-[1.65] text-slate-600 max-w-xl mb-10">
+          <p className="text-[20.5px] leading-[1.65] text-slate-600 max-w-xl mb-5">
             {t.hero.body}
+          </p>
+          <p className="text-[15.5px] leading-[1.7] text-slate-500 max-w-xl mb-9">
+            {t.hero.support}
           </p>
           <div className="flex items-center gap-4 flex-wrap">
             <button data-magnetic className="cta-primary px-7 h-12 rounded-sm text-[12px] font-bold tracking-[0.14em]">
