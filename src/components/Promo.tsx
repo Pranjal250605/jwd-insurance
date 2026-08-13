@@ -26,7 +26,7 @@ function withEmphasis(text: string) {
 }
 
 export default function Promo() {
-  const { lang, t } = useT();
+  const { t } = useT();
   const c = t.promo.chairman;
 
   return (
@@ -79,12 +79,13 @@ export default function Promo() {
               </div>
             ))}
 
+            {/* 08.13 supersedes 08.11: the two signatures are one set and
+                both appear in either language, rather than swapping by page. */}
             <div className="clear-both flex justify-end pt-10">
-              <img
-                src={lang === 'ja' ? '/signature-ja.png' : '/signature-en.png'}
-                alt={c.name}
-                className={lang === 'ja' ? 'h-[68px] w-auto' : 'h-[46px] w-auto'}
-              />
+              <div className="flex flex-col items-end gap-1.5">
+                <img src="/signature-ja.png" alt={c.name} className="h-[64px] w-auto" />
+                <img src="/signature-en.png" alt="" aria-hidden="true" className="h-[38px] w-auto mr-1" />
+              </div>
             </div>
           </div>
         </div>
