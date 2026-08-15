@@ -79,6 +79,15 @@ export const STRINGS = {
         { id: 'forex', title: 'Forex Expo 2025 Winner’s Award', note: ' (video)' },
         { id: 'inheritance', title: 'Inheritance, passed on well', note: ' (video)' },
       ],
+      moreVideosLabel: 'EQUITI IN ACTION',
+      moreVideos: [
+        { id: 'eq-about', title: 'About Equiti' },
+        { id: 'eq-station', title: 'Equiti Station' },
+        { id: 'eq-football', title: 'Football partnership' },
+        { id: 'eq-euroleague', title: 'EuroLeague basketball' },
+        { id: 'eq-polo', title: 'EMAAR Polo Cup 2026' },
+        { id: 'eq-takethewin', title: 'Take the Win' },
+      ],
       stripLabel: 'EQUITI · IN THE FIELD',
       stats: [
         ['5 yrs', 'Years operating in Dubai'],
@@ -473,6 +482,15 @@ export const STRINGS = {
       videos: [
         { id: 'forex', title: 'Forex Expo 2025 Winner’s Award', note: '（ビデオ）' },
         { id: 'inheritance', title: '有益な遺産相続を', note: '（ビデオ）' },
+      ],
+      moreVideosLabel: 'EQUITIの活動',
+      moreVideos: [
+        { id: 'eq-about', title: 'Equitiという会社' },
+        { id: 'eq-station', title: 'Equiti Station' },
+        { id: 'eq-football', title: 'サッカー・パートナーシップ' },
+        { id: 'eq-euroleague', title: 'ユーロリーグ・バスケットボール' },
+        { id: 'eq-polo', title: 'EMAAR ポロカップ 2026' },
+        { id: 'eq-takethewin', title: 'Take the Win' },
       ],
       stripLabel: 'EQUITI · IN THE FIELD',
       stats: [
