@@ -62,13 +62,24 @@ export const STRINGS = {
     },
     hero: {
       eyebrow: 'FIRST CALL PARTNER · EST. 2020',
-      headline: 'Two horizons, one golden bridge.',
+      headline: 'A golden bridge to greater prosperity',
       tagline: '日本とドバイを結ぶ、不動産×資産形成。',
       body: 'The rare partner fluent in both markets — guiding your wealth to its next horizon. Cross-border advisory bridging real estate and wealth creation between Japan and Dubai, by introduction only.',
       ctaPrimary: 'BOOK A CONSULTATION',
       ctaSecondary: 'Download Investment Guide',
       support: '※弊社は日本人スタッフによる日本語サポートにも対応しておりますので、ご安心ください。',
       platformsLabel: 'EXECUTION VIA',
+      platformsHeading: 'Grow your assets with the UAE’s top investment firms',
+      platformNotes: [
+        'Equiti — no.1 for trading performance across 16 Middle Eastern countries in 2025',
+        'AIX — based on floors 144 and 146 of the Burj Khalifa, and a Grand Partner of Emirates',
+      ] as [string, string],
+      videosLabel: 'VIDEO',
+      videos: [
+        { id: 'forex', title: 'Forex Expo 2025 Winner’s Award', note: ' (video)' },
+        { id: 'inheritance', title: 'Inheritance, passed on well', note: ' (video)' },
+      ],
+      stripLabel: 'EQUITI · IN THE FIELD',
       stats: [
         ['5 yrs', 'Years operating in Dubai'],
         ['¥10B+', 'Transaction volume'],
@@ -446,13 +457,24 @@ export const STRINGS = {
     },
     hero: {
       eyebrow: 'ファースト・コール・パートナー · 2020年創業',
-      headline: '二つの地平を結ぶ、黄金の架け橋。',
+      headline: 'さらなる豊かさへ\n黄金の架け橋',
       tagline: 'Two horizons, one golden bridge.',
       body: '日本とドバイ、その両方を母語で、一貫した視点で語れる数少ないパートナー。ご相談は完全紹介制。あとは私たちが導きます。',
       ctaPrimary: 'ご相談のご予約',
       ctaSecondary: '投資ガイドをダウンロード',
       support: '※弊社は日本人スタッフによる日本語サポートにも対応しておりますので、ご安心ください。',
       platformsLabel: '提携プラットフォーム',
+      platformsHeading: 'UAEトップの投資会社で資産を運用する！',
+      platformNotes: [
+        '2025年 中東16カ国で運用実績No1のEquiti',
+        'ブルジュハリファ144F, 146Fに拠点を持ちエミレーツ航空とグランドパートナーのAIX',
+      ] as [string, string],
+      videosLabel: 'ビデオ',
+      videos: [
+        { id: 'forex', title: 'Forex Expo 2025 Winner’s Award', note: '（ビデオ）' },
+        { id: 'inheritance', title: '有益な遺産相続を', note: '（ビデオ）' },
+      ],
+      stripLabel: 'EQUITI · IN THE FIELD',
       stats: [
         ['5年', 'ドバイでの活動年数'],
         ['¥10億+', '取引総額'],

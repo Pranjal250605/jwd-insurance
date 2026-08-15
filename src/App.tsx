@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Nav from '@/components/Nav';
 import Hero from '@/components/Hero';
+import PhotoStrip from '@/components/PhotoStrip';
 import Message from '@/components/Message';
 import Markets from '@/components/Markets';
 import RealEstate from '@/components/RealEstate';
@@ -23,7 +24,7 @@ const DEFAULTS: TweakValues = {
   accentChroma: 0.08,
   altSurfaceTone: 'cool',
   heroEyebrow: 'FIRST CALL PARTNER · EST. 2020',
-  heroHeadline: 'Two horizons, one golden bridge.',
+  heroHeadline: 'A golden bridge to greater prosperity',
 };
 
 // Allow tooling (puppeteer, deep links) to set the variant via ?theme=equiti
@@ -92,6 +93,7 @@ export default function App() {
       ) : (
         <>
           <Hero eyebrow={tweaks.heroEyebrow} headline={tweaks.heroHeadline} />
+          <PhotoStrip />
           <Message />
           <Markets />
           <RealEstate />

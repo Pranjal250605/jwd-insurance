@@ -1,4 +1,5 @@
 import { useT } from '@/i18n';
+import VideoTiles from '@/components/VideoTiles';
 
 interface HeroProps {
   eyebrow?: string;
@@ -87,7 +88,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
       <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20 lg:py-24 grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-center">
         <div className="relative z-10">
           <div className="eyebrow-rule text-[12px] font-semibold tracking-[0.22em] mb-7" style={{ color: 'var(--accent-deep)' }}>{eyebrowText}</div>
-          <h1 className={`font-serif ${lang === 'ja' ? 'fluid-hero-ja leading-[1.2]' : 'fluid-hero-en leading-[1.05]'} font-medium text-slate-900 tracking-[-0.015em] mb-5`} style={{ textWrap: 'balance' } as React.CSSProperties}>
+          <h1 className={`font-serif whitespace-pre-line ${lang === 'ja' ? 'fluid-hero-ja leading-[1.2]' : 'fluid-hero-en leading-[1.05]'} font-medium text-slate-900 tracking-[-0.015em] mb-5`} style={{ textWrap: 'balance' } as React.CSSProperties}>
             {headlineText}
           </h1>
           <p className={`${lang === 'ja' ? '' : 'font-jp'} text-[21.5px] leading-[1.7] text-slate-700 mb-7 max-w-xl tracking-wide`}>
@@ -109,26 +110,35 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             </button>
           </div>
 
-          <div className="mt-10">
-            <div className="text-[11px] font-bold tracking-[0.22em] text-slate-400 mb-3">{t.hero.platformsLabel}</div>
-            <div className="grid sm:grid-cols-2 gap-4 max-w-xl">
-              {t.products.platforms.map((p) => (
-                <a
-                  key={p.name}
-                  href={p.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between rounded-lg px-5 py-4 border-2 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)]"
-                  style={{ borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
-                >
-                  <div>
-                    <div className="text-[10px] font-bold tracking-[0.18em] mb-1 opacity-70" style={{ color: 'var(--accent-deep)' }}>{p.tag}</div>
-                    <div className="font-serif text-[22px] font-semibold tracking-tight leading-none" style={{ color: 'var(--accent-deep)' }}>{p.name}</div>
-                  </div>
-                  <span className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ background: 'var(--accent-deep)' }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2"><path d="M7 17L17 7M9 7h8v8" /></svg>
-                  </span>
-                </a>
+          {/* Platform block, 08.24 revision: a selling headline, then one row
+              per platform pairing its claim with the card it links to. The
+              plain "EXECUTION VIA" label the cards used to sit under is gone. */}
+          <div className="mt-10 max-w-xl">
+            <h2 className="text-[21px] sm:text-[23px] font-bold leading-[1.4] mb-6" style={{ color: 'var(--accent-deep)' }}>
+              {t.hero.platformsHeading}
+            </h2>
+            <div className="flex flex-col gap-4">
+              {t.products.platforms.map((p, i) => (
+                <div key={p.name} className="grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-5 items-center">
+                  <p className="text-[15px] leading-[1.6] font-semibold text-slate-800">
+                    {t.hero.platformNotes[i]}
+                  </p>
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between gap-4 rounded-lg px-5 py-4 border-2 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)] sm:w-[248px]"
+                    style={{ borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
+                  >
+                    <span className="min-w-0">
+                      <span className="block text-[10px] font-bold tracking-[0.18em] mb-1 opacity-70" style={{ color: 'var(--accent-deep)' }}>{p.tag}</span>
+                      <span className="block font-serif text-[22px] font-semibold tracking-tight leading-none" style={{ color: 'var(--accent-deep)' }}>{p.name}</span>
+                    </span>
+                    <span className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ background: 'var(--accent-deep)' }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2"><path d="M7 17L17 7M9 7h8v8" /></svg>
+                    </span>
+                  </a>
+                </div>
               ))}
             </div>
           </div>
@@ -140,6 +150,10 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                 <div className="text-[12px] text-slate-500 leading-tight mt-1">{b}</div>
               </div>
             ))}
+          </div>
+
+          <div className="mt-10">
+            <VideoTiles />
           </div>
         </div>
 

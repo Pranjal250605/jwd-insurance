@@ -399,6 +399,28 @@ body::after {
   50%      { transform: translate(24px, -22px) scale(1.06); }
 }
 
+/* — Photo marquee: continuous right-to-left travel —
+   The track holds two identical rows, so translating by -50% lands the second
+   row exactly where the first started and the loop is seamless. Paused on
+   hover so a visitor can actually look at a photo. */
+.photo-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: photo-marquee 90s linear infinite;
+}
+.photo-marquee__row {
+  display: flex;
+  gap: 12px;
+  padding-right: 12px;
+  margin: 0;
+  list-style: none;
+}
+.photo-marquee:hover .photo-marquee__track { animation-play-state: paused; }
+@keyframes photo-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
 /* — Count-up numerals: tabular figures so width never jitters — */
 [data-count] { font-variant-numeric: tabular-nums; }
 
@@ -540,4 +562,7 @@ body::after {
   .spotlight::before, .spotlight--wash::after,
   .img-zoom img, [data-magnetic] { transition: none; }
   [data-magnetic] { transform: none !important; }
+  /* A marquee is pure motion — stop it and let the row be scrolled by hand. */
+  .photo-marquee__track { animation: none; }
+  .photo-marquee { overflow-x: auto; }
 }
