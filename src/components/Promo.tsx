@@ -82,9 +82,13 @@ export default function Promo() {
             {/* 08.13 supersedes 08.11: the two signatures are one set and
                 both appear in either language, rather than swapping by page. */}
             <div className="clear-both flex justify-end pt-10">
-              <div className="flex flex-col items-end gap-1.5">
-                <img src="/signature-ja.png" alt={c.name} className="h-[64px] w-auto" />
-                <img src="/signature-en.png" alt="" aria-hidden="true" className="h-[38px] w-auto mr-1" />
+              {/* 08.16: both marks are set to one shared width so the English
+                  signature spans the same measure as the Japanese one, rather
+                  than sitting visibly short beneath it. Heights follow from
+                  each file's own aspect ratio. */}
+              <div className="flex flex-col items-end gap-1.5 w-[224px]">
+                <img src="/signature-ja.png" alt={c.name} className="w-full h-auto" />
+                <img src="/signature-en.png" alt="" aria-hidden="true" className="w-full h-auto" />
               </div>
             </div>
           </div>

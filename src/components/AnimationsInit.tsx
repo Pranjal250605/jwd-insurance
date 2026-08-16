@@ -27,19 +27,19 @@ export default function AnimationsInit() {
       const heroBody    = heroJP?.nextElementSibling as HTMLElement | null;
 
       const heroTl = gsap.timeline({ defaults: { ...SNAP } });
-      if (heroEyebrow) heroTl.from(heroEyebrow, { y: 20, opacity: 0, duration: 0.8 });
-      if (heroH1)      heroTl.from(heroH1,      { y: 30, opacity: 0, duration: 1.0 }, '-=0.5');
-      if (heroJP)      heroTl.from(heroJP,      { y: 20, opacity: 0, duration: 0.8 },  '-=0.6');
-      if (heroBody)    heroTl.from(heroBody,    { y: 20, opacity: 0, duration: 0.8 }, '-=0.6');
+      if (heroEyebrow) heroTl.from(heroEyebrow, { y: 20, opacity: 0, duration: 0.5 });
+      if (heroH1)      heroTl.from(heroH1,      { y: 30, opacity: 0, duration: 0.6 }, '-=0.5');
+      if (heroJP)      heroTl.from(heroJP,      { y: 20, opacity: 0, duration: 0.5 },  '-=0.6');
+      if (heroBody)    heroTl.from(heroBody,    { y: 20, opacity: 0, duration: 0.5 }, '-=0.6');
 
       const heroCTAs = document.querySelectorAll<HTMLElement>('section h1 ~ div.flex.items-center.gap-4 > *');
       if (heroCTAs.length) {
-        heroTl.from(heroCTAs, { y: 20, opacity: 0, duration: 0.8, stagger: 0.1, ...SNAP }, '-=0.5');
+        heroTl.from(heroCTAs, { y: 20, opacity: 0, duration: 0.5, stagger: 0.05, ...SNAP }, '-=0.5');
       }
 
       const heroStats = document.querySelectorAll<HTMLElement>('[data-anim="hero-stats"] > *');
       if (heroStats.length) {
-        heroTl.from(heroStats, { y: 20, opacity: 0, duration: 0.8, stagger: 0.1, ...SNAP }, '-=0.6');
+        heroTl.from(heroStats, { y: 20, opacity: 0, duration: 0.5, stagger: 0.05, ...SNAP }, '-=0.6');
       }
 
       // ── Hero visual entrance ─────────────────────────────────────────
@@ -75,8 +75,8 @@ export default function AnimationsInit() {
         const reveal  = [eyebrow, heading, body].filter((el): el is HTMLElement => el != null);
         if (!reveal.length) return;
         gsap.from(reveal, {
-          scrollTrigger: { trigger: panel, start: 'top 80%', toggleActions: 'play none none reverse' },
-          y: 30, opacity: 0, duration: 1.0, stagger: 0.12, ...SNAP,
+          scrollTrigger: { trigger: panel, start: 'top 90%', once: true },
+          y: 30, opacity: 0, duration: 0.6, stagger: 0.06, ...SNAP,
         });
       });
 
@@ -84,8 +84,8 @@ export default function AnimationsInit() {
       document.querySelectorAll<HTMLElement>('.grid.md\\:grid-cols-3, .grid.md\\:grid-cols-2').forEach((grid) => {
         if (!grid.children.length) return;
         gsap.from(Array.from(grid.children), {
-          scrollTrigger: { trigger: grid, start: 'top 82%', toggleActions: 'play none none reverse' },
-          y: 40, opacity: 0, duration: 1.0, stagger: 0.12,
+          scrollTrigger: { trigger: grid, start: 'top 90%', once: true },
+          y: 40, opacity: 0, duration: 0.6, stagger: 0.06,
           ease: 'power4.out', clearProps: 'opacity,transform',
         });
       });
@@ -93,8 +93,8 @@ export default function AnimationsInit() {
       // ── Rounded feature panels ───────────────────────────────────────
       document.querySelectorAll<HTMLElement>('section .rounded-\\[20px\\]').forEach((panel) => {
         gsap.from(panel, {
-          scrollTrigger: { trigger: panel, start: 'top 84%', toggleActions: 'play none none reverse' },
-          y: 30, opacity: 0, scale: 0.98, duration: 1.1,
+          scrollTrigger: { trigger: panel, start: 'top 92%', once: true },
+          y: 30, opacity: 0, scale: 0.98, duration: 0.65,
           ease: 'power4.out', clearProps: 'opacity,transform',
         });
       });
@@ -103,8 +103,8 @@ export default function AnimationsInit() {
       const officeCards = document.querySelectorAll<HTMLElement>('[data-anim="office-diagram"] > .absolute.bg-white.rounded-lg');
       if (officeCards.length) {
         gsap.from(officeCards, {
-          scrollTrigger: { trigger: officeCards[0].parentElement!, start: 'top 78%', toggleActions: 'play none none reverse' },
-          scale: 0.85, opacity: 0, duration: 0.9, stagger: 0.1,
+          scrollTrigger: { trigger: officeCards[0].parentElement!, start: 'top 90%', once: true },
+          scale: 0.85, opacity: 0, duration: 0.55, stagger: 0.05,
           ease: 'back.out(1.2)', clearProps: 'opacity,transform',
         });
       }
@@ -116,16 +116,16 @@ export default function AnimationsInit() {
       const researchCards = document.querySelectorAll<HTMLElement>('[data-anim="research-cards"] > .absolute.right-0.bg-white.rounded-xl');
       if (researchCards.length) {
         gsap.from(researchCards, {
-          scrollTrigger: { trigger: researchCards[0].parentElement!, start: 'top 80%', toggleActions: 'play none none reverse' },
-          x: 40, opacity: 0, duration: 1.0, stagger: 0.14,
+          scrollTrigger: { trigger: researchCards[0].parentElement!, start: 'top 90%', once: true },
+          x: 40, opacity: 0, duration: 0.6, stagger: 0.14,
           ease: 'power4.out', clearProps: 'opacity',
         });
       } else {
         const stackedResearchCards = document.querySelectorAll<HTMLElement>('[data-anim="research-cards"].flex > *');
         if (stackedResearchCards.length) {
           gsap.from(stackedResearchCards, {
-            scrollTrigger: { trigger: stackedResearchCards[0].parentElement!, start: 'top 82%', toggleActions: 'play none none reverse' },
-            y: 20, opacity: 0, duration: 0.8, stagger: 0.1,
+            scrollTrigger: { trigger: stackedResearchCards[0].parentElement!, start: 'top 90%', once: true },
+            y: 20, opacity: 0, duration: 0.5, stagger: 0.05,
             ease: 'power4.out', clearProps: 'opacity,transform',
           });
         }
@@ -135,8 +135,8 @@ export default function AnimationsInit() {
       const langChips = document.querySelectorAll<HTMLElement>('[data-anim="lang-chips"] > *');
       if (langChips.length) {
         gsap.from(langChips, {
-          scrollTrigger: { trigger: langChips[0].parentElement!, start: 'top 82%', toggleActions: 'play none none reverse' },
-          y: 20, opacity: 0, duration: 0.8, stagger: 0.08, ease: 'power4.out', clearProps: 'opacity,transform',
+          scrollTrigger: { trigger: langChips[0].parentElement!, start: 'top 90%', once: true },
+          y: 20, opacity: 0, duration: 0.5, stagger: 0.08, ease: 'power4.out', clearProps: 'opacity,transform',
         });
       }
 
@@ -144,8 +144,8 @@ export default function AnimationsInit() {
       const regulatorBadges = document.querySelectorAll<HTMLElement>('.px-6.py-4.bg-white.rounded-md.border');
       if (regulatorBadges.length) {
         gsap.from(regulatorBadges, {
-          scrollTrigger: { trigger: regulatorBadges[0].parentElement!, start: 'top 84%', toggleActions: 'play none none reverse' },
-          y: 20, opacity: 0, duration: 0.8, stagger: 0.08, ease: 'power4.out', clearProps: 'opacity,transform',
+          scrollTrigger: { trigger: regulatorBadges[0].parentElement!, start: 'top 92%', once: true },
+          y: 20, opacity: 0, duration: 0.5, stagger: 0.08, ease: 'power4.out', clearProps: 'opacity,transform',
         });
       }
 
@@ -153,8 +153,8 @@ export default function AnimationsInit() {
       const footerCols = document.querySelectorAll<HTMLElement>('footer .grid > div');
       if (footerCols.length) {
         gsap.from(footerCols, {
-          scrollTrigger: { trigger: 'footer', start: 'top 85%', toggleActions: 'play none none reverse' },
-          y: 24, opacity: 0, duration: 0.9, stagger: 0.1, ease: 'power4.out', clearProps: 'opacity,transform',
+          scrollTrigger: { trigger: 'footer', start: 'top 92%', once: true },
+          y: 24, opacity: 0, duration: 0.55, stagger: 0.05, ease: 'power4.out', clearProps: 'opacity,transform',
         });
       }
 
@@ -174,6 +174,16 @@ export default function AnimationsInit() {
     // as a second guard. (Declared outside gsap.context because it's a
     // plain DOM listener, not a GSAP tween — ctx.revert() only tracks the
     // latter, so this needs its own cleanup.)
+    // The photo band and the eight video posters load lazily, landing after
+    // first paint and changing the page height. That leaves ScrollTrigger's
+    // cached trigger positions stale, and a trigger that never fires would
+    // strand its content at the opacity:0 that .from() applies up front —
+    // permanently blank. Re-sync once everything has loaded, with a couple of
+    // late passes to cover slow media.
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener('load', refresh);
+    const lateRefreshes = [800, 2000, 4000].map((t) => setTimeout(refresh, t));
+
     let lastWidth = window.innerWidth;
     let debounceId: ReturnType<typeof setTimeout> | undefined;
     const onResize = () => {
@@ -192,6 +202,8 @@ export default function AnimationsInit() {
     return () => {
       ctx.revert();
       clearTimeout(debounceId);
+      lateRefreshes.forEach(clearTimeout);
+      window.removeEventListener('load', refresh);
       window.removeEventListener('resize', onResize);
       window.removeEventListener('orientationchange', onOrientation);
     };
