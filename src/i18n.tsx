@@ -45,6 +45,166 @@ export function useLang() {
 
 export const STRINGS = {
   en: {
+    /* 08.18 revision, page ②: the interstitial the hero's "grow your assets
+       with a top UAE firm" button leads to. The Japanese below is the client's
+       P②ーDraft wording, verbatim; this English is a faithful rendering of it
+       for EN mode and should be reviewed by a native speaker before launch. */
+    consent: {
+      title: 'Confirmation of intent and important notices before viewing asset-management information',
+      lead: 'Introduction',
+      intro: [
+        'This page introduces explanatory materials, videos and information covering overseas asset management, investment environments, overseas real estate, wealth building, wealth preservation, wealth succession and related subjects, for clients who wish to know more.',
+        'Overseas financial markets, property markets and asset-management environments may differ from those in Japan in their frameworks, mechanisms, taxation, commercial practice, risks and other conditions.',
+        'For that reason, we ask that the information provided beyond this page is not simply received passively: we place importance on you confirming its content yourself, and gathering, comparing and considering the information you need on your own initiative.',
+        'JWD Investment LLC (“JWD”) believes it is important that each client, having obtained sufficient information, judges carefully in light of their own objectives, financial position, investment experience, risk tolerance and other circumstances.',
+        'Accordingly, the asset-management content beyond this page is placed behind this confirmation screen, so that it is viewed voluntarily and only by clients who have said they “want to check detailed information”, “want to see an explanation”, or “want to know about managing assets overseas”.',
+        'Please review this page, and proceed only if you understand and accept the items below and wish, of your own volition, to view the explanatory videos and other materials — tick the box, then continue.',
+      ],
+      sections: [
+        {
+          heading: '1. Gathering information for yourself',
+          body: [
+            'When considering asset management, it is important not to judge on a single source: gather what you need from several sources and compare and weigh the content yourself.',
+            'This page offers videos and materials explaining overseas asset management and investment environments as one such opportunity to gather information.',
+            'Whether or not you view this content is entirely for you to decide of your own free will.',
+            'JWD does not compel any client to view particular information, nor does it treat any client unfavourably for choosing not to view the information beyond this page.',
+            'It exists so that clients who think “I want to know more”, “I want to check the information first”, or “I want material on which to make my own judgement” can view it by their own choice.',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '2. Reviewing information and deciding to invest are separate things',
+          body: [
+            'Viewing the explanatory videos, materials and other content provided beyond this page does not mean you are thereby making an investment, entering a contract, submitting an application, committing funds or carrying out any other transaction.',
+            'Please first review the information, understand it fully, and then judge whether it is information you need.',
+            'Deciding, after reviewing it, not to invest is equally your own free judgement.',
+            'JWD does not compel any client to invest; whether to invest is, as a matter of principle, for you to decide once you have reviewed sufficient information.',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '3. On managing assets overseas',
+          body: [
+            'When considering asset management overseas, you need to understand frameworks and environments that differ from products and services within Japan.',
+            'Legal systems, regulation, taxation, foreign exchange, financial markets, property markets, contract regimes, and operators’ qualifications and licences may all differ by country and region.',
+            'Depending on the investment, risks may include price volatility, exchange-rate movement, liquidity, credit, country risk, business risk and others.',
+            'You are therefore encouraged not to make an investment decision on the information on this page alone, but to review further materials as needed and to confirm what you need — including by consulting professionals.',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '4. About the information JWD provides',
+          body: [
+            'The explanatory videos and materials JWD provides are intended to help you deepen your understanding of overseas asset management and investment environments.',
+            'Their content is based on information verifiable at the time of provision; economic conditions, financial, property and currency markets, and each country’s systems and policies may change.',
+            'Past performance, past market conditions and previously provided information are therefore no guarantee of the same outcome in future.',
+            'Depending on the investment, principal may not be guaranteed.',
+            'Please make your own judgement only after fully confirming each product’s terms, contractual content, costs, fees, risks, cancellation conditions and other material matters.',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '5. Confirmation of your own free will',
+          body: [
+            'If you view the explanatory videos beyond this page, please confirm that you are interested in the information JWD provides and wish to see it in more detail.',
+            'This confirmation concerns the viewing of information itself; viewing a video does not by itself mean you have decided to invest in any particular product.',
+            'Even after ticking the box, you remain free to decide — having reviewed the explanation — not to invest, to consider further, to consult a professional, or to request additional information.',
+            'Please make whatever judgement you need once you have reviewed sufficient information.',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '6. A confirmation that respects your own judgement',
+          body: [
+            'JWD respects each client’s own information gathering and judgement.',
+            'This page therefore carries a confirmation item establishing your intent before you view asset-management information.',
+            'That item exists to confirm that you wish to view the information beyond this page.',
+            'Please confirm that you are requesting this content in order to check information you need — not that JWD has unilaterally asked you to view it.',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '7. JWD Investment LLC’s location and business standing',
+          body: [
+            'JWD Investment LLC is a company located in the United Arab Emirates (UAE).',
+            'JWD conducts its business under the licences and approvals required by the relevant laws and applicable rules of the UAE.',
+            'The legal and registration regimes applying to financial and investment businesses differ between Japan and the UAE.',
+            'Please therefore confirm for yourself, as needed, JWD’s location, its qualifications and licences in the UAE, its registration status within Japan, and other such matters.',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '8. Registration as a financial instruments business in Japan',
+          body: [
+            'Stated expressly as a material matter.',
+            'JWD Investment LLC does not hold Type II Financial Instruments Business registration with Japan’s Financial Services Agency.',
+            'Please understand this point in advance.',
+            'Japan’s registration regime for financial instruments businesses and the UAE’s licensing regime for operators rest on different legal systems.',
+            'The licences JWD holds in the UAE are therefore not presented as equivalent to financial instruments business registration with Japan’s Financial Services Agency.',
+            'Ticking the box on this confirmation screen does not mean JWD holds Japanese financial instruments business registration, nor does it waive any registration or other obligation required by law.',
+            'Proceed to the next screen only if, understanding this, you still wish to continue viewing the information.',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '9. Your final confirmation',
+          body: ['Please confirm all of the following items.'],
+          bullets: [
+            'I wish to check more detailed information about overseas asset management and investment environments for myself.',
+            'I wish, of my own volition, to view the explanatory videos and materials provided by JWD Investment LLC.',
+            'I understand that viewing explanatory videos and actually investing, contracting or applying are separate things.',
+            'I understand that investment carries risk and that future performance or profit is not guaranteed.',
+            'I understand that I may review additional materials as needed, and consult lawyers, tax accountants, financial, investment or other professionals.',
+            'I have confirmed that JWD Investment LLC is a company located in the UAE and does not hold Type II Financial Instruments Business registration with Japan’s Financial Services Agency.',
+            'Having confirmed and understood the above, I wish of my own volition to view the asset-management explanatory videos and information content provided by JWD Investment LLC.',
+          ],
+        },
+        {
+          heading: '10. An important request regarding viewing this information',
+          body: [
+            'If anything on this page is unclear to you, please resolve your questions before ticking the box.',
+            'In particular, where you have questions about the investment target, contract terms, costs, fees, risks, redemption and cancellation conditions, tax treatment or legal standing, we recommend confirming what you need before judging.',
+            'Please make investment decisions carefully, in light of your own financial position, investment objectives, investment horizon, risk tolerance and other circumstances.',
+            'The confirmation on this page does not ask you to invest.',
+            'It confirms only that you wish to check information you need, and that you are beginning to view the explanatory videos on that basis.',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '11. Final confirmation of intent',
+          body: [
+            'If, having confirmed the above and understood JWD Investment LLC’s location, its business standing, whether it holds financial instruments business registration in Japan, the risks accompanying investment and other material matters, you still wish to review the asset-management explanatory videos and information content of your own volition, please tick the box below and continue.',
+          ],
+          bullets: [],
+        },
+      ],
+      quote: '“I have confirmed the above and understand JWD Investment LLC’s business standing and whether it holds financial instruments business registration in Japan. I also wish, of my own volition, to view the asset-management information JWD Investment LLC provides.”',
+      agreeLabel: '* I have confirmed and understood the above, and wish of my own volition to view the explanatory videos.',
+      notes: [
+        '· This confirmation establishes that you wish to view information; it does not itself constitute an investment contract, a financial instruments transaction contract, or any other contract.',
+        '· Nor does making this confirmation waive any registration, licensing or other obligation required by applicable law.',
+      ],
+      closing: 'Please proceed to the next page only if you have understood and confirmed the above.',
+      button: 'I agree',
+      hint: 'Please tick the box above to continue.',
+      scrollHint: 'Scroll to the end to continue',
+      back: 'Back',
+    },
+    howTo: {
+      eyebrow: 'HOW TO INVEST ON EQUITI',
+      sub: 'Equitiでの資産運用の始め方',
+      title: 'Getting started with Equiti',
+      intro: 'Everything below is explanatory material. Nothing here is a solicitation, and no step commits you to anything — our consultations are Japanese-speaking throughout, and by introduction only.',
+      stepLabel: 'STEP',
+      steps: [
+        { title: 'Book a consultation', body: 'We listen first — your objectives, time horizon and risk tolerance — in Japanese, with no obligation.' },
+        { title: 'Open your account', body: 'We walk you through Equiti’s identity verification and account opening, and prepare the documents with you.' },
+        { title: 'Fund and begin', body: 'Once the account is live, we set the initial allocation together and begin, at whatever scale you are comfortable with.' },
+        { title: 'Ongoing reporting', body: 'You receive continuing reports and a Japanese-speaking point of contact for as long as the account is open.' },
+      ],
+      platformsTitle: 'Go to the platforms',
+      note: 'Links open an external site. CFD trading carries a significant risk of loss. Always review the offering documents before investing.',
+    },
     nav: {
       regulated: 'BY INTRODUCTION ONLY · NAGOYA & DUBAI',
       portal: 'Client Portal',
@@ -69,6 +229,8 @@ export const STRINGS = {
       ctaSecondary: 'Download Investment Guide',
       support: '※弊社は日本人スタッフによる日本語サポートにも対応しておりますので、ご安心ください。',
       platformsLabel: 'EXECUTION VIA',
+      gateLead: 'Interested in investing?\nClick here',
+      gateButton: 'Grow your assets\nwith a top\nUAE investment firm',
       platformsHeading: 'Grow your assets with the UAE’s top investment firms',
       platformNotes: [
         'Equiti — no.1 for trading performance across 16 Middle Eastern countries in 2025',
@@ -95,6 +257,19 @@ export const STRINGS = {
         ['120+', 'Families & investors advised'],
         ['7%', 'Average target yield'],
       ] as [string, string][],
+      mainLabel: 'DUBAI TODAY',
+      mainImages: [
+        { name: 'Burj Khalifa', area: 'DOWNTOWN DUBAI' },
+        { name: 'Atlantis The Palm', area: 'PALM JUMEIRAH' },
+        { name: 'Burj Al Arab', area: 'JUMEIRAH' },
+        { name: 'The Gate', area: 'DIFC' },
+        { name: 'Private villa', area: 'DUBAI' },
+        { name: 'Floating Seahorse', area: 'THE WORLD ISLANDS' },
+        { name: 'The Heart of Europe', area: 'THE WORLD ISLANDS' },
+        { name: 'The Lost Chambers', area: 'ATLANTIS' },
+        { name: 'Residential tower', area: 'DUBAI' },
+        { name: 'Palm Jumeirah', area: 'DUBAI' },
+      ],
       flagship: 'FLAGSHIP PROJECT',
       flagshipName: 'The Heart of Europe',
       since: 'THE WORLD ISLANDS',
@@ -449,6 +624,162 @@ export const STRINGS = {
   },
 
   ja: {
+    consent: {
+      title: '資産運用に関する情報閲覧にあたってのお客様による意思確認および重要事項',
+      lead: 'はじめに',
+      intro: [
+        '本ページでは、海外における資産運用、投資環境、海外不動産、資産形成、資産保全、資産承継その他の関連情報について、より詳しく知りたいと希望されるお客様に向けて、各種の説明資料・動画・情報コンテンツをご案内しております。',
+        '海外の金融市場や不動産市場、資産運用環境は、日本国内とは制度、仕組み、税制、商慣習、リスクその他の条件が異なる場合があります。',
+        'そのため、本ページ以降で提供される情報については、単に表示された情報を受動的に受け取るのではなく、お客様ご自身が内容を確認し、必要な情報をご自身で収集・比較・検討していただくことを大切にしています。',
+        'JWD Investment LLC（以下「JWD」といいます。）は、お客様一人ひとりが十分な情報を得たうえで、ご自身の目的、資産状況、投資経験、リスク許容度その他の事情を踏まえ、慎重に判断されることが重要であると考えています。',
+        'そのため、本ページ以降の資産運用関連コンテンツについては、お客様ご自身が「詳しい情報を確認したい」「説明を見たい」「海外での資産運用について知りたい」と希望された場合に限り、任意で閲覧いただくための確認画面を設けています。',
+        '本ページの内容をご確認いただき、以下の事項をご理解・ご了承いただいたうえで、ご自身の意思により説明動画等の閲覧を希望される場合に限り、チェックを入れて次へお進みください。',
+      ],
+      sections: [
+        {
+          heading: '1．お客様ご自身による情報収集について',
+          body: [
+            '資産運用を検討するにあたっては、特定の情報だけを確認して判断するのではなく、複数の情報源から必要な情報を収集し、ご自身で内容を比較・検討することが重要です。',
+            '本ページでは、そのような情報収集の機会の一つとして、海外における資産運用や投資環境等について説明する動画・資料等をご用意しています。',
+            'これらのコンテンツをご覧になるかどうかは、お客様ご自身の自由な意思によって決定していただくものです。',
+            'JWDは、お客様に対して特定の情報の閲覧を強制するものではなく、また、お客様が本ページ以降の情報を閲覧しないことを理由として、不利益な取扱いを行うものでもありません。',
+            '「詳しい内容を知りたい」「まずは情報を確認したい」「自分自身で判断するための材料を得たい」と考えられるお客様が、ご自身の意思で情報を閲覧していただくためのものです。',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '2．情報を確認することと、投資を決定することは別のものです',
+          body: [
+            '本ページ以降で提供される説明動画、資料、その他の情報コンテンツを閲覧することは、直ちに投資、契約、申込み、資金拠出その他の取引を行うことを意味するものではありません。',
+            'まず情報を確認し、その内容について十分に理解したうえで、ご自身にとって必要な情報であるかどうかをご判断ください。',
+            'また、情報を閲覧した結果、投資を行わないという判断をされることも、当然にお客様ご自身の自由な判断となります。',
+            'JWDは、お客様に対して投資を強制するものではなく、投資を行うか否かについては、お客様ご自身が十分な情報を確認したうえで判断されることを基本としています。',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '3．海外における資産運用について',
+          body: [
+            '海外での資産運用を検討する場合、日本国内の商品・サービスとは異なる制度や環境について理解する必要があります。',
+            '例えば、対象となる国・地域によって、法制度、規制、税務、為替、金融市場、不動産市場、契約制度、事業者の資格・許認可等が異なる場合があります。',
+            'また、投資対象によっては、価格変動リスク、為替変動リスク、流動性リスク、信用リスク、カントリーリスク、事業リスクその他のリスクが存在する場合があります。',
+            'したがって、本ページに掲載されている情報のみをもって投資判断を行うのではなく、必要に応じて追加の資料を確認し、専門家等への相談も含めて、ご自身に必要な情報を十分に確認されることをお勧めします。',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '4．JWDが提供する情報について',
+          body: [
+            'JWDが提供する説明動画・資料等は、海外における資産運用や投資環境等について理解を深めるための情報提供を目的としています。',
+            '情報の内容については、その時点で確認可能な情報に基づいて提供されますが、経済情勢、金融市場、不動産市場、為替市場、各国の制度・政策その他の環境は変化する可能性があります。',
+            'そのため、過去の実績、過去の市場環境、過去に提供された情報等が、将来において同様に実現することを保証するものではありません。',
+            'また、投資対象によっては元本が保証されない場合があります。',
+            'お客様におかれましては、個々の商品の条件、契約内容、費用、手数料、リスク、解約条件その他の重要事項を十分に確認したうえで、ご自身の判断を行ってください。',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '5．お客様による自由意思の確認',
+          body: [
+            '本ページ以降の説明動画等を閲覧される場合、お客様は、JWDから提供される情報についてご自身が関心を持ち、さらに詳しい内容を確認することを希望していることをご確認ください。',
+            '本確認は、お客様が情報を閲覧すること自体を目的とするものであり、動画を閲覧したことのみをもって、特定の商品への投資を決定したものではありません。',
+            'また、チェックを行った後であっても、説明内容を確認した結果、投資を行わない、さらに検討する、専門家に相談する、追加情報を求める等の判断をすることができます。',
+            'お客様は、十分な情報を確認したうえで、ご自身にとって必要な判断を行ってください。',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '6．お客様の判断を尊重するための確認',
+          body: [
+            'JWDは、お客様ご自身による情報収集と判断を尊重します。',
+            'そのため、本ページでは、資産運用に関する情報をご覧いただく前に、お客様ご自身の意思を確認するためのチェック項目を設けています。',
+            'このチェック項目は、お客様が本ページ以降の情報を閲覧することを希望されていることを確認するためのものです。',
+            'JWDから一方的に情報閲覧を求められたという認識ではなく、お客様ご自身が必要な情報を確認するために、本コンテンツの閲覧を希望されていることをご確認ください。',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '7．JWD Investment LLCの所在地および事業上の位置付けについて',
+          body: [
+            'JWD Investment LLCは、アラブ首長国連邦（UAE）に所在する法人です。',
+            'JWDは、UAEにおける関係法令および適用される規則等に従い、必要なライセンス・許認可等のもとで事業活動を行っています。',
+            '一方、日本とUAEでは、金融・投資関連事業に適用される法制度や登録制度等が異なります。',
+            'そのため、お客様におかれましては、JWDの所在地、UAEにおける事業上の資格・ライセンス、日本国内における登録状況その他の事項について、必要に応じてご自身でも確認してください。',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '8．日本における金融商品取引業の登録について',
+          body: [
+            '重要事項として明示します。',
+            'JWD Investment LLCは、日本の金融庁における第二種金融商品取引業の登録を有しておりません。',
+            'この点について、お客様はあらかじめご理解ください。',
+            '日本国内における金融商品取引業の登録制度と、UAEにおける事業者のライセンス制度は、それぞれ異なる法制度に基づくものです。',
+            'したがって、JWDがUAEにおいて取得しているライセンス等を、日本の金融庁による金融商品取引業登録と同一のものとして表示するものではありません。',
+            'また、本確認画面へのチェックは、JWDに日本の金融商品取引業登録があることを意味するものではなく、また、法令上必要となる登録その他の義務を免除するものでもありません。',
+            '本事項についてご理解いただいたうえで、引き続き情報の閲覧を希望される場合にのみ、次の画面へお進みください。',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '9．お客様による最終確認',
+          body: ['以下の項目をすべてご確認ください。'],
+          bullets: [
+            '私は、海外における資産運用・投資環境等について、より詳しい情報を自分自身で確認したいと考えています。',
+            '私は、JWD Investment LLCが提供する説明動画・資料等について、自らの意思で閲覧を希望しています。',
+            '私は、説明動画等を閲覧することと、実際に投資・契約・申込みを行うことは別のものであることを理解しています。',
+            '私は、投資にはリスクが存在し、将来の運用成果や利益が保証されるものではないことを理解しています。',
+            '私は、必要に応じて追加資料を確認したり、弁護士、税理士、金融・投資その他の専門家に相談したりすることができることを理解しています。',
+            '私は、JWD Investment LLCがUAEに所在する法人であり、日本の金融庁における第二種金融商品取引業の登録を有していないことを確認しました。',
+            '私は、上記の内容を確認・理解したうえで、JWD Investment LLCが提供する資産運用に関する説明動画・情報コンテンツを、自らの意思により閲覧することを希望します。',
+          ],
+        },
+        {
+          heading: '10．情報閲覧に関する重要なお願い',
+          body: [
+            '本ページをご確認いただいたうえで、内容についてご不明な点がある場合には、チェックを行う前に、疑問点を確認してください。',
+            '特に、投資対象、契約条件、費用、手数料、リスク、換金・解約条件、税務上の取扱い、法的な位置付け等について疑問がある場合には、必要な情報を十分に確認してから判断することをお勧めします。',
+            '投資判断は、お客様ご自身の資産状況、投資目的、投資期間、リスク許容度その他の事情を踏まえて慎重に行ってください。',
+            '本ページのチェックは、お客様に投資を行うことを求めるものではありません。',
+            'あくまで、お客様ご自身が必要な情報を確認することを希望し、その意思に基づいて説明動画等の閲覧を開始することについての確認です。',
+          ],
+          bullets: [],
+        },
+        {
+          heading: '11．最終意思確認',
+          body: [
+            '以上の内容を確認し、JWD Investment LLCの所在地、事業上の位置付け、日本における金融商品取引業登録の有無、投資に伴うリスクその他の重要事項について理解したうえで、それでもなお、資産運用に関する説明動画・情報コンテンツをご自身の意思で確認することを希望されるお客様は、下記にチェックを入れて次へお進みください。',
+          ],
+          bullets: [],
+        },
+      ],
+      quote: '「私は、上記の内容を確認し、JWD Investment LLCの事業上の位置付けおよび日本における金融商品取引業登録の有無について理解しました。また、JWD Investment LLCが提供する資産運用関連情報の閲覧を、自らの意思により希望します。」',
+      agreeLabel: '＊上記内容を確認・理解し、自らの意思で説明動画の閲覧を希望します。',
+      notes: [
+        '※本確認は、お客様が情報閲覧を希望されていることを確認するためのものであり、これ自体が投資契約、金融商品取引契約その他の契約の成立を意味するものではありません。',
+        '※また、本確認を行うことによって、適用される法令上の登録・許認可その他の義務が免除されるものではありません。',
+      ],
+      closing: 'ご理解・ご確認いただいたお客様のみ、次のページへお進みください。',
+      button: '合意しました',
+      hint: '上のチェックボックスにチェックを入れてください。',
+      scrollHint: '最後までスクロールしてください',
+      back: '戻る',
+    },
+    howTo: {
+      eyebrow: 'EQUITIでの資産運用の始め方',
+      sub: 'How to invest on Equiti',
+      title: 'Equitiでの資産運用の始め方',
+      intro: '以下はすべて説明のための情報です。勧誘を目的としたものではなく、いずれの段階でもお申し込みの義務は生じません。ご相談は日本語で、完全紹介制にて承ります。',
+      stepLabel: 'STEP',
+      steps: [
+        { title: 'ご相談のご予約', body: 'まずはお話をうかがいます。ご希望、運用期間、リスク許容度を日本語で確認します。お申し込みの義務はありません。' },
+        { title: '口座開設のお手続き', body: 'Equitiの本人確認と口座開設の流れをご案内し、必要書類の準備をご一緒に進めます。' },
+        { title: 'ご入金と運用開始', body: '口座開設後、初期の配分をご一緒に決め、ご無理のない規模から運用を始めていただきます。' },
+        { title: '継続的なレポート', body: '運用開始後も定期的なレポートをお届けし、日本語の担当窓口が継続してサポートします。' },
+      ],
+      platformsTitle: 'プラットフォームへ',
+      note: 'リンクは外部サイトに移動します。CFD取引には重大な損失リスクがあります。お申し込み前に必ず商品説明書をご確認ください。',
+    },
     nav: {
       regulated: '完全紹介制 · 名古屋・ドバイ',
       portal: 'クライアント・ポータル',
@@ -473,6 +804,8 @@ export const STRINGS = {
       ctaSecondary: '投資ガイドをダウンロード',
       support: '※弊社は日本人スタッフによる日本語サポートにも対応しておりますので、ご安心ください。',
       platformsLabel: '提携プラットフォーム',
+      gateLead: '投資にご興味のある方は\nこちらをクリック',
+      gateButton: 'UAEトップの\n投資会社での\n資産運用',
       platformsHeading: 'UAEトップの投資会社で資産を運用する！',
       platformNotes: [
         '2025年 中東16カ国で運用実績No1のEquiti',
@@ -499,6 +832,19 @@ export const STRINGS = {
         ['120+', '支援した投資家・家族'],
         ['7%', '平均目標利回り'],
       ] as [string, string][],
+      mainLabel: 'ドバイの今',
+      mainImages: [
+        { name: 'ブルジュ・ハリファ', area: 'ダウンタウン・ドバイ' },
+        { name: 'アトランティス・ザ・パーム', area: 'パーム・ジュメイラ' },
+        { name: 'ブルジュ・アル・アラブ', area: 'ジュメイラ' },
+        { name: 'ザ・ゲート', area: 'DIFC' },
+        { name: 'プライベート・ヴィラ', area: 'ドバイ' },
+        { name: 'フローティング・シーホース', area: 'ザ・ワールド諸島' },
+        { name: 'ハート・オブ・ヨーロッパ', area: 'ザ・ワールド諸島' },
+        { name: 'ロスト・チェンバーズ', area: 'アトランティス' },
+        { name: 'レジデンシャル・タワー', area: 'ドバイ' },
+        { name: 'パーム・ジュメイラ', area: 'ドバイ' },
+      ],
       flagship: '旗艦プロジェクト',
       flagshipName: 'ハート・オブ・ヨーロッパ',
       since: 'ザ・ワールド諸島',

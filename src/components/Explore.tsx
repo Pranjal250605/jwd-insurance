@@ -1,11 +1,9 @@
 import { useT } from '@/i18n';
-import { useIsBelowLg } from '@/hooks/useMediaQuery';
 
-const RESEARCH_POS = [
-  { accent: 'navy', x: 40, y: 0, rot: -2 },
-  { accent: 'gold', x: 0, y: 90, rot: 1 },
-  { accent: 'slate', x: -20, y: 180, rot: -1.5 },
-];
+/* The cards used to fan out in a rotated cascade. The site reads as a formal
+   financial document, so they now sit flush in a plain vertical column and
+   only the accent colour varies between them. */
+const RESEARCH_ACCENTS = ['navy', 'gold', 'slate'];
 
 const accentBg = (a: string) => {
   if (a === 'gold')  return 'linear-gradient(135deg, var(--secondary), var(--accent-deep))';
@@ -27,12 +25,6 @@ const FEATURE_IMAGES = [
 
 export default function Explore() {
   const { t } = useT();
-  // Below `lg` the research-card cluster switches from an absolutely
-  // positioned, rotated cascade (w-[420px] cards, up to 40/90/180px offsets)
-  // to a plain stacked list. The cascade was sized for the ~600px desktop
-  // column; unscaled, a 420px card inside a ~300px mobile column guarantees
-  // horizontal overflow, so this is a structural switch, not just a resize.
-  const stacked = useIsBelowLg();
 
   return (
     <section className="bg-white">
@@ -60,17 +52,16 @@ export default function Explore() {
               sizes to the intrinsic (unwrapped) width of the truncated card
               titles below, forcing the item — and the whole card — wider
               than its track and overflowing the viewport on mobile. */}
-          <div data-anim="research-cards" className={stacked ? 'flex flex-col gap-3 min-w-0' : 'relative h-[380px]'}>
+          <div data-anim="research-cards" className="flex flex-col gap-4 min-w-0">
             {t.explore.research.map((c, i) => (
               <div
                 key={i}
                 data-spotlight
-                className={`spotlight bg-white rounded-xl shadow-[0_14px_40px_-12px_rgba(var(--shadow-rgb),0.18)] border border-slate-100 p-4 flex items-center gap-4 hover:shadow-[0_22px_55px_-14px_rgba(var(--shadow-rgb),0.28)] transition-shadow ${stacked ? 'w-full' : 'absolute right-0 w-[420px]'}`}
-                style={stacked ? undefined : { transform: `translate(${RESEARCH_POS[i].x}px, ${RESEARCH_POS[i].y}px) rotate(${RESEARCH_POS[i].rot}deg)` }}
+                className="spotlight w-full bg-white rounded-xl shadow-[0_14px_40px_-12px_rgba(var(--shadow-rgb),0.18)] border border-slate-100 p-4 sm:p-5 flex items-center gap-4 hover:shadow-[0_22px_55px_-14px_rgba(var(--shadow-rgb),0.28)] transition-shadow"
               >
                 <div className="w-14 h-[70px] sm:w-16 sm:h-20 rounded-md flex-shrink-0 flex items-center justify-center text-white font-serif font-medium text-[20px] sm:text-[24px]"
-                  style={{ background: accentBg(RESEARCH_POS[i].accent) }}>
-                  {accentMark(RESEARCH_POS[i].accent)}
+                  style={{ background: accentBg(RESEARCH_ACCENTS[i]) }}>
+                  {accentMark(RESEARCH_ACCENTS[i])}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-[9px] font-semibold tracking-[0.22em] text-slate-400 mb-1">{c.tag}</div>

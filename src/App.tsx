@@ -7,6 +7,8 @@ import Message from '@/components/Message';
 import Markets from '@/components/Markets';
 import RealEstate from '@/components/RealEstate';
 import PropertiesPage from '@/components/PropertiesPage';
+import ConsentGate from '@/components/ConsentGate';
+import HowToInvest from '@/components/HowToInvest';
 import Promo from '@/components/Promo';
 import Products from '@/components/Products';
 import Money from '@/components/Money';
@@ -74,7 +76,8 @@ export default function App() {
     root.style.setProperty('--surface-alt', altMap[tweaks.altSurfaceTone] ?? '#F4F6F9');
   }, [tweaks.variant, tweaks.accentHue, tweaks.accentChroma, tweaks.altSurfaceTone]);
 
-  // Lightweight hash routing: '#/properties' shows the client portfolio page.
+  // Lightweight hash routing: '#/properties' shows the client portfolio page,
+  // '#/consent' the 08.18 information notice, '#/how-to-invest' what it gates.
   const [route, setRoute] = useState(typeof window !== 'undefined' ? window.location.hash : '');
   useEffect(() => {
     const onHash = () => {
@@ -85,12 +88,18 @@ export default function App() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
   const isPortfolio = route.startsWith('#/properties');
+  const isConsent = route.startsWith('#/consent');
+  const isHowToInvest = route.startsWith('#/how-to-invest');
 
   return (
     <div className="min-h-screen bg-white">
       <Nav />
       {isPortfolio ? (
         <PropertiesPage />
+      ) : isConsent ? (
+        <ConsentGate />
+      ) : isHowToInvest ? (
+        <HowToInvest />
       ) : (
         <>
           <Hero eyebrow={tweaks.heroEyebrow} headline={tweaks.heroHeadline} />
@@ -107,8 +116,8 @@ export default function App() {
         </>
       )}
       <Footer />
-      <AnimationsInit key={`anim-${isPortfolio}`} />
-      <Interactions key={`int-${isPortfolio}`} />
+      <AnimationsInit key={`anim-${route}`} />
+      <Interactions key={`int-${route}`} />
       <Advisor />
       {!BARE && <TweaksPanel tweaks={tweaks} setTweak={setTweak} />}
     </div>

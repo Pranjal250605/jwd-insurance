@@ -48,23 +48,10 @@ export default function AnimationsInit() {
         heroTl.from(heroVisual, { y: 40, opacity: 0, duration: 1.2, ease: 'power4.out', clearProps: 'opacity,transform' }, 0.1);
       }
 
-      // ── Floating idle on hero overlay cards ──────────────────────────
-      // Only at `lg`+, where the cards are absolutely floated over the
-      // photo — below that they sit in normal document flow (stacked under
-      // the image), and bobbing a static-flow element up and down would
-      // just look like a layout jitter rather than a premium float.
-      if (window.matchMedia('(min-width: 1024px)').matches) {
-        document.querySelectorAll<HTMLElement>('[data-anim="hero-cards"] > .equiti-card-rim').forEach((el, i) => {
-          gsap.to(el, {
-            y: `+=${5 + (i % 2) * 3}`,
-            duration: 3.2 + i * 0.5,
-            yoyo: true,
-            repeat: -1,
-            ease: 'sine.inOut',
-            delay: i * 0.3,
-          });
-        });
-      }
+      // The hero cards used to bob on an idle float. They now sit in normal
+      // document flow at every width (see Hero.tsx), and bobbing a static-flow
+      // element up and down reads as layout jitter rather than a premium
+      // float, so the idle animation is gone.
 
       // ── Section text reveals ─────────────────────────────────────────
       document.querySelectorAll<HTMLElement>('section .max-w-\\[1280px\\]').forEach((panel, idx) => {

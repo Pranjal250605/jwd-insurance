@@ -1,5 +1,6 @@
 import { useT } from '@/i18n';
 import VideoTiles from '@/components/VideoTiles';
+import MainImage from '@/components/MainImage';
 
 interface HeroProps {
   eyebrow?: string;
@@ -85,7 +86,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
         })}
       </svg>
 
-      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20 lg:py-24 grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-center">
+      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20 lg:py-24 grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-start">
         <div className="relative z-10">
           <div className="eyebrow-rule text-[12px] font-semibold tracking-[0.22em] mb-7" style={{ color: 'var(--accent-deep)' }}>{eyebrowText}</div>
           <h1 className={`font-serif whitespace-pre-line ${lang === 'ja' ? 'fluid-hero-ja leading-[1.2]' : 'fluid-hero-en leading-[1.05]'} font-medium text-slate-900 tracking-[-0.015em] mb-5`} style={{ textWrap: 'balance' } as React.CSSProperties}>
@@ -109,6 +110,31 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </button>
           </div>
+
+          {/* 08.18 revision, page ①: the entry point to the information
+              notice. The sheet draws it as a lead line with an arrow pointing
+              at a bordered button, sitting directly under the hero CTAs and
+              above the platform block. It routes to #/consent, not to a
+              platform — the notice comes first. */}
+          <a
+            href="#/consent"
+            className="mt-8 flex flex-wrap items-center gap-4 sm:gap-6 group w-fit"
+          >
+            <span className="flex items-center gap-3">
+              <span className="whitespace-pre-line text-[19px] sm:text-[21px] font-bold leading-[1.35]" style={{ color: 'var(--accent-deep)' }}>
+                {t.hero.gateLead}
+              </span>
+              <svg width="34" height="26" viewBox="0 0 34 26" aria-hidden="true" className="flex-shrink-0 transition-transform group-hover:translate-x-1" style={{ color: 'var(--accent-deep)' }}>
+                <path d="M0 4h18V0l16 13-16 13v-4H0z" fill="currentColor" />
+              </svg>
+            </span>
+            <span
+              className="whitespace-pre-line rounded-md border-2 px-5 py-3 text-[15px] sm:text-[16px] font-bold leading-[1.45] text-center transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)]"
+              style={{ borderColor: 'var(--accent-deep)', color: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
+            >
+              {t.hero.gateButton}
+            </span>
+          </a>
 
           {/* Platform block, 08.24 revision: a selling headline, then one row
               per platform pairing its claim with the card it links to. The
@@ -165,24 +191,10 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             applied at that width in the desktop design anyway. This is what
             prevents the guaranteed horizontal overflow those offsets caused
             on a full-viewport-width mobile column. */}
-        <div data-anim="hero-visual" className="relative lg:h-[620px] flex flex-col lg:block">
-          <div className="img-zoom relative w-full h-[300px] sm:h-[400px] lg:h-full rounded-2xl overflow-hidden shadow-[0_30px_80px_-30px_rgba(var(--shadow-rgb),0.4)]">
-            <img
-              src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=85&auto=format&fit=crop"
-              alt="JWD Investment global headquarters — modern corporate office"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+        <div data-anim="hero-visual" className="relative lg:mt-[44px] lg:h-[720px] flex flex-col lg:block">
+          <div className="relative w-full h-[300px] sm:h-[400px] lg:h-full rounded-2xl overflow-hidden shadow-[0_30px_80px_-30px_rgba(var(--shadow-rgb),0.4)]">
+            <MainImage />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, rgba(var(--photo-tint-rgb),0.55) 0%, rgba(var(--photo-tint-rgb),0.15) 50%, transparent 100%)' }} />
-
-            <div className="absolute top-5 left-5 right-5 sm:top-6 sm:left-6 sm:right-6 flex items-start justify-between">
-              <div className="text-white">
-                <div className="text-[10px] font-semibold tracking-[0.22em] opacity-80 mb-1">{t.hero.flagship}</div>
-                <div className="font-serif text-[19px] sm:text-[22px] font-medium leading-tight">{t.hero.flagshipName}</div>
-              </div>
-              <div className="bg-white/90 backdrop-blur px-3 py-1.5 rounded-full flex-shrink-0">
-                <span className="text-[11px] font-semibold tracking-wider" style={{ color: 'var(--accent-deep)' }}>{t.hero.since}</span>
-              </div>
-            </div>
 
             <div className="absolute bottom-0 left-0 right-0 p-3.5 sm:p-5">
               <div className="grid grid-cols-3 gap-2 sm:gap-3">
@@ -197,9 +209,14 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             </div>
           </div>
 
-          {/* card cluster: static + stacked below lg, absolute-floating at lg+ */}
-          <div data-anim="hero-cards" className="mt-4 flex flex-col sm:flex-row lg:block gap-4 lg:gap-0">
-            <div data-spotlight className="spotlight equiti-card-rim relative lg:absolute lg:-left-6 lg:top-24 bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 sm:min-w-0 lg:w-[220px] lg:z-10">
+          {/* Card cluster. `.spotlight` pins these to position:relative at a
+              specificity a responsive `lg:absolute` cannot beat, so at lg+ they
+              stay in normal flow — which is also how the client's page ①
+              reference shows them, sitting under the photo. They therefore
+              carry no absolute offsets: `top`/`bottom` on a relative element
+              just shunts the two cards into each other. */}
+          <div data-anim="hero-cards" className="mt-4 flex flex-col sm:flex-row gap-4">
+            <div data-spotlight className="spotlight equiti-card-rim relative bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 sm:min-w-0">
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-soft)' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" style={{ color: 'var(--accent-deep)' }}>
@@ -215,7 +232,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
               </div>
             </div>
 
-            <div data-spotlight className="spotlight equiti-card-rim relative lg:absolute lg:-right-4 lg:bottom-32 bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 sm:min-w-0 lg:w-[220px] lg:z-10">
+            <div data-spotlight className="spotlight equiti-card-rim relative bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 sm:min-w-0">
               <div className="text-[10px] font-semibold tracking-[0.2em] text-slate-500 mb-2">{t.hero.allocation}</div>
               {t.hero.allocRows.map((row, i) => (
                 <div key={i} className="flex items-center justify-between gap-2 text-[11px] py-1 first:pt-0 last:pb-0 border-t first:border-t-0 border-slate-50">
