@@ -2,6 +2,15 @@ import { useT } from '@/i18n';
 import VideoTiles from '@/components/VideoTiles';
 import MainImage from '@/components/MainImage';
 
+/* The sheet steps "No1" up from the surrounding claim text, level with the
+   year. Copy carries it as a markdown bold marker, the same convention the
+   chairman's copy uses in Promo.tsx. */
+function withEmphasis(text: string) {
+  return text.split('**').map((part, i) =>
+    i % 2 ? <span key={i} className="text-[21px]">{part}</span> : part,
+  );
+}
+
 interface HeroProps {
   eyebrow?: string;
   headline?: string;
@@ -86,15 +95,17 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
         })}
       </svg>
 
-      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20 lg:py-24 grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-start">
+      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20 lg:py-24 grid lg:grid-cols-[1.18fr_1fr] gap-10 lg:gap-12 items-start">
         <div className="relative z-10">
           <div className="eyebrow-rule text-[12px] font-semibold tracking-[0.22em] mb-7" style={{ color: 'var(--accent-deep)' }}>{eyebrowText}</div>
           <h1 className={`font-serif whitespace-pre-line ${lang === 'ja' ? 'fluid-hero-ja leading-[1.2]' : 'fluid-hero-en leading-[1.05]'} font-medium text-slate-900 tracking-[-0.015em] mb-5`} style={{ textWrap: 'balance' } as React.CSSProperties}>
             {headlineText}
           </h1>
-          <p className={`${lang === 'ja' ? '' : 'font-jp'} text-[21.5px] leading-[1.7] text-slate-700 mb-7 max-w-xl tracking-wide`}>
-            {t.hero.tagline}
-          </p>
+          {lang !== 'ja' && (
+            <p className="font-jp text-[21.5px] leading-[1.7] text-slate-700 mb-7 max-w-xl tracking-wide">
+              {t.hero.tagline}
+            </p>
+          )}
           <p className="text-[20.5px] leading-[1.65] text-slate-600 max-w-xl mb-5">
             {t.hero.body}
           </p>
@@ -121,39 +132,62 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             className="mt-8 flex flex-wrap items-center gap-4 sm:gap-6 group w-fit"
           >
             <span className="flex items-center gap-3">
-              <span className="whitespace-pre-line text-[19px] sm:text-[21px] font-bold leading-[1.35]" style={{ color: 'var(--accent-deep)' }}>
+              <span className="whitespace-pre-line text-[22px] sm:text-[26px] font-bold leading-[1.35]" style={{ color: 'var(--accent-deep)' }}>
                 {t.hero.gateLead}
               </span>
-              <svg width="34" height="26" viewBox="0 0 34 26" aria-hidden="true" className="flex-shrink-0 transition-transform group-hover:translate-x-1" style={{ color: 'var(--accent-deep)' }}>
-                <path d="M0 4h18V0l16 13-16 13v-4H0z" fill="currentColor" />
+              <svg width="38" height="30" viewBox="0 0 38 30" aria-hidden="true" className="flex-shrink-0 transition-transform group-hover:translate-x-1" style={{ color: 'var(--accent-deep)' }}>
+                <path d="M0 2l38 13L0 28z" fill="currentColor" />
               </svg>
             </span>
             <span
               className="whitespace-pre-line rounded-md border-2 px-5 py-3 text-[15px] sm:text-[16px] font-bold leading-[1.45] text-center transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)]"
-              style={{ borderColor: 'var(--accent-deep)', color: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
+              style={{ borderColor: 'var(--accent-deep)', color: 'var(--accent-deep)', background: '#ffffff' }}
             >
               {t.hero.gateButton}
             </span>
           </a>
 
-          {/* Platform block, 08.24 revision: a selling headline, then one row
-              per platform pairing its claim with the card it links to. The
-              plain "EXECUTION VIA" label the cards used to sit under is gone. */}
-          <div className="mt-10 max-w-xl">
-            <h2 className="text-[21px] sm:text-[23px] font-bold leading-[1.4] mb-6" style={{ color: 'var(--accent-deep)' }}>
+          {/* Platform block: a selling headline, then one row per platform
+              pairing its claim with the card it links to. The 08.18 sheet sets
+              the headline and the claims in navy and restores the small label
+              over the card column. */}
+          <div className="mt-10 max-w-2xl">
+            <h2 className="text-[30px] sm:text-[42px] font-bold leading-[1.25] tracking-[-0.01em] mb-7" style={{ color: 'var(--jwd-navy)' }}>
               {t.hero.platformsHeading}
             </h2>
+            <div className="grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-4">
+              <span aria-hidden="true" className="hidden sm:block" />
+              <div className="text-[11px] font-bold tracking-[0.22em] text-slate-400 mb-2 sm:w-[224px]">{t.hero.platformsLabel}</div>
+            </div>
             <div className="flex flex-col gap-4">
               {t.products.platforms.map((p, i) => (
-                <div key={p.name} className="grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-5 items-center">
-                  <p className="text-[15px] leading-[1.6] font-semibold text-slate-800">
-                    {t.hero.platformNotes[i]}
+                <div key={p.name} className="grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-4 items-center">
+                  {/* The sheet sets each claim on one line and closes it with
+                      the partner's own wordmark — equiti in the accent teal,
+                      AIX in gold — rather than as more navy body text. */}
+                  <p className="text-[16px] leading-[1.5] font-bold" style={{ color: 'var(--jwd-navy)' }}>
+                    {t.hero.platformNotes[i].lead && (
+                      <span className="text-[21px] mr-2">{t.hero.platformNotes[i].lead}</span>
+                    )}
+                    {withEmphasis(t.hero.platformNotes[i].text)}
+                    <span
+                      className={`ml-1 align-baseline font-extrabold ${
+                        t.hero.platformNotes[i].brand === 'equiti'
+                          ? 'text-[23px] lowercase tracking-[-0.01em]'
+                          : 'text-[20px]'
+                      }`}
+                      /* Brand marks carry their own colour, sampled from the
+                         sheet — they must not shift with the site theme. */
+                      style={{ color: t.hero.platformNotes[i].brand === 'equiti' ? '#02AFA9' : '#B2764B' }}
+                    >
+                      {t.hero.platformNotes[i].brand}
+                    </span>
                   </p>
                   <a
                     href={p.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-between gap-4 rounded-lg px-5 py-4 border-2 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)] sm:w-[248px]"
+                    className="group flex items-center justify-between gap-4 rounded-lg px-5 py-4 border-2 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)] sm:w-[224px]"
                     style={{ borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
                   >
                     <span className="min-w-0">
@@ -169,13 +203,25 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             </div>
           </div>
 
-          <div data-anim="hero-stats" className="mt-14 pt-10 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-8">
-            {t.hero.stats.map(([a, b]) => (
-              <div key={b}>
-                <div data-count={a} className="font-serif text-[28px] font-medium tracking-tight" style={{ color: 'var(--accent-deep)' }}>{a}</div>
-                <div className="text-[12px] text-slate-500 leading-tight mt-1">{b}</div>
-              </div>
-            ))}
+          <div data-anim="hero-stats" className="mt-14 pt-10 border-t border-slate-100 grid grid-cols-2 gap-8 sm:flex sm:flex-wrap sm:gap-x-6">
+            {t.hero.stats.map(([a, b]) => {
+              // '120億＋' → figure '120', unit '億＋'. The sheet steps the unit
+              // down to roughly 40% of the figure rather than setting the whole
+              // value at one size.
+              const [, figure, unit] = /^([\d０-９〜~–.,]*)(.*)$/.exec(a)!;
+              return (
+                <div key={b}>
+                  {/* data-count sits on the figure alone: the count-up in
+                      Interactions.tsx writes textContent, which would wipe out
+                      any child spans on the element it animates. */}
+                  <div className="font-serif font-medium tracking-tight leading-none whitespace-nowrap" style={{ color: 'var(--accent-deep)' }}>
+                    <span data-count={figure} className="text-[34px] sm:text-[41px]">{figure}</span>
+                    <span className="text-[15px] sm:text-[17px]">{unit}</span>
+                  </div>
+                  <div className="text-[12px] text-slate-500 leading-tight mt-2">{b}</div>
+                </div>
+              );
+            })}
           </div>
 
           <div className="mt-10">
@@ -183,63 +229,24 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
           </div>
         </div>
 
-        {/* Visual column: below `lg`, the photo gets a fixed-but-responsive
-            height and the two info cards stack in normal document flow
-            beneath it (side by side from `sm`). At `lg`+ they switch back to
-            the original absolute-floating mockup treatment — the negative
-            offsets (-left-6/-right-4) and 220px fixed width only ever
-            applied at that width in the desktop design anyway. This is what
-            prevents the guaranteed horizontal overflow those offsets caused
-            on a full-viewport-width mobile column. */}
-        <div data-anim="hero-visual" className="relative lg:mt-[44px] lg:h-[720px] flex flex-col lg:block">
-          <div className="relative w-full h-[300px] sm:h-[400px] lg:h-full rounded-2xl overflow-hidden shadow-[0_30px_80px_-30px_rgba(var(--shadow-rgb),0.4)]">
+        {/* Visual column: one photograph plus the exchange-rate chip beneath
+            it, as page ① draws it. The column is auto-height so the chip always
+            sits under the photo rather than outside a fixed-height box. */}
+        <div data-anim="hero-visual" className="relative lg:mt-[44px] flex flex-col">
+          <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[720px] rounded-sm overflow-hidden">
             <MainImage />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, rgba(var(--photo-tint-rgb),0.55) 0%, rgba(var(--photo-tint-rgb),0.15) 50%, transparent 100%)' }} />
-
-            <div className="absolute bottom-0 left-0 right-0 p-3.5 sm:p-5">
-              <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                {t.hero.metrics.map((m) => (
-                  <div key={m.v} className="bg-white/95 backdrop-blur rounded-lg p-2 sm:p-3">
-                    <div className="text-[8px] sm:text-[9px] font-semibold tracking-[0.14em] sm:tracking-[0.18em] text-slate-500 uppercase truncate">{m.l}</div>
-                    <div className="font-serif text-[15px] sm:text-[20px] font-semibold tracking-tight text-slate-900 mt-0.5">{m.v}</div>
-                    <div className="text-[9px] sm:text-[10px] text-slate-500 mt-0.5 truncate">{m.s}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
-          {/* Card cluster. `.spotlight` pins these to position:relative at a
-              specificity a responsive `lg:absolute` cannot beat, so at lg+ they
-              stay in normal flow — which is also how the client's page ①
-              reference shows them, sitting under the photo. They therefore
-              carry no absolute offsets: `top`/`bottom` on a relative element
-              just shunts the two cards into each other. */}
-          <div data-anim="hero-cards" className="mt-4 flex flex-col sm:flex-row gap-4">
-            <div data-spotlight className="spotlight equiti-card-rim relative bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 sm:min-w-0">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-soft)' }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" style={{ color: 'var(--accent-deep)' }}>
-                    <path d="M3 3v18h18" /><path d="M7 14l4-4 4 4 6-6" />
-                  </svg>
-                </div>
-                <div className="text-[11px] font-semibold tracking-[0.18em] text-slate-500">{t.hero.portfolio}</div>
-              </div>
-              <div className="font-serif text-[22px] sm:text-[24px] font-semibold tracking-tight text-slate-900">AED 1 = ¥41</div>
-              <div className="flex items-center gap-1.5 mt-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-slate-300 flex-shrink-0" />
-                <span className="text-[11px] text-slate-500">{t.hero.ytd}</span>
-              </div>
-            </div>
-
-            <div data-spotlight className="spotlight equiti-card-rim relative bg-white rounded-xl shadow-[0_16px_40px_-12px_rgba(var(--shadow-rgb),0.18)] p-4 w-full sm:flex-1 sm:min-w-0">
-              <div className="text-[10px] font-semibold tracking-[0.2em] text-slate-500 mb-2">{t.hero.allocation}</div>
-              {t.hero.allocRows.map((row, i) => (
-                <div key={i} className="flex items-center justify-between gap-2 text-[11px] py-1 first:pt-0 last:pb-0 border-t first:border-t-0 border-slate-50">
-                  <span className="text-slate-600 leading-tight min-w-0 break-words">{row.label}</span>
-                  <span className="font-mono font-semibold text-slate-900 flex-shrink-0">{row.value}</span>
-                </div>
-              ))}
+          {/* The sheet replaces the old two-card cluster with a single
+              exchange-rate chip tucked under the photo's bottom-left corner. */}
+          <div data-anim="hero-cards" className="mt-4 flex">
+            <div className="inline-flex items-center gap-3 rounded-lg bg-white pr-5 shadow-[0_16px_40px_-18px_rgba(var(--shadow-rgb),0.25)]">
+              <span className="w-11 h-11 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-soft)' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" style={{ color: 'var(--accent-deep)' }}>
+                  <path d="M3 3v18h18" /><path d="M7 14l4-4 4 4 6-6" />
+                </svg>
+              </span>
+              <span className="text-[19px] sm:text-[21px] font-bold tracking-tight text-slate-900">AED 1 = ¥41</span>
             </div>
           </div>
         </div>

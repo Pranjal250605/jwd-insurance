@@ -44,6 +44,8 @@ html, body {
   --accent-soft:      #E8EDF5;
   --accent-rgb:       26, 44, 79;
 
+  --jwd-navy:         #204B78;
+
   --secondary:        #B89968;
   --secondary-soft:   rgba(184, 153, 104, 0.12);
   --secondary-rgb:    184, 153, 104;
@@ -86,6 +88,8 @@ html, body {
   --accent-deep:      #07807C;
   --accent-soft:      #E0F7F6;
   --accent-rgb:       10, 186, 181;
+
+  --jwd-navy:         #204B78;
 
   --secondary:        #40E0D0;
   --secondary-soft:   rgba(64, 224, 208, 0.14);

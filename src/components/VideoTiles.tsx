@@ -98,18 +98,24 @@ function Tile({
   );
 }
 
-/** The two tiles the revision sheet places under the hero stats. */
+/** The two clips page ① places under the hero stats: thumbnail on the left,
+    title and description set beside it rather than underneath. */
 export default function VideoTiles() {
   const { t } = useT();
 
   return (
-    <div className="grid sm:grid-cols-2 gap-5 max-w-xl">
+    <div className="flex flex-col gap-6 max-w-3xl">
       {t.hero.videos.map((v) => (
-        <figure key={v.id} className="m-0">
-          <Tile id={v.id} label={`${v.title} ${v.note}`} aspect="aspect-[16/10]" />
-          <figcaption className="mt-3 text-[14px] font-semibold text-slate-800 leading-snug">
-            {v.title}
-            <span className="font-normal text-slate-500 whitespace-nowrap">{v.note}</span>
+        <figure key={v.id} className="m-0 grid grid-cols-[minmax(0,150px)_1fr] sm:grid-cols-[minmax(0,290px)_1fr] gap-4 sm:gap-7 items-start">
+          <Tile id={v.id} label={`${v.title} ${v.note}`} aspect="aspect-[16/9]" />
+          <figcaption className="min-w-0">
+            <div className="text-[15px] sm:text-[17px] font-bold text-slate-900 leading-snug">
+              {v.title}
+              <span className="whitespace-nowrap">{v.note}</span>
+            </div>
+            {v.desc && (
+              <p className="mt-1.5 text-[14px] sm:text-[16px] leading-[1.6] text-slate-800">{v.desc}</p>
+            )}
           </figcaption>
         </figure>
       ))}

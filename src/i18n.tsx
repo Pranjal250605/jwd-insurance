@@ -233,13 +233,18 @@ export const STRINGS = {
       gateButton: 'Grow your assets\nwith a top\nUAE investment firm',
       platformsHeading: 'Grow your assets with the UAE’s top investment firms',
       platformNotes: [
-        'Equiti — no.1 for trading performance across 16 Middle Eastern countries in 2025',
-        'AIX — based on floors 144 and 146 of the Burj Khalifa, and a Grand Partner of Emirates',
-      ] as [string, string],
+        { lead: '2025', text: '— **no.1** for trading performance across 16 Middle Eastern countries:', brand: 'equiti' },
+        { lead: '', text: 'Based on floors 144 and 146 of the Burj Khalifa, and a Grand Partner of Emirates:', brand: 'AIX' },
+      ],
       videosLabel: 'VIDEO',
       videos: [
-        { id: 'forex', title: 'Forex Expo 2025 Winner’s Award', note: ' (video)' },
-        { id: 'inheritance', title: 'Inheritance, passed on well', note: ' (video)' },
+        {
+          id: 'forex',
+          title: 'Forex Expo 2025 Awards Ceremony',
+          note: ' (video)',
+          desc: 'The awards ceremony for Equiti Dubai, named the Middle East’s no.1 asset manager in 2025.',
+        },
+        { id: 'inheritance', title: 'Inheritance, passed on well', note: ' (video)', desc: '' },
       ],
       moreVideosLabel: 'EQUITI IN ACTION',
       moreVideos: [
@@ -252,10 +257,10 @@ export const STRINGS = {
       ],
       stripLabel: 'EQUITI · IN THE FIELD',
       stats: [
-        ['5 yrs', 'Years operating in Dubai'],
-        ['¥10B+', 'Transaction volume'],
-        ['120+', 'Families & investors advised'],
-        ['7%', 'Average target yield'],
+        ['20 yrs', 'Years operating in Dubai'],
+        ['¥12B+', 'Transaction volume'],
+        ['200+', 'Families & investors advised'],
+        ['12–18%', 'Average target yield'],
       ] as [string, string][],
       mainLabel: 'DUBAI TODAY',
       mainImages: [
@@ -799,7 +804,7 @@ export const STRINGS = {
       eyebrow: 'ファースト・コール・パートナー · 2020年創業',
       headline: 'さらなる豊かさへ\n黄金の架け橋',
       tagline: 'Two horizons, one golden bridge.',
-      body: '日本とドバイ、その両方を母語で、一貫した視点で語れる数少ないパートナー。ご相談は完全紹介制。あとは私たちが導きます。',
+      body: '日本とドバイ、その両方を母国語で、一貫した視点で語れる数少ないパートナー。ご相談は完全紹介制。私たちが導きます。',
       ctaPrimary: 'ご相談のご予約',
       ctaSecondary: '投資ガイドをダウンロード',
       support: '※弊社は日本人スタッフによる日本語サポートにも対応しておりますので、ご安心ください。',
@@ -808,13 +813,18 @@ export const STRINGS = {
       gateButton: 'UAEトップの\n投資会社での\n資産運用',
       platformsHeading: 'UAEトップの投資会社で資産を運用する！',
       platformNotes: [
-        '2025年 中東16カ国で運用実績No1のEquiti',
-        'ブルジュハリファ144F, 146Fに拠点を持ちエミレーツ航空とグランドパートナーのAIX',
-      ] as [string, string],
+        { lead: '2025年', text: '中東16カ国で運用実績**No1**の', brand: 'equiti' },
+        { lead: '', text: 'ブルジュハリファ144F, 146Fに拠点を持ちエミレーツ航空とグランドパートナーの', brand: 'AIX' },
+      ],
       videosLabel: 'ビデオ',
       videos: [
-        { id: 'forex', title: 'Forex Expo 2025 Winner’s Award', note: '（ビデオ）' },
-        { id: 'inheritance', title: '有益な遺産相続を', note: '（ビデオ）' },
+        {
+          id: 'forex',
+          title: 'Forex Expo 2025 授賞式',
+          note: '（ビデオ）',
+          desc: '2025年中東No.1に輝いたの資産運用会社Equitiドバイの栄えある表彰式の様子です。',
+        },
+        { id: 'inheritance', title: '有益な遺産相続を', note: '（ビデオ）', desc: '' },
       ],
       moreVideosLabel: 'EQUITIの活動',
       moreVideos: [
@@ -827,10 +837,10 @@ export const STRINGS = {
       ],
       stripLabel: 'EQUITI · IN THE FIELD',
       stats: [
-        ['5年', 'ドバイでの活動年数'],
-        ['¥10億+', '取引総額'],
-        ['120+', '支援した投資家・家族'],
-        ['7%', '平均目標利回り'],
+        ['20年', 'ドバイでの活動年数'],
+        ['120億＋', '取引総額'],
+        ['200＋', '支援した投資家・家族'],
+        ['12〜18%', '平均目標利回り'],
       ] as [string, string][],
       mainLabel: 'ドバイの今',
       mainImages: [

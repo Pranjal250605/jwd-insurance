@@ -59,20 +59,11 @@ export default function MainImage() {
         />
       ))}
 
-      {/* Photo caption + area badge, replacing the fixed "flagship project"
-          label the single stock photo used to carry. */}
-      <div className="absolute top-5 left-5 right-5 sm:top-6 sm:left-6 sm:right-6 flex items-start justify-between gap-3 z-10">
-        <div className="text-white min-w-0">
-          <div className="text-[10px] font-semibold tracking-[0.22em] opacity-80 mb-1">{t.hero.mainLabel}</div>
-          <div className="font-serif text-[19px] sm:text-[22px] font-medium leading-tight">{t.hero.mainImages[i].name}</div>
-        </div>
-        <div className="bg-white/90 backdrop-blur px-3 py-1.5 rounded-full flex-shrink-0">
-          <span className="text-[11px] font-semibold tracking-wider" style={{ color: 'var(--accent-deep)' }}>{t.hero.mainImages[i].area}</span>
-        </div>
-      </div>
-
-      {/* Dots sit clear of the metric cards along the bottom edge. */}
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-[128px] sm:bottom-[150px] flex gap-1.5 z-10 rounded-full bg-slate-900/30 backdrop-blur-sm px-2.5 py-1.5">
+      {/* Page ① shows the photograph clean — no caption plate, no tint. The
+          dots are the one thing kept: with ten frames and no other control,
+          a reader holding on prefers-reduced-motion would otherwise be stuck
+          on the first image forever. */}
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-4 flex gap-1.5 z-10 rounded-full bg-slate-900/30 backdrop-blur-sm px-2.5 py-1.5">
         {IMAGES.map((src, n) => (
           <button
             key={src}
