@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useT } from '@/i18n';
+import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
 
 /* 08.18 revision, page ②. The hero's "grow your assets with a top UAE firm"
    button lands here rather than going straight to the Equiti material: the
@@ -11,12 +12,21 @@ import { useT } from '@/i18n';
        end — then it turns orange ("High Lighted" in the sheet);
      · the notice's own copy asks the reader to tick a box before continuing,
        so the click is only accepted once that box is ticked.
-   Only after both does it route on to #/how-to-invest. */
 
-const NEXT_ROUTE = '#/how-to-invest';
+   Where it goes afterwards: the client asked (2026.08.19, via Tomo) for the
+   agree button to open the Equiti landing page for now — "we will make the
+   appropriate page later" — rather than the in-house #/how-to-invest page.
+   TEMPORARY: when that page is written, point NEXT_TARGET back at it.
+
+   Equiti publishes no Japanese site (ar/cn/en/es/ko/pt/th/vi only), so
+   Japanese readers go through the same Google Translate proxy as every other
+   investor-site link here — see src/lib/translate.ts for why we do not
+   rehost or retranslate a regulated broker's pages ourselves. */
+
+const NEXT_TARGET = 'https://www.equiti.com/sc-en/';
 
 export default function ConsentGate() {
-  const { t } = useT();
+  const { t, lang } = useT();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [reachedEnd, setReachedEnd] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -47,7 +57,10 @@ export default function ConsentGate() {
       setShowHint(true);
       return;
     }
-    window.location.hash = NEXT_ROUTE;
+    /* A new tab, matching every other investor-site link on this site: the
+       reader keeps the notice they just accepted, and leaving JWD is never
+       something the agree button does silently underneath them. */
+    window.open(jaOutbound(NEXT_TARGET, lang === 'ja'), '_blank', 'noopener,noreferrer');
   };
 
   const armed = reachedEnd && checked;
@@ -136,6 +149,7 @@ export default function ConsentGate() {
               type="button"
               onClick={proceed}
               aria-disabled={!armed}
+              title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
               className={`h-[52px] px-14 rounded-full text-[15px] font-semibold transition-colors duration-300 ${
                 armed
                   ? 'bg-[#F5A25D] text-slate-900 hover:bg-[#EE9440] shadow-[0_10px_28px_-12px_rgba(238,148,64,0.9)]'
@@ -144,6 +158,11 @@ export default function ConsentGate() {
             >
               {t.consent.button}
             </button>
+            {/* Japanese readers are told, before they click, that the button
+                leaves JWD for an auto-translated external page. */}
+            {armed && lang === 'ja' && (
+              <p className="max-w-[46ch] text-center text-[12px] leading-[1.8] text-slate-500">{JA_PROXY_NOTICE}</p>
+            )}
             {!reachedEnd && <p className="text-[12.5px] text-slate-400">{t.consent.scrollHint}</p>}
             {showHint && <p className="text-[12.5px] text-rose-500">{t.consent.hint}</p>}
           </div>
