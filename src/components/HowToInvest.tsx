@@ -1,4 +1,5 @@
 import { useT } from '@/i18n';
+import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
 import { VideoGallery } from '@/components/VideoTiles';
 import PhotoStrip from '@/components/PhotoStrip';
 
@@ -10,7 +11,7 @@ import PhotoStrip from '@/components/PhotoStrip';
    Copy for the steps is provisional pending the client's own wording. */
 
 export default function HowToInvest() {
-  const { t } = useT();
+  const { lang, t } = useT();
 
   return (
     <main className="bg-white">
@@ -43,7 +44,8 @@ export default function HowToInvest() {
           {t.products.platforms.map((p) => (
             <a
               key={p.name}
-              href={p.url}
+              href={jaOutbound(p.url, lang === 'ja')}
+              title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center justify-between gap-4 rounded-lg px-5 py-4 border-2 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)]"

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useT } from '@/i18n';
+import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
 import { useScrollLock } from '@/hooks/useScrollLock';
 
 export default function Nav() {
@@ -110,7 +111,8 @@ export default function Nav() {
             {t.products.platforms.map((p) => (
               <a
                 key={p.name}
-                href={p.url}
+                href={jaOutbound(p.url, lang === 'ja')}
+                title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 px-4 h-11 rounded-full border text-[15px] font-bold transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_25px_-10px_rgba(10,186,181,0.5)]"
@@ -208,7 +210,8 @@ export default function Nav() {
                 {t.products.platforms.map((p) => (
                   <a
                     key={p.name}
-                    href={p.url}
+                    href={jaOutbound(p.url, lang === 'ja')}
+                    title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={closeMobile}

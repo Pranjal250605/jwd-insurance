@@ -1,4 +1,5 @@
 import { useT } from '@/i18n';
+import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
 
 // Real per-solution facts (replacing invented AUM figures — JWD is not
 // an asset manager reporting AUM per product line).
@@ -75,7 +76,8 @@ export default function Products() {
           {t.products.platforms.map((p) => (
             <a
               key={p.name}
-              href={p.url}
+              href={jaOutbound(p.url, lang === 'ja')}
+              title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
               target="_blank"
               rel="noopener noreferrer"
               data-spotlight

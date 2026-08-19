@@ -1,4 +1,5 @@
 import { useT } from '@/i18n';
+import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
 
 /* Stroke icons mirroring the lucide set used on jwd-web
    (candlestick, bar-chart, droplet, pie-chart, layers, bitcoin, shield) */
@@ -36,7 +37,7 @@ const MARKET_ICONS = [
 ];
 
 export default function Markets() {
-  const { t } = useT();
+  const { lang, t } = useT();
 
   return (
     <section className="bg-white">
@@ -52,7 +53,8 @@ export default function Markets() {
           <div className="lg:justify-self-end lg:text-right">
             <p className="text-[17px] leading-[1.65] text-slate-600 max-w-lg mb-4">{t.markets.intro}</p>
             <a
-              href={t.markets.viewAllUrl}
+              href={jaOutbound(t.markets.viewAllUrl, lang === 'ja')}
+              title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
               target="_blank"
               rel="noopener noreferrer"
               className="link-underline text-[15.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all"
@@ -68,7 +70,8 @@ export default function Markets() {
           {t.markets.items.map((m, i) => (
             <a
               key={m.url}
-              href={m.url}
+              href={jaOutbound(m.url, lang === 'ja')}
+              title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
               target="_blank"
               rel="noopener noreferrer"
               data-spotlight
@@ -89,7 +92,8 @@ export default function Markets() {
 
           {/* View-all card fills the 8th grid cell */}
           <a
-            href={t.markets.viewAllUrl}
+            href={jaOutbound(t.markets.viewAllUrl, lang === 'ja')}
+            title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
             target="_blank"
             rel="noopener noreferrer"
             className="group rounded-xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1 hover:shadow-[0_16px_45px_-14px_rgba(10,186,181,0.55)]"

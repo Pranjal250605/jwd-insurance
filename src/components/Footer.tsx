@@ -1,7 +1,8 @@
 import { useT } from '@/i18n';
+import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
 
 export default function Footer() {
-  const { t } = useT();
+  const { lang, t } = useT();
 
   return (
     <footer className="bg-slate-50 border-t border-slate-100">
@@ -21,7 +22,8 @@ export default function Footer() {
               {t.products.platforms.map((p) => (
                 <a
                   key={p.name}
-                  href={p.url}
+                  href={jaOutbound(p.url, lang === 'ja')}
+                  title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="link-underline inline-flex items-center gap-1.5 text-[16px] font-medium text-slate-600 hover:text-slate-900 self-start"

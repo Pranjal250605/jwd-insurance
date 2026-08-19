@@ -1,4 +1,5 @@
 import { useT } from '@/i18n';
+import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
 import VideoTiles from '@/components/VideoTiles';
 import MainImage from '@/components/MainImage';
 import { useFxRate } from '@/hooks/useFxRate';
@@ -164,29 +165,37 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             <div className="flex flex-col gap-4">
               {t.products.platforms.map((p, i) => (
                 <div key={p.name} className="grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-4 items-center">
-                  {/* The sheet sets each claim on one line and closes it with
-                      the partner's own wordmark — equiti in the accent teal,
-                      AIX in gold — rather than as more navy body text. */}
+                  {/* The sheet closes each claim with the partner's own
+                      wordmark. These are the supplied logo files, trimmed of
+                      their white margins so they sit on the text baseline, and
+                      each links to the same destination as the card beside it
+                      — a reader who taps the logo means the same thing. */}
                   <p className="text-[16px] leading-[1.5] font-bold" style={{ color: 'var(--jwd-navy)' }}>
                     {t.hero.platformNotes[i].lead && (
                       <span className="text-[21px] mr-2">{t.hero.platformNotes[i].lead}</span>
                     )}
                     {withEmphasis(t.hero.platformNotes[i].text)}
-                    <span
-                      className={`ml-1 align-baseline font-extrabold ${
-                        t.hero.platformNotes[i].brand === 'equiti'
-                          ? 'text-[23px] lowercase tracking-[-0.01em]'
-                          : 'text-[20px]'
-                      }`}
-                      /* Brand marks carry their own colour, sampled from the
-                         sheet — they must not shift with the site theme. */
-                      style={{ color: t.hero.platformNotes[i].brand === 'equiti' ? '#02AFA9' : '#B2764B' }}
+                    <a
+                      href={jaOutbound(p.url, lang === 'ja')}
+                      title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={p.name}
+                      className="inline-block align-baseline transition-opacity hover:opacity-70"
                     >
-                      {t.hero.platformNotes[i].brand}
-                    </span>
+                      <img
+                        src={t.hero.platformNotes[i].brand === 'equiti' ? '/brand/equiti.png' : '/brand/aix.png'}
+                        alt={t.hero.platformNotes[i].brand}
+                        className={`ml-1.5 inline-block w-auto ${
+                          t.hero.platformNotes[i].brand === 'equiti' ? 'h-[23px]' : 'h-[20px]'
+                        }`}
+                        style={{ verticalAlign: '-0.18em' }}
+                      />
+                    </a>
                   </p>
                   <a
-                    href={p.url}
+                    href={jaOutbound(p.url, lang === 'ja')}
+                    title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group flex items-center justify-between gap-4 rounded-lg px-5 py-4 border-2 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)] sm:w-[224px]"
