@@ -1,6 +1,7 @@
 import { useT } from '@/i18n';
 import VideoTiles from '@/components/VideoTiles';
 import MainImage from '@/components/MainImage';
+import { useFxRate } from '@/hooks/useFxRate';
 
 /* The sheet steps "No1" up from the surrounding claim text, level with the
    year. Copy carries it as a markdown bold marker, the same convention the
@@ -18,6 +19,7 @@ interface HeroProps {
 
 export default function Hero({ eyebrow, headline }: HeroProps) {
   const { lang, t } = useT();
+  const fx = useFxRate();
   // Tweaks-panel overrides only apply in English; Japanese always uses the dictionary.
   const eyebrowText = lang === 'ja' ? t.hero.eyebrow : (eyebrow ?? t.hero.eyebrow);
   const headlineText = lang === 'ja' ? t.hero.headline : (headline ?? t.hero.headline);
@@ -246,7 +248,12 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                   <path d="M3 3v18h18" /><path d="M7 14l4-4 4 4 6-6" />
                 </svg>
               </span>
-              <span className="text-[19px] sm:text-[21px] font-bold tracking-tight text-slate-900">AED 1 = ¥41</span>
+              <span
+                className="text-[19px] sm:text-[21px] font-bold tracking-tight text-slate-900"
+                title={fx.live && fx.updated ? `${t.hero.ytd} · ${fx.updated}` : t.hero.ytd}
+              >
+                AED 1 = ¥{fx.jpy.toFixed(1)}
+              </span>
             </div>
           </div>
         </div>

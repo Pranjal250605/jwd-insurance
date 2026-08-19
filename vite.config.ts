@@ -63,10 +63,42 @@ function advisorDevApi(apiKey: string): Plugin {
   };
 }
 
+/**
+ * Dev-only middleware mirroring the deployed Vercel function (api/fx.ts), so
+ * the hero's exchange-rate chip shows a live number under `npm run dev` too.
+ */
+function fxDevApi(): Plugin {
+  return {
+    name: 'fx-dev-api',
+    configureServer(server) {
+      server.middlewares.use('/api/fx', async (_req, res) => {
+        try {
+          const upstream = await fetch('https://open.er-api.com/v6/latest/AED', {
+            headers: { accept: 'application/json' },
+          });
+          const data = await upstream.json();
+          const jpy = data?.rates?.JPY;
+          if (data?.result !== 'success' || typeof jpy !== 'number') throw new Error('bad payload');
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({
+            jpy,
+            updated: data.time_last_update_utc ?? null,
+            next: data.time_next_update_utc ?? null,
+          }));
+        } catch (err) {
+          console.error('fx dev api error:', err);
+          res.statusCode = 503;
+          res.end(JSON.stringify({ error: 'Rate unavailable.' }));
+        }
+      });
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, __dirname, '');
   return {
-    plugins: [react(), advisorDevApi(env.GROQ_API_KEY ?? '')],
+    plugins: [react(), advisorDevApi(env.GROQ_API_KEY ?? ''), fxDevApi()],
     resolve: {
       alias: { '@': path.resolve(__dirname, './src') },
     },
