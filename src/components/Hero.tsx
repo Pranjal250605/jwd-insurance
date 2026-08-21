@@ -98,7 +98,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
         })}
       </svg>
 
-      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20 lg:py-24 grid lg:grid-cols-[1.32fr_1fr] gap-10 lg:gap-12 items-start">
+      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8 pt-6 sm:pt-8 lg:pt-10 pb-14 sm:pb-20 lg:pb-24 grid lg:grid-cols-[1.32fr_1fr] gap-10 lg:gap-12 items-start">
         <div className="relative z-10">
           <div className="eyebrow-rule text-[13.5px] font-semibold tracking-[0.22em] mb-5" style={{ color: 'var(--accent-deep)' }}>{eyebrowText}</div>
           <h1 className={`font-serif whitespace-pre-line ${lang === 'ja' ? 'fluid-hero-ja leading-[1.2]' : 'fluid-hero-en leading-[1.05]'} font-medium text-slate-900 tracking-[-0.015em] mb-4`} style={{ textWrap: 'balance' } as React.CSSProperties}>
@@ -222,7 +222,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
         {/* Visual column: one photograph plus the exchange-rate chip beneath
             it, as page ① draws it. The column is auto-height so the chip always
             sits under the photo rather than outside a fixed-height box. */}
-        <div data-anim="hero-visual" className="relative lg:mt-[44px] flex flex-col">
+        <div data-anim="hero-visual" className="relative lg:mt-2 flex flex-col">
           <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[720px] rounded-sm overflow-hidden">
             <MainImage />
           </div>
