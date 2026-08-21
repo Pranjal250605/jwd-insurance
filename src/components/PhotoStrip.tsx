@@ -49,7 +49,10 @@ function Lightbox({ index, onClose, onStep }: { index: number; onClose: () => vo
         src={`/strip/${PHOTOS[index]}`}
         alt=""
         onClick={(e) => e.stopPropagation()}
-        className="max-h-full max-w-full object-contain rounded-lg shadow-[0_30px_90px_-30px_rgba(0,0,0,0.8)]"
+        /* 1.2× larger than the plain fit. The bounds are pulled in to
+           match, so the scaled result still clears the viewport. */
+        style={{ transform: 'scale(1.2)' }}
+        className="max-h-[74vh] max-w-[74vw] object-contain rounded-lg shadow-[0_30px_90px_-30px_rgba(0,0,0,0.8)]"
       />
 
       {[-1, 1].map((delta) => (
@@ -86,7 +89,7 @@ export default function PhotoStrip() {
   return (
     <section className="bg-white overflow-hidden pb-10 sm:pb-14">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 mb-4">
-        <div className="text-[11px] font-bold tracking-[0.22em] text-slate-400">{t.hero.stripLabel}</div>
+        <div className="text-[12.5px] font-bold tracking-[0.22em] text-slate-400">{t.hero.stripLabel}</div>
       </div>
 
       <div className="photo-marquee relative">

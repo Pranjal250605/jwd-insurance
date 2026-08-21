@@ -8,7 +8,8 @@ import { useT } from '@/i18n';
    lazily as the rotation reaches them.
 
    Auto-advance is motion, so prefers-reduced-motion holds on the first frame
-   and the reader can still step through with the dots. */
+   and the reader can still step through with the dots — and the slide itself
+   is dropped there too, so stepping jumps rather than travels. */
 
 /* Order matches t.hero.mainImages, which carries the caption for each frame —
    the overlay label has to track the photo, or the reader is told they are
@@ -26,7 +27,7 @@ const IMAGES = [
   '/main/palm-jumeirah.jpg',
 ];
 
-const INTERVAL = 5000;
+const INTERVAL = 4000;
 
 export default function MainImage() {
   const { t } = useT();
@@ -42,22 +43,30 @@ export default function MainImage() {
 
   return (
     <div
-      className="absolute inset-0"
+      className="absolute inset-0 overflow-hidden"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {IMAGES.map((src, n) => (
-        <img
-          key={src}
-          src={src}
-          alt={n === i ? `${t.hero.mainImages[n].name}, ${t.hero.mainImages[n].area}` : ''}
-          aria-hidden={n !== i}
-          loading={n === 0 ? 'eager' : 'lazy'}
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-in-out"
-          style={{ opacity: n === i ? 1 : 0 }}
-        />
-      ))}
+      {/* The frames sit in one full-width track that slides by whole viewport
+          widths, rather than cross-fading in place: the client asked for a
+          slide. overflow-hidden on the wrapper crops everything but the
+          current frame. */}
+      <div
+        className="absolute inset-0 flex h-full transition-transform duration-[900ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none"
+        style={{ transform: `translateX(-${i * 100}%)` }}
+      >
+        {IMAGES.map((src, n) => (
+          <img
+            key={src}
+            src={src}
+            alt={n === i ? `${t.hero.mainImages[n].name}, ${t.hero.mainImages[n].area}` : ''}
+            aria-hidden={n !== i}
+            loading={n === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+            className="h-full w-full flex-shrink-0 object-cover"
+          />
+        ))}
+      </div>
 
       {/* Page ① shows the photograph clean — no caption plate, no tint. The
           dots are the one thing kept: with ten frames and no other control,

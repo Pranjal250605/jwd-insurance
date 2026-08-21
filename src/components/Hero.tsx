@@ -9,7 +9,7 @@ import { useFxRate } from '@/hooks/useFxRate';
    chairman's copy uses in Promo.tsx. */
 function withEmphasis(text: string) {
   return text.split('**').map((part, i) =>
-    i % 2 ? <span key={i} className="text-[21px]">{part}</span> : part,
+    i % 2 ? <span key={i} className="text-[22px]">{part}</span> : part,
   );
 }
 
@@ -98,10 +98,10 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
         })}
       </svg>
 
-      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20 lg:py-24 grid lg:grid-cols-[1.18fr_1fr] gap-10 lg:gap-12 items-start">
+      <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20 lg:py-24 grid lg:grid-cols-[1.32fr_1fr] gap-10 lg:gap-12 items-start">
         <div className="relative z-10">
-          <div className="eyebrow-rule text-[12px] font-semibold tracking-[0.22em] mb-7" style={{ color: 'var(--accent-deep)' }}>{eyebrowText}</div>
-          <h1 className={`font-serif whitespace-pre-line ${lang === 'ja' ? 'fluid-hero-ja leading-[1.2]' : 'fluid-hero-en leading-[1.05]'} font-medium text-slate-900 tracking-[-0.015em] mb-5`} style={{ textWrap: 'balance' } as React.CSSProperties}>
+          <div className="eyebrow-rule text-[13.5px] font-semibold tracking-[0.22em] mb-5" style={{ color: 'var(--accent-deep)' }}>{eyebrowText}</div>
+          <h1 className={`font-serif whitespace-pre-line ${lang === 'ja' ? 'fluid-hero-ja leading-[1.2]' : 'fluid-hero-en leading-[1.05]'} font-medium text-slate-900 tracking-[-0.015em] mb-4`} style={{ textWrap: 'balance' } as React.CSSProperties}>
             {headlineText}
           </h1>
           {lang !== 'ja' && (
@@ -109,17 +109,17 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
               {t.hero.tagline}
             </p>
           )}
-          <p className="text-[20.5px] leading-[1.65] text-slate-600 max-w-xl mb-5">
+          <p className="text-[20.5px] leading-[1.65] text-slate-600 max-w-xl mb-3.5">
             {t.hero.body}
           </p>
-          <p className="text-[15.5px] leading-[1.7] text-slate-500 max-w-xl mb-9">
+          <p className="text-[17.5px] leading-[1.7] text-slate-500 max-w-xl mb-7">
             {t.hero.support}
           </p>
           <div className="flex items-center gap-4 flex-wrap">
-            <button data-magnetic className="cta-primary px-7 h-12 rounded-sm text-[12px] font-bold tracking-[0.14em]">
+            <button data-magnetic className="cta-primary px-7 h-12 rounded-sm text-[13.5px] font-bold tracking-[0.14em]">
               {t.hero.ctaPrimary}
             </button>
-            <button className="px-2 h-12 text-[17px] font-medium text-slate-700 hover:text-slate-900 flex items-center gap-2 group">
+            <button className="px-2 h-12 text-[19px] font-medium text-slate-700 hover:text-slate-900 flex items-center gap-2 group">
               {t.hero.ctaSecondary}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </button>
@@ -132,7 +132,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
               platform — the notice comes first. */}
           <a
             href="#/consent"
-            className="mt-8 flex flex-wrap items-center gap-4 sm:gap-6 group w-fit"
+            className="mt-7 flex flex-wrap items-center gap-4 sm:gap-6 group w-fit"
           >
             <span className="flex items-center gap-3">
               <span className="whitespace-pre-line text-[22px] sm:text-[26px] font-bold leading-[1.35]" style={{ color: 'var(--accent-deep)' }}>
@@ -154,13 +154,13 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
               pairing its claim with the card it links to. The 08.18 sheet sets
               the headline and the claims in navy and restores the small label
               over the card column. */}
-          <div className="mt-10 max-w-2xl">
-            <h2 className="text-[30px] sm:text-[42px] font-bold leading-[1.25] tracking-[-0.01em] mb-7" style={{ color: 'var(--jwd-navy)' }}>
+          <div className="mt-8 max-w-2xl">
+            <h2 className="whitespace-pre-line text-[30px] sm:text-[42px] font-bold leading-[1.25] tracking-[-0.01em] mb-5" style={{ color: 'var(--jwd-navy)' }}>
               {t.hero.platformsHeading}
             </h2>
             <div className="grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-4">
               <span aria-hidden="true" className="hidden sm:block" />
-              <div className="text-[11px] font-bold tracking-[0.22em] text-slate-400 mb-2 sm:w-[224px]">{t.hero.platformsLabel}</div>
+              <div className="text-[12.5px] font-bold tracking-[0.22em] text-slate-400 mb-2 sm:w-[208px]">{t.hero.platformsLabel}</div>
             </div>
             <div className="flex flex-col gap-4">
               {t.products.platforms.map((p, i) => (
@@ -170,9 +170,9 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                       their white margins so they sit on the text baseline, and
                       each links to the same destination as the card beside it
                       — a reader who taps the logo means the same thing. */}
-                  <p className="text-[16px] leading-[1.5] font-bold" style={{ color: 'var(--jwd-navy)' }}>
+                  <p className="text-[17px] leading-[1.5] font-bold" style={{ color: 'var(--jwd-navy)' }}>
                     {t.hero.platformNotes[i].lead && (
-                      <span className="text-[21px] mr-2">{t.hero.platformNotes[i].lead}</span>
+                      <span className="text-[22px] mr-2">{t.hero.platformNotes[i].lead}</span>
                     )}
                     {withEmphasis(t.hero.platformNotes[i].text)}
                     <a
@@ -187,7 +187,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                         src={t.hero.platformNotes[i].brand === 'equiti' ? '/brand/equiti.png' : '/brand/aix.png'}
                         alt={t.hero.platformNotes[i].brand}
                         className={`ml-1.5 inline-block w-auto ${
-                          t.hero.platformNotes[i].brand === 'equiti' ? 'h-[23px]' : 'h-[20px]'
+                          t.hero.platformNotes[i].brand === 'equiti' ? 'h-[26px]' : 'h-[22px]'
                         }`}
                         style={{ verticalAlign: '-0.18em' }}
                       />
@@ -198,11 +198,11 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                     title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-between gap-4 rounded-lg px-5 py-4 border-2 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)] sm:w-[224px]"
+                    className="group flex items-center justify-between gap-4 rounded-lg px-5 py-4 border-2 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)] sm:w-[208px]"
                     style={{ borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
                   >
                     <span className="min-w-0">
-                      <span className="block text-[10px] font-bold tracking-[0.18em] mb-1 opacity-70" style={{ color: 'var(--accent-deep)' }}>{p.tag}</span>
+                      <span className="block text-[11.5px] font-bold tracking-[0.18em] mb-1 opacity-70" style={{ color: 'var(--accent-deep)' }}>{p.tag}</span>
                       <span className="block font-serif text-[22px] font-semibold tracking-tight leading-none" style={{ color: 'var(--accent-deep)' }}>{p.name}</span>
                     </span>
                     <span className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ background: 'var(--accent-deep)' }}>
@@ -214,28 +214,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             </div>
           </div>
 
-          <div data-anim="hero-stats" className="mt-14 pt-10 border-t border-slate-100 grid grid-cols-2 gap-8 sm:flex sm:flex-wrap sm:gap-x-6">
-            {t.hero.stats.map(([a, b]) => {
-              // '120億＋' → figure '120', unit '億＋'. The sheet steps the unit
-              // down to roughly 40% of the figure rather than setting the whole
-              // value at one size.
-              const [, figure, unit] = /^([\d０-９〜~–.,]*)(.*)$/.exec(a)!;
-              return (
-                <div key={b}>
-                  {/* data-count sits on the figure alone: the count-up in
-                      Interactions.tsx writes textContent, which would wipe out
-                      any child spans on the element it animates. */}
-                  <div className="font-serif font-medium tracking-tight leading-none whitespace-nowrap" style={{ color: 'var(--accent-deep)' }}>
-                    <span data-count={figure} className="text-[34px] sm:text-[41px]">{figure}</span>
-                    <span className="text-[15px] sm:text-[17px]">{unit}</span>
-                  </div>
-                  <div className="text-[12px] text-slate-500 leading-tight mt-2">{b}</div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="mt-10">
+          <div className="mt-9">
             <VideoTiles />
           </div>
         </div>
@@ -264,6 +243,27 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                 AED 1 = ¥{fx.jpy.toFixed(1)}
               </span>
             </div>
+          </div>
+
+          <div data-anim="hero-stats" className="mt-8 pt-8 border-t border-slate-100 grid grid-cols-2 gap-x-6 gap-y-7">
+            {t.hero.stats.map(([a, b]) => {
+              // '120億＋' → figure '120', unit '億＋'. The sheet steps the unit
+              // down to roughly 40% of the figure rather than setting the whole
+              // value at one size.
+              const [, figure, unit] = /^([\d０-９〜~–.,]*)(.*)$/.exec(a)!;
+              return (
+                <div key={b}>
+                  {/* data-count sits on the figure alone: the count-up in
+                      Interactions.tsx writes textContent, which would wipe out
+                      any child spans on the element it animates. */}
+                  <div className="font-serif font-medium tracking-tight leading-none whitespace-nowrap" style={{ color: 'var(--accent-deep)' }}>
+                    <span data-count={figure} className="text-[34px] sm:text-[41px]">{figure}</span>
+                    <span className="text-[15px] sm:text-[17px]">{unit}</span>
+                  </div>
+                  <div className="text-[13.5px] text-slate-500 leading-tight mt-2">{b}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

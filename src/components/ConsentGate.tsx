@@ -126,14 +126,21 @@ export default function ConsentGate() {
               {t.consent.quote}
             </blockquote>
 
-            <label className="mt-10 flex items-start justify-center gap-3 cursor-pointer">
+            {/* This is the action the whole notice exists for, and an older
+                reader can scroll straight past a line of plain body text. It
+                is set larger than the notice around it and given a tinted,
+                ruled panel so it reads as the thing to do, not more copy. */}
+            <label
+              className="mt-10 flex items-start justify-center gap-4 cursor-pointer rounded-xl border-2 px-5 py-5 sm:px-7 sm:py-6 transition-colors"
+              style={{ borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
+            >
               <input
                 type="checkbox"
                 checked={checked}
                 onChange={(e) => { setChecked(e.target.checked); setShowHint(false); }}
-                className="mt-[3px] h-[18px] w-[18px] flex-shrink-0 accent-[var(--accent-deep)]"
+                className="mt-[5px] h-[26px] w-[26px] flex-shrink-0 accent-[var(--accent-deep)]"
               />
-              <span className="text-[13.5px] sm:text-[14.5px] leading-[1.8] text-slate-800">{t.consent.agreeLabel}</span>
+              <span className="text-[17px] sm:text-[19.5px] font-bold leading-[1.7] text-slate-900">{t.consent.agreeLabel}</span>
             </label>
 
             <div className="mt-8 space-y-2">

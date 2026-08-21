@@ -231,7 +231,7 @@ export const STRINGS = {
       platformsLabel: 'EXECUTION VIA',
       gateLead: 'Interested in investing?\nClick here',
       gateButton: 'Grow your assets\nwith a top\nUAE investment firm',
-      platformsHeading: 'Grow your assets with the UAE’s top investment firms',
+      platformsHeading: 'Grow your assets with\nthe UAE’s top investment firms',
       platformNotes: [
         { lead: '2025', text: '— **no.1** for trading performance across 16 Middle Eastern countries:', brand: 'equiti' },
         { lead: '', text: 'Based on floors 144 and 146 of the Burj Khalifa, and a Grand Partner of Emirates:', brand: 'AIX' },
@@ -811,7 +811,7 @@ export const STRINGS = {
       platformsLabel: '提携プラットフォーム',
       gateLead: '投資にご興味のある方は\nこちらをクリック',
       gateButton: 'UAEトップの\n投資会社での\n資産運用',
-      platformsHeading: 'UAEトップの投資会社で資産を運用する！',
+      platformsHeading: 'UAEトップの投資会社で\n資産を運用する！',
       platformNotes: [
         { lead: '2025年', text: '中東16カ国で運用実績**No1**の', brand: 'equiti' },
         { lead: '', text: 'ブルジュハリファ144F, 146Fに拠点を持ちエミレーツ航空とグランドパートナーの', brand: 'AIX' },
