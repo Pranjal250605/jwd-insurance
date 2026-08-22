@@ -9,7 +9,7 @@ import { useFxRate } from '@/hooks/useFxRate';
    chairman's copy uses in Promo.tsx. */
 function withEmphasis(text: string) {
   return text.split('**').map((part, i) =>
-    i % 2 ? <span key={i} className="text-[24px]">{part}</span> : part,
+    i % 2 ? <span key={i} className="text-[32px]">{part}</span> : part,
   );
 }
 
@@ -105,14 +105,14 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             {headlineText}
           </h1>
           {lang !== 'ja' && (
-            <p className="font-jp text-[23.5px] leading-[1.7] text-slate-700 mb-7 max-w-xl tracking-wide">
+            <p className="font-jp text-[21.5px] leading-[1.7] text-slate-700 mb-7 max-w-xl tracking-wide">
               {t.hero.tagline}
             </p>
           )}
-          <p className="text-[22.5px] leading-[1.65] text-slate-600 max-w-xl mb-3.5">
+          <p className="text-[23px] leading-[1.6] text-slate-600 max-w-2xl mb-3.5">
             {t.hero.body}
           </p>
-          <p className="text-[19px] leading-[1.7] text-slate-500 max-w-xl mb-7">
+          <p className="text-[20px] leading-[1.65] text-slate-500 max-w-2xl mb-7">
             {t.hero.support}
           </p>
           <div className="flex items-center gap-4 flex-wrap">
@@ -135,7 +135,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             className="mt-7 flex flex-wrap items-center gap-4 sm:gap-6 group w-fit"
           >
             <span className="flex items-center gap-3">
-              <span className="whitespace-pre-line text-[24px] sm:text-[28.5px] font-bold leading-[1.35]" style={{ color: 'var(--accent-deep)' }}>
+              <span className="whitespace-pre-line text-[27px] sm:text-[33px] font-bold leading-[1.3]" style={{ color: 'var(--accent-deep)' }}>
                 {t.hero.gateLead}
               </span>
               <svg width="38" height="30" viewBox="0 0 38 30" aria-hidden="true" className="flex-shrink-0 transition-transform group-hover:translate-x-1" style={{ color: 'var(--accent-deep)' }}>
@@ -143,7 +143,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
               </svg>
             </span>
             <span
-              className="whitespace-pre-line rounded-md border-2 px-5 py-3 text-[16.5px] sm:text-[17.5px] font-bold leading-[1.45] text-center transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)]"
+              className="whitespace-pre-line rounded-md border-2 px-5 py-3 text-[20px] sm:text-[24px] font-bold leading-[1.4] text-center transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)]"
               style={{ borderColor: 'var(--accent-deep)', color: 'var(--accent-deep)', background: '#ffffff' }}
             >
               {t.hero.gateButton}
@@ -155,7 +155,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
               the headline and the claims in navy and restores the small label
               over the card column. */}
           <div className="mt-8 max-w-2xl">
-            <h2 className="whitespace-pre-line text-[33px] sm:text-[46px] font-bold leading-[1.25] tracking-[-0.01em] mb-5" style={{ color: 'var(--jwd-navy)' }}>
+            <h2 className="whitespace-pre-line text-[40px] sm:text-[56px] font-bold leading-[1.2] tracking-[-0.01em] mb-5" style={{ color: 'var(--jwd-navy)' }}>
               {t.hero.platformsHeading}
             </h2>
             <div className="grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-4">
@@ -170,9 +170,9 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                       their white margins so they sit on the text baseline, and
                       each links to the same destination as the card beside it
                       — a reader who taps the logo means the same thing. */}
-                  <p className="text-[18.5px] leading-[1.5] font-bold" style={{ color: 'var(--jwd-navy)' }}>
+                  <p className="text-[25px] leading-[1.45] font-bold" style={{ color: 'var(--jwd-navy)' }}>
                     {t.hero.platformNotes[i].lead && (
-                      <span className="text-[24px] mr-2">{t.hero.platformNotes[i].lead}</span>
+                      <span className="text-[32px] mr-2">{t.hero.platformNotes[i].lead}</span>
                     )}
                     {withEmphasis(t.hero.platformNotes[i].text)}
                     <a
@@ -187,7 +187,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                         src={t.hero.platformNotes[i].brand === 'equiti' ? '/brand/equiti.png' : '/brand/aix.png'}
                         alt={t.hero.platformNotes[i].brand}
                         className={`ml-1.5 inline-block w-auto ${
-                          t.hero.platformNotes[i].brand === 'equiti' ? 'h-[26px]' : 'h-[22px]'
+                          t.hero.platformNotes[i].brand === 'equiti' ? 'h-[51px]' : 'h-[32px]'
                         }`}
                         style={{ verticalAlign: '-0.18em' }}
                       />
@@ -231,13 +231,13 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
               exchange-rate chip tucked under the photo's bottom-left corner. */}
           <div data-anim="hero-cards" className="mt-4 flex">
             <div className="inline-flex items-center gap-3 rounded-lg bg-white pr-5 shadow-[0_16px_40px_-18px_rgba(var(--shadow-rgb),0.25)]">
-              <span className="w-11 h-11 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-soft)' }}>
+              <span className="w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-soft)' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" style={{ color: 'var(--accent-deep)' }}>
                   <path d="M3 3v18h18" /><path d="M7 14l4-4 4 4 6-6" />
                 </svg>
               </span>
               <span
-                className="text-[21px] sm:text-[23px] font-bold tracking-tight text-slate-900"
+                className="text-[30px] sm:text-[37px] font-bold tracking-tight text-slate-900"
                 title={fx.live && fx.updated ? `${t.hero.ytd} · ${fx.updated}` : t.hero.ytd}
               >
                 AED 1 = ¥{fx.jpy.toFixed(1)}
@@ -257,10 +257,10 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                       Interactions.tsx writes textContent, which would wipe out
                       any child spans on the element it animates. */}
                   <div className="font-serif font-medium tracking-tight leading-none whitespace-nowrap" style={{ color: 'var(--accent-deep)' }}>
-                    <span data-count={figure} className="text-[37.5px] sm:text-[45px]">{figure}</span>
-                    <span className="text-[16.5px] sm:text-[18.5px]">{unit}</span>
+                    <span data-count={figure} className="text-[58px] sm:text-[74px]">{figure}</span>
+                    <span className="text-[24px] sm:text-[31px]">{unit}</span>
                   </div>
-                  <div className="text-[15px] text-slate-500 leading-tight mt-2">{b}</div>
+                  <div className="text-[18px] text-slate-500 leading-tight mt-3">{b}</div>
                 </div>
               );
             })}

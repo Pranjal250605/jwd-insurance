@@ -8,8 +8,8 @@ import { useT } from '@/i18n';
    lazily as the rotation reaches them.
 
    Auto-advance is motion, so prefers-reduced-motion holds on the first frame
-   and the reader can still step through with the dots — and the dissolve
-   itself is dropped there too, so stepping cuts rather than fades. */
+   and the reader can still step through with the dots — and the cross-fade is
+   dropped there too, so stepping cuts rather than dissolves. */
 
 /* Order matches t.hero.mainImages, which carries the caption for each frame —
    the overlay label has to track the photo, or the reader is told they are
@@ -47,10 +47,8 @@ export default function MainImage() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* The frames are stacked and cross-dissolve in place. 08.18 asked for a
-          slide; 08.22 reverses it — "Dissolve is better than slide in & out".
-          The incoming frame sits above the others and fades up while the one
-          under it fades away, so the two blend rather than travel. */}
+      {/* 08.22 revision: the client prefers a dissolve to the slide — the
+          frames stack and cross-fade in place. */}
       {IMAGES.map((src, n) => (
         <img
           key={src}
@@ -59,9 +57,8 @@ export default function MainImage() {
           aria-hidden={n !== i}
           loading={n === 0 ? 'eager' : 'lazy'}
           decoding="async"
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-in-out motion-reduce:transition-none ${
-            n === i ? 'opacity-100 z-[1]' : 'opacity-0'
-          }`}
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-in-out motion-reduce:transition-none"
+          style={{ opacity: n === i ? 1 : 0 }}
         />
       ))}
 
