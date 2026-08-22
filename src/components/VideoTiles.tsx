@@ -55,7 +55,7 @@ function Lightbox({ id, label, onClose }: { id: string; label: string; onClose: 
           playsInline
           className="w-full max-h-[82vh] rounded-xl bg-black shadow-[0_40px_120px_-30px_rgba(0,0,0,0.85)]"
         />
-        <div className="mt-4 text-center text-[14px] text-white/80">{label}</div>
+        <div className="mt-4 text-center text-[15.5px] text-white/80">{label}</div>
       </div>
     </div>,
     document.body,
@@ -109,12 +109,12 @@ export default function VideoTiles() {
         <figure key={v.id} className="m-0 grid grid-cols-[minmax(0,150px)_1fr] sm:grid-cols-[minmax(0,290px)_1fr] gap-4 sm:gap-7 items-start">
           <Tile id={v.id} label={`${v.title} ${v.note}`} aspect="aspect-[16/9]" />
           <figcaption className="min-w-0">
-            <div className="text-[17px] sm:text-[19px] font-bold text-slate-900 leading-snug">
+            <div className="text-[18.5px] sm:text-[21px] font-bold text-slate-900 leading-snug">
               {v.title}
               <span className="whitespace-nowrap">{v.note}</span>
             </div>
             {v.desc && (
-              <p className="mt-1.5 text-[15.5px] sm:text-[18px] leading-[1.6] text-slate-800">{v.desc}</p>
+              <p className="mt-1.5 text-[17px] sm:text-[20px] leading-[1.6] text-slate-800">{v.desc}</p>
             )}
           </figcaption>
         </figure>
@@ -130,12 +130,12 @@ export function VideoGallery() {
   return (
     <section className="bg-white">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-4 pb-12 sm:pb-16">
-        <div className="text-[12.5px] font-bold tracking-[0.22em] text-slate-400 mb-5">{t.hero.moreVideosLabel}</div>
+        <div className="text-[14px] font-bold tracking-[0.22em] text-slate-400 mb-5">{t.hero.moreVideosLabel}</div>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {t.hero.moreVideos.map((v) => (
             <figure key={v.id} className="m-0">
               <Tile id={v.id} label={v.title} aspect="aspect-[16/10]" fit="contain" />
-              <figcaption className="mt-2.5 text-[15px] font-medium text-slate-700 leading-snug">{v.title}</figcaption>
+              <figcaption className="mt-2.5 text-[16.5px] font-medium text-slate-700 leading-snug">{v.title}</figcaption>
             </figure>
           ))}
         </div>
