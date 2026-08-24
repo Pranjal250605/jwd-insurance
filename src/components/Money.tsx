@@ -31,18 +31,18 @@ export default function Money() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-16 sm:py-24">
         <div data-spotlight className="spotlight rounded-[20px] bg-white border border-slate-100 p-6 sm:p-10 lg:p-16 grid lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-14 items-center">
           <div>
-            <div className="eyebrow-rule text-[13px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.money.reachEyebrow}</div>
-            <div className="font-jp text-[18.5px] tracking-[0.18em] text-slate-500 mb-6">{t.money.reachSub}</div>
+            <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.money.reachEyebrow}</div>
+            <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.money.reachSub}</div>
             <h2 className="font-serif fluid-40-48 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-6">
               {t.money.reachTitle}
             </h2>
-            <p className="text-[23px] leading-[1.65] text-slate-600 mb-4 max-w-md">
+            <p className="text-[20.5px] leading-[1.65] text-slate-600 mb-4 max-w-md">
               {t.money.reachBody}
             </p>
-            <p className="font-jp text-[21px] leading-[1.85] text-slate-600 mb-9 max-w-md tracking-wide">
+            <p className="font-jp text-[19px] leading-[1.85] text-slate-600 mb-9 max-w-md tracking-wide">
               {t.money.reachBody2}
             </p>
-            <a href="#" className="link-underline text-[18.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+            <a href="#" className="link-underline text-[16.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
               {t.money.reachCta}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </a>
@@ -76,9 +76,9 @@ export default function Money() {
               <div key={i}
                 className={`absolute bg-white rounded-lg shadow-[0_12px_30px_-12px_rgba(var(--shadow-rgb),0.25)] px-3.5 py-2 sm:px-4 sm:py-2.5 ${OFFICE_POS[i].lead ? 'border-l-2' : ''}`}
                 style={{ transform: `translate(${OFFICE_POS[i].x}px, ${OFFICE_POS[i].y}px) rotate(${OFFICE_POS[i].rot}deg)`, borderLeftColor: OFFICE_POS[i].lead ? 'var(--secondary)' : undefined, zIndex: 10 + i }}>
-                <div className="text-[11px] sm:text-[12px] font-semibold tracking-[0.18em] text-slate-400">{OFFICE_POS[i].lead ? t.money.hq : t.money.office}</div>
-                <div className="font-serif text-[18px] sm:text-[21.5px] font-semibold text-slate-900 leading-tight">{o.city}</div>
-                <div className="font-jp text-[11px] sm:text-[12px] text-slate-500 tracking-wide">{o.sub}</div>
+                <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.18em] text-slate-400">{OFFICE_POS[i].lead ? t.money.hq : t.money.office}</div>
+                <div className="font-serif text-[16px] sm:text-[19.5px] font-semibold text-slate-900 leading-tight">{o.city}</div>
+                <div className="font-jp text-[10px] sm:text-[11px] text-slate-500 tracking-wide">{o.sub}</div>
               </div>
             ))}
           </div>
@@ -89,23 +89,23 @@ export default function Money() {
         <div data-spotlight className="spotlight spotlight--wash rounded-[20px] p-6 sm:p-10 lg:p-16 grid lg:grid-cols-[1fr_1fr] gap-10 lg:gap-12 items-center relative overflow-hidden"
           style={{ background: 'var(--gradient-dark)' }}>
           <div className="relative z-10">
-            <div className="eyebrow-rule text-[13px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>{t.money.portalEyebrow}</div>
-            <div className="font-jp text-[18.5px] tracking-[0.18em] mb-7 text-white/60">{t.money.portalSub}</div>
+            <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>{t.money.portalEyebrow}</div>
+            <div className="font-jp text-[16.5px] tracking-[0.18em] mb-7 text-white/60">{t.money.portalSub}</div>
             <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-white tracking-[-0.015em] mb-6">
               {t.money.portalTitle}
             </h2>
-            <p className="text-[21.5px] leading-[1.65] text-slate-300 mb-3 max-w-md">
+            <p className="text-[19.5px] leading-[1.65] text-slate-300 mb-3 max-w-md">
               {t.money.portalBody}
             </p>
-            <p className="font-jp text-[20.5px] leading-[1.85] text-slate-400 mb-9 max-w-md tracking-wide">
+            <p className="font-jp text-[18.5px] leading-[1.85] text-slate-400 mb-9 max-w-md tracking-wide">
               {t.money.portalBody2}
             </p>
             <div className="flex flex-col gap-3 max-w-sm">
               {t.money.features.map((f) => (
-                <div key={f.l} className="flex items-center gap-3 text-[20.5px] text-white/85">
+                <div key={f.l} className="flex items-center gap-3 text-[18.5px] text-white/85">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ stroke: 'var(--secondary)' }} strokeWidth="2"><path d="M5 12l5 5L20 7" /></svg>
                   <span className="flex-1">{f.l}</span>
-                  <span className="font-jp text-[13px] text-white/40">{f.sub}</span>
+                  <span className="font-jp text-[11.5px] text-white/40">{f.sub}</span>
                 </div>
               ))}
             </div>
@@ -120,12 +120,12 @@ export default function Money() {
               <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(var(--photo-tint-rgb),0.5) 0%, transparent 60%)' }} />
               <div className="equiti-card-rim absolute top-4 left-4 right-4 bg-white/95 backdrop-blur rounded-lg p-3 flex items-center justify-between">
                 <div>
-                  <div className="text-[11px] font-semibold tracking-[0.2em] text-slate-400">{t.money.totalWealth}</div>
-                  <div className="font-serif text-[24px] font-semibold text-slate-900">2020</div>
+                  <div className="text-[10px] font-semibold tracking-[0.2em] text-slate-400">{t.money.totalWealth}</div>
+                  <div className="font-serif text-[21.5px] font-semibold text-slate-900">2020</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[11px] font-semibold tracking-[0.2em] text-slate-400">{t.money.qtr}</div>
-                  <div className="text-[20.5px] font-semibold" style={{ color: 'var(--accent-deep)' }}>Japan × UAE</div>
+                  <div className="text-[10px] font-semibold tracking-[0.2em] text-slate-400">{t.money.qtr}</div>
+                  <div className="text-[18.5px] font-semibold" style={{ color: 'var(--accent-deep)' }}>Japan × UAE</div>
                 </div>
               </div>
             </div>

@@ -22,13 +22,13 @@ export default function Products() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-16 sm:py-24">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-12 mb-10 sm:mb-16 items-end">
           <div>
-            <div className="eyebrow-rule text-[13px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.eyebrow}</div>
-            <div className="font-jp text-[18.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.sub}</div>
+            <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.eyebrow}</div>
+            <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.sub}</div>
             <h2 className="font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
               {t.products.title}
             </h2>
           </div>
-          <p className="text-[23px] leading-[1.65] text-slate-600 max-w-lg lg:justify-self-end">
+          <p className="text-[20.5px] leading-[1.65] text-slate-600 max-w-lg lg:justify-self-end">
             {t.products.intro}
           </p>
         </div>
@@ -42,16 +42,16 @@ export default function Products() {
                   image becomes a normal-flow strip above the text instead. */}
               <div className="grid grid-cols-1 sm:grid-cols-[1fr_180px]">
                 <div className="p-6 sm:p-8 order-2 sm:order-1">
-                  <div className="text-[12px] font-semibold tracking-[0.22em] text-slate-400 mb-2">{s.tag}</div>
-                  <h3 className="font-serif text-[29px] font-semibold text-slate-900 mb-1 tracking-[-0.01em]">{s.label}</h3>
-                  <div className="font-jp text-[14.5px] tracking-[0.16em] text-slate-500 mb-4">{s.sub2}</div>
-                  <p className="text-[20.5px] leading-[1.6] text-slate-600 mb-6">{s.body}</p>
+                  <div className="text-[11px] font-semibold tracking-[0.22em] text-slate-400 mb-2">{s.tag}</div>
+                  <h3 className="font-serif text-[26px] font-semibold text-slate-900 mb-1 tracking-[-0.01em]">{s.label}</h3>
+                  <div className="font-jp text-[13px] tracking-[0.16em] text-slate-500 mb-4">{s.sub2}</div>
+                  <p className="text-[18.5px] leading-[1.6] text-slate-600 mb-6">{s.body}</p>
                   <div className="flex items-center justify-between pt-5 border-t border-slate-100">
                     <div>
-                      <div className="text-[12px] font-semibold tracking-[0.18em] text-slate-400 uppercase">{t.products.aumLabel}</div>
-                      <div className="font-serif text-[26px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{lang === 'ja' ? SOLUTION_META[i].factJa : SOLUTION_META[i].fact}</div>
+                      <div className="text-[11px] font-semibold tracking-[0.18em] text-slate-400 uppercase">{t.products.aumLabel}</div>
+                      <div className="font-serif text-[23.5px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{lang === 'ja' ? SOLUTION_META[i].factJa : SOLUTION_META[i].fact}</div>
                     </div>
-                    <a href="#" className="link-underline text-[14.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+                    <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                       {t.products.detailCta}
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                     </a>
@@ -67,8 +67,8 @@ export default function Products() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-20">
-        <div className="eyebrow-rule text-[13px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.platformsEyebrow}</div>
-        <div className="font-jp text-[18.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.platformsSub}</div>
+        <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.platformsEyebrow}</div>
+        <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.platformsSub}</div>
         <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-8 sm:mb-10 max-w-3xl">
           {t.products.platformsTitle}
         </h2>
@@ -85,21 +85,21 @@ export default function Products() {
               style={{ borderColor: 'var(--accent-deep)' }}
             >
               <div className="flex items-start justify-between mb-5">
-                <span className="text-[12px] font-semibold tracking-[0.22em] px-3 py-1.5 rounded-full" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>{p.tag}</span>
+                <span className="text-[11px] font-semibold tracking-[0.22em] px-3 py-1.5 rounded-full" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>{p.tag}</span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-slate-300 transition-all group-hover:text-slate-900 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 flex-shrink-0">
                   <path d="M7 17L17 7M9 7h8v8" />
                 </svg>
               </div>
-              <h3 className="font-serif text-[31px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{p.name}</h3>
-              <p className="text-[20.5px] leading-[1.6] text-slate-600 mb-7">{p.desc}</p>
-              <span className="link-underline text-[18.5px] font-semibold inline-flex items-center gap-1.5 group-hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+              <h3 className="font-serif text-[28px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{p.name}</h3>
+              <p className="text-[18.5px] leading-[1.6] text-slate-600 mb-7">{p.desc}</p>
+              <span className="link-underline text-[16.5px] font-semibold inline-flex items-center gap-1.5 group-hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                 {t.products.platformsVisit}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
               </span>
             </a>
           ))}
         </div>
-        <p className="text-[15.5px] text-slate-400 mt-5">{t.products.platformsNote}</p>
+        <p className="text-[14px] text-slate-400 mt-5">{t.products.platformsNote}</p>
       </div>
 
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-20">
@@ -114,14 +114,14 @@ export default function Products() {
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(var(--photo-tint-rgb), 0.92), rgba(var(--photo-tint-rgb), 0.85))' }} />
           </div>
           <div className="relative">
-            <div className="eyebrow-rule justify-center text-[13px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>{t.products.langEyebrow}</div>
-            <div className="font-jp text-[18.5px] tracking-[0.18em] mb-7 text-white/60">{t.products.langSub}</div>
+            <div className="eyebrow-rule justify-center text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>{t.products.langEyebrow}</div>
+            <div className="font-jp text-[16.5px] tracking-[0.18em] mb-7 text-white/60">{t.products.langSub}</div>
             <h2 className="font-serif fluid-36-52 leading-[1.15] font-medium text-white tracking-[-0.015em] max-w-3xl mx-auto">
               {t.products.langTitle}
             </h2>
             <div data-anim="lang-chips" className="mt-10 sm:mt-12 flex items-center justify-center gap-2.5 sm:gap-3 flex-wrap">
               {LANG_CHIPS.map((l) => (
-                <span key={l} className="px-4 sm:px-5 h-10 rounded-full bg-white/5 border border-white/10 text-white/85 text-[17px] sm:text-[18.5px] flex items-center font-medium transition-all duration-300 hover:bg-white/12 hover:border-white/30 hover:text-white hover:-translate-y-0.5 cursor-default">{l}</span>
+                <span key={l} className="px-4 sm:px-5 h-10 rounded-full bg-white/5 border border-white/10 text-white/85 text-[15.5px] sm:text-[16.5px] flex items-center font-medium transition-all duration-300 hover:bg-white/12 hover:border-white/30 hover:text-white hover:-translate-y-0.5 cursor-default">{l}</span>
               ))}
             </div>
           </div>
@@ -129,8 +129,8 @@ export default function Products() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-24">
-        <div className="eyebrow-rule text-[13px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.stepsEyebrow}</div>
-        <div className="font-jp text-[18.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.stepsSub}</div>
+        <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.stepsEyebrow}</div>
+        <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.stepsSub}</div>
         <h2 className="font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-10 sm:mb-14 max-w-3xl">
           {t.products.stepsTitle}
         </h2>
@@ -138,13 +138,13 @@ export default function Products() {
           {t.products.steps.map((s, i) => (
             <div key={i} data-spotlight className="spotlight group bg-white border border-slate-100 rounded-xl p-6 sm:p-9 hover:shadow-[0_16px_50px_-16px_rgba(var(--shadow-rgb),0.16)] hover:-translate-y-0.5 transition-all">
               <div className="flex items-start justify-between mb-7">
-                <div className="font-serif text-[48px] font-medium leading-none transition-transform duration-500 ease-out group-hover:scale-110 origin-left" style={{ color: 'var(--accent-deep)' }}>{`0${i + 1}`}</div>
-                <div className="text-[12px] font-semibold tracking-[0.22em] text-slate-300">{t.products.stepLabel}</div>
+                <div className="font-serif text-[43px] font-medium leading-none transition-transform duration-500 ease-out group-hover:scale-110 origin-left" style={{ color: 'var(--accent-deep)' }}>{`0${i + 1}`}</div>
+                <div className="text-[11px] font-semibold tracking-[0.22em] text-slate-300">{t.products.stepLabel}</div>
               </div>
-              <div className="font-jp text-[14.5px] tracking-[0.16em] text-slate-500 mb-1">{s.sub}</div>
-              <h3 className="font-serif text-[26.5px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{s.title}</h3>
-              <p className="text-[21px] leading-[1.6] text-slate-600 mb-8">{s.body}</p>
-              <a href="#" className="link-underline text-[18.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+              <div className="font-jp text-[13px] tracking-[0.16em] text-slate-500 mb-1">{s.sub}</div>
+              <h3 className="font-serif text-[24px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{s.title}</h3>
+              <p className="text-[19px] leading-[1.6] text-slate-600 mb-8">{s.body}</p>
+              <a href="#" className="link-underline text-[16.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                 {s.cta}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
               </a>

@@ -89,7 +89,7 @@ export default function PhotoStrip() {
   return (
     <section className="bg-white overflow-hidden pb-10 sm:pb-14">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 mb-4">
-        <div className="text-[15px] font-bold tracking-[0.22em] text-slate-400">{t.hero.stripLabel}</div>
+        <div className="text-[13.5px] font-bold tracking-[0.22em] text-slate-400">{t.hero.stripLabel}</div>
       </div>
 
       <div className="photo-marquee relative">

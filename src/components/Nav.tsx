@@ -18,7 +18,7 @@ export default function Nav() {
   // tighter padding/type; nothing wraps in either language.
   const isJa = lang === 'ja';
   const navItem = `flex items-center h-10 whitespace-nowrap font-medium text-slate-700 hover:text-slate-900 ${
-    isJa ? 'px-2 xl:px-3 text-[18px] xl:text-[19px]' : 'px-3 xl:px-4 text-[20.5px]'
+    isJa ? 'px-2 xl:px-3 text-[16px] xl:text-[17px]' : 'px-3 xl:px-4 text-[18.5px]'
   }`;
 
   // Close the drawer on Escape and on route change (hash nav).
@@ -39,7 +39,7 @@ export default function Nav() {
   return (
     <div className="w-full bg-white sticky top-0 z-40 border-b border-slate-100">
       <div className="border-b border-slate-100">
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-9 flex items-center justify-end gap-6 text-[14.5px] text-slate-500">
+        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-9 flex items-center justify-end gap-6 text-[13px] text-slate-500">
           <span className="hidden md:inline tracking-[0.18em] text-slate-400">{t.nav.regulated}</span>
           <button className="hidden sm:flex items-center gap-1.5 hover:text-slate-900">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -71,7 +71,7 @@ export default function Nav() {
             the Equiti/AIX pills + CTA button don't quite fit at px-4,
             overflowing the header by a few px — this closes that gap.
             See `navItem` above for the per-language sizing. */}
-        <nav className="hidden min-[1400px]:flex items-center gap-1" onMouseLeave={() => setOpenMenu(null)}>
+        <nav className="hidden min-[1320px]:flex items-center gap-1" onMouseLeave={() => setOpenMenu(null)}>
           {Object.entries(t.nav.menus).map(([key, menu]) => (
             <div key={key} className="relative flex-shrink-0" onMouseEnter={() => setOpenMenu(key)}>
               <button className={`${navItem} gap-1`}>
@@ -85,11 +85,11 @@ export default function Nav() {
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-64">
                   <div className="bg-white border border-slate-100 rounded-xl shadow-[0_10px_40px_-12px_rgba(15,23,42,0.15)] py-3">
                     <div className="px-4 pb-2 mb-1 border-b border-slate-100">
-                      <div className="text-[12px] font-bold tracking-[0.2em] text-slate-400">{menu.label.toUpperCase()}</div>
-                      <div className="text-[13px] font-jp text-slate-500 mt-0.5">{menu.sub}</div>
+                      <div className="text-[11px] font-bold tracking-[0.2em] text-slate-400">{menu.label.toUpperCase()}</div>
+                      <div className="text-[11.5px] font-jp text-slate-500 mt-0.5">{menu.sub}</div>
                     </div>
                     {menu.items.map((item) => (
-                      <a key={item} href="#" className="block px-4 py-2 text-[19px] text-slate-700 hover:bg-slate-50 hover:text-slate-900">{item}</a>
+                      <a key={item} href="#" className="block px-4 py-2 text-[17px] text-slate-700 hover:bg-slate-50 hover:text-slate-900">{item}</a>
                     ))}
                   </div>
                 </div>
@@ -115,7 +115,7 @@ export default function Nav() {
                 title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-4 h-11 rounded-full border text-[18px] font-bold transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_25px_-10px_rgba(10,186,181,0.5)]"
+                className="flex items-center gap-1.5 px-4 h-11 rounded-full border text-[16px] font-bold transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_25px_-10px_rgba(10,186,181,0.5)]"
                 style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
               >
                 {p.name === 'AIX Investment' ? 'AIX' : p.name}
@@ -125,7 +125,7 @@ export default function Nav() {
           </div>
           <button
             data-magnetic
-            className={`hidden sm:inline-flex items-center justify-center cta-primary h-11 rounded-sm text-[14.5px] font-bold whitespace-nowrap ${
+            className={`hidden sm:inline-flex items-center justify-center cta-primary h-11 rounded-sm text-[13px] font-bold whitespace-nowrap ${
               isJa ? 'px-4 tracking-[0.06em]' : 'px-5 tracking-[0.14em]'
             }`}
           >
@@ -133,12 +133,12 @@ export default function Nav() {
           </button>
 
           {/* Hamburger — the only nav access point below lg (1024px); the
-              desktop <nav> above is `hidden min-[1400px]:flex` with no other fallback. */}
+              desktop <nav> above is `hidden min-[1320px]:flex` with no other fallback. */}
           <button
             onClick={() => setMobileOpen(true)}
             aria-label={t.nav.openMenu}
             aria-expanded={mobileOpen}
-            className="min-[1400px]:hidden flex items-center justify-center w-11 h-11 -mr-1.5 rounded-lg text-slate-700 hover:bg-slate-50 active:bg-slate-100 transition-colors"
+            className="min-[1320px]:hidden flex items-center justify-center w-11 h-11 -mr-1.5 rounded-lg text-slate-700 hover:bg-slate-50 active:bg-slate-100 transition-colors"
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M4 7h16M4 12h16M4 17h16" />
@@ -148,7 +148,7 @@ export default function Nav() {
       </div>
 
       {mobileOpen && createPortal(
-        <div className="min-[1400px]:hidden fixed inset-0 z-[70] flex flex-col bg-white">
+        <div className="min-[1320px]:hidden fixed inset-0 z-[70] flex flex-col bg-white">
           {/* backdrop-equivalent: the drawer itself is opaque and full-screen,
               so there's no separate scrim to manage — it fully replaces the
               page, avoiding any transform/filter ancestor entirely (portal). */}
@@ -177,8 +177,8 @@ export default function Nav() {
                       className="w-full flex items-center justify-between min-h-[56px] py-3 text-left"
                     >
                       <span>
-                        <span className="block text-[23px] font-medium text-slate-900">{menu.label}</span>
-                        <span className="block font-jp text-[14.5px] text-slate-400 mt-0.5">{menu.sub}</span>
+                        <span className="block text-[20.5px] font-medium text-slate-900">{menu.label}</span>
+                        <span className="block font-jp text-[13px] text-slate-400 mt-0.5">{menu.sub}</span>
                       </span>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
                         className={`flex-shrink-0 text-slate-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}>
@@ -188,7 +188,7 @@ export default function Nav() {
                     {isOpen && (
                       <div className="pb-3 flex flex-col">
                         {menu.items.map((item) => (
-                          <a key={item} href="#" onClick={closeMobile} className="min-h-[44px] flex items-center text-[19px] text-slate-600 hover:text-slate-900">
+                          <a key={item} href="#" onClick={closeMobile} className="min-h-[44px] flex items-center text-[17px] text-slate-600 hover:text-slate-900">
                             {item}
                           </a>
                         ))}
@@ -198,15 +198,15 @@ export default function Nav() {
                 );
               })}
 
-              <a href="#/properties" onClick={closeMobile} className="min-h-[56px] flex items-center text-[23px] font-medium text-slate-900 border-b border-slate-100">
+              <a href="#/properties" onClick={closeMobile} className="min-h-[56px] flex items-center text-[20.5px] font-medium text-slate-900 border-b border-slate-100">
                 {t.nav.portfolio}
               </a>
-              <a href="#" onClick={closeMobile} className="min-h-[56px] flex items-center text-[23px] font-medium text-slate-900 border-b border-slate-100">
+              <a href="#" onClick={closeMobile} className="min-h-[56px] flex items-center text-[20.5px] font-medium text-slate-900 border-b border-slate-100">
                 {t.nav.contact}
               </a>
 
               <div className="flex flex-col gap-2.5 mt-6">
-                <div className="text-[13px] font-bold tracking-[0.22em] text-slate-400">{t.hero.platformsLabel}</div>
+                <div className="text-[11.5px] font-bold tracking-[0.22em] text-slate-400">{t.hero.platformsLabel}</div>
                 {t.products.platforms.map((p) => (
                   <a
                     key={p.name}
@@ -215,7 +215,7 @@ export default function Nav() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={closeMobile}
-                    className="flex items-center justify-between min-h-[52px] px-4 rounded-lg border text-[19px] font-bold"
+                    className="flex items-center justify-between min-h-[52px] px-4 rounded-lg border text-[17px] font-bold"
                     style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
                   >
                     {p.name}
@@ -224,7 +224,7 @@ export default function Nav() {
                 ))}
               </div>
 
-              <a href="#" onClick={closeMobile} className="flex items-center gap-2 min-h-[52px] mt-6 text-[19px] text-slate-600">
+              <a href="#" onClick={closeMobile} className="flex items-center gap-2 min-h-[52px] mt-6 text-[17px] text-slate-600">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
                   <circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-7 8-7s8 3 8 7" />
                 </svg>
@@ -234,7 +234,7 @@ export default function Nav() {
           </div>
 
           <div className="pb-safe flex-shrink-0 px-5 pt-3 pb-4 border-t border-slate-100">
-            <button data-magnetic className="cta-primary w-full h-12 rounded-sm text-[14.5px] font-bold tracking-[0.14em]">
+            <button data-magnetic className="cta-primary w-full h-12 rounded-sm text-[13px] font-bold tracking-[0.14em]">
               {t.nav.cta}
             </button>
           </div>

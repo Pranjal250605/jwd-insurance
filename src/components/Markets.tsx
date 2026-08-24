@@ -44,20 +44,20 @@ export default function Markets() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-4 pb-16">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-10 mb-10 sm:mb-12 items-end">
           <div>
-            <div className="eyebrow-rule text-[13px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.markets.eyebrow}</div>
-            <div className="font-jp text-[18.5px] tracking-[0.18em] text-slate-500 mb-6">{t.markets.sub}</div>
+            <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.markets.eyebrow}</div>
+            <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.markets.sub}</div>
             <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
               {t.markets.title}
             </h2>
           </div>
           <div className="lg:justify-self-end lg:text-right">
-            <p className="text-[20.5px] leading-[1.65] text-slate-600 max-w-lg mb-4">{t.markets.intro}</p>
+            <p className="text-[18.5px] leading-[1.65] text-slate-600 max-w-lg mb-4">{t.markets.intro}</p>
             <a
               href={jaOutbound(t.markets.viewAllUrl, lang === 'ja')}
               title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
               target="_blank"
               rel="noopener noreferrer"
-              className="link-underline text-[18.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all"
+              className="link-underline text-[16.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all"
               style={{ color: 'var(--accent-deep)' }}
             >
               {t.markets.viewAll}
@@ -85,8 +85,8 @@ export default function Markets() {
                   <path d="M7 17L17 7M9 7h8v8" />
                 </svg>
               </div>
-              <h3 className="font-serif text-[26px] font-semibold text-slate-900 mb-1.5 tracking-[-0.01em]">{m.name}</h3>
-              <p className="text-[18.5px] leading-[1.55] text-slate-600">{m.desc}</p>
+              <h3 className="font-serif text-[23.5px] font-semibold text-slate-900 mb-1.5 tracking-[-0.01em]">{m.name}</h3>
+              <p className="text-[16.5px] leading-[1.55] text-slate-600">{m.desc}</p>
             </a>
           ))}
 
@@ -103,13 +103,13 @@ export default function Markets() {
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M7 17L17 7M9 7h8v8" /></svg>
             </span>
             <span>
-              <span className="block font-serif text-[26px] font-semibold text-white mb-1.5 tracking-[-0.01em]">Equiti</span>
-              <span className="block text-[18.5px] leading-[1.55] text-white/70">{t.markets.viewAll} →</span>
+              <span className="block font-serif text-[23.5px] font-semibold text-white mb-1.5 tracking-[-0.01em]">Equiti</span>
+              <span className="block text-[16.5px] leading-[1.55] text-white/70">{t.markets.viewAll} →</span>
             </span>
           </a>
         </div>
 
-        <p className="text-[15.5px] text-slate-400 mt-5">{t.markets.note}</p>
+        <p className="text-[14px] text-slate-400 mt-5">{t.markets.note}</p>
       </div>
     </section>
   );

@@ -474,32 +474,32 @@ body::after {
      as before. Only the <768px range is new — desktop and tablet render
      pixel-identical to the prior fixed sizes. One class per (base,max) pair
      actually used in the type scale; see the components for the mapping. — */
-.fluid-40-48 { font-size: clamp(36px, 25.5px + 2.94vw, 48px); }
-@media (min-width: 1024px) { .fluid-40-48 { font-size: 57.5px; } }
+.fluid-40-48 { font-size: clamp(32.5px, 23px + 2.65vw, 43px); }
+@media (min-width: 1024px) { .fluid-40-48 { font-size: 52px; } }
 
-.fluid-40-52 { font-size: clamp(36px, 25.5px + 2.94vw, 48px); }
-@media (min-width: 1024px) { .fluid-40-52 { font-size: 62.5px; } }
+.fluid-40-52 { font-size: clamp(32.5px, 23px + 2.65vw, 43px); }
+@media (min-width: 1024px) { .fluid-40-52 { font-size: 56px; } }
 
-.fluid-36-44 { font-size: clamp(32.5px, 23px + 2.65vw, 43px); }
-@media (min-width: 1024px) { .fluid-36-44 { font-size: 53px; } }
+.fluid-36-44 { font-size: clamp(29px, 20.5px + 2.38vw, 38.5px); }
+@media (min-width: 1024px) { .fluid-36-44 { font-size: 47.5px; } }
 
-.fluid-36-52 { font-size: clamp(32.5px, 23px + 2.65vw, 43px); }
-@media (min-width: 1024px) { .fluid-36-52 { font-size: 62.5px; } }
+.fluid-36-52 { font-size: clamp(29px, 20.5px + 2.38vw, 38.5px); }
+@media (min-width: 1024px) { .fluid-36-52 { font-size: 56px; } }
 
-.fluid-44-60 { font-size: clamp(38.5px, 25.5px + 3.53vw, 53px); }
-@media (min-width: 1024px) { .fluid-44-60 { font-size: 72px; } }
+.fluid-44-60 { font-size: clamp(34.5px, 23px + 3.18vw, 47.5px); }
+@media (min-width: 1024px) { .fluid-44-60 { font-size: 65px; } }
 
-.fluid-hero-en { font-size: clamp(41px, 21.5px + 5.29vw, 62.5px); }
-@media (min-width: 1024px) { .fluid-hero-en { font-size: 77px; } }
+.fluid-hero-en { font-size: clamp(37px, 19.5px + 4.76vw, 56px); }
+@media (min-width: 1024px) { .fluid-hero-en { font-size: 69.5px; } }
 
-.fluid-hero-ja { font-size: clamp(41px, 24px + 4.68vw, 60px); }
-@media (min-width: 1024px) { .fluid-hero-ja { font-size: 74.5px; } }
+.fluid-hero-ja { font-size: clamp(37px, 21.5px + 4.21vw, 54px); }
+@media (min-width: 1024px) { .fluid-hero-ja { font-size: 67px; } }
 
-.fluid-props-h1-en { font-size: clamp(38.5px, 25.5px + 3.53vw, 53px); }
-@media (min-width: 1024px) { .fluid-props-h1-en { font-size: 67px; } }
+.fluid-props-h1-en { font-size: clamp(34.5px, 23px + 3.18vw, 47.5px); }
+@media (min-width: 1024px) { .fluid-props-h1-en { font-size: 60.5px; } }
 
-.fluid-props-h1-ja { font-size: clamp(33.5px, 23px + 2.94vw, 45.5px); }
-@media (min-width: 1024px) { .fluid-props-h1-ja { font-size: 57.5px; } }
+.fluid-props-h1-ja { font-size: clamp(30px, 20.5px + 2.65vw, 41px); }
+@media (min-width: 1024px) { .fluid-props-h1-ja { font-size: 52px; } }
 
 /* — Safe-area helpers for fixed/full-screen overlays (nav drawer, chat,
      sticky bars) so content and tap targets clear the notch / home

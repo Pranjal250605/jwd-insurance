@@ -47,12 +47,12 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
           style={{ right: '1rem', bottom: 'calc(4.5rem + env(safe-area-inset-bottom, 0px))' }}
         >
           <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between flex-shrink-0">
-            <span className="text-[14.5px] font-semibold text-slate-700 tracking-wide">TWEAKS</span>
-            <button onClick={() => setOpen(false)} className="flex items-center justify-center w-8 h-8 -mr-1 text-slate-400 hover:text-slate-700 text-[19px] leading-none">✕</button>
+            <span className="text-[13px] font-semibold text-slate-700 tracking-wide">TWEAKS</span>
+            <button onClick={() => setOpen(false)} className="flex items-center justify-center w-8 h-8 -mr-1 text-slate-400 hover:text-slate-700 text-[17px] leading-none">✕</button>
           </div>
           <div className="p-4 flex flex-col gap-5 overflow-y-auto">
             <div>
-              <div className="text-[12px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Brand variant</div>
+              <div className="text-[11px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Brand variant</div>
               <div className="grid grid-cols-2 gap-2">
                 {VARIANTS.map((v) => {
                   const active = tweaks.variant === v.id;
@@ -75,8 +75,8 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
                           />
                         ))}
                       </div>
-                      <div className="text-[14.5px] font-semibold text-slate-900 leading-tight">{v.label}</div>
-                      <div className="font-jp text-[12px] tracking-[0.16em] text-slate-500 mt-0.5">{v.jp}</div>
+                      <div className="text-[13px] font-semibold text-slate-900 leading-tight">{v.label}</div>
+                      <div className="font-jp text-[11px] tracking-[0.16em] text-slate-500 mt-0.5">{v.jp}</div>
                     </button>
                   );
                 })}
@@ -86,8 +86,8 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
             {tweaks.variant === 'heritage' && (
               <>
                 <div>
-                  <div className="text-[12px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Brand accent</div>
-                  <label className="flex items-center justify-between text-[14.5px] text-slate-600 mb-1">
+                  <div className="text-[11px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Brand accent</div>
+                  <label className="flex items-center justify-between text-[13px] text-slate-600 mb-1">
                     <span>Hue</span>
                     <span className="text-slate-400 font-mono">{tweaks.accentHue}</span>
                   </label>
@@ -98,7 +98,7 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
                     className="range-touch w-full"
                     style={{ ['--range-thumb-color' as string]: '#2dd4bf' }}
                   />
-                  <label className="flex items-center justify-between text-[14.5px] text-slate-600 mb-1 mt-3">
+                  <label className="flex items-center justify-between text-[13px] text-slate-600 mb-1 mt-3">
                     <span>Saturation</span>
                     <span className="text-slate-400 font-mono">{tweaks.accentChroma.toFixed(2)}</span>
                   </label>
@@ -112,13 +112,13 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
                 </div>
 
                 <div>
-                  <div className="text-[12px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Alt surface</div>
+                  <div className="text-[11px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Alt surface</div>
                   <div className="flex gap-1.5">
                     {ALT_SURFACE_OPTIONS.map((opt) => (
                       <button
                         key={opt}
                         onClick={() => setTweak('altSurfaceTone', opt)}
-                        className={`flex-1 py-1 rounded-lg text-[13px] font-medium transition-all ${
+                        className={`flex-1 py-1 rounded-lg text-[11.5px] font-medium transition-all ${
                           tweaks.altSurfaceTone === opt
                             ? 'bg-slate-900 text-white'
                             : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -134,8 +134,8 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
 
             {tweaks.variant === 'equiti' && (
               <div className="rounded-lg bg-slate-50 border border-slate-100 px-3 py-2.5">
-                <div className="text-[12px] font-bold tracking-[0.16em] text-slate-500 uppercase mb-1">Equiti palette</div>
-                <p className="text-[14px] leading-[1.5] text-slate-600">
+                <div className="text-[11px] font-bold tracking-[0.16em] text-slate-500 uppercase mb-1">Equiti palette</div>
+                <p className="text-[12.5px] leading-[1.5] text-slate-600">
                   Brand-matched cyan + midnight navy, modelled on{' '}
                   <span className="font-medium text-slate-800">equiti.com</span>. Sliders are disabled — switch back to Heritage to fine-tune.
                 </p>
@@ -143,20 +143,20 @@ export default function TweaksPanel({ tweaks, setTweak }: Props) {
             )}
 
             <div>
-              <div className="text-[12px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Hero copy</div>
-              <label className="text-[14.5px] text-slate-600 block mb-1">Eyebrow</label>
+              <div className="text-[11px] font-bold tracking-[0.1em] text-slate-400 uppercase mb-3">Hero copy</div>
+              <label className="text-[13px] text-slate-600 block mb-1">Eyebrow</label>
               <input
                 type="text"
                 value={tweaks.heroEyebrow}
                 onChange={(e) => setTweak('heroEyebrow', e.target.value)}
-                className="w-full text-[19px] sm:text-[14.5px] px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 bg-white text-slate-700 mb-3"
+                className="w-full text-[17px] sm:text-[13px] px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 bg-white text-slate-700 mb-3"
               />
-              <label className="text-[14.5px] text-slate-600 block mb-1">Headline</label>
+              <label className="text-[13px] text-slate-600 block mb-1">Headline</label>
               <input
                 type="text"
                 value={tweaks.heroHeadline}
                 onChange={(e) => setTweak('heroHeadline', e.target.value)}
-                className="w-full text-[19px] sm:text-[14.5px] px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 bg-white text-slate-700"
+                className="w-full text-[17px] sm:text-[13px] px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 bg-white text-slate-700"
               />
             </div>
           </div>

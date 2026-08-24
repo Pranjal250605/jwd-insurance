@@ -8,17 +8,17 @@ export default function RealEstate() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-16 sm:py-24">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-10 mb-10 sm:mb-12 items-end">
           <div>
-            <div className="eyebrow-rule text-[13px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.realEstate.eyebrow}</div>
-            <div className="font-jp text-[18.5px] tracking-[0.18em] text-slate-500 mb-6">{t.realEstate.sub}</div>
+            <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.realEstate.eyebrow}</div>
+            <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.realEstate.sub}</div>
             <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
               {t.realEstate.title}
             </h2>
           </div>
           <div className="lg:justify-self-end lg:text-right">
-            <p className="text-[20.5px] leading-[1.65] text-slate-600 max-w-lg mb-4">
+            <p className="text-[18.5px] leading-[1.65] text-slate-600 max-w-lg mb-4">
               {t.realEstate.intro}
             </p>
-            <a href="#/properties" className="link-underline text-[18.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+            <a href="#/properties" className="link-underline text-[16.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
               {t.realEstate.portfolioCta}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </a>
@@ -32,12 +32,12 @@ export default function RealEstate() {
                 <img src={r.image} alt={r.name} className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(var(--photo-tint-rgb),0.45) 100%)' }} />
                 <div className="absolute bottom-4 left-5">
-                  <span className="text-[12px] font-bold tracking-[0.22em] px-3 py-1.5 rounded-full bg-white/90 backdrop-blur" style={{ color: 'var(--accent-deep)' }}>{r.tag}</span>
+                  <span className="text-[11px] font-bold tracking-[0.22em] px-3 py-1.5 rounded-full bg-white/90 backdrop-blur" style={{ color: 'var(--accent-deep)' }}>{r.tag}</span>
                 </div>
               </div>
               <div className="p-8">
-                <h3 className="font-serif text-[31px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{r.name}</h3>
-                <p className="text-[20.5px] leading-[1.6] text-slate-600 mb-7">{r.desc}</p>
+                <h3 className="font-serif text-[28px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{r.name}</h3>
+                <p className="text-[18.5px] leading-[1.6] text-slate-600 mb-7">{r.desc}</p>
                 <div className="flex items-center gap-3 flex-wrap">
                   {r.links.map((l) => (
                     <a
@@ -45,7 +45,7 @@ export default function RealEstate() {
                       href={l.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-5 h-11 rounded-full border-2 text-[18.5px] font-bold transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_25px_-10px_rgba(10,186,181,0.5)]"
+                      className="inline-flex items-center gap-1.5 px-5 h-11 rounded-full border-2 text-[16.5px] font-bold transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_25px_-10px_rgba(10,186,181,0.5)]"
                       style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
                     >
                       {l.label}
@@ -58,7 +58,7 @@ export default function RealEstate() {
           ))}
         </div>
 
-        <p className="text-[15.5px] text-slate-400 mt-5">{t.realEstate.note}</p>
+        <p className="text-[14px] text-slate-400 mt-5">{t.realEstate.note}</p>
       </div>
     </section>
   );
