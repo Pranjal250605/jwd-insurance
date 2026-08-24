@@ -40,8 +40,8 @@ function AllocationDonut() {
 
   return (
     <div className="border border-slate-200 rounded-2xl bg-white p-5 sm:p-7 h-full">
-      <div className="text-[11px] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.alloc.kicker}</div>
-      <h3 className="font-serif text-[22px] font-semibold text-slate-900 mb-6 tracking-[-0.01em]">{t.propsPage.alloc.title}</h3>
+      <div className="text-[13px] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.alloc.kicker}</div>
+      <h3 className="font-serif text-[26.5px] font-semibold text-slate-900 mb-6 tracking-[-0.01em]">{t.propsPage.alloc.title}</h3>
       <div className="flex items-center gap-8 flex-wrap">
         <div className="relative flex-shrink-0">
           <svg width="180" height="180" viewBox="0 0 180 180" role="img" aria-label="Portfolio allocation by asset">
@@ -63,13 +63,13 @@ function AllocationDonut() {
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
             {focus ? (
               <>
-                <span className="text-[18px] font-bold text-slate-900 leading-none">{(focus.frac * 100).toFixed(1)}%</span>
-                <span className="text-[11px] text-slate-500 mt-1 max-w-[90px] leading-tight">{focus.short}</span>
+                <span className="text-[21.5px] font-bold text-slate-900 leading-none">{(focus.frac * 100).toFixed(1)}%</span>
+                <span className="text-[13px] text-slate-500 mt-1 max-w-[90px] leading-tight">{focus.short}</span>
               </>
             ) : (
               <>
-                <span className="text-[15px] font-bold text-slate-900 leading-none">AED {fmtAed(total / 1e6)}M</span>
-                <span className="text-[10.5px] text-slate-500 mt-1">{t.propsPage.alloc.total}</span>
+                <span className="text-[18px] font-bold text-slate-900 leading-none">AED {fmtAed(total / 1e6)}M</span>
+                <span className="text-[12.5px] text-slate-500 mt-1">{t.propsPage.alloc.total}</span>
               </>
             )}
           </div>
@@ -86,14 +86,14 @@ function AllocationDonut() {
               onClick={() => setActive(active === s.i ? null : s.i)}
             >
               <span className="w-3 h-3 rounded-sm flex-shrink-0" style={{ background: s.color }} />
-              <span className="flex-1 text-[14.5px] text-slate-700">{s.short}</span>
-              <span className="text-[13.5px] text-slate-500">AED {fmtAed(s.value)}</span>
-              <span className="text-[14px] font-semibold text-slate-900 w-12 text-right">{(s.frac * 100).toFixed(1)}%</span>
+              <span className="flex-1 text-[17.5px] text-slate-700">{s.short}</span>
+              <span className="text-[16px] text-slate-500">AED {fmtAed(s.value)}</span>
+              <span className="text-[17px] font-semibold text-slate-900 w-12 text-right">{(s.frac * 100).toFixed(1)}%</span>
             </div>
           ))}
         </div>
       </div>
-      <p className="text-[12.5px] text-slate-400 mt-5">{t.propsPage.alloc.note}</p>
+      <p className="text-[15px] text-slate-400 mt-5">{t.propsPage.alloc.note}</p>
     </div>
   );
 }
@@ -106,24 +106,24 @@ function AreaBars() {
 
   return (
     <div className="border border-slate-200 rounded-2xl bg-white p-5 sm:p-7 h-full">
-      <div className="text-[11px] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.areas.kicker}</div>
-      <h3 className="font-serif text-[22px] font-semibold text-slate-900 mb-6 tracking-[-0.01em]">{t.propsPage.areas.title}</h3>
+      <div className="text-[13px] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.areas.kicker}</div>
+      <h3 className="font-serif text-[26.5px] font-semibold text-slate-900 mb-6 tracking-[-0.01em]">{t.propsPage.areas.title}</h3>
       <div className="flex flex-col gap-4">
         {AREA_PRICES.map((a) => (
           <div key={a.en} className="grid grid-cols-[64px_1fr_54px] sm:grid-cols-[110px_1fr_74px] items-center gap-2 sm:gap-3">
-            <span className="text-[12px] sm:text-[14px] text-slate-600 truncate">{ja ? a.ja : a.en}</span>
+            <span className="text-[14.5px] sm:text-[17px] text-slate-600 truncate">{ja ? a.ja : a.en}</span>
             <div className="h-5 rounded-r-[4px] relative" style={{ width: `${(a.value / max) * 100}%`, background: 'var(--accent-deep)', opacity: a.highlight ? 1 : 0.45 }}>
               {a.highlight && (
-                <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 text-[10px] font-bold tracking-wider whitespace-nowrap px-2 py-0.5 rounded-full" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>
+                <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 text-[12px] font-bold tracking-wider whitespace-nowrap px-2 py-0.5 rounded-full" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>
                   {t.propsPage.areas.highlight}
                 </span>
               )}
             </div>
-            <span className="text-[14px] font-semibold text-slate-900 text-right">{a.value.toLocaleString()}</span>
+            <span className="text-[17px] font-semibold text-slate-900 text-right">{a.value.toLocaleString()}</span>
           </div>
         ))}
       </div>
-      <p className="text-[12.5px] text-slate-400 mt-6">{t.propsPage.areas.note}</p>
+      <p className="text-[15px] text-slate-400 mt-6">{t.propsPage.areas.note}</p>
     </div>
   );
 }
@@ -135,8 +135,8 @@ function Slider({ label, value, display, min, max, step, onChange }: {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-baseline justify-between">
-        <span className="text-[14px] text-slate-600">{label}</span>
-        <span className="text-[15px] font-semibold text-slate-900">{display}</span>
+        <span className="text-[17px] text-slate-600">{label}</span>
+        <span className="text-[18px] font-semibold text-slate-900">{display}</span>
       </div>
       <input
         type="range" min={min} max={max} step={step} value={value}
@@ -194,10 +194,10 @@ function GrowthSimulator() {
     <div className="border border-slate-200 rounded-2xl bg-white p-5 sm:p-8 lg:p-10">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
-          <div className="text-[11px] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: 'var(--accent-deep)' }}>{s.kicker}</div>
-          <h3 className="font-serif text-[26px] font-semibold text-slate-900 tracking-[-0.01em]">{s.title}</h3>
+          <div className="text-[13px] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: 'var(--accent-deep)' }}>{s.kicker}</div>
+          <h3 className="font-serif text-[31px] font-semibold text-slate-900 tracking-[-0.01em]">{s.title}</h3>
         </div>
-        <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-[13.5px] text-slate-500">
+        <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-[16px] text-slate-500">
           <span className="h-1.5 w-1.5 rounded-full bg-slate-300" />
           {s.fxNote}
         </span>
@@ -209,7 +209,7 @@ function GrowthSimulator() {
           <button
             key={l.id}
             onClick={() => setIdx(i)}
-            className="px-4 h-11 rounded-full border text-[13.5px] font-semibold transition-all"
+            className="px-4 h-11 rounded-full border text-[16px] font-semibold transition-all"
             style={idx === i
               ? { background: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', color: 'white' }
               : { background: 'white', borderColor: '#CBD5E1', color: '#475569' }}
@@ -236,17 +236,17 @@ function GrowthSimulator() {
             <path d={path(dPts)} fill="none" stroke={LINE} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" style={{ strokeWidth: 2.5 }} />
           </svg>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
-            <span className="inline-flex items-center gap-2 text-[13.5px] text-slate-700">
+            <span className="inline-flex items-center gap-2 text-[16px] text-slate-700">
               <span className="h-1.5 w-5 rounded-full" style={{ background: 'var(--accent-deep)' }} /> {s.legendDubai}
             </span>
-            <span className="inline-flex items-center gap-2 text-[13.5px] text-slate-700">
+            <span className="inline-flex items-center gap-2 text-[16px] text-slate-700">
               <span className="h-1.5 w-5 rounded-full" style={{ background: JAPAN_LINE, opacity: 0.7 }} /> {s.legendJapan}
             </span>
           </div>
         </div>
 
         <div className="flex flex-col gap-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-          <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-500">{s.assumptions}</span>
+          <span className="text-[13px] font-semibold tracking-[0.2em] uppercase text-slate-500">{s.assumptions}</span>
           <Slider label={s.years} value={years} display={`${years}${s.yrsSuffix}`} min={3} max={25} step={1} onChange={setYears} />
           <Slider label={s.dubaiApp} value={dubaiApp} display={`${dubaiApp.toFixed(1)}%`} min={0} max={12} step={0.1} onChange={setDubaiApp} />
           <Slider label={s.japanRet} value={japanRet} display={`${japanRet.toFixed(1)}%`} min={0} max={6} step={0.1} onChange={setJapanRet} />
@@ -256,27 +256,27 @@ function GrowthSimulator() {
       {/* result cards */}
       <div className="mt-8 grid sm:grid-cols-3 gap-px rounded-2xl overflow-hidden border border-slate-200 bg-slate-200">
         <div className="bg-white p-5">
-          <div className="text-[11.5px] uppercase tracking-[0.14em] text-slate-500 mb-1">{s.resThis} · {years}{s.yrsSuffix}</div>
-          <div className="font-serif text-[26px] font-medium" style={{ color: 'var(--accent-deep)' }}>{oku(dFinal)}</div>
-          <div className="text-[13px] text-slate-500 mt-0.5">AED {fmtAed(dFinal / FX_JPY)}</div>
+          <div className="text-[14px] uppercase tracking-[0.14em] text-slate-500 mb-1">{s.resThis} · {years}{s.yrsSuffix}</div>
+          <div className="font-serif text-[31px] font-medium" style={{ color: 'var(--accent-deep)' }}>{oku(dFinal)}</div>
+          <div className="text-[15.5px] text-slate-500 mt-0.5">AED {fmtAed(dFinal / FX_JPY)}</div>
         </div>
         <div className="bg-white p-5">
-          <div className="text-[11.5px] uppercase tracking-[0.14em] text-slate-500 mb-1">{s.resJapan} · {years}{s.yrsSuffix}</div>
-          <div className="font-serif text-[26px] font-medium" style={{ color: JAPAN_LINE }}>{oku(jFinal)}</div>
-          <div className="text-[13px] text-slate-500 mt-0.5">{s.afterTax}</div>
+          <div className="text-[14px] uppercase tracking-[0.14em] text-slate-500 mb-1">{s.resJapan} · {years}{s.yrsSuffix}</div>
+          <div className="font-serif text-[31px] font-medium" style={{ color: JAPAN_LINE }}>{oku(jFinal)}</div>
+          <div className="text-[15.5px] text-slate-500 mt-0.5">{s.afterTax}</div>
         </div>
         <div className="p-5" style={{ background: 'var(--accent-soft)' }}>
-          <div className="text-[11.5px] uppercase tracking-[0.14em] text-slate-500 mb-1">{s.resDiff}</div>
-          <div className="font-serif text-[26px] font-medium" style={{ color: gap >= 0 ? 'var(--accent-deep)' : JAPAN_LINE }}>
+          <div className="text-[14px] uppercase tracking-[0.14em] text-slate-500 mb-1">{s.resDiff}</div>
+          <div className="font-serif text-[31px] font-medium" style={{ color: gap >= 0 ? 'var(--accent-deep)' : JAPAN_LINE }}>
             {gap >= 0 ? '+' : ''}{oku(gap)}
           </div>
-          <div className="text-[13px] text-slate-500 mt-0.5">
+          <div className="text-[15.5px] text-slate-500 mt-0.5">
             {jFinal > 0 ? `+${((dFinal / jFinal - 1) * 100).toFixed(0)}% ${s.more}` : '—'}
           </div>
         </div>
       </div>
 
-      <p className="mt-6 text-[13.5px] leading-[1.7] text-slate-400">{s.disclaimer}</p>
+      <p className="mt-6 text-[16px] leading-[1.7] text-slate-400">{s.disclaimer}</p>
     </div>
   );
 }
@@ -329,7 +329,7 @@ function PriceChart({ listing, series }: { listing: Listing; series: Point[] }) 
   return (
     <div>
       <div className="flex items-baseline justify-between gap-3 mb-2">
-        <span className="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">{t.propsPage.chartTitle}</span>
+        <span className="text-[13px] font-semibold tracking-[0.18em] text-slate-500 uppercase">{t.propsPage.chartTitle}</span>
       </div>
       <div
         ref={wrapRef}
@@ -375,17 +375,17 @@ function PriceChart({ listing, series }: { listing: Listing; series: Point[] }) 
             }`}
             style={{ left: `${(xy[hover][0] / W) * 100}%`, top: -8 }}
           >
-            <div className="text-[11px] font-semibold whitespace-nowrap">
+            <div className="text-[13px] font-semibold whitespace-nowrap">
               {h.label} {h.projected && '·'} {h.projected ? '→' : ''} AED {fmtAed(h.value)}/sqft
             </div>
-            <div className="text-[10px] text-white/70 whitespace-nowrap">≈ AED {fmtAed(h.value * listing.sizeSqft)}</div>
+            <div className="text-[12px] text-white/70 whitespace-nowrap">≈ AED {fmtAed(h.value * listing.sizeSqft)}</div>
           </div>
         )}
       </div>
-      <div className="flex justify-between text-[11px] text-slate-400 mt-1">
+      <div className="flex justify-between text-[13px] text-slate-400 mt-1">
         {series.filter((_, i) => i % 2 === 0).map((s, i) => <span key={`${s.label}-${i}`}>{s.label}</span>)}
       </div>
-      <p className="text-[12.5px] text-slate-400 italic mt-2">{t.propsPage.chartNote}</p>
+      <p className="text-[15px] text-slate-400 italic mt-2">{t.propsPage.chartNote}</p>
     </div>
   );
 }
@@ -426,17 +426,17 @@ export default function PropertiesPage() {
       {/* page header */}
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-10 sm:pt-16 pb-10 sm:pb-12">
         <div className="mb-8 sm:mb-10">
-          <a href="#" className="relative inline-flex items-center gap-2 min-h-[44px] text-[15.5px] font-medium text-slate-500 hover:text-slate-900">
+          <a href="#" className="relative inline-flex items-center gap-2 min-h-[44px] text-[18.5px] font-medium text-slate-500 hover:text-slate-900">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
             {t.propsPage.backHome}
           </a>
         </div>
-        <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.eyebrow}</div>
-        <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.propsPage.sub}</div>
+        <div className="eyebrow-rule text-[13px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.eyebrow}</div>
+        <div className="font-jp text-[18.5px] tracking-[0.18em] text-slate-500 mb-6">{t.propsPage.sub}</div>
         <h1 className={`font-serif ${ja ? 'fluid-props-h1-ja leading-[1.2]' : 'fluid-props-h1-en leading-[1.1]'} font-medium text-slate-900 tracking-[-0.015em] mb-6 max-w-3xl`}>
           {t.propsPage.title}
         </h1>
-        <p className="text-[18px] leading-[1.65] text-slate-600 max-w-2xl mb-12">{t.propsPage.intro}</p>
+        <p className="text-[21.5px] leading-[1.65] text-slate-600 max-w-2xl mb-12">{t.propsPage.intro}</p>
 
         {/* summary stat tiles */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden border border-slate-200 bg-slate-200">
@@ -447,8 +447,8 @@ export default function PropertiesPage() {
             [`+${growthPct.toFixed(0)}%`, t.propsPage.summary.growth],
           ].map(([v, l]) => (
             <div key={l} className="bg-white p-6">
-              <div className="font-serif text-[19px] sm:text-[30px] font-medium tracking-tight leading-tight" style={{ color: 'var(--accent-deep)' }}>{v}</div>
-              <div className="text-[13px] text-slate-500 mt-1">{l}</div>
+              <div className="font-serif text-[23px] sm:text-[36px] font-medium tracking-tight leading-tight" style={{ color: 'var(--accent-deep)' }}>{v}</div>
+              <div className="text-[15.5px] text-slate-500 mt-1">{l}</div>
             </div>
           ))}
         </div>
@@ -471,34 +471,34 @@ export default function PropertiesPage() {
                   <img src={p.image} alt={ja ? p.nameJa : p.nameEn} className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(var(--photo-tint-rgb),0.5) 100%)' }} />
                   <div className="absolute top-4 left-5">
-                    <span className="text-[10px] font-bold tracking-[0.2em] px-3 py-1.5 rounded-full bg-white/90 backdrop-blur" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.acquired}</span>
+                    <span className="text-[12px] font-bold tracking-[0.2em] px-3 py-1.5 rounded-full bg-white/90 backdrop-blur" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.acquired}</span>
                   </div>
                   <div className="absolute bottom-4 left-5 text-white">
-                    <div className="text-[11px] font-semibold tracking-[0.2em] opacity-85 uppercase">{p.area}</div>
-                    <div className="font-serif text-[24px] font-semibold leading-tight">{ja ? p.nameJa : p.nameEn}</div>
+                    <div className="text-[13px] font-semibold tracking-[0.2em] opacity-85 uppercase">{p.area}</div>
+                    <div className="font-serif text-[29px] font-semibold leading-tight">{ja ? p.nameJa : p.nameEn}</div>
                   </div>
                 </div>
                 <div className="p-5 sm:p-7">
-                  <div className="flex items-center gap-4 flex-wrap mb-4 text-[14px] text-slate-500">
+                  <div className="flex items-center gap-4 flex-wrap mb-4 text-[17px] text-slate-500">
                     <span>{ja ? p.typeJa : p.typeEn}</span><span className="text-slate-300">·</span>
                     <span>{p.beds}</span><span className="text-slate-300">·</span>
                     <span>{p.sizeSqft.toLocaleString()} sqft</span>
                   </div>
                   <div className="flex items-end justify-between gap-4 mb-5">
                     <div>
-                      <div className="text-[11px] font-semibold tracking-[0.18em] text-slate-400 uppercase mb-1">{ja ? '取得価格' : 'Acquisition price'}</div>
-                      <div className="font-serif text-[28px] font-semibold tracking-tight text-slate-900">AED {fmtAed(p.priceAed)}</div>
+                      <div className="text-[13px] font-semibold tracking-[0.18em] text-slate-400 uppercase mb-1">{ja ? '取得価格' : 'Acquisition price'}</div>
+                      <div className="font-serif text-[33.5px] font-semibold tracking-tight text-slate-900">AED {fmtAed(p.priceAed)}</div>
                     </div>
                     <div className="text-right">
-                      <div className="text-[11px] font-semibold tracking-[0.18em] text-slate-400 uppercase mb-1">{t.propsPage.metrics.grossYield}</div>
-                      <div className="font-serif text-[28px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{p.yieldPct.toFixed(1)}%</div>
+                      <div className="text-[13px] font-semibold tracking-[0.18em] text-slate-400 uppercase mb-1">{t.propsPage.metrics.grossYield}</div>
+                      <div className="font-serif text-[33.5px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{p.yieldPct.toFixed(1)}%</div>
                     </div>
                   </div>
-                  <p className="text-[16px] leading-[1.65] text-slate-600 mb-6">{ja ? p.descJa : p.descEn}</p>
+                  <p className="text-[19px] leading-[1.65] text-slate-600 mb-6">{ja ? p.descJa : p.descEn}</p>
                   <div className="flex items-center gap-3 flex-wrap">
                     {[{ label: 'Bayut', url: p.bayut }, { label: 'Property Finder', url: p.pf }].map((l) => (
                       <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-4 h-11 rounded-full border text-[14px] font-bold transition-all hover:-translate-y-0.5"
+                        className="inline-flex items-center gap-1.5 px-4 h-11 rounded-full border text-[17px] font-bold transition-all hover:-translate-y-0.5"
                         style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}>
                         {l.label}
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M9 7h8v8" /></svg>
@@ -521,8 +521,8 @@ export default function PropertiesPage() {
                     [`${payback.toFixed(1)} ${t.propsPage.metrics.yrs}`, t.propsPage.metrics.payback],
                   ].map(([v, l]) => (
                     <div key={l} className="bg-white p-4">
-                      <div className="font-serif text-[19px] font-semibold tracking-tight text-slate-900">{v}</div>
-                      <div className="text-[11.5px] text-slate-500 mt-0.5 leading-tight">{l}</div>
+                      <div className="font-serif text-[23px] font-semibold tracking-tight text-slate-900">{v}</div>
+                      <div className="text-[14px] text-slate-500 mt-0.5 leading-tight">{l}</div>
                     </div>
                   ))}
                 </div>
@@ -530,17 +530,17 @@ export default function PropertiesPage() {
                 {/* value history (table view of the chart) */}
                 <div>
                   <div className="flex items-baseline justify-between mb-3">
-                    <span className="text-[11px] font-semibold tracking-[0.18em] uppercase" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.valueHistory}</span>
-                    <span className="text-[13px] text-slate-500">{t.propsPage.since} <b style={{ color: 'var(--accent-deep)' }}>+{totalGrowth.toFixed(0)}%</b></span>
+                    <span className="text-[13px] font-semibold tracking-[0.18em] uppercase" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.valueHistory}</span>
+                    <span className="text-[15.5px] text-slate-500">{t.propsPage.since} <b style={{ color: 'var(--accent-deep)' }}>+{totalGrowth.toFixed(0)}%</b></span>
                   </div>
                   <div className="grid grid-cols-3 sm:grid-cols-6 gap-px rounded-xl overflow-hidden border border-slate-200 bg-slate-200">
                     {valueHistory.map((v) => (
                       <div key={v.year} className="p-3" style={{ background: v.now ? 'var(--accent-soft)' : 'white' }}>
-                        <div className="text-[11px] text-slate-500">{v.year}{v.now ? ` ${t.propsPage.now}` : ''}</div>
-                        <div className="text-[12px] font-semibold text-slate-900 mt-0.5 break-words">AED {fmtAed(v.value)}</div>
+                        <div className="text-[13px] text-slate-500">{v.year}{v.now ? ` ${t.propsPage.now}` : ''}</div>
+                        <div className="text-[14.5px] font-semibold text-slate-900 mt-0.5 break-words">AED {fmtAed(v.value)}</div>
                         {v.yoy != null
-                          ? <div className="text-[11px] mt-0.5" style={{ color: 'var(--accent-deep)' }}>▲ {Math.abs(v.yoy).toFixed(1)}%</div>
-                          : <div className="text-[11px] text-slate-400 mt-0.5">{t.propsPage.base}</div>}
+                          ? <div className="text-[13px] mt-0.5" style={{ color: 'var(--accent-deep)' }}>▲ {Math.abs(v.yoy).toFixed(1)}%</div>
+                          : <div className="text-[13px] text-slate-400 mt-0.5">{t.propsPage.base}</div>}
                       </div>
                     ))}
                   </div>
@@ -555,24 +555,24 @@ export default function PropertiesPage() {
 
         {/* risks & hedges */}
         <div className="border border-slate-200 rounded-2xl bg-white p-5 sm:p-8 lg:p-10">
-          <div className="text-[11px] font-semibold tracking-[0.24em] uppercase mb-6" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.risksTitle}</div>
+          <div className="text-[13px] font-semibold tracking-[0.24em] uppercase mb-6" style={{ color: 'var(--accent-deep)' }}>{t.propsPage.risksTitle}</div>
           <div className="grid md:grid-cols-2 gap-4">
             {t.propsPage.risks.map((r, i) => (
               <div key={i} className="rounded-xl border border-slate-100 p-5">
                 <div className="flex items-start gap-2.5">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-400" />
-                  <span className="text-[15px] font-semibold text-slate-900">{r.risk}</span>
+                  <span className="text-[18px] font-semibold text-slate-900">{r.risk}</span>
                 </div>
                 <div className="mt-2 flex items-start gap-2.5 pl-4">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: 'var(--accent-deep)' }} />
-                  <span className="text-[14.5px] leading-[1.6] text-slate-600">{r.hedge}</span>
+                  <span className="text-[17.5px] leading-[1.6] text-slate-600">{r.hedge}</span>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <p className="text-[13.5px] leading-[1.7] text-slate-400 max-w-4xl">{t.propsPage.disclaimer}</p>
+        <p className="text-[16px] leading-[1.7] text-slate-400 max-w-4xl">{t.propsPage.disclaimer}</p>
       </div>
     </main>
   );

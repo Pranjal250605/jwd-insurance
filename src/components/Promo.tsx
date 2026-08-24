@@ -40,10 +40,10 @@ export default function Promo() {
           style={{ background: 'var(--gradient-soft)' }}
         >
           <div className="relative">
-            <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>
+            <div className="eyebrow-rule text-[13px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>
               {c.eyebrow}
             </div>
-            <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-7">{c.sub}</div>
+            <div className="font-jp text-[18.5px] tracking-[0.18em] text-slate-500 mb-7">{c.sub}</div>
             <h2 className="font-serif fluid-36-44 leading-[1.25] font-medium text-slate-900 mb-8 tracking-[-0.01em] max-w-3xl" style={{ textWrap: 'balance' } as React.CSSProperties}>
               {c.title}
             </h2>
@@ -57,22 +57,22 @@ export default function Promo() {
                 />
                 <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 50%, rgba(var(--photo-tint-rgb),0.72) 100%)' }} />
                 <figcaption className="absolute bottom-0 left-0 right-0 p-5">
-                  <div className="text-white/70 text-[11px] tracking-[0.12em] mb-1.5">{c.company}</div>
-                  <div className="text-white font-serif text-[19px] font-semibold leading-tight">{c.name}</div>
-                  <div className="text-white/80 text-[12.5px] mt-0.5">{c.role}</div>
+                  <div className="text-white/70 text-[13px] tracking-[0.12em] mb-1.5">{c.company}</div>
+                  <div className="text-white font-serif text-[23px] font-semibold leading-tight">{c.name}</div>
+                  <div className="text-white/80 text-[15px] mt-0.5">{c.role}</div>
                 </figcaption>
               </div>
             </figure>
 
-            <p className="text-[18px] leading-[1.75] font-medium text-slate-800 mb-6">{c.lead}</p>
+            <p className="text-[21.5px] leading-[1.75] font-medium text-slate-800 mb-6">{c.lead}</p>
 
             {c.blocks.map((block, i) => (
               <div key={i}>
                 {block.heading && (
-                  <h3 className="text-[16.5px] font-semibold text-slate-900 mt-8 mb-4">{block.heading}</h3>
+                  <h3 className="text-[20px] font-semibold text-slate-900 mt-8 mb-4">{block.heading}</h3>
                 )}
                 {block.paragraphs.map((p, j) => (
-                  <p key={j} className="text-[16.5px] leading-[1.9] text-slate-600 mb-4 last:mb-0">
+                  <p key={j} className="text-[20px] leading-[1.9] text-slate-600 mb-4 last:mb-0">
                     {withEmphasis(p)}
                   </p>
                 ))}
@@ -96,8 +96,8 @@ export default function Promo() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-14 sm:pt-20 pb-8 sm:pb-10">
-        <div className="eyebrow-rule text-[11px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.promo.whyEyebrow}</div>
-        <div className="font-jp text-[15.5px] tracking-[0.18em] text-slate-500 mb-6">{t.promo.whySub}</div>
+        <div className="eyebrow-rule text-[13px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.promo.whyEyebrow}</div>
+        <div className="font-jp text-[18.5px] tracking-[0.18em] text-slate-500 mb-6">{t.promo.whySub}</div>
         <h2 className="font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] max-w-3xl">
           {t.promo.whyTitle}
         </h2>
@@ -110,10 +110,10 @@ export default function Promo() {
               <div className="w-14 h-14 rounded-lg flex items-center justify-center mb-7 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-rotate-6" style={{ background: 'var(--accent-soft)', color: 'var(--accent-deep)' }}>
                 {PILLAR_ICONS[i]}
               </div>
-              <div className="font-jp text-[12px] tracking-[0.18em] text-slate-500 mb-1">{p.sub}</div>
-              <h3 className="font-serif text-[24px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{p.title}</h3>
-              <p className="text-[18px] leading-[1.6] text-slate-600 mb-7">{p.body}</p>
-              <a href="#" className="link-underline text-[15.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+              <div className="font-jp text-[14.5px] tracking-[0.18em] text-slate-500 mb-1">{p.sub}</div>
+              <h3 className="font-serif text-[29px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{p.title}</h3>
+              <p className="text-[21.5px] leading-[1.6] text-slate-600 mb-7">{p.body}</p>
+              <a href="#" className="link-underline text-[18.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                 {p.cta}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
               </a>

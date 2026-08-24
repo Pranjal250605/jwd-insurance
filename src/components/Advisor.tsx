@@ -191,7 +191,7 @@ export default function Advisor() {
           style={{ background: 'var(--gradient-dark)', bottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}
         >
           <AiSpark className="h-6 w-6" />
-          <span className="text-[14px] font-semibold tracking-wide">{a.label}</span>
+          <span className="text-[17px] font-semibold tracking-wide">{a.label}</span>
         </button>
       )}
 
@@ -207,10 +207,10 @@ export default function Advisor() {
                 <AiSpark className="h-[18px] w-[18px]" />
               </div>
               <div>
-                <div className="text-[14px] font-semibold text-slate-900 leading-tight">{a.title}</div>
+                <div className="text-[17px] font-semibold text-slate-900 leading-tight">{a.title}</div>
                 <div className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  <span className="text-[10.5px] uppercase tracking-wide text-slate-400">{a.online}</span>
+                  <span className="text-[12.5px] uppercase tracking-wide text-slate-400">{a.online}</span>
                 </div>
               </div>
             </div>
@@ -231,14 +231,14 @@ export default function Advisor() {
               so the list grows to fit every message instead of scrolling
               and pushes the input off the bottom of the screen. */}
           <div ref={listRef} className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-4 flex flex-col gap-3">
-            <div className="text-[14px] leading-[1.6] text-slate-700 bg-slate-50 rounded-2xl rounded-tl-md px-4 py-3 max-w-[92%]">
+            <div className="text-[17px] leading-[1.6] text-slate-700 bg-slate-50 rounded-2xl rounded-tl-md px-4 py-3 max-w-[92%]">
               {a.greeting}
             </div>
             {msgs.length === 0 && (
               <div className="flex flex-col items-start gap-2 mt-1">
                 {a.suggestions.map((s) => (
                   <button key={s} onClick={() => send(s)}
-                    className="px-3.5 min-h-[44px] rounded-full border text-[13px] font-medium transition-all hover:-translate-y-0.5 text-left"
+                    className="px-3.5 min-h-[44px] rounded-full border text-[15.5px] font-medium transition-all hover:-translate-y-0.5 text-left"
                     style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}>
                     {s}
                   </button>
@@ -247,11 +247,11 @@ export default function Advisor() {
             )}
             {msgs.map((m, i) => (
               m.role === 'user' ? (
-                <div key={i} className="self-end text-[14px] leading-[1.6] text-white rounded-2xl rounded-br-md px-4 py-2.5 max-w-[85%]" style={{ background: 'var(--accent-deep)' }}>
+                <div key={i} className="self-end text-[17px] leading-[1.6] text-white rounded-2xl rounded-br-md px-4 py-2.5 max-w-[85%]" style={{ background: 'var(--accent-deep)' }}>
                   {m.content}
                 </div>
               ) : (
-                <div key={i} className={`text-[14px] leading-[1.6] rounded-2xl rounded-tl-md px-4 py-3 max-w-[92%] ${m.error ? 'bg-rose-50 text-rose-700' : 'bg-slate-50 text-slate-700'}`}>
+                <div key={i} className={`text-[17px] leading-[1.6] rounded-2xl rounded-tl-md px-4 py-3 max-w-[92%] ${m.error ? 'bg-rose-50 text-rose-700' : 'bg-slate-50 text-slate-700'}`}>
                   {m.content ? (
                     <Markdown text={m.content} />
                   ) : (
@@ -278,7 +278,7 @@ export default function Advisor() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={a.placeholder}
-                className="flex-1 h-11 px-4 rounded-full border border-slate-200 text-[16px] outline-none focus:border-slate-400 bg-white"
+                className="flex-1 h-11 px-4 rounded-full border border-slate-200 text-[19px] outline-none focus:border-slate-400 bg-white"
               />
               <button
                 type="submit"
@@ -290,7 +290,7 @@ export default function Advisor() {
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>
               </button>
             </form>
-            <div className="pb-safe px-4 pb-2 text-[10.5px] text-slate-400 text-center">{a.disclaimer}</div>
+            <div className="pb-safe px-4 pb-2 text-[12.5px] text-slate-400 text-center">{a.disclaimer}</div>
           </div>
         </div>,
         document.body,
