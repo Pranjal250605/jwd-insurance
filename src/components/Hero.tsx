@@ -133,18 +133,18 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                 platform — the notice comes first. */}
             <a
               href="#/consent"
-              className="mt-7 flex flex-wrap items-center gap-4 sm:gap-6 group w-fit"
+              className="mt-6 flex flex-wrap sm:flex-nowrap items-center gap-4 sm:gap-5 group w-fit"
             >
-              <span className="flex items-center gap-3">
+              <span className="flex items-center gap-2.5 flex-shrink-0">
                 <span className="whitespace-pre-line text-[29px] sm:text-[35.5px] font-bold leading-[1.3]" style={{ color: 'var(--accent-deep)' }}>
                   {t.hero.gateLead}
                 </span>
-                <svg width="38" height="30" viewBox="0 0 38 30" aria-hidden="true" className="flex-shrink-0 transition-transform group-hover:translate-x-1" style={{ color: 'var(--accent-deep)' }}>
+                <svg width="34" height="27" viewBox="0 0 38 30" aria-hidden="true" className="flex-shrink-0 transition-transform group-hover:translate-x-1" style={{ color: 'var(--accent-deep)' }}>
                   <path d="M0 2l38 13L0 28z" fill="currentColor" />
                 </svg>
               </span>
               <span
-                className="whitespace-pre-line rounded-md border-2 px-5 py-3 text-[21.5px] sm:text-[26px] font-bold leading-[1.4] text-center transition-all group-hover:-translate-y-0.5 group-hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)]"
+                className="whitespace-pre-line rounded-md border-2 px-4 py-2.5 text-[21.5px] sm:text-[26px] font-bold leading-[1.35] text-center transition-all flex-shrink-0 group-hover:-translate-y-0.5 group-hover:shadow-[0_14px_35px_-12px_rgba(10,186,181,0.45)]"
                 style={{ borderColor: 'var(--accent-deep)', color: 'var(--accent-deep)', background: '#ffffff' }}
               >
                 {t.hero.gateButton}
@@ -155,7 +155,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                 pairing its claim with the card it links to. The 08.18 sheet sets
                 the headline and the claims in navy and restores the small label
                 over the card column. */}
-            <div className="mt-8 max-w-2xl">
+            <div className="mt-7 max-w-2xl">
               <h2 className="whitespace-pre-line text-[34.5px] sm:text-[48.5px] font-bold leading-[1.2] tracking-[-0.01em] mb-5" style={{ color: 'var(--jwd-navy)' }}>
                 {t.hero.platformsHeading}
               </h2>
