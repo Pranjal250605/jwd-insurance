@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useT } from '@/i18n';
+import RegistrationForm, { type Registration } from '@/components/RegistrationForm';
 import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
 
 /* 08.18 revision, page ②. The hero's "grow your assets with a top UAE firm"
@@ -25,8 +26,32 @@ import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
 
 const NEXT_TARGET = 'https://www.equiti.com/sc-en/';
 
+/* Send the accepted registration to /api/consent. Fire-and-forget on purpose:
+   the reader has done what was asked of them, and a logging failure must not
+   stand between them and the page they consented to see. The endpoint's own
+   comment explains why its log line is not yet a durable record. */
+function record(reg: Registration | null) {
+  if (!reg) return;
+  try {
+    const body = JSON.stringify(reg);
+    // keepalive so the POST survives the tab handing off to the new window.
+    void fetch('/api/consent', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body,
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    /* never block the reader */
+  }
+}
+
 export default function ConsentGate() {
   const { t, lang } = useT();
+  // 08.25 item 5: the notice sits behind a registration step so the client can
+  // identify who consented. The details are held for the session only — see the
+  // note on `record` below for where they still need to go.
+  const [registration, setRegistration] = useState<Registration | null>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [reachedEnd, setReachedEnd] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -60,6 +85,7 @@ export default function ConsentGate() {
     /* A new tab, matching every other investor-site link on this site: the
        reader keeps the notice they just accepted, and leaving JWD is never
        something the agree button does silently underneath them. */
+    record(registration);
     window.open(jaOutbound(NEXT_TARGET, lang === 'ja'), '_blank', 'noopener,noreferrer');
   };
 
@@ -77,6 +103,10 @@ export default function ConsentGate() {
           {t.consent.back}
         </button>
 
+        {registration === null ? (
+          <RegistrationForm onDone={setRegistration} />
+        ) : (
+        <>
         {/* The mint panel from the sheet: the notice scrolls inside it, so
             "reached the end" is a fact about the notice, not the window. */}
         <div className="rounded-3xl p-4 sm:p-8" style={{ background: 'var(--accent-soft)' }}>
@@ -174,6 +204,8 @@ export default function ConsentGate() {
             {showHint && <p className="text-[13.5px] text-rose-500">{t.consent.hint}</p>}
           </div>
         </div>
+        </>
+        )}
       </div>
     </main>
   );

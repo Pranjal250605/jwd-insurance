@@ -50,6 +50,22 @@ export const STRINGS = {
        P②ーDraft wording, verbatim; this English is a faithful rendering of it
        for EN mode and should be reviewed by a native speaker before launch. */
     consent: {
+      form: {
+        heading: 'Please enter your details before continuing',
+        note: 'So that we can identify who has given consent, we ask you to complete the fields below.',
+        name: 'Name',
+        kana: 'Name (kana)',
+        phone: 'Phone number',
+        email: 'Email address',
+        entity: 'Corporate or individual',
+        corporate: 'Corporate',
+        individual: 'Individual',
+        company: 'Company name',
+        companyNote: '* Corporate clients, please enter your company name',
+        next: 'Continue',
+        required: 'This field is required',
+        invalidEmail: 'Please check the email address format',
+      },
       title: 'Confirmation of intent and important notices before viewing asset-management information',
       lead: 'Introduction',
       intro: [
@@ -270,9 +286,7 @@ export const STRINGS = {
         { name: 'The Gate', area: 'DIFC' },
         { name: 'Private villa', area: 'DUBAI' },
         { name: 'Floating Seahorse', area: 'THE WORLD ISLANDS' },
-        { name: 'The Heart of Europe', area: 'THE WORLD ISLANDS' },
         { name: 'The Lost Chambers', area: 'ATLANTIS' },
-        { name: 'Residential tower', area: 'DUBAI' },
         { name: 'Palm Jumeirah', area: 'DUBAI' },
       ],
       flagship: 'FLAGSHIP PROJECT',
@@ -325,6 +339,18 @@ export const STRINGS = {
       ],
       viewAllUrl: 'https://www.equiti.com/sc-en/products/',
     },
+    ihg: {
+      eyebrow: 'IHG HOTELS & RESORTS',
+      title: 'The trust of the IHG group, recognised worldwide, in your portfolio',
+      subtitle: 'A guaranteed hotel — a choice you can be sure of',
+      paragraphs: [
+        'IHG (InterContinental Hotels Group) operates one of the world’s largest hotel networks. The strength of a brand trusted and chosen by travellers the world over for decades brings real appeal not only to the quality of the hotel itself, but to its value as an asset you hold.',
+        'Interiors considered down to the last detail, hospitality held to a global standard, and an operating regime underwritten by the brand.',
+        'For the guest, hours of a grace and calm they have not known before. For the owner, a long-term option for building wealth, supported by a brand that carries worldwide and the confidence that comes with it.',
+        'A quality of hotel experience — and of asset value — that only a brand of IHG’s standing can deliver.',
+        'We offer premium hotel assets that combine genuine brand strength with genuine reliability.',
+      ],
+    },
     realEstate: {
       eyebrow: 'REAL ESTATE PORTFOLIO',
       sub: '不動産ポートフォリオ',
@@ -351,6 +377,7 @@ export const STRINGS = {
           links: [
             { label: 'Official site', url: 'https://theheartofeurope.emirates.expert/' },
             { label: 'The World Islands', url: 'https://theworld-dubai.com/' },
+            { label: 'Our exclusive listings', url: '' },
           ],
         },
       ],
@@ -630,6 +657,22 @@ export const STRINGS = {
 
   ja: {
     consent: {
+      form: {
+        heading: 'ご確認の前に、お客様情報をご入力ください',
+        note: '同意された方を確認させていただくため、以下の項目のご入力をお願いしております。',
+        name: 'お名前',
+        kana: 'フリガナ',
+        phone: '電話番号',
+        email: 'Eメールアドレス',
+        entity: '法人 または 個人',
+        corporate: '法人',
+        individual: '個人',
+        company: '会社名',
+        companyNote: '＊法人の方は会社名をご記入ください',
+        next: '次へ進む',
+        required: 'ご入力ください',
+        invalidEmail: 'メールアドレスの形式をご確認ください',
+      },
       title: '資産運用に関する情報閲覧にあたってのお客様による意思確認および重要事項',
       lead: 'はじめに',
       intro: [
@@ -850,9 +893,7 @@ export const STRINGS = {
         { name: 'ザ・ゲート', area: 'DIFC' },
         { name: 'プライベート・ヴィラ', area: 'ドバイ' },
         { name: 'フローティング・シーホース', area: 'ザ・ワールド諸島' },
-        { name: 'ハート・オブ・ヨーロッパ', area: 'ザ・ワールド諸島' },
         { name: 'ロスト・チェンバーズ', area: 'アトランティス' },
-        { name: 'レジデンシャル・タワー', area: 'ドバイ' },
         { name: 'パーム・ジュメイラ', area: 'ドバイ' },
       ],
       flagship: '旗艦プロジェクト',
@@ -905,6 +946,18 @@ export const STRINGS = {
       ],
       viewAllUrl: 'https://www.equiti.com/sc-en/products/',
     },
+    ihg: {
+      eyebrow: 'IHG ホテルズ＆リゾーツ',
+      title: '世界が認めるIHGグループの信頼を、あなたの資産に',
+      subtitle: '保証付きホテルという確かな選択',
+      paragraphs: [
+        '世界最大級のホテルネットワークを展開する、IHG（インターコンチネンタル・ホテルズ・グループ）。世界中の旅人から長年にわたり信頼と支持を集める、その確かなブランド力は、ホテルとしての品質だけでなく、所有する資産としての価値にも大きな魅力をもたらします。',
+        '細部にまでこだわり抜かれた上質な空間、世界基準のホスピタリティ、そしてブランドに裏付けられた確かな運営体制。',
+        '訪れる人には、かつてないほど優美で心安らぐひとときを。所有する方には、世界に通用するブランド力と安心感に支えられた、長期的な資産形成の選択肢を。',
+        '世界を代表するIHGブランドだからこそ実現できる、上質なホテル体験と資産価値。',
+        '確かなブランド力と信頼性を兼ね備えた、プレミアムなホテル資産をご提供します。',
+      ],
+    },
     realEstate: {
       eyebrow: '不動産ポートフォリオ',
       sub: 'REAL ESTATE PORTFOLIO',
@@ -931,6 +984,7 @@ export const STRINGS = {
           links: [
             { label: '公式サイト', url: 'https://theheartofeurope.emirates.expert/' },
             { label: 'ザ・ワールド諸島', url: 'https://theworld-dubai.com/' },
+            { label: '弊社独占販売物件', url: '' },
           ],
         },
       ],

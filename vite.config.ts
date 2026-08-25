@@ -95,10 +95,34 @@ function fxDevApi(): Plugin {
   };
 }
 
+/** Dev-only mirror of api/consent.ts so the 08.25 registration flow works
+ *  under `npm run dev`. Logs the same single line the edge function does. */
+function consentDevApi(): Plugin {
+  return {
+    name: 'consent-dev-api',
+    configureServer(server) {
+      server.middlewares.use('/api/consent', async (req, res) => {
+        if (req.method !== 'POST') { res.statusCode = 405; res.end('{}'); return; }
+        const chunks: Buffer[] = [];
+        for await (const c of req) chunks.push(c as Buffer);
+        try {
+          const body = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+          console.log('consent-accepted', JSON.stringify({ at: new Date().toISOString(), ...body }));
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ ok: true }));
+        } catch {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ error: 'Invalid body.' }));
+        }
+      });
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, __dirname, '');
   return {
-    plugins: [react(), advisorDevApi(env.GROQ_API_KEY ?? ''), fxDevApi()],
+    plugins: [react(), advisorDevApi(env.GROQ_API_KEY ?? ''), fxDevApi(), consentDevApi()],
     resolve: {
       alias: { '@': path.resolve(__dirname, './src') },
     },

@@ -39,19 +39,34 @@ export default function RealEstate() {
                 <h3 className="font-serif text-[28px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{r.name}</h3>
                 <p className="text-[18.5px] leading-[1.6] text-slate-600 mb-7">{r.desc}</p>
                 <div className="flex items-center gap-3 flex-wrap">
-                  {r.links.map((l) => (
-                    <a
-                      key={l.url}
-                      href={l.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-5 h-11 rounded-full border-2 text-[16.5px] font-bold transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_25px_-10px_rgba(10,186,181,0.5)]"
-                      style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
-                    >
-                      {l.label}
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M9 7h8v8" /></svg>
-                    </a>
-                  ))}
+                  {r.links.map((l) => {
+                    /* 08.25 item 3: 弊社独占販売物件 is specified, but its ANAWAK
+                       page has no address yet. An empty href would navigate to
+                       the current page, so the button renders inert until the
+                       url is filled in — which is an i18n edit, not a code one. */
+                    const cls = 'inline-flex items-center gap-1.5 px-5 h-11 rounded-full border-2 text-[16.5px] font-bold transition-all';
+                    const style = { color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' };
+                    if (!l.url) {
+                      return (
+                        <span key={l.label} aria-disabled="true" className={`${cls} opacity-45 cursor-default`} style={style}>
+                          {l.label}
+                        </span>
+                      );
+                    }
+                    return (
+                      <a
+                        key={l.url}
+                        href={l.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`${cls} hover:-translate-y-0.5 hover:shadow-[0_10px_25px_-10px_rgba(10,186,181,0.5)]`}
+                        style={style}
+                      >
+                        {l.label}
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M9 7h8v8" /></svg>
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </div>

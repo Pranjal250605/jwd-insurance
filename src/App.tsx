@@ -9,6 +9,7 @@ import RealEstate from '@/components/RealEstate';
 import PropertiesPage from '@/components/PropertiesPage';
 import ConsentGate from '@/components/ConsentGate';
 import HowToInvest from '@/components/HowToInvest';
+import Ihg from '@/components/Ihg';
 import Promo from '@/components/Promo';
 import Products from '@/components/Products';
 import Money from '@/components/Money';
@@ -108,6 +109,7 @@ export default function App() {
           <Message />
           <Markets />
           <RealEstate />
+          <Ihg />
           <Promo />
           <Products />
           <Money />

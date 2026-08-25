@@ -156,7 +156,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                 the headline and the claims in navy and restores the small label
                 over the card column. */}
             <div className="mt-8 max-w-2xl">
-              <h2 className="whitespace-pre-line text-[43px] sm:text-[60.5px] font-bold leading-[1.2] tracking-[-0.01em] mb-5" style={{ color: 'var(--jwd-navy)' }}>
+              <h2 className="whitespace-pre-line text-[34.5px] sm:text-[48.5px] font-bold leading-[1.2] tracking-[-0.01em] mb-5" style={{ color: 'var(--jwd-navy)' }}>
                 {t.hero.platformsHeading}
               </h2>
               <div className="grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-4">
@@ -260,8 +260,8 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                     Interactions.tsx writes textContent, which would wipe out
                     any child spans on the element it animates. */}
                 <div className="font-serif font-medium tracking-tight leading-none whitespace-nowrap" style={{ color: 'var(--accent-deep)' }}>
-                  <span data-count={figure} className="text-[62.5px] sm:text-[80px]">{figure}</span>
-                  <span className="text-[26px] sm:text-[33.5px]">{unit}</span>
+                  <span data-count={figure} className="text-[50px] sm:text-[64px]">{figure}</span>
+                  <span className="text-[21px] sm:text-[27px]">{unit}</span>
                 </div>
                 <div className="text-[19.5px] text-slate-500 leading-tight mt-3 lg:whitespace-nowrap">{b}</div>
               </div>

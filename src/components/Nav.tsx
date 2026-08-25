@@ -64,14 +64,14 @@ export default function Nav() {
 
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-[76px] flex items-center justify-between">
         <a href="#" className="flex items-center select-none flex-shrink-0">
-          <img src="/jwd-logo.png" alt="JWD Investment" className="h-9 w-auto" />
+          <img src="/jwd-logo.png" alt="JWD Investment" className="h-[47px] w-auto" />
         </a>
 
         {/* px-3 (not px-4) below xl: at exactly 1024px the six nav items +
             the Equiti/AIX pills + CTA button don't quite fit at px-4,
             overflowing the header by a few px — this closes that gap.
             See `navItem` above for the per-language sizing. */}
-        <nav className="hidden min-[1320px]:flex items-center gap-1" onMouseLeave={() => setOpenMenu(null)}>
+        <nav className="hidden min-[1400px]:flex items-center gap-1" onMouseLeave={() => setOpenMenu(null)}>
           {Object.entries(t.nav.menus).map(([key, menu]) => (
             <div key={key} className="relative flex-shrink-0" onMouseEnter={() => setOpenMenu(key)}>
               <button className={`${navItem} gap-1`}>
@@ -133,12 +133,12 @@ export default function Nav() {
           </button>
 
           {/* Hamburger — the only nav access point below lg (1024px); the
-              desktop <nav> above is `hidden min-[1320px]:flex` with no other fallback. */}
+              desktop <nav> above is `hidden min-[1400px]:flex` with no other fallback. */}
           <button
             onClick={() => setMobileOpen(true)}
             aria-label={t.nav.openMenu}
             aria-expanded={mobileOpen}
-            className="min-[1320px]:hidden flex items-center justify-center w-11 h-11 -mr-1.5 rounded-lg text-slate-700 hover:bg-slate-50 active:bg-slate-100 transition-colors"
+            className="min-[1400px]:hidden flex items-center justify-center w-11 h-11 -mr-1.5 rounded-lg text-slate-700 hover:bg-slate-50 active:bg-slate-100 transition-colors"
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M4 7h16M4 12h16M4 17h16" />
@@ -148,13 +148,13 @@ export default function Nav() {
       </div>
 
       {mobileOpen && createPortal(
-        <div className="min-[1320px]:hidden fixed inset-0 z-[70] flex flex-col bg-white">
+        <div className="min-[1400px]:hidden fixed inset-0 z-[70] flex flex-col bg-white">
           {/* backdrop-equivalent: the drawer itself is opaque and full-screen,
               so there's no separate scrim to manage — it fully replaces the
               page, avoiding any transform/filter ancestor entirely (portal). */}
           <div className="pt-safe flex items-center justify-between px-5 h-[76px] border-b border-slate-100 flex-shrink-0">
             <a href="#" onClick={closeMobile} className="flex items-center select-none">
-              <img src="/jwd-logo.png" alt="JWD Investment" className="h-8 w-auto" />
+              <img src="/jwd-logo.png" alt="JWD Investment" className="h-[42px] w-auto" />
             </a>
             <button
               onClick={closeMobile}

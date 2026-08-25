@@ -21,9 +21,7 @@ const IMAGES = [
   '/main/difc-gate.jpg',
   '/main/villa-pool.jpg',
   '/main/floating-villa.jpg',
-  '/main/heart-island.jpg',
   '/main/aquarium.jpg',
-  '/main/tower.jpg',
   '/main/palm-jumeirah.jpg',
 ];
 

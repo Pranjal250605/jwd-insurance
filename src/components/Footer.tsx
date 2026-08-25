@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-12 mb-12">
           <div>
             <div className="flex items-center mb-6">
-              <img src="/jwd-logo.png" alt="JWD Investment" className="h-10 w-auto" />
+              <img src="/jwd-logo.png" alt="JWD Investment" className="h-[52px] w-auto" />
             </div>
             <p className="text-[17px] text-slate-600 leading-[1.7] max-w-xs mb-3">
               {t.footer.blurb}
