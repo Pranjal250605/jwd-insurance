@@ -5,7 +5,7 @@ export default function Message() {
   const m = t.message;
 
   return (
-    <section className="bg-white">
+    <section id="message" className="bg-white">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-16 sm:py-24">
         <div
           data-spotlight

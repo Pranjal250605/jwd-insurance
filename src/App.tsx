@@ -15,6 +15,7 @@ import Products from '@/components/Products';
 import Money from '@/components/Money';
 import Explore from '@/components/Explore';
 import ClosingCTA from '@/components/ClosingCTA';
+import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import AnimationsInit from '@/components/AnimationsInit';
 import Interactions from '@/components/Interactions';
@@ -115,6 +116,7 @@ export default function App() {
           <Money />
           <Explore />
           <ClosingCTA />
+          <Contact />
         </>
       )}
       <Footer />

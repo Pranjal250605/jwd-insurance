@@ -37,15 +37,16 @@ export default function ClosingCTA() {
               {t.closing.body}
             </p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
-              <button
+              <a
+                href="#contact"
                 data-magnetic
-                className="cta-primary px-8 py-4 rounded-sm text-[13px] font-bold tracking-[0.14em]"
+                className="cta-primary px-8 py-4 rounded-sm text-[13px] font-bold tracking-[0.14em] inline-flex items-center"
               >
                 {t.closing.ctaPrimary}
-              </button>
-              <button data-magnetic className="px-8 py-4 rounded-sm text-[13px] font-bold tracking-[0.14em] text-[#0ABAB5] transition-all hover:bg-[#0ABAB5]/5 border border-[#0ABAB5]">
+              </a>
+              <a href="#contact" data-magnetic className="px-8 py-4 rounded-sm text-[13px] font-bold tracking-[0.14em] text-[#0ABAB5] transition-all hover:bg-[#0ABAB5]/5 border border-[#0ABAB5] inline-flex items-center">
                 {t.closing.ctaSecondary}
-              </button>
+              </a>
             </div>
           </div>
         </div>

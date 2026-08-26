@@ -231,14 +231,14 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             {/* The sheet replaces the old two-card cluster with a single
                 exchange-rate chip tucked under the photo's bottom-left corner. */}
             <div data-anim="hero-cards" className="mt-4 flex">
-              <div className="inline-flex items-center gap-3 rounded-lg bg-white pr-5 shadow-[0_16px_40px_-18px_rgba(var(--shadow-rgb),0.25)]">
-                <span className="w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-soft)' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" style={{ color: 'var(--accent-deep)' }}>
+              <div className="inline-flex items-center gap-2.5 rounded-lg bg-white pr-4 shadow-[0_16px_40px_-18px_rgba(var(--shadow-rgb),0.25)]">
+                <span className="w-[51px] h-[51px] rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-soft)' }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" style={{ color: 'var(--accent-deep)' }}>
                     <path d="M3 3v18h18" /><path d="M7 14l4-4 4 4 6-6" />
                   </svg>
                 </span>
                 <span
-                  className="text-[32.5px] sm:text-[40px] font-bold tracking-tight text-slate-900"
+                  className="text-[26px] sm:text-[32px] font-bold tracking-tight text-slate-900"
                   title={fx.live && fx.updated ? `${t.hero.ytd} · ${fx.updated}` : t.hero.ytd}
                 >
                   AED 1 = ¥{fx.jpy.toFixed(1)}

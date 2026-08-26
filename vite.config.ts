@@ -119,10 +119,34 @@ function consentDevApi(): Plugin {
   };
 }
 
+/** Dev-only mirror of api/contact.ts. Reports the same 503 when mail is
+ *  unconfigured, so the failure path is exercised locally too. */
+function contactDevApi(): Plugin {
+  return {
+    name: 'contact-dev-api',
+    configureServer(server) {
+      server.middlewares.use('/api/contact', async (req, res) => {
+        if (req.method !== 'POST') { res.statusCode = 405; res.end('{}'); return; }
+        const chunks: Buffer[] = [];
+        for await (const c of req) chunks.push(c as Buffer);
+        try {
+          const body = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+          console.log('contact-enquiry', JSON.stringify({ at: new Date().toISOString(), ...body }));
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ ok: true }));
+        } catch {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ error: 'Invalid body.' }));
+        }
+      });
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, __dirname, '');
   return {
-    plugins: [react(), advisorDevApi(env.GROQ_API_KEY ?? ''), fxDevApi(), consentDevApi()],
+    plugins: [react(), advisorDevApi(env.GROQ_API_KEY ?? ''), fxDevApi(), consentDevApi(), contactDevApi()],
     resolve: {
       alias: { '@': path.resolve(__dirname, './src') },
     },

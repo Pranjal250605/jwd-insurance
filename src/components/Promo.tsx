@@ -1,5 +1,10 @@
 import { useT } from '@/i18n';
 
+/* Where each pillar's link goes: "about JWD" to the representative's
+   message, "Kawana's story" to the chairman block in this same section, and
+   the services pillar to the contact form at the foot of the page. */
+const PILLAR_LINKS = ['#message', '#chairman', '#contact'];
+
 const PILLAR_ICONS = [
   <svg key="shield" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
     <path d="M12 2l9 5v6c0 5-4 8-9 9-5-1-9-4-9-9V7l9-5z" />
@@ -30,7 +35,7 @@ export default function Promo() {
   const c = t.promo.chairman;
 
   return (
-    <section className="bg-white">
+    <section id="chairman" className="bg-white">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-12">
         {/* Chairman's message. The portrait floats into the running text at
             lg+ (as in the approved layout) and stacks above it below that. */}
@@ -113,7 +118,7 @@ export default function Promo() {
               <div className="font-jp text-[13px] tracking-[0.18em] text-slate-500 mb-1">{p.sub}</div>
               <h3 className="font-serif text-[26px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{p.title}</h3>
               <p className="text-[19.5px] leading-[1.6] text-slate-600 mb-7">{p.body}</p>
-              <a href="#" className="link-underline text-[16.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+              <a href={PILLAR_LINKS[i]} className="link-underline text-[16.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                 {p.cta}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
               </a>

@@ -1,5 +1,6 @@
 import { useT } from '@/i18n';
 import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
+import { menuHref, MENU_KEYS } from '@/components/Nav';
 
 export default function Footer() {
   const { lang, t } = useT();
@@ -51,16 +52,27 @@ export default function Footer() {
             </div>
           </div>
 
-          {t.footer.cols.map((col) => (
+          {t.footer.cols.map((col, ci) => (
             <div key={col.h}>
               <h4 className="text-[11.5px] font-bold tracking-[0.22em] text-slate-900 uppercase">{col.h}</h4>
               <div className="font-jp text-[11px] tracking-[0.16em] text-slate-400 mt-1 mb-5">{col.sub}</div>
               <ul className="space-y-3">
-                {col.links.map((l) => (
-                  <li key={l}>
-                    <a href="#" className="link-underline text-[17px] text-slate-600 hover:text-slate-900">{l}</a>
-                  </li>
-                ))}
+                {col.links.map((l, i) => {
+                  const href = menuHref(MENU_KEYS[ci] ?? '', i);
+                  const ext = href.startsWith('http');
+                  return (
+                    <li key={l}>
+                      <a
+                        href={ext ? jaOutbound(href, lang === 'ja') : href}
+                        target={ext ? '_blank' : undefined}
+                        rel={ext ? 'noopener noreferrer' : undefined}
+                        className="link-underline text-[17px] text-slate-600 hover:text-slate-900"
+                      >
+                        {l}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}

@@ -4,6 +4,41 @@ import { useT } from '@/i18n';
 import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
 import { useScrollLock } from '@/hooks/useScrollLock';
 
+/* Where each dropdown item goes. Keyed by menu and by position, because the
+   two locales carry the same items in the same order but under different
+   labels — an English-keyed table would leave the Japanese menu dead.
+   External destinations are routed through the translate proxy for Japanese
+   readers by jaOutbound, exactly as the rest of the site does. */
+const MENU_LINKS: Record<string, string[]> = {
+  Solutions: [
+    '#properties-section',                        // Dubai Properties
+    'https://theheartofeurope.emirates.expert/',  // Heart of Europe
+    '#/consent',                                  // Investment Funds — notice first
+    '#properties-section',                        // Japan Properties
+    'https://new-jwd-office.vercel.app/',         // Family Office
+  ],
+  Insights: [
+    '#markets',        // Why Dubai
+    '#insights',       // Knowledge Center
+    '#/properties',    // Investment Simulator
+    '#chairman',       // Tomo's Stories
+  ],
+  About: [
+    '#message',        // Company Overview
+    '#message',        // Mission
+    '#message',        // Vision
+    '#reach',          // Leadership
+    '#chairman',       // Tomo Kawana
+  ],
+  Clients: [
+    '#solutions', '#solutions', '#solutions', '#solutions', '#solutions', '#solutions',
+  ],
+};
+
+export const MENU_KEYS = ['Solutions', 'Insights', 'About', 'Clients'];
+
+export const menuHref = (key: string, i: number) => MENU_LINKS[key]?.[i] ?? '#contact';
+
 export default function Nav() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -63,7 +98,7 @@ export default function Nav() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-[76px] flex items-center justify-between">
-        <a href="#" className="flex items-center select-none flex-shrink-0">
+        <a href="#/" aria-label="JWD Investment" className="flex items-center select-none flex-shrink-0">
           <img src="/jwd-logo.png" alt="JWD Investment" className="h-[47px] w-auto" />
         </a>
 
@@ -88,16 +123,30 @@ export default function Nav() {
                       <div className="text-[11px] font-bold tracking-[0.2em] text-slate-400">{menu.label.toUpperCase()}</div>
                       <div className="text-[11.5px] font-jp text-slate-500 mt-0.5">{menu.sub}</div>
                     </div>
-                    {menu.items.map((item) => (
-                      <a key={item} href="#" className="block px-4 py-2 text-[17px] text-slate-700 hover:bg-slate-50 hover:text-slate-900">{item}</a>
-                    ))}
+                    {menu.items.map((item, i) => {
+                      const href = menuHref(key, i);
+                      const ext = href.startsWith('http');
+                      return (
+                        <a
+                          key={item}
+                          href={ext ? jaOutbound(href, lang === 'ja') : href}
+                          title={ext && lang === 'ja' ? JA_PROXY_NOTICE : undefined}
+                          target={ext ? '_blank' : undefined}
+                          rel={ext ? 'noopener noreferrer' : undefined}
+                          onClick={() => setOpenMenu(null)}
+                          className="block px-4 py-2 text-[17px] text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+                        >
+                          {item}
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               )}
             </div>
           ))}
           <a href="#/properties" className={`${navItem} flex-shrink-0`}>{t.nav.portfolio}</a>
-          <a href="#" className={`${navItem} flex-shrink-0`}>{t.nav.contact}</a>
+          <a href="#contact" className={`${navItem} flex-shrink-0`}>{t.nav.contact}</a>
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
@@ -153,7 +202,7 @@ export default function Nav() {
               so there's no separate scrim to manage — it fully replaces the
               page, avoiding any transform/filter ancestor entirely (portal). */}
           <div className="pt-safe flex items-center justify-between px-5 h-[76px] border-b border-slate-100 flex-shrink-0">
-            <a href="#" onClick={closeMobile} className="flex items-center select-none">
+            <a href="#/" aria-label="JWD Investment" onClick={closeMobile} className="flex items-center select-none">
               <img src="/jwd-logo.png" alt="JWD Investment" className="h-[42px] w-auto" />
             </a>
             <button
@@ -187,11 +236,22 @@ export default function Nav() {
                     </button>
                     {isOpen && (
                       <div className="pb-3 flex flex-col">
-                        {menu.items.map((item) => (
-                          <a key={item} href="#" onClick={closeMobile} className="min-h-[44px] flex items-center text-[17px] text-slate-600 hover:text-slate-900">
-                            {item}
-                          </a>
-                        ))}
+                        {menu.items.map((item, i) => {
+                          const href = menuHref(key, i);
+                          const ext = href.startsWith('http');
+                          return (
+                            <a
+                              key={item}
+                              href={ext ? jaOutbound(href, lang === 'ja') : href}
+                              target={ext ? '_blank' : undefined}
+                              rel={ext ? 'noopener noreferrer' : undefined}
+                              onClick={closeMobile}
+                              className="min-h-[44px] flex items-center text-[17px] text-slate-600 hover:text-slate-900"
+                            >
+                              {item}
+                            </a>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
@@ -201,7 +261,7 @@ export default function Nav() {
               <a href="#/properties" onClick={closeMobile} className="min-h-[56px] flex items-center text-[20.5px] font-medium text-slate-900 border-b border-slate-100">
                 {t.nav.portfolio}
               </a>
-              <a href="#" onClick={closeMobile} className="min-h-[56px] flex items-center text-[20.5px] font-medium text-slate-900 border-b border-slate-100">
+              <a href="#contact" onClick={closeMobile} className="min-h-[56px] flex items-center text-[20.5px] font-medium text-slate-900 border-b border-slate-100">
                 {t.nav.contact}
               </a>
 

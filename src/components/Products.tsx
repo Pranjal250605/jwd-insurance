@@ -10,15 +10,31 @@ const SOLUTION_META = [
   { image: 'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=600&q=80&auto=format&fit=crop', fact: '2 markets', factJa: '2市場' },
 ];
 
-// Real bilingual capability + real consultation channels (WhatsApp/LINE/Zoom,
+// Real bilingual capability + real consultation channels (Instagram,
 // by introduction only) — replaces a fabricated six-language claim.
-const LANG_CHIPS = ['日本語', 'English', 'WhatsApp', 'LINE', 'Zoom'];
+const LANG_CHIPS = ['日本語', 'English', 'Instagram'];
+
+/* Destinations for the four solution cards, in the order i18n lists them.
+   Heart of Europe and Family Office go to their own sites; Investment Funds
+   goes to the information notice first, since that is the gate the client put
+   in front of the Equiti/AIX material. */
+const SOLUTION_LINKS = [
+  '#properties-section',
+  'https://theheartofeurope.emirates.expert/',
+  '#/consent',
+  'https://new-jwd-office.vercel.app/',
+];
+
+/* Every consulting step routes through the same notice. */
+const STEP_LINK = '#/consent';
+
+const isExternal = (href: string) => href.startsWith('http');
 
 export default function Products() {
   const { t, lang } = useT();
 
   return (
-    <section style={{ background: 'var(--surface-alt)' }}>
+    <section id="solutions" style={{ background: 'var(--surface-alt)' }}>
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-16 sm:py-24">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-12 mb-10 sm:mb-16 items-end">
           <div>
@@ -51,7 +67,13 @@ export default function Products() {
                       <div className="text-[11px] font-semibold tracking-[0.18em] text-slate-400 uppercase">{t.products.aumLabel}</div>
                       <div className="font-serif text-[23.5px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{lang === 'ja' ? SOLUTION_META[i].factJa : SOLUTION_META[i].fact}</div>
                     </div>
-                    <a href="#" className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+                    <a
+                      href={isExternal(SOLUTION_LINKS[i]) ? jaOutbound(SOLUTION_LINKS[i], lang === 'ja') : SOLUTION_LINKS[i]}
+                      target={isExternal(SOLUTION_LINKS[i]) ? '_blank' : undefined}
+                      rel={isExternal(SOLUTION_LINKS[i]) ? 'noopener noreferrer' : undefined}
+                      className="link-underline text-[13px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all"
+                      style={{ color: 'var(--accent-deep)' }}
+                    >
                       {t.products.detailCta}
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                     </a>
@@ -144,7 +166,7 @@ export default function Products() {
               <div className="font-jp text-[13px] tracking-[0.16em] text-slate-500 mb-1">{s.sub}</div>
               <h3 className="font-serif text-[24px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{s.title}</h3>
               <p className="text-[19px] leading-[1.6] text-slate-600 mb-8">{s.body}</p>
-              <a href="#" className="link-underline text-[16.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
+              <a href={STEP_LINK} className="link-underline text-[16.5px] font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                 {s.cta}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
               </a>

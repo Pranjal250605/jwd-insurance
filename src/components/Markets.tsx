@@ -40,7 +40,7 @@ export default function Markets() {
   const { lang, t } = useT();
 
   return (
-    <section className="bg-white">
+    <section id="markets" className="bg-white">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-4 pb-16">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-10 mb-10 sm:mb-12 items-end">
           <div>
