@@ -172,14 +172,15 @@ export default function Nav() {
               </a>
             ))}
           </div>
-          <button
+          <a
+            href="#contact"
             data-magnetic
             className={`hidden sm:inline-flex items-center justify-center cta-primary h-11 rounded-sm text-[13px] font-bold whitespace-nowrap ${
               isJa ? 'px-4 tracking-[0.06em]' : 'px-5 tracking-[0.14em]'
             }`}
           >
             {t.nav.cta}
-          </button>
+          </a>
 
           {/* Hamburger — the only nav access point below lg (1024px); the
               desktop <nav> above is `hidden min-[1400px]:flex` with no other fallback. */}
@@ -294,9 +295,9 @@ export default function Nav() {
           </div>
 
           <div className="pb-safe flex-shrink-0 px-5 pt-3 pb-4 border-t border-slate-100">
-            <button data-magnetic className="cta-primary w-full h-12 rounded-sm text-[13px] font-bold tracking-[0.14em]">
+            <a href="#contact" onClick={closeMobile} data-magnetic className="cta-primary w-full h-12 rounded-sm text-[13px] font-bold tracking-[0.14em] inline-flex items-center justify-center">
               {t.nav.cta}
-            </button>
+            </a>
           </div>
         </div>,
         document.body,

@@ -25,8 +25,9 @@ const SOLUTION_LINKS = [
   'https://new-jwd-office.vercel.app/',
 ];
 
-/* Every consulting step routes through the same notice. */
-const STEP_LINK = '#/consent';
+/* Every consulting step ends at the consultation form: these are services you
+   enquire about, not material the information notice gates. */
+const STEP_LINK = '#contact';
 
 const isExternal = (href: string) => href.startsWith('http');
 

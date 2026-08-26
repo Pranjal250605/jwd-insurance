@@ -80,11 +80,25 @@ export default function App() {
 
   // Lightweight hash routing: '#/properties' shows the client portfolio page,
   // '#/consent' the 08.18 information notice, '#/how-to-invest' what it gates.
-  const [route, setRoute] = useState(typeof window !== 'undefined' ? window.location.hash : '');
+  //
+  // Only '#/'-prefixed hashes are routes. In-page anchors (#contact, #chairman
+  // …) must not register here at all: they used to set route state and run the
+  // scroll-to-top below, so every one of them threw the reader back to the top
+  // of the page instead of moving to the section they asked for.
+  const readRoute = () => {
+    if (typeof window === 'undefined') return '';
+    const h = window.location.hash;
+    return h.startsWith('#/') ? h : '';
+  };
+  const [route, setRoute] = useState(readRoute);
   useEffect(() => {
     const onHash = () => {
-      setRoute(window.location.hash);
-      window.scrollTo(0, 0);
+      const next = readRoute();
+      setRoute((prev) => {
+        // Top-of-page only when the page itself changed.
+        if (prev !== next) window.scrollTo(0, 0);
+        return next;
+      });
     };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);

@@ -117,13 +117,13 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
               {t.hero.support}
             </p>
             <div className="flex items-center gap-4 flex-wrap">
-              <button data-magnetic className="cta-primary px-7 h-12 rounded-sm text-[16px] font-bold tracking-[0.14em]">
+              <a href="#contact" data-magnetic className="cta-primary px-7 h-12 rounded-sm text-[16px] font-bold tracking-[0.14em] inline-flex items-center">
                 {t.hero.ctaPrimary}
-              </button>
-              <button className="px-2 h-12 text-[22.5px] font-medium text-slate-700 hover:text-slate-900 flex items-center gap-2 group">
+              </a>
+              <a href="#contact" className="px-2 h-12 text-[22.5px] font-medium text-slate-700 hover:text-slate-900 flex items-center gap-2 group">
                 {t.hero.ctaSecondary}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-              </button>
+              </a>
             </div>
 
             {/* 08.18 revision, page ①: the entry point to the information

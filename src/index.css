@@ -576,3 +576,13 @@ body::after {
   .photo-marquee__track { animation: none; }
   .photo-marquee { overflow-x: auto; }
 }
+
+/* In-page anchor targets sit below the sticky header rather than under it.
+   The header is ~96px at desktop; the extra breathing room keeps the section
+   eyebrow visible rather than flush against the nav's underside. */
+html { scroll-behavior: smooth; }
+section[id] { scroll-margin-top: 116px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
