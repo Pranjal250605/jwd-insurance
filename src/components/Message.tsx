@@ -18,7 +18,7 @@ export default function Message() {
             </div>
             <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{m.sub}</div>
             <h2
-              className="font-serif fluid-40-52 leading-[1.22] font-medium text-slate-900 tracking-[-0.015em] mb-7"
+              className="whitespace-pre-line font-serif fluid-40-52 leading-[1.22] font-medium text-slate-900 tracking-[-0.015em] mb-7"
               style={{ textWrap: 'balance' } as React.CSSProperties}
             >
               {m.title}

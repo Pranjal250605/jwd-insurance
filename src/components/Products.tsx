@@ -41,7 +41,7 @@ export default function Products() {
           <div>
             <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.eyebrow}</div>
             <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.sub}</div>
-            <h2 className="font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
+            <h2 className="whitespace-pre-line font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
               {t.products.title}
             </h2>
           </div>
@@ -92,7 +92,7 @@ export default function Products() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-20">
         <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.platformsEyebrow}</div>
         <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.platformsSub}</div>
-        <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-8 sm:mb-10 max-w-3xl">
+        <h2 className="whitespace-pre-line font-serif fluid-36-44 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-8 sm:mb-10 max-w-3xl">
           {t.products.platformsTitle}
         </h2>
         <div className="grid md:grid-cols-2 gap-6">
@@ -139,7 +139,7 @@ export default function Products() {
           <div className="relative">
             <div className="eyebrow-rule justify-center text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>{t.products.langEyebrow}</div>
             <div className="font-jp text-[16.5px] tracking-[0.18em] mb-7 text-white/60">{t.products.langSub}</div>
-            <h2 className="font-serif fluid-36-52 leading-[1.15] font-medium text-white tracking-[-0.015em] max-w-3xl mx-auto">
+            <h2 className="whitespace-pre-line font-serif fluid-36-52 leading-[1.15] font-medium text-white tracking-[-0.015em] max-w-3xl mx-auto">
               {t.products.langTitle}
             </h2>
             <div data-anim="lang-chips" className="mt-10 sm:mt-12 flex items-center justify-center gap-2.5 sm:gap-3 flex-wrap">
@@ -154,7 +154,7 @@ export default function Products() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-24">
         <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.products.stepsEyebrow}</div>
         <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.products.stepsSub}</div>
-        <h2 className="font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-10 sm:mb-14 max-w-3xl">
+        <h2 className="whitespace-pre-line font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-10 sm:mb-14 max-w-3xl">
           {t.products.stepsTitle}
         </h2>
         <div className="grid md:grid-cols-3 gap-6">

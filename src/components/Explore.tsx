@@ -83,7 +83,7 @@ export default function Explore() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pb-16 sm:pb-24">
         <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.explore.apartEyebrow}</div>
         <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.explore.apartSub}</div>
-        <h2 className="font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-10 sm:mb-14 max-w-3xl">
+        <h2 className="whitespace-pre-line font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-10 sm:mb-14 max-w-3xl">
           {t.explore.apartTitle}
         </h2>
         <div className="grid md:grid-cols-3 gap-6">

@@ -860,7 +860,7 @@ export const STRINGS = {
       eyebrow: 'ファースト・コール・パートナー · 2020年創業',
       headline: 'さらなる豊かさへ\n黄金の架け橋',
       tagline: 'Two horizons, one golden bridge.',
-      body: '日本とドバイ、その両方を母国語で、一貫した視点で語れる数少ないパートナー。ご相談は完全紹介制。私たちが導きます。',
+      body: '日本とドバイ、双方の市場を母国語で理解し、確かな視座で導くことのできる稀有なパートナー。\n私たちは、完全紹介制のクロスボーダー・アドバイザリーです。\nお客様のビジョンをお聞かせください。具現化への道筋は、私たちが構築いたします。',
       ctaPrimary: 'ご相談のご予約',
       ctaSecondary: '投資ガイドをダウンロード',
       support: '※弊社は日本人スタッフによる日本語サポートにも対応しておりますので、ご安心ください。',
@@ -930,7 +930,7 @@ export const STRINGS = {
     message: {
       eyebrow: '代表からのメッセージ',
       sub: 'A MESSAGE FROM OUR REPRESENTATIVE',
-      title: '次世代へ繋ぐ「安心」と「価値」を、ご家族とともに',
+      title: '次世代へ繋ぐ\n「安心」と「価値」を\nご家族とともに',
       paragraphs: [
         '私たちJWD investment L.L.C.は、「資本の力で未来を創る」という理念のもと、企業価値の向上と持続可能な社会の実現を目指して、長期的視点に立った投資を行ってまいりました。',
         '私たちの使命は、投資を通じて皆さまの可能性を最大限に引き出し、その成長が社会全体の豊かさにつながる好循環を生み出すことです。',
@@ -944,7 +944,7 @@ export const STRINGS = {
     markets: {
       eyebrow: 'EQUITIで取引できるマーケット',
       sub: 'TRADE WITH EQUITI',
-      title: '世界のマーケットを、ひとつのプラットフォームで',
+      title: '世界のマーケットを\nひとつのプラットフォームで',
       intro: '提携プラットフォームEquitiを通じて、あらゆる主要資産クラスで執行。各マーケットは公式の商品ページに直接リンクしています。',
       viewAll: 'Equitiの全商品を見る',
       note: 'リンクはEquiti公式サイトに移動します。CFD取引には重大な損失リスクがあります。',
@@ -974,7 +974,7 @@ export const STRINGS = {
     realEstate: {
       eyebrow: '不動産ポートフォリオ',
       sub: 'REAL ESTATE PORTFOLIO',
-      title: '投資価値で選び抜く、ドバイ不動産',
+      title: '投資価値で選び抜く\nドバイ不動産',
       intro: '数千件の在庫ではなく、投資価値で選び抜いた物件だけを。利回りと立地で見極めた最新のキュレーション。',
       note: 'リンクは外部サイトに移動します。不動産投資にはリスクがあり、資産価値は下落する場合があります。',
       portfolioCta: 'クライアント保有物件を見る',
@@ -1104,7 +1104,7 @@ export const STRINGS = {
       },
       whyEyebrow: 'JWDが選ばれる理由',
       whySub: 'WHY PARTNER WITH JWD',
-      whyTitle: '二つの市場を、母語で結ぶ',
+      whyTitle: '二つの市場を、母国語で結ぶ',
       pillars: [
         { title: '両市場に精通', sub: 'Fluent in both markets', body: '日本とドバイ、その両方を母語で、一貫した視点で語れる数少ない事業者です。', cta: 'JWDについて' },
         { title: '当事者の実体験', sub: 'First-hand as an owner', body: '代表・川名はドバイに住み、投資し、子を育てる。語る資格は暮らしの中にあります。', cta: '川名のストーリー' },
@@ -1114,7 +1114,7 @@ export const STRINGS = {
     products: {
       eyebrow: '事業領域',
       sub: 'WHAT WE DO',
-      title: '一つの窓口で、すべてを',
+      title: '私たちに\nお任せください',
       intro: 'ドバイ法人設立、不動産取得、ファミリーオフィス設計から、日本側の資産・相続戦略まで。案件ごとに専門家を寄せ集めるのではなく、ひとつのチームとして横断的に伴走します。',
       aumLabel: '一目でわかる',
       detailCta: '詳しく見る',
@@ -1126,7 +1126,7 @@ export const STRINGS = {
       ],
       platformsEyebrow: '投資プラットフォーム',
       platformsSub: '投資プラットフォーム',
-      platformsTitle: 'パートナー・プラットフォームによる執行',
+      platformsTitle: '信頼のパートナー・プラットフォーム',
       platformsNote: 'リンクは外部サイトに移動します。投資判断は目論見書等をご確認ください。',
       platformsVisit: '公式サイトへ',
       platforms: [
@@ -1135,10 +1135,10 @@ export const STRINGS = {
       ],
       langEyebrow: '日本語・英語対応',
       langSub: 'BILINGUAL BY DESIGN',
-      langTitle: '日本とドバイ、両方に精通した数少ない事業者',
+      langTitle: '日本とドバイに精通した\n数少ない事業者',
       stepsEyebrow: 'コンサルティングの進め方',
       stepsSub: 'HOW WE WORK',
-      stepsTitle: '8つの必須手続きを、ひとつのチームで',
+      stepsTitle: '8つの必須手続きを\nひとつのチームで',
       stepLabel: 'ステップ',
       steps: [
         { title: '法人設立・ライセンス', sub: 'Company & License', body: 'フリーゾーン・メインランド・オフショアの最適構造を選定し、成長戦略まで一貫して支援します。', cta: '法人設立について' },
@@ -1149,7 +1149,7 @@ export const STRINGS = {
     money: {
       reachEyebrow: '日本とドバイ、ひとつのチーム',
       reachSub: 'TWO MARKETS, ONE TEAM',
-      reachTitle: '日本に根ざし、ドバイに広がる',
+      reachTitle: '日本に根ざし\nドバイに広がる',
       reachBody: '日本とドバイの不動産・資産形成をつなぐクロスボーダー・アドバイザリー。案件ごとに専門家を寄せ集めるのではなく、ひとつのチームとして横断的に伴走します。',
       reachBody2: 'A cross-border advisory bridging real estate and wealth creation between Japan and Dubai.',
       reachCta: 'JWDについて',
@@ -1161,7 +1161,7 @@ export const STRINGS = {
       ],
       portalEyebrow: 'AI投資アドバイザー',
       portalSub: 'AI PROPERTY ADVISOR',
-      portalTitle: 'ドバイ・日本の不動産投資について、いつでもご相談',
+      portalTitle: '日本とドバイの\n不動産投資について\nご相談ください',
       portalBody: 'JWD自身の市場知見をもとに、利回り・ビザ・税制・ハート・オブ・ヨーロッパまで、いつでも即座にお答えします。',
       portalBody2: 'Powered by JWD’s own market knowledge.',
       features: [
@@ -1186,7 +1186,7 @@ export const STRINGS = {
       ],
       apartEyebrow: '伴走する専門領域',
       apartSub: 'HOW WE ARE ORGANISED',
-      apartTitle: '机上の理論ではなく、自らの資金と経験で語るチーム',
+      apartTitle: '机上の理論ではなく、自らの\n資金と経験で語るチーム',
       features: [
         { tag: '代表 / 投資戦略', sub: '川名 智', title: '投資戦略', body: 'ドバイ・ハートオブヨーロッパへの個人投資家。日本とドバイをつなぐ全体戦略を統括します。', cta: '川名のストーリー' },
         { tag: '法人・コンプライアンス', sub: 'UAE法務ネットワーク', title: '法人・コンプライアンス', body: 'フリーゾーン・メインランドの設立、ビザ、税務登録をUAE当局との深いネットワークで支えます。', cta: '事業内容を見る' },
@@ -1211,7 +1211,7 @@ export const STRINGS = {
     closing: {
       eyebrow: 'はじめの一歩',
       sub: 'THE FIRST MOVE',
-      title: '二つの地平へ、ともに踏み出す',
+      title: 'ドバイの確実な\n資産運用に踏み出す',
       tagline: 'ご相談はご紹介制です。まずはお問い合わせください。あとは私たちが導きます。',
       body: 'ご相談は完全紹介制です。不動産、法人・ビザ、ファミリーオフィス——代表があなたの目標を直接お伺いします。',
       ctaPrimary: 'ご相談のご予約',

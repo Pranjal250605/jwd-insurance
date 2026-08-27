@@ -33,7 +33,7 @@ export default function Money() {
           <div>
             <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.money.reachEyebrow}</div>
             <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.money.reachSub}</div>
-            <h2 className="font-serif fluid-40-48 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-6">
+            <h2 className="whitespace-pre-line font-serif fluid-40-48 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] mb-6">
               {t.money.reachTitle}
             </h2>
             <p className="text-[20.5px] leading-[1.65] text-slate-600 mb-4 max-w-md">
@@ -91,7 +91,7 @@ export default function Money() {
           <div className="relative z-10">
             <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--secondary)' }}>{t.money.portalEyebrow}</div>
             <div className="font-jp text-[16.5px] tracking-[0.18em] mb-7 text-white/60">{t.money.portalSub}</div>
-            <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-white tracking-[-0.015em] mb-6">
+            <h2 className="whitespace-pre-line font-serif fluid-36-44 leading-[1.15] font-medium text-white tracking-[-0.015em] mb-6">
               {t.money.portalTitle}
             </h2>
             <p className="text-[19.5px] leading-[1.65] text-slate-300 mb-3 max-w-md">

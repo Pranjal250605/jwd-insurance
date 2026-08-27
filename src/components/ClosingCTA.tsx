@@ -25,7 +25,7 @@ export default function ClosingCTA() {
             <div className="eyebrow-rule justify-center text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.closing.eyebrow}</div>
             <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-7">{t.closing.sub}</div>
             <h2
-              className="font-serif fluid-44-60 leading-[1.1] font-medium text-slate-900 tracking-[-0.015em] mb-6"
+              className="whitespace-pre-line font-serif fluid-44-60 leading-[1.1] font-medium text-slate-900 tracking-[-0.015em] mb-6"
               style={{ textWrap: 'balance' } as React.CSSProperties}
             >
               {t.closing.title}

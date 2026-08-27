@@ -10,7 +10,7 @@ export default function RealEstate() {
           <div>
             <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.realEstate.eyebrow}</div>
             <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.realEstate.sub}</div>
-            <h2 className="font-serif fluid-36-44 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
+            <h2 className="whitespace-pre-line font-serif fluid-36-44 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em]">
               {t.realEstate.title}
             </h2>
           </div>

@@ -103,7 +103,7 @@ export default function Promo() {
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-14 sm:pt-20 pb-8 sm:pb-10">
         <div className="eyebrow-rule text-[11.5px] font-semibold tracking-[0.28em] mb-3" style={{ color: 'var(--accent-deep)' }}>{t.promo.whyEyebrow}</div>
         <div className="font-jp text-[16.5px] tracking-[0.18em] text-slate-500 mb-6">{t.promo.whySub}</div>
-        <h2 className="font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] max-w-3xl">
+        <h2 className="whitespace-pre-line font-serif fluid-40-52 leading-[1.15] font-medium text-slate-900 tracking-[-0.015em] max-w-3xl">
           {t.promo.whyTitle}
         </h2>
       </div>

@@ -110,7 +110,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                 {t.hero.tagline}
               </p>
             )}
-            <p className="text-[25px] leading-[1.6] text-slate-600 max-w-2xl mb-3.5">
+            <p className="whitespace-pre-line text-[25px] leading-[1.6] text-slate-600 max-w-2xl mb-3.5">
               {t.hero.body}
             </p>
             <p className="text-[21.5px] leading-[1.65] text-slate-500 max-w-2xl mb-7">
