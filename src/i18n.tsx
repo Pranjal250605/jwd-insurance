@@ -264,9 +264,9 @@ export const STRINGS = {
       ],
       moreVideosLabel: 'EQUITI IN ACTION',
       moreVideos: [
-        { id: 'eq-about', title: 'About Equiti' },
+        { id: 'eq-about', title: 'Inside Equiti' },
         { id: 'eq-station', title: 'Equiti Station' },
-        { id: 'eq-football', title: 'Football partnership' },
+        { id: 'eq-football', title: 'Football sponsorship' },
         { id: 'eq-euroleague', title: 'EuroLeague basketball' },
         { id: 'eq-polo', title: 'EMAAR Polo Cup 2026' },
         { id: 'eq-takethewin', title: 'Take the Win' },
@@ -884,9 +884,9 @@ export const STRINGS = {
       ],
       moreVideosLabel: 'EQUITIの活動',
       moreVideos: [
-        { id: 'eq-about', title: 'Equitiという会社' },
+        { id: 'eq-about', title: 'Equiti 社内' },
         { id: 'eq-station', title: 'Equiti Station' },
-        { id: 'eq-football', title: 'サッカー・パートナーシップ' },
+        { id: 'eq-football', title: 'サッカー・スポンサーシップ' },
         { id: 'eq-euroleague', title: 'ユーロリーグ・バスケットボール' },
         { id: 'eq-polo', title: 'EMAAR ポロカップ 2026' },
         { id: 'eq-takethewin', title: 'Take the Win' },
