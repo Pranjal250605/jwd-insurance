@@ -1,4 +1,5 @@
 import { useT } from '@/i18n';
+import { asset } from '@/lib/paths';
 
 export default function Message() {
   const { t } = useT();
@@ -36,7 +37,7 @@ export default function Message() {
           <div className="relative">
             <div className="img-zoom relative rounded-xl overflow-hidden aspect-[4/5] max-w-[320px] mx-auto lg:max-w-none">
               <img
-                src="/hamit-gurbuz.jpg"
+                src={asset("/hamit-gurbuz.jpg")}
                 alt={`${m.signName}, ${m.signRole}, ${m.company}`}
                 className="absolute inset-0 w-full h-full object-cover"
               />

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { asset } from '@/lib/paths';
 import { createPortal } from 'react-dom';
 import { useT } from '@/i18n';
 
@@ -7,7 +8,7 @@ import { useT } from '@/i18n';
    video bytes, which matters here because the page carries eight clips. */
 
 function src(id: string) {
-  return { video: `/media/${id}.mp4`, poster: `/media/${id}.jpg` };
+  return { video: asset(`/media/${id}.mp4`), poster: asset(`/media/${id}.jpg`) };
 }
 
 /** Full-screen player. Rendered into <body> so no ancestor's overflow,

@@ -1,4 +1,5 @@
 import { useT } from '@/i18n';
+import { asset } from '@/lib/paths';
 import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
 import VideoTiles from '@/components/VideoTiles';
 import MainImage from '@/components/MainImage';
@@ -185,7 +186,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                         className="inline-block align-baseline transition-opacity hover:opacity-70"
                       >
                         <img
-                          src={t.hero.platformNotes[i].brand === 'equiti' ? '/brand/equiti.png' : '/brand/aix.png'}
+                          src={asset(t.hero.platformNotes[i].brand === 'equiti' ? '/brand/equiti.png' : '/brand/aix.png')}
                           alt={t.hero.platformNotes[i].brand}
                           className={`ml-1.5 inline-block w-auto ${
                             t.hero.platformNotes[i].brand === 'equiti' ? 'h-[51px]' : 'h-[32px]'

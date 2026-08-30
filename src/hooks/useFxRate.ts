@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { apiUrl } from '@/lib/paths';
 
 /* AED→JPY for the hero chip. The number ships with a fallback baked in so the
    chip is never blank and never shifts layout on arrival: the fallback renders
@@ -22,7 +23,7 @@ export function useFxRate(): FxRate {
   useEffect(() => {
     const ac = new AbortController();
 
-    fetch('/api/fx', { signal: ac.signal })
+    fetch(apiUrl('/api/fx'), { signal: ac.signal })
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
       .then((d) => {
         if (typeof d?.jpy === 'number' && isFinite(d.jpy)) {

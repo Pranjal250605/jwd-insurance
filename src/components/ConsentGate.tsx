@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { apiUrl } from '@/lib/paths';
 import { useT } from '@/i18n';
 import RegistrationForm, { type Registration } from '@/components/RegistrationForm';
 import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
@@ -35,7 +36,7 @@ function record(reg: Registration | null) {
   try {
     const body = JSON.stringify(reg);
     // keepalive so the POST survives the tab handing off to the new window.
-    void fetch('/api/consent', {
+    void fetch(apiUrl('/api/consent'), {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body,

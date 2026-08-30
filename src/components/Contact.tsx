@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { apiUrl } from '@/lib/paths';
 import { useT } from '@/i18n';
 
 /* The consultation form at the foot of the page, modelled on the DWC site's
@@ -36,7 +37,7 @@ export default function Contact() {
 
     setState('sending');
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(apiUrl('/api/contact'), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ ...v, name: v.name.trim(), email: v.email.trim() }),

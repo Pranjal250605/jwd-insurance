@@ -8,6 +8,8 @@
  * Env (shared with api/consent.ts):
  *   RESEND_API_KEY, CONSENT_EMAIL_TO, CONSENT_EMAIL_FROM (optional)
  */
+import { corsHeaders, preflight } from './_cors';
+
 export const config = { runtime: 'edge' };
 
 function clean(v: unknown, max = 4000): string {
@@ -19,7 +21,7 @@ function esc(v: string): string {
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
 }
 
-export default async function handler(request: Request): Promise<Response> {
+async function run(request: Request): Promise<Response> {
   if (request.method !== 'POST') {
     return Response.json({ error: 'Method not allowed.' }, { status: 405 });
   }
@@ -78,4 +80,19 @@ export default async function handler(request: Request): Promise<Response> {
     console.error('contact-email-failed:', err);
     return Response.json({ error: 'Could not send.' }, { status: 502 });
   }
+}
+
+/* Answer the preflight, then stamp the real response. Rebuilt rather than
+   mutated so a streamed body (the advisor) passes through untouched. */
+export default async function handler(request: Request): Promise<Response> {
+  const pre = preflight(request);
+  if (pre) return pre;
+
+  const res = await run(request);
+  const cors = corsHeaders(request);
+  if (Object.keys(cors).length === 0) return res;
+
+  const headers = new Headers(res.headers);
+  for (const [k, v] of Object.entries(cors)) headers.set(k, v);
+  return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
 }

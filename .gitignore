@@ -3,6 +3,8 @@ node_modules/
 *.pdf
 .next/
 dist/
+# wp-build/ is intentionally NOT ignored: it is the handover build for the
+# WordPress host and is committed so it can be downloaded from GitHub.
 *.tsbuildinfo
 .env
 .env.local

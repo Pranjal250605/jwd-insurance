@@ -1,4 +1,5 @@
 import { useT } from '@/i18n';
+import { asset } from '@/lib/paths';
 
 /* Where each pillar's link goes: "about JWD" to the representative's
    message, "Kawana's story" to the chairman block in this same section, and
@@ -56,7 +57,7 @@ export default function Promo() {
             <figure className="lg:float-left lg:w-[340px] lg:mr-10 lg:mb-8 mb-8 m-0">
               <div className="img-zoom relative rounded-xl overflow-hidden aspect-[4/5]">
                 <img
-                  src="/tomo-kawana.jpg"
+                  src={asset("/tomo-kawana.jpg")}
                   alt={`${c.name}, ${c.role}, ${c.company}`}
                   className="absolute inset-0 w-full h-full object-cover object-top"
                 />
@@ -92,8 +93,8 @@ export default function Promo() {
                   than sitting visibly short beneath it. Heights follow from
                   each file's own aspect ratio. */}
               <div className="flex flex-col items-end gap-1.5 w-[224px]">
-                <img src="/signature-ja.png" alt={c.name} className="w-full h-auto" />
-                <img src="/signature-en.png" alt="" aria-hidden="true" className="w-full h-auto" />
+                <img src={asset("/signature-ja.png")} alt={c.name} className="w-full h-auto" />
+                <img src={asset("/signature-en.png")} alt="" aria-hidden="true" className="w-full h-auto" />
               </div>
             </div>
           </div>

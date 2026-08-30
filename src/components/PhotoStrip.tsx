@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { asset } from '@/lib/paths';
 import { createPortal } from 'react-dom';
 import { useT } from '@/i18n';
 import { useScrollLock } from '@/hooks/useScrollLock';
@@ -46,7 +47,7 @@ function Lightbox({ index, onClose, onStep }: { index: number; onClose: () => vo
       className="fixed inset-0 z-[80] bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 sm:p-10"
     >
       <img
-        src={`/strip/${PHOTOS[index]}`}
+        src={asset(`/strip/${PHOTOS[index]}`)}
         alt=""
         onClick={(e) => e.stopPropagation()}
         /* 1.2× larger than the plain fit. The bounds are pulled in to
@@ -106,7 +107,7 @@ export default function PhotoStrip() {
                     className="block cursor-zoom-in rounded-lg overflow-hidden transition-transform hover:scale-[1.04]"
                   >
                     <img
-                      src={`/strip/${src}`}
+                      src={asset(`/strip/${src}`)}
                       alt=""
                       loading="lazy"
                       decoding="async"

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { apiUrl } from '@/lib/paths';
 import { createPortal } from 'react-dom';
 import { useT } from '@/i18n';
 import { useScrollLock } from '@/hooks/useScrollLock';
@@ -133,7 +134,7 @@ export default function Advisor() {
       setMsgs((cur) => cur.map((x, i) => (i === cur.length - 1 ? { ...x, ...m } : x)));
 
     try {
-      const res = await fetch('/api/advisor', {
+      const res = await fetch(apiUrl('/api/advisor'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

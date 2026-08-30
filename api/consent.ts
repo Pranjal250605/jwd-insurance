@@ -17,6 +17,8 @@
  * which of the two happened, so a failure to deliver is visible rather than
  * silent.
  */
+import { corsHeaders, preflight } from './_cors';
+
 export const config = { runtime: 'edge' };
 
 interface ConsentBody {
@@ -38,7 +40,7 @@ function esc(v: string): string {
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
 }
 
-export default async function handler(request: Request): Promise<Response> {
+async function run(request: Request): Promise<Response> {
   if (request.method !== 'POST') {
     return Response.json({ error: 'Method not allowed.' }, { status: 405 });
   }
@@ -117,4 +119,19 @@ export default async function handler(request: Request): Promise<Response> {
     return Response.json({ ok: true, delivered: false, reason: 'mail failed' },
       { status: 200, headers: { 'cache-control': 'no-store' } });
   }
+}
+
+/* Answer the preflight, then stamp the real response. Rebuilt rather than
+   mutated so a streamed body (the advisor) passes through untouched. */
+export default async function handler(request: Request): Promise<Response> {
+  const pre = preflight(request);
+  if (pre) return pre;
+
+  const res = await run(request);
+  const cors = corsHeaders(request);
+  if (Object.keys(cors).length === 0) return res;
+
+  const headers = new Headers(res.headers);
+  for (const [k, v] of Object.entries(cors)) headers.set(k, v);
+  return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
 }

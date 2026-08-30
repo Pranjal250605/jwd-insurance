@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { asset } from '@/lib/paths';
 import { createPortal } from 'react-dom';
 import { useT } from '@/i18n';
 import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
@@ -99,7 +100,7 @@ export default function Nav() {
 
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-[76px] flex items-center justify-between">
         <a href="#/" aria-label="JWD Investment" className="flex items-center select-none flex-shrink-0">
-          <img src="/jwd-logo.png" alt="JWD Investment" className="h-[47px] w-auto" />
+          <img src={asset("/jwd-logo.png")} alt="JWD Investment" className="h-[47px] w-auto" />
         </a>
 
         {/* px-3 (not px-4) below xl: at exactly 1024px the six nav items +
@@ -204,7 +205,7 @@ export default function Nav() {
               page, avoiding any transform/filter ancestor entirely (portal). */}
           <div className="pt-safe flex items-center justify-between px-5 h-[76px] border-b border-slate-100 flex-shrink-0">
             <a href="#/" aria-label="JWD Investment" onClick={closeMobile} className="flex items-center select-none">
-              <img src="/jwd-logo.png" alt="JWD Investment" className="h-[42px] w-auto" />
+              <img src={asset("/jwd-logo.png")} alt="JWD Investment" className="h-[42px] w-auto" />
             </a>
             <button
               onClick={closeMobile}

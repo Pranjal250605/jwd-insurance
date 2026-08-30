@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { asset } from '@/lib/paths';
 import { useT } from '@/i18n';
 
 /* 08.18 revision, page ①: "Use the below photos for the Main images." The
@@ -15,14 +16,14 @@ import { useT } from '@/i18n';
    the overlay label has to track the photo, or the reader is told they are
    looking at something they are not. */
 const IMAGES = [
-  '/main/burj-khalifa.jpg',
-  '/main/atlantis.jpg',
-  '/main/burj-al-arab.jpg',
-  '/main/difc-gate.jpg',
-  '/main/villa-pool.jpg',
-  '/main/floating-villa.jpg',
-  '/main/aquarium.jpg',
-  '/main/palm-jumeirah.jpg',
+  asset('/main/burj-khalifa.jpg'),
+  asset('/main/atlantis.jpg'),
+  asset('/main/burj-al-arab.jpg'),
+  asset('/main/difc-gate.jpg'),
+  asset('/main/villa-pool.jpg'),
+  asset('/main/floating-villa.jpg'),
+  asset('/main/aquarium.jpg'),
+  asset('/main/palm-jumeirah.jpg'),
 ];
 
 const INTERVAL = 4000;

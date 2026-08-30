@@ -10,6 +10,8 @@ import {
   transformGroqSse,
 } from '../shared/advisor-core.mjs';
 
+import { corsHeaders, preflight } from './_cors';
+
 export const config = { runtime: 'edge' };
 
 // Best-effort per-instance rate limit (blunts casual scripted abuse).
@@ -30,7 +32,7 @@ function rateLimited(ip: string): number | null {
   return null;
 }
 
-export default async function handler(request: Request): Promise<Response> {
+async function run(request: Request): Promise<Response> {
   if (request.method !== 'POST') {
     return Response.json({ error: 'Method not allowed.' }, { status: 405 });
   }
@@ -87,4 +89,19 @@ export default async function handler(request: Request): Promise<Response> {
     console.error('Advisor API error:', err);
     return Response.json({ error: 'Internal server error.' }, { status: 500 });
   }
+}
+
+/* Answer the preflight, then stamp the real response. Rebuilt rather than
+   mutated so a streamed body (the advisor) passes through untouched. */
+export default async function handler(request: Request): Promise<Response> {
+  const pre = preflight(request);
+  if (pre) return pre;
+
+  const res = await run(request);
+  const cors = corsHeaders(request);
+  if (Object.keys(cors).length === 0) return res;
+
+  const headers = new Headers(res.headers);
+  for (const [k, v] of Object.entries(cors)) headers.set(k, v);
+  return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
 }

@@ -146,6 +146,10 @@ function contactDevApi(): Plugin {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, __dirname, '');
   return {
+    /* '/' on Vercel. The WordPress host serves this build from a
+       subdirectory, so VITE_BASE is set at build time there — every asset URL
+       and every path in src/lib/paths.ts follows from it. */
+    base: env.VITE_BASE || '/',
     plugins: [react(), advisorDevApi(env.GROQ_API_KEY ?? ''), fxDevApi(), consentDevApi(), contactDevApi()],
     resolve: {
       alias: { '@': path.resolve(__dirname, './src') },
