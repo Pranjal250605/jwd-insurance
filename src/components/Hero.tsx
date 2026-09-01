@@ -157,7 +157,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                 the headline and the claims in navy and restores the small label
                 over the card column. */}
             <div className="mt-7 max-w-2xl">
-              <h2 className="whitespace-pre-line text-[34.5px] sm:text-[48.5px] font-bold leading-[1.2] tracking-[-0.01em] mb-5" style={{ color: 'var(--jwd-navy)' }}>
+              <h2 className="whitespace-pre-line text-[31px] sm:text-[44px] font-bold leading-[1.2] tracking-[-0.01em] mb-5" style={{ color: 'var(--jwd-navy)' }}>
                 {t.hero.platformsHeading}
               </h2>
               <div className="grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-4">

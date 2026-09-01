@@ -489,11 +489,11 @@ body::after {
 .fluid-44-60 { font-size: clamp(34.5px, 23px + 3.18vw, 47.5px); }
 @media (min-width: 1024px) { .fluid-44-60 { font-size: 65px; } }
 
-.fluid-hero-en { font-size: clamp(29.5px, 15.5px + 3.81vw, 45px); }
-@media (min-width: 1024px) { .fluid-hero-en { font-size: 55.5px; } }
+.fluid-hero-en { font-size: clamp(23.5px, 12.5px + 3.02vw, 35.5px); }
+@media (min-width: 1024px) { .fluid-hero-en { font-size: 44px; } }
 
-.fluid-hero-ja { font-size: clamp(29.5px, 17px + 3.37vw, 43px); }
-@media (min-width: 1024px) { .fluid-hero-ja { font-size: 53.5px; } }
+.fluid-hero-ja { font-size: clamp(24.5px, 14px + 2.77vw, 35.5px); }
+@media (min-width: 1024px) { .fluid-hero-ja { font-size: 44px; } }
 
 .fluid-props-h1-en { font-size: clamp(34.5px, 23px + 3.18vw, 47.5px); }
 @media (min-width: 1024px) { .fluid-props-h1-en { font-size: 60.5px; } }
