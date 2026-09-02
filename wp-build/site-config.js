@@ -11,6 +11,6 @@ window.__JWD_CONFIG__ = {
      On this hosting there is no mail server of our own, so submitting the
      form opens the visitor's own mail app with the message ready to send.
      Put the address that should receive enquiries between the quotes. */
-  contactEmail: "",
+  contactEmail: "shiraishi.t@gene-sis.jp",
 
 };

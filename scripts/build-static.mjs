@@ -18,13 +18,13 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 /**
- * Optional build-time default for the consultation form's recipient.
+ * Recipient for the consultation form on builds with no backend.
  *
- * Normally left unset: the address lives in site-config.js inside the upload,
- * so whoever deploys can set it in cPanel without Node or a rebuild. Passing
- * CONTACT_EMAIL here only pre-fills that file.
+ * Baked in so an upload works the moment it lands, and written into
+ * site-config.js so it can still be changed on the server without a rebuild.
+ * Override for a one-off build with CONTACT_EMAIL=… in the environment.
  */
-const CONTACT_EMAIL = process.env.CONTACT_EMAIL ?? '';
+const CONTACT_EMAIL = process.env.CONTACT_EMAIL ?? 'shiraishi.t@gene-sis.jp';
 
 const TARGETS = {
   // Japan — onamae.com. Static, no backend.
