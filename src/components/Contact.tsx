@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { apiUrl } from '@/lib/paths';
+import { NO_BACKEND, CONTACT_EMAIL } from '@/lib/runtime';
 import { useT } from '@/i18n';
 
 /* The consultation form at the foot of the page, modelled on the DWC site's
@@ -34,6 +35,25 @@ export default function Contact() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email.trim())) next.email = c.invalidEmail;
     setErrors(next);
     if (Object.keys(next).length) return;
+
+    /* Static hosts (onamae, MilesWeb) run no server to post to, so the
+       enquiry is handed to the visitor's own mail client with the fields
+       already filled in. It leaves their outbox rather than ours, which is
+       the honest limit of a site with no backend — but it does reach us,
+       where a form that always errored would not. */
+    if (NO_BACKEND) {
+      const subject = `${c.submit}: ${v.name.trim()}`;
+      const body = [
+        `${c.name}: ${v.name.trim()}`,
+        `${c.email}: ${v.email.trim()}`,
+        '',
+        v.message.trim(),
+      ].join('\n');
+      window.location.href =
+        `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      setState('sent');
+      return;
+    }
 
     setState('sending');
     try {

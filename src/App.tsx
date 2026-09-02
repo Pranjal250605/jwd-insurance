@@ -16,6 +16,7 @@ import Money from '@/components/Money';
 import Explore from '@/components/Explore';
 import ClosingCTA from '@/components/ClosingCTA';
 import Contact from '@/components/Contact';
+import { NO_BACKEND } from '@/lib/runtime';
 import Footer from '@/components/Footer';
 import AnimationsInit from '@/components/AnimationsInit';
 import Interactions from '@/components/Interactions';
@@ -136,7 +137,9 @@ export default function App() {
       <Footer />
       <AnimationsInit key={`anim-${route}`} />
       <Interactions key={`int-${route}`} />
-      <Advisor />
+      {/* Needs a server to hold the API key; a chat that cannot answer
+          is worse than none, so static builds omit it. */}
+      {!NO_BACKEND && <Advisor />}
       {!BARE && <TweaksPanel tweaks={tweaks} setTweak={setTweak} />}
     </div>
   );

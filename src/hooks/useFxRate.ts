@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { apiUrl } from '@/lib/paths';
+import { NO_BACKEND } from '@/lib/runtime';
 
 /* AED→JPY for the hero chip. The number ships with a fallback baked in so the
    chip is never blank and never shifts layout on arrival: the fallback renders
@@ -21,6 +22,10 @@ export function useFxRate(): FxRate {
   const [rate, setRate] = useState<FxRate>({ jpy: FALLBACK_AED_JPY, live: false, updated: null });
 
   useEffect(() => {
+    // Nothing to ask on a static host; the fallback rate already renders, so
+    // the request would only produce a 404 on every page load.
+    if (NO_BACKEND) return;
+
     const ac = new AbortController();
 
     fetch(apiUrl('/api/fx'), { signal: ac.signal })

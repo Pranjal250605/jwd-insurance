@@ -3,6 +3,11 @@ node_modules/
 *.pdf
 .next/
 dist/
+# Host builds are generated per deployment and need CONTACT_EMAIL passed in,
+# so they are not committed with a placeholder address baked into them:
+#   CONTACT_EMAIL=… npm run build:onamae
+build-onamae/
+build-milesweb/
 # wp-build/ is intentionally NOT ignored: it is the handover build for the
 # WordPress host and is committed so it can be downloaded from GitHub.
 *.tsbuildinfo

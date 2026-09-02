@@ -3,6 +3,7 @@ import { apiUrl } from '@/lib/paths';
 import { useT } from '@/i18n';
 import RegistrationForm, { type Registration } from '@/components/RegistrationForm';
 import { jaOutbound, JA_PROXY_NOTICE } from '@/lib/translate';
+import { NO_BACKEND } from '@/lib/runtime';
 
 /* 08.18 revision, page ②. The hero's "grow your assets with a top UAE firm"
    button lands here rather than going straight to the Equiti material: the
@@ -33,6 +34,10 @@ const NEXT_TARGET = 'https://www.equiti.com/sc-en/';
    comment explains why its log line is not yet a durable record. */
 function record(reg: Registration | null) {
   if (!reg) return;
+  /* A static build has nowhere to send this. The gate still works — the reader
+     registers, reads and ticks — but nothing is stored, so the record the
+     08.25 sheet asked for does not exist on those deployments. */
+  if (NO_BACKEND) return;
   try {
     const body = JSON.stringify(reg);
     // keepalive so the POST survives the tab handing off to the new window.

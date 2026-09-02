@@ -6,7 +6,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "build:wp": "tsc && vite build --outDir wp-build --emptyOutDir"
+    "build:wp": "node scripts/build-static.mjs wp",
+    "build:onamae": "node scripts/build-static.mjs onamae",
+    "build:milesweb": "node scripts/build-static.mjs milesweb"
   },
   "dependencies": {
     "gsap": "^3.12.5",
