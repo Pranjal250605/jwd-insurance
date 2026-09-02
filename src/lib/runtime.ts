@@ -18,7 +18,20 @@ export const NO_BACKEND = import.meta.env.VITE_NO_BACKEND === '1';
 
 /**
  * Where the consultation form sends enquiries when there is no backend.
- * Set VITE_CONTACT_EMAIL at build time; without it the form still validates
- * but has nowhere to go, so the build refuses to hide that (see Contact.tsx).
+ *
+ * Read from site-config.js first — a plain text file sitting next to
+ * index.html on the server, editable in cPanel without rebuilding anything.
+ * That matters because the people deploying this may not have Node installed,
+ * and an address baked into a bundle can only be changed by someone who does.
+ * VITE_CONTACT_EMAIL remains as a build-time default behind it.
  */
-export const CONTACT_EMAIL = (import.meta.env.VITE_CONTACT_EMAIL as string | undefined) ?? '';
+declare global {
+  interface Window {
+    __JWD_CONFIG__?: { contactEmail?: string };
+  }
+}
+
+export function contactEmail(): string {
+  const fromFile = typeof window !== 'undefined' ? window.__JWD_CONFIG__?.contactEmail?.trim() : '';
+  return fromFile || (import.meta.env.VITE_CONTACT_EMAIL as string | undefined) || '';
+}

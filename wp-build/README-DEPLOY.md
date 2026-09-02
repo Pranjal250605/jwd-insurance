@@ -1,89 +1,145 @@
-# JWD Investment — static build for the WordPress host
+# Deploying JWD Investment to shared hosting
 
-This folder is the whole site, pre-built. It is plain HTML/CSS/JS/images: no
-PHP, no database, no WordPress plugin. Upload it and it runs.
+Three deployments, one codebase:
 
-Built for **`https://groupjwd.com/investment-llc/`**.
+| Target | Host | Command |
+| --- | --- | --- |
+| Japan | onamae.com | `npm run build:onamae` |
+| India | MilesWeb | `npm run build:milesweb` |
+| WordPress | groupjwd.com/investment-llc/ | `npm run build:wp` |
+
+Each produces a folder that is the complete upload — `.htaccess` included.
+Upload the **contents** of that folder to the host's web root (`public_html/`
+on both onamae and MilesWeb).
+
+```
+npm run build:onamae
+#   → build-onamae/       the folder
+#   → build-onamae.zip    the same thing zipped, ready to upload
+```
+
+Each zip contains `index.html`, `.htaccess`, `site-config.js`, this guide, and
+every image, video and script the site needs — files at the top level, so
+extracting into `public_html/` puts everything where it belongs.
+
+## Set the contact address after uploading
+
+`site-config.js` sits next to `index.html` and is plain text:
+
+```js
+contactEmail: "",     ←  put the address between the quotes
+```
+
+Edit it in cPanel or the file manager, save, reload. **No rebuild, no Node, no
+developer needed.** Until it is filled in, the consultation form will report a
+failure rather than open an unaddressed mail window.
+
+There is nothing to install on the server. No PHP, no database, no Node.
+
+---
+
+## What works without a backend, and what does not
+
+onamae and MilesWeb serve files; they do not run this project's serverless
+functions. Four features depend on a server, so the static builds are made with
+`VITE_NO_BACKEND=1` and behave differently on purpose — degraded deliberately
+rather than failing in front of a visitor.
+
+| Feature | On Vercel | On onamae / MilesWeb |
+| --- | --- | --- |
+| Site, pages, photos, videos, navigation | works | **works, identically** |
+| Consultation form | emails the enquiry | **opens the visitor's mail client**, fields pre-filled |
+| Consent gate | records who consented | **gates and proceeds, but records nothing** |
+| AED/JPY rate | today's rate | **fixed fallback (¥43.5)** |
+| AI advisor | answers | **not shown at all** |
+
+Two of these deserve a decision rather than a shrug:
+
+**The consent record.** The 08.25 revision asked for this specifically — "it is
+necessary to have a system that can identify who has given consent". On a
+static host that does not happen. The reader still registers, reads the notice
+and ticks the box, but nothing is stored anywhere. If the record matters
+legally, the static build is not sufficient on its own.
+
+**The AI advisor** is omitted rather than shown broken. It needs a server to
+hold the API key; a chat button that errors on every message is worse than no
+chat button.
+
+Both come back the moment there is a backend — see the last section.
 
 ---
 
 ## Uploading
 
-Put the **contents of this folder** (not the folder itself) into
-`investment-llc/` at the web root, so that:
+### onamae.com (お名前.com レンタルサーバー)
 
-```
-public_html/investment-llc/index.html      ← this file must land here
-public_html/investment-llc/assets/…
-public_html/investment-llc/media/…
-```
+1. Control panel → **FTPアカウント** for the credentials, or use **ファイルマネージャー**.
+2. Upload the contents of `build-onamae/` into `public_html/`.
+3. Confirm `.htaccess` arrived. **FTP clients hide dotfiles by default** —
+   in FileZilla: Server → Force showing hidden files.
+4. Enable the free SSL certificate in the control panel, then uncomment the
+   HTTPS block at the bottom of `.htaccess`.
 
-Visiting `https://groupjwd.com/investment-llc/` then serves the site. Any
-FTP/SFTP client or cPanel's File Manager will do; there is nothing to install.
+### MilesWeb
 
-**If WordPress swallows the URL** (some setups route every path through
-`index.php`), add this to `.htaccess` *inside* `investment-llc/`:
+1. cPanel → **File Manager** → `public_html`.
+2. Upload the contents of `build-milesweb/`. For 33MB, zip it, upload the zip,
+   and use cPanel's **Extract** — far faster and less error-prone than FTP.
+3. In File Manager, **Settings → Show Hidden Files** to confirm `.htaccess`.
+4. cPanel → **SSL/TLS Status** → AutoSSL, then uncomment the HTTPS block.
 
-```apache
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /investment-llc/
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /investment-llc/index.html [L]
-</IfModule>
-```
+MilesWeb runs LiteSpeed, which reads `.htaccess` the same way Apache does.
 
 ---
 
-## The path is baked in
+## About that `.htaccess`
 
-Asset URLs are absolute — `/investment-llc/assets/…`. Moving this folder to a
-different path breaks every image and script. To serve it somewhere else,
-rebuild with the new path rather than moving files:
+It is not boilerplate; two of its directives were wrong on the first attempt
+and only surfaced under a real Apache:
+
+- **Compression** is guarded by `<IfModule mod_filter.c>` *and*
+  `mod_deflate.c`. `AddOutputFilterByType` comes from mod_filter, so guarding
+  on mod_deflate alone lets it through on a host without filter — and every
+  request 500s.
+- It lists **both** `text/javascript` and `application/javascript`. Apache 2.4
+  serves `.js` as the former; listing only the latter ships the bundle
+  uncompressed at 467KB instead of 150KB, silently.
+
+It also sets `AddDefaultCharset UTF-8`, which matters most on the Japanese
+host: shared hosting there has historically defaulted to Shift_JIS or EUC-JP,
+and under the wrong charset every kanji on the page becomes mojibake.
+
+No rewrite rules are needed for routing. The site routes on the URL hash
+(`#/consent`, `#/properties`), which never reaches the server.
+
+---
+
+## Checking a deployment
+
+1. Open the domain. Photos, videos and the logo should all appear; anything
+   missing usually means the folder went one level too deep.
+2. View source → the `<html lang>` and Japanese text should render correctly.
+   Mojibake means `.htaccess` did not upload.
+3. DevTools → Network → reload → the main `.js` should show **Content-Encoding:
+   gzip** and roughly 150KB, not 467KB.
+4. Submit the consultation form: the mail client should open with the fields
+   filled in.
+5. Console should be free of 404s for `/api/…` — the static build makes no
+   API calls at all.
+
+---
+
+## Turning the four features back on later
+
+They need a server; that is the whole of it. The Vercel deployment already is
+one and already holds the keys, so the shortest path is to point these builds
+at it instead of disabling them:
 
 ```bash
-VITE_BASE=/some-other-path/ \
-VITE_API_BASE=https://jwd-insurance.vercel.app \
-npm run build:wp
+VITE_BASE=/ VITE_API_BASE=https://jwd-insurance.vercel.app npm run build
 ```
 
-For the domain root, use `VITE_BASE=/`.
-
----
-
-## The forms need one setting on Vercel
-
-Four things need a server, which WordPress hosting does not run for them: the
-consultation form, the consent record, the AED/JPY rate, and the AI advisor.
-This build calls the Vercel deployment for those instead
-(`https://jwd-insurance.vercel.app/api/…`).
-
-The browser will refuse those calls until Vercel is told to accept them from
-this domain. **In the Vercel project → Settings → Environment Variables, add:**
-
-| Name | Value |
-| --- | --- |
-| `ALLOWED_ORIGINS` | `https://groupjwd.com,https://www.groupjwd.com` |
-
-Then **redeploy** — environment changes do not apply to existing deployments.
-
-Until that is set: the page and all its content work normally, but the
-consultation form shows its error message, consents are not recorded, the rate
-shows its fallback, and the advisor does not answer.
-
-Include every origin the site is reached on. `http://` and `https://`, and
-`www.` and bare, count as different origins.
-
----
-
-## Checking it worked
-
-1. Open `https://groupjwd.com/investment-llc/` — photos, videos and the logo
-   should all appear. Anything missing means the folder is at the wrong path.
-2. Scroll to the bottom, submit the consultation form. 「ありがとうございます」
-   means the Vercel connection is good; the red error line means
-   `ALLOWED_ORIGINS` is not set, or not set to this exact origin.
-3. The AED rate near the top of the hero should show today's number rather
-   than the ¥43.5 fallback.
+and set `ALLOWED_ORIGINS` in the Vercel project to the two new domains, so the
+browser is permitted to call across. That restores the consent record, the live
+rate, the advisor, and server-side email — with the static hosts still serving
+every byte of the actual site.

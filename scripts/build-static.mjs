@@ -11,20 +11,18 @@
  * point is that a deployment is reproducible from a name in a commit message.
  */
 import { execSync } from 'node:child_process';
-import { copyFileSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { copyFileSync, existsSync, readdirSync, statSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 /**
- * Recipient for the consultation form on builds with no backend.
+ * Optional build-time default for the consultation form's recipient.
  *
- * Deliberately not defaulted: there is no contact address anywhere in the site
- * copy, and a guessed one would send every enquiry into a black hole while
- * looking like it worked. Pass it explicitly:
- *
- *   CONTACT_EMAIL=someone@example.com node scripts/build-static.mjs onamae
+ * Normally left unset: the address lives in site-config.js inside the upload,
+ * so whoever deploys can set it in cPanel without Node or a rebuild. Passing
+ * CONTACT_EMAIL here only pre-fills that file.
  */
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL ?? '';
 
@@ -55,14 +53,7 @@ if (!cfg) {
   console.error(`Unknown target "${target ?? ''}". Available: ${Object.keys(TARGETS).join(', ')}`);
   process.exit(1);
 }
-if (cfg.env.VITE_NO_BACKEND === '1' && !CONTACT_EMAIL) {
-  console.error(
-    `\n"${target}" has no backend, so the consultation form hands off to a mail client,\n` +
-    'and it needs an address to hand off to. Re-run with:\n\n' +
-    `  CONTACT_EMAIL=someone@example.com node scripts/build-static.mjs ${target}\n`,
-  );
-  process.exit(1);
-}
+
 
 const dirSize = (p) =>
   readdirSync(p, { withFileTypes: true }).reduce((n, e) => {
@@ -85,7 +76,27 @@ if (!existsSync(htaccess)) {
 }
 copyFileSync(htaccess, join(dest, '.htaccess'));
 
+// The upload carries its own instructions. --emptyOutDir wipes the folder on
+// every build, so this is copied in rather than left to survive.
+copyFileSync(join(root, 'deploy', 'README.md'), join(dest, 'README-DEPLOY.md'));
+
+// Pre-fill site-config.js when an address was supplied.
+if (CONTACT_EMAIL) {
+  const cfgFile = join(dest, 'site-config.js');
+  writeFileSync(cfgFile, readFileSync(cfgFile, 'utf8').replace('contactEmail: ""', `contactEmail: "${CONTACT_EMAIL}"`));
+}
+
+/* Zip it. -r recurses, and the dotfile is added explicitly: zip skips names
+   beginning with a dot under some shells, and a .htaccess missing from the
+   archive is the single most common reason a deploy like this looks broken. */
+const zipName = `${cfg.outDir}.zip`;
+execSync(`rm -f ../${zipName} && zip -qr ../${zipName} . -x '.DS_Store' && zip -q ../${zipName} .htaccess`, {
+  cwd: dest, stdio: 'inherit', shell: '/bin/bash',
+});
+
+const zipPath = join(root, zipName);
 console.log(`\n  ${cfg.outDir}/  ${(dirSize(dest) / 1024 / 1024).toFixed(1)} MB  (.htaccess included)`);
+console.log(`  ${zipName}      ${(statSync(zipPath).size / 1024 / 1024).toFixed(1)} MB  ← upload this`);
 if (cfg.env.VITE_NO_BACKEND === '1') {
   console.log('  No backend: consultation form opens the visitor\'s mail client,');
   console.log('  AI advisor omitted, consent is gated but not recorded.\n');

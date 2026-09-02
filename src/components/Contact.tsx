@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { apiUrl } from '@/lib/paths';
-import { NO_BACKEND, CONTACT_EMAIL } from '@/lib/runtime';
+import { NO_BACKEND, contactEmail } from '@/lib/runtime';
 import { useT } from '@/i18n';
 
 /* The consultation form at the foot of the page, modelled on the DWC site's
@@ -42,6 +42,13 @@ export default function Contact() {
        the honest limit of a site with no backend — but it does reach us,
        where a form that always errored would not. */
     if (NO_BACKEND) {
+      const to = contactEmail();
+      if (!to) {
+        // site-config.js was never filled in. Say so rather than opening a
+        // blank mail window the visitor cannot address.
+        setState('failed');
+        return;
+      }
       const subject = `${c.submit}: ${v.name.trim()}`;
       const body = [
         `${c.name}: ${v.name.trim()}`,
@@ -50,7 +57,7 @@ export default function Contact() {
         v.message.trim(),
       ].join('\n');
       window.location.href =
-        `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       setState('sent');
       return;
     }

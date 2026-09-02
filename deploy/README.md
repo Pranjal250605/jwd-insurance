@@ -4,8 +4,8 @@ Three deployments, one codebase:
 
 | Target | Host | Command |
 | --- | --- | --- |
-| Japan | onamae.com | `CONTACT_EMAIL=… npm run build:onamae` |
-| India | MilesWeb | `CONTACT_EMAIL=… npm run build:milesweb` |
+| Japan | onamae.com | `npm run build:onamae` |
+| India | MilesWeb | `npm run build:milesweb` |
 | WordPress | groupjwd.com/investment-llc/ | `npm run build:wp` |
 
 Each produces a folder that is the complete upload — `.htaccess` included.
@@ -13,9 +13,26 @@ Upload the **contents** of that folder to the host's web root (`public_html/`
 on both onamae and MilesWeb).
 
 ```
-CONTACT_EMAIL=someone@jwd.example npm run build:onamae
-#   → build-onamae/   ready to upload
+npm run build:onamae
+#   → build-onamae/       the folder
+#   → build-onamae.zip    the same thing zipped, ready to upload
 ```
+
+Each zip contains `index.html`, `.htaccess`, `site-config.js`, this guide, and
+every image, video and script the site needs — files at the top level, so
+extracting into `public_html/` puts everything where it belongs.
+
+## Set the contact address after uploading
+
+`site-config.js` sits next to `index.html` and is plain text:
+
+```js
+contactEmail: "",     ←  put the address between the quotes
+```
+
+Edit it in cPanel or the file manager, save, reload. **No rebuild, no Node, no
+developer needed.** Until it is filled in, the consultation form will report a
+failure rather than open an unaddressed mail window.
 
 There is nothing to install on the server. No PHP, no database, no Node.
 

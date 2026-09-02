@@ -1,0 +1,114 @@
+# JWD Investment — static site configuration
+#
+# Works on Apache and on LiteSpeed (MilesWeb), which reads .htaccess the same
+# way. Upload it alongside index.html. Every block is guarded by <IfModule>, so
+# a host missing one of these modules ignores that block rather than returning
+# a 500.
+#
+# There are no rewrite rules for routing on purpose: the site routes on the URL
+# hash (#/consent, #/properties), which never reaches the server. Only the
+# WordPress case at the bottom needs a rewrite, and only to stop WordPress
+# stealing the path.
+
+# ── Character encoding ────────────────────────────────────────────────────
+# Japanese shared hosting has historically defaulted to Shift_JIS or EUC-JP.
+# The pages are UTF-8; served under the wrong charset every kanji becomes
+# mojibake. The meta tag in index.html usually wins, but a Content-Type header
+# from the server overrides it, so set it here too.
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+  AddCharset UTF-8 .html .css .js .json .svg .webmanifest
+</IfModule>
+
+# ── MIME types ────────────────────────────────────────────────────────────
+# Shared hosts often lack entries for these, and a video served as
+# text/plain will not play.
+<IfModule mod_mime.c>
+  AddType video/mp4                    .mp4
+  AddType image/svg+xml                .svg
+  AddType image/webp                   .webp
+  AddType application/json             .json
+  AddType application/manifest+json    .webmanifest
+  AddType font/woff2                   .woff2
+</IfModule>
+
+# ── Compression ───────────────────────────────────────────────────────────
+# The JS bundle is ~450KB raw and ~150KB gzipped. Without this every visitor
+# downloads the full 450KB. Images and video are already compressed and are
+# deliberately excluded — recompressing them wastes CPU for nothing.
+# AddOutputFilterByType comes from mod_filter, not mod_deflate, so it needs
+# both guards: on a host with deflate but no filter, a lone mod_deflate guard
+# lets the directive through and every request 500s.
+<IfModule mod_filter.c>
+  <IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+    # Both spellings: Apache 2.4 serves .js as text/javascript, while older
+    # configs use application/javascript. Listing only one silently ships the
+    # bundle uncompressed — 467KB instead of 150KB.
+    AddOutputFilterByType DEFLATE text/javascript application/javascript
+    AddOutputFilterByType DEFLATE application/json application/xml image/svg+xml
+  </IfModule>
+</IfModule>
+
+# ── Caching ───────────────────────────────────────────────────────────────
+# Filenames under /assets/ carry a content hash, so a change produces a new
+# name and the old cache entry is never consulted: they can be cached hard.
+# index.html must NOT be, or visitors keep seeing the previous deployment
+# after an update.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                   "access plus 1 year"
+  ExpiresByType text/javascript            "access plus 1 year"
+  ExpiresByType application/javascript     "access plus 1 year"
+  ExpiresByType image/jpeg                 "access plus 1 month"
+  ExpiresByType image/png                  "access plus 1 month"
+  ExpiresByType image/webp                 "access plus 1 month"
+  ExpiresByType image/svg+xml              "access plus 1 month"
+  ExpiresByType video/mp4                  "access plus 1 month"
+  ExpiresByType font/woff2                 "access plus 1 year"
+  ExpiresByType text/html                  "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # ── Security headers ────────────────────────────────────────────────────
+  # Modest and safe for a marketing site. No Content-Security-Policy here:
+  # the page loads Google Fonts and Unsplash images, and a CSP written blind
+  # would break them — it is worth adding once, deliberately, with those
+  # origins listed.
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header always unset X-Powered-By
+</IfModule>
+
+# ── Directory listings ────────────────────────────────────────────────────
+# Without this, /media/ and /strip/ are browsable index pages.
+Options -Indexes
+
+# ── Force HTTPS ───────────────────────────────────────────────────────────
+# Both hosts issue certificates; uncomment once the certificate is live.
+# Enabling it before the certificate exists locks visitors out of the site.
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>
+
+# ── Only if this sits inside a WordPress install ──────────────────────────
+# WordPress routes unknown paths through index.php, which can swallow this
+# folder. Uncomment and set RewriteBase to the folder name.
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteBase /investment-llc/
+#   RewriteRule ^index\.html$ - [L]
+#   RewriteCond %{REQUEST_FILENAME} !-f
+#   RewriteCond %{REQUEST_FILENAME} !-d
+#   RewriteRule . /investment-llc/index.html [L]
+# </IfModule>
