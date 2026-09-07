@@ -157,7 +157,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                 the headline and the claims in navy and restores the small label
                 over the card column. */}
             <div className="mt-7 max-w-2xl">
-              <h2 className="whitespace-pre-line text-[31px] sm:text-[44px] font-bold leading-[1.2] tracking-[-0.01em] mb-5" style={{ color: 'var(--jwd-navy)' }}>
+              <h2 className="whitespace-pre-line text-[28px] sm:text-[39.5px] font-bold leading-[1.2] tracking-[-0.01em] mb-5" style={{ color: 'var(--jwd-navy)' }}>
                 {t.hero.platformsHeading}
               </h2>
               <div className="grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-4">
@@ -189,7 +189,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                           src={asset(t.hero.platformNotes[i].brand === 'equiti' ? '/brand/equiti.png' : '/brand/aix.png')}
                           alt={t.hero.platformNotes[i].brand}
                           className={`ml-1.5 inline-block w-auto ${
-                            t.hero.platformNotes[i].brand === 'equiti' ? 'h-[51px]' : 'h-[32px]'
+                            t.hero.platformNotes[i].brand === 'equiti' ? 'h-[46px]' : 'h-[32px]'
                           }`}
                           style={{ verticalAlign: '-0.18em' }}
                         />
@@ -249,7 +249,7 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
           </div>
         </div>
 
-        <div data-anim="hero-stats" className="mt-12 pt-10 border-t border-slate-100 grid grid-cols-2 gap-x-6 gap-y-9 lg:flex lg:justify-between lg:gap-x-6">
+        <div data-anim="hero-stats" className="mt-12 pt-10 border-t border-slate-100 grid grid-cols-2 gap-x-3 sm:gap-x-6 gap-y-9 lg:flex lg:justify-between lg:gap-x-6">
           {t.hero.stats.map(([a, b]) => {
             // '120億＋' → figure '120', unit '億＋'. The sheet steps the unit
             // down to roughly 40% of the figure rather than setting the whole
@@ -261,10 +261,10 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                     Interactions.tsx writes textContent, which would wipe out
                     any child spans on the element it animates. */}
                 <div className="font-serif font-medium tracking-tight leading-none whitespace-nowrap" style={{ color: 'var(--accent-deep)' }}>
-                  <span data-count={figure} className="text-[50px] sm:text-[64px]">{figure}</span>
-                  <span className="text-[21px] sm:text-[27px]">{unit}</span>
+                  <span data-count={figure} className="text-[38px] sm:text-[51px]">{figure}</span>
+                  <span className="text-[17px] sm:text-[21.5px]">{unit}</span>
                 </div>
-                <div className="text-[19.5px] text-slate-500 leading-tight mt-3 lg:whitespace-nowrap">{b}</div>
+                <div className="text-[15.5px] text-slate-500 leading-tight mt-3 lg:whitespace-nowrap">{b}</div>
               </div>
             );
           })}
