@@ -15,6 +15,7 @@ import Products from '@/components/Products';
 import Money from '@/components/Money';
 import Explore from '@/components/Explore';
 import ClosingCTA from '@/components/ClosingCTA';
+import Instagram from '@/components/Instagram';
 import Contact from '@/components/Contact';
 import { NO_BACKEND } from '@/lib/runtime';
 import Footer from '@/components/Footer';
@@ -131,6 +132,7 @@ export default function App() {
           <Money />
           <Explore />
           <ClosingCTA />
+          <Instagram />
           <Contact />
         </>
       )}
