@@ -30,14 +30,14 @@ const TARGETS = {
   // Japan — onamae.com. Static, no backend.
   onamae: {
     outDir: 'build-onamae',
-    env: { VITE_BASE: '/', VITE_NO_BACKEND: '1', VITE_CONTACT_EMAIL: CONTACT_EMAIL },
-    note: 'onamae.com (Japan) — domain root, no backend',
+    env: { VITE_BASE: './', VITE_NO_BACKEND: '1', VITE_CONTACT_EMAIL: CONTACT_EMAIL },
+    note: 'onamae.com (Japan) — path-independent, no backend',
   },
   // India — MilesWeb. Static, no backend.
   milesweb: {
     outDir: 'build-milesweb',
-    env: { VITE_BASE: '/', VITE_NO_BACKEND: '1', VITE_CONTACT_EMAIL: CONTACT_EMAIL },
-    note: 'MilesWeb (India) — domain root, no backend',
+    env: { VITE_BASE: './', VITE_NO_BACKEND: '1', VITE_CONTACT_EMAIL: CONTACT_EMAIL },
+    note: 'MilesWeb (India) — path-independent, no backend',
   },
   // The WordPress server, in a subdirectory, calling Vercel for the forms.
   wp: {

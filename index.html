@@ -17,6 +17,35 @@
     <div id="root"></div>
     <!-- Editable on the server without a rebuild; must load before the app. -->
     <script src="./site-config.js"></script>
+
+    <!--
+      If the app never mounts, say why instead of showing a blank white page.
+      The usual cause on shared hosting is the JS bundle 404ing because the
+      upload is not where the paths expect, and a blank page gives whoever is
+      deploying nothing to go on.
+    -->
+    <script>
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          var root = document.getElementById('root');
+          if (root && root.children.length > 0) return;
+          var s = document.querySelector('script[type=module]');
+          var src = s ? s.getAttribute('src') : '(none)';
+          root.innerHTML =
+            '<div style="font-family:system-ui,sans-serif;max-width:640px;margin:12vh auto;padding:0 24px;line-height:1.7;color:#0B1830">' +
+            '<h1 style="font-size:20px;margin:0 0 12px">The page could not start</h1>' +
+            '<p style="color:#475569;margin:0 0 16px">The site files loaded, but the application script did not run. ' +
+            'This almost always means the files are not in the folder the server is serving.</p>' +
+            '<p style="color:#475569;margin:0 0 8px"><strong>Expected script:</strong><br>' +
+            '<code style="font-size:13px;word-break:break-all">' + src + '</code></p>' +
+            '<p style="color:#475569;margin:0 0 8px"><strong>Page address:</strong><br>' +
+            '<code style="font-size:13px;word-break:break-all">' + location.href + '</code></p>' +
+            '<p style="color:#475569;margin:16px 0 0">Check that <code>index.html</code>, <code>assets/</code> and ' +
+            '<code>site-config.js</code> all sit in the same folder, and open the browser console for the exact error.</p>' +
+            '</div>';
+        }, 4000);
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -24,6 +24,11 @@ AddDefaultCharset UTF-8
 # Shared hosts often lack entries for these, and a video served as
 # text/plain will not play.
 <IfModule mod_mime.c>
+  # A <script type="module"> served as text/plain is refused outright by the
+  # browser — another way this renders as a blank page. Most hosts get .js
+  # right; stating it costs nothing and removes the doubt.
+  AddType text/javascript              .js .mjs
+  AddType text/css                     .css
   AddType video/mp4                    .mp4
   AddType image/svg+xml                .svg
   AddType image/webp                   .webp

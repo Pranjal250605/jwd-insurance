@@ -114,6 +114,27 @@ No rewrite rules are needed for routing. The site routes on the URL hash
 
 ---
 
+## If the page comes up blank
+
+The onamae and MilesWeb builds use **relative** asset paths (`./assets/…`), so
+they run from the domain root or from any subfolder without being rebuilt. An
+earlier build used absolute paths (`/assets/…`) and rendered a blank page
+whenever the host served it from anywhere but the exact root — that is fixed.
+
+If a blank page ever appears again it will now explain itself instead: the page
+prints which script it expected, and the address it was loaded from. The usual
+causes, in order:
+
+1. `index.html`, `assets/` and `site-config.js` are not all in the **same
+   folder**. Extracting the zip in the wrong place splits them.
+2. `.htaccess` did not upload. FTP clients hide dotfiles by default.
+3. The host serves `.js` as the wrong type, which makes the browser refuse the
+   module. `.htaccess` now declares it explicitly.
+
+The browser console gives the exact failing URL in every case.
+
+---
+
 ## Checking a deployment
 
 1. Open the domain. Photos, videos and the logo should all appear; anything

@@ -11,7 +11,13 @@
 /** BASE_URL is '/' by default and always ends in a slash. */
 export function asset(path: string): string {
   const base = import.meta.env.BASE_URL || '/';
-  return `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+  const clean = path.replace(/^\//, '');
+  // BASE_URL is './' on the static-host builds, so URLs come out relative to
+  // index.html and the upload works at the domain root or in any subfolder.
+  // Absolute '/assets/…' is what made those builds render a blank page when
+  // the host did not serve them from the exact root.
+  if (base === './' || base === '') return `./${clean}`;
+  return `${base.replace(/\/$/, '')}/${clean}`;
 }
 
 /**
