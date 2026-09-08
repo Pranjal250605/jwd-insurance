@@ -23,7 +23,7 @@ export default function Ihg() {
             {c.eyebrow}
           </div>
 
-          <h2 className="font-serif fluid-36-44 leading-[1.3] font-medium text-slate-900 tracking-[-0.015em] mb-2">
+          <h2 className="whitespace-pre-line font-serif fluid-36-44 leading-[1.3] font-medium text-slate-900 tracking-[-0.015em] mb-2">
             {c.title}
           </h2>
           <p className="font-serif text-[24px] sm:text-[30px] leading-[1.35] font-medium mb-8" style={{ color: 'var(--accent-deep)' }}>

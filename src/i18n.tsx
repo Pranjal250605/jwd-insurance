@@ -377,7 +377,7 @@ export const STRINGS = {
           links: [
             { label: 'Official site', url: 'https://theheartofeurope.emirates.expert/' },
             { label: 'The World Islands', url: 'https://theworld-dubai.com/' },
-            { label: 'Our exclusive listings', url: '' },
+            { label: 'Our exclusive listings', url: 'https://www.jwd-anawak.com/' },
           ],
         },
       ],
@@ -506,7 +506,7 @@ export const STRINGS = {
       ],
       platformsEyebrow: 'INVESTMENT PLATFORMS',
       platformsSub: '投資プラットフォーム',
-      platformsTitle: 'Execute through our partner platforms',
+      platformsTitle: 'Partners you can trust',
       platformsNote: 'Links open an external site. Always review the offering documents before investing.',
       platformsVisit: 'Visit official site',
       platforms: [
@@ -961,7 +961,7 @@ export const STRINGS = {
     },
     ihg: {
       eyebrow: 'IHG ホテルズ＆リゾーツ',
-      title: '世界が認めるIHGグループの信頼を、あなたの資産に',
+      title: '世界が認めるIHGグループの信頼を、\nあなたの資産に',
       subtitle: '保証付きホテルという確かな選択',
       paragraphs: [
         '世界最大級のホテルネットワークを展開する、IHG（インターコンチネンタル・ホテルズ・グループ）。世界中の旅人から長年にわたり信頼と支持を集める、その確かなブランド力は、ホテルとしての品質だけでなく、所有する資産としての価値にも大きな魅力をもたらします。',
@@ -997,7 +997,7 @@ export const STRINGS = {
           links: [
             { label: '公式サイト', url: 'https://theheartofeurope.emirates.expert/' },
             { label: 'ザ・ワールド諸島', url: 'https://theworld-dubai.com/' },
-            { label: '弊社独占販売物件', url: '' },
+            { label: '弊社独占販売物件', url: 'https://www.jwd-anawak.com/' },
           ],
         },
       ],
@@ -1126,7 +1126,7 @@ export const STRINGS = {
       ],
       platformsEyebrow: '投資プラットフォーム',
       platformsSub: '投資プラットフォーム',
-      platformsTitle: '信頼のパートナー・プラットフォーム',
+      platformsTitle: '信頼のパートナー',
       platformsNote: 'リンクは外部サイトに移動します。投資判断は目論見書等をご確認ください。',
       platformsVisit: '公式サイトへ',
       platforms: [

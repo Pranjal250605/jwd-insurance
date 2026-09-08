@@ -39,11 +39,14 @@ export default function RealEstate() {
                 <h3 className="font-serif text-[28px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{r.name}</h3>
                 <p className="text-[18.5px] leading-[1.6] text-slate-600 mb-7">{r.desc}</p>
                 <div className="flex items-center gap-3 flex-wrap">
-                  {r.links.map((l) => {
-                    /* 08.25 item 3: 弊社独占販売物件 is specified, but its ANAWAK
-                       page has no address yet. An empty href would navigate to
-                       the current page, so the button renders inert until the
-                       url is filled in — which is an i18n edit, not a code one. */
+                  {r.links.map((l: { label: string; url: string }) => {
+                    /* Every link has an address now — the ANAWAK page arrived
+                       with the 09.08 sheet. The inert branch stays for the next
+                       time a button is specified before its URL exists: an
+                       empty href would navigate to the current page instead,
+                       which looks like a broken link rather than a pending one.
+                       The parameter is typed rather than inferred so a fully
+                       populated table does not narrow that branch to `never`. */
                     const cls = 'inline-flex items-center gap-1.5 px-5 h-11 rounded-full border-2 text-[16.5px] font-bold transition-all';
                     const style = { color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' };
                     if (!l.url) {
