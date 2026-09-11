@@ -111,10 +111,12 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                 {t.hero.tagline}
               </p>
             )}
-            <p className="whitespace-pre-line text-[25px] leading-[1.6] text-slate-600 max-w-2xl mb-3.5">
+            {/* 09.10 sheet ①: this paragraph and the ※ line below it drop to
+                80% — 25px→20px and 21.5px→17px. */}
+            <p className="whitespace-pre-line text-[20px] leading-[1.6] text-slate-600 max-w-2xl mb-3.5">
               {t.hero.body}
             </p>
-            <p className="text-[21.5px] leading-[1.65] text-slate-500 max-w-2xl mb-7">
+            <p className="text-[17px] leading-[1.65] text-slate-500 max-w-2xl mb-7">
               {t.hero.support}
             </p>
             <div className="flex items-center gap-4 flex-wrap">
@@ -254,7 +256,15 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
             // '120億＋' → figure '120', unit '億＋'. The sheet steps the unit
             // down to roughly 40% of the figure rather than setting the whole
             // value at one size.
-            const [, figure, unit] = /^([\d０-９〜~–.,]*)(.*)$/.exec(a)!;
+            // 09.10 sheet ②: '¥12B+' rendered entirely at the small unit size
+            // while its neighbours showed a large figure — the old pattern
+            // required the value to START with a digit, so the ¥ pushed the
+            // whole string into `unit`. A leading currency symbol now travels
+            // with the figure ('¥12' large, 'B+' small), which is also the
+            // shape the count-up in Interactions.tsx already parses.
+            const m = /^([^\dA-Za-z]*[\d０-９〜~–.,]+)(.*)$/.exec(a);
+            const figure = m ? m[1] : a;
+            const unit = m ? m[2] : '';
             return (
               <div key={b}>
                 {/* data-count sits on the figure alone: the count-up in

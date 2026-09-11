@@ -31,13 +31,14 @@ export default function Instagram() {
           <p className="text-[19px] leading-[1.75] text-slate-600">{c.body}</p>
         </div>
 
-        {/* Two rows of three at desktop, matching the sheet; two across on a
-            phone, where three portrait tiles would each be thumbnail-sized. */}
-        {/* Capped width on purpose: these are 9:16 story frames, and at a full
-            1280px the three columns render nearly 1000px tall and swamp the
-            page. ~900px keeps each tile about 500px, the size the sheet
-            draws them. */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-[900px]">
+        {/* Two rows of four at desktop, matching the 09.10 sheet, which adds an
+            eighth tile; two across on a phone, where four portrait tiles would
+            each be thumbnail-sized, and three at tablet width.
+            Capped width on purpose: these are 9:16 story frames, and uncapped
+            at 1280px they render nearly 1000px tall and swamp the page. The cap
+            rises with the extra column so each tile stays about the size the
+            sheet draws it. */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 max-w-[1160px]">
           {c.items.map((item) => (
             <a
               key={item.id + item.url}

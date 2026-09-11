@@ -56,13 +56,15 @@ export default function ClosingCTA() {
         <div className="text-[11.5px] font-semibold tracking-[0.28em] mb-2 text-slate-400 text-center">{t.closing.regulatedTitle}</div>
         <div className="font-jp text-[13px] tracking-[0.16em] text-slate-400 mb-10 text-center">{t.closing.regulatedSub}</div>
         <div className="flex items-center justify-center flex-wrap gap-3 lg:gap-4">
-          {/* The Instagram chip is the entry point to the gallery below it. */}
+          {/* The Instagram chip is the entry point to the gallery below it.
+              09.10 sheet ⑤: enlarged to 150% — it was the smallest thing on
+              the page despite being the entry point. */}
           {t.closing.regulators.map((r) => (
-            <a key={r.code} href="#instagram" data-spotlight className="spotlight px-6 py-4 bg-white rounded-md border border-slate-200 flex items-center gap-4 hover:border-slate-300 hover:-translate-y-0.5 transition-all">
-              <div className="font-serif text-[19.5px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{r.code}</div>
-              <div className="border-l border-slate-200 pl-4">
-                <div className="text-[13px] font-medium text-slate-700 leading-tight">{r.name}</div>
-                <div className="text-[11px] text-slate-500 mt-0.5">{r.region}</div>
+            <a key={r.code} href="#instagram" data-spotlight className="spotlight px-9 py-6 bg-white rounded-md border border-slate-200 flex items-center gap-6 hover:border-slate-300 hover:-translate-y-0.5 transition-all">
+              <div className="font-serif text-[29px] font-semibold tracking-tight" style={{ color: 'var(--accent-deep)' }}>{r.code}</div>
+              <div className="border-l border-slate-200 pl-6">
+                <div className="text-[19.5px] font-medium text-slate-700 leading-tight">{r.name}</div>
+                <div className="text-[16.5px] text-slate-500 mt-0.5">{r.region}</div>
               </div>
             </a>
           ))}
