@@ -111,9 +111,11 @@ export default function Hero({ eyebrow, headline }: HeroProps) {
                 {t.hero.tagline}
               </p>
             )}
-            {/* 09.10 sheet ①: this paragraph and the ※ line below it drop to
-                80% — 25px→20px and 21.5px→17px. */}
-            <p className="whitespace-pre-line text-[20px] leading-[1.6] text-slate-600 max-w-2xl mb-3.5">
+            {/* 09.10 sheet ①: this paragraph and the ※ line below it dropped to
+                80% — 25px→20px and 21.5px→17px. The 09.17 note then asks for
+                this paragraph to match the ※ line exactly, so both are 17px
+                with the same leading; only the ink still separates them. */}
+            <p className="whitespace-pre-line text-[17px] leading-[1.65] text-slate-600 max-w-2xl mb-3.5">
               {t.hero.body}
             </p>
             <p className="text-[17px] leading-[1.65] text-slate-500 max-w-2xl mb-7">
