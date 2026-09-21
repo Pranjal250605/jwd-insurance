@@ -159,6 +159,7 @@ export default function Contact() {
                 </button>
                 {state === 'failed' && <p className="text-[16px] text-rose-500">{c.failed}</p>}
                 <p className="text-[15.5px] text-slate-500 text-center">{c.note}</p>
+                <p className="mt-2 text-[13.5px] leading-relaxed text-slate-500 text-center">{c.privacy}</p>
               </div>
             </form>
           )}

@@ -76,13 +76,6 @@ export default function Nav() {
     <div className="w-full bg-white sticky top-0 z-40 border-b border-slate-100">
       <div className="border-b border-slate-100">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-9 flex items-center justify-end gap-6 text-[13px] text-slate-500">
-          <span className="hidden md:inline tracking-[0.18em] text-slate-400">{t.nav.regulated}</span>
-          <button className="hidden sm:flex items-center gap-1.5 hover:text-slate-900">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-              <circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-7 8-7s8 3 8 7" />
-            </svg>
-            {t.nav.portal}
-          </button>
           <button
             onClick={() => setLang(lang === 'en' ? 'ja' : 'en')}
             aria-label={lang === 'en' ? '日本語に切り替え' : 'Switch to English'}
@@ -285,13 +278,6 @@ export default function Nav() {
                   </a>
                 ))}
               </div>
-
-              <a href="#" onClick={closeMobile} className="flex items-center gap-2 min-h-[52px] mt-6 text-[17px] text-slate-600">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                  <circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-7 8-7s8 3 8 7" />
-                </svg>
-                {t.nav.portal}
-              </a>
             </div>
           </div>
 
