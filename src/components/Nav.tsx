@@ -25,7 +25,7 @@ const MENU_LINKS: Record<string, string[]> = {
     '#chairman',       // Tomo's Stories
   ],
   About: [
-    '#message',        // Company Overview
+    '#company-profile', // Company Overview (09.30 sheet: the 会社概要 card)
     '#message',        // Mission
     '#message',        // Vision
     '#reach',          // Leadership
@@ -51,11 +51,32 @@ export default function Nav() {
   // Japanese labels run far wider than the English ones this row was sized
   // for (コンサルティング vs "Consulting"), which pushed the row past the
   // 1280px container and wrapped every item onto a second line. JA gets
-  // tighter padding/type; nothing wraps in either language.
+  // tighter padding/type; nothing wraps in either language. The 09.30
+  // 会社概要 item took the last of the slack, so EN is px-3 / 18px throughout.
   const isJa = lang === 'ja';
   const navItem = `flex items-center h-10 whitespace-nowrap font-medium text-slate-700 hover:text-slate-900 ${
-    isJa ? 'px-2 xl:px-3 text-[16px] xl:text-[17px]' : 'px-3 xl:px-4 text-[18.5px]'
+    isJa ? 'px-2 xl:px-3 text-[16px] xl:text-[17px]' : 'px-3 text-[18px]'
   }`;
+
+  // Equiti / AIX pills. `compact` is the utility-bar size used beside the
+  // language switch once the full desktop nav is showing.
+  const platformPills = (compact: boolean) =>
+    t.products.platforms.map((p) => (
+      <a
+        key={p.name}
+        href={jaOutbound(p.url, lang === 'ja')}
+        title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`flex items-center gap-1.5 rounded-full border font-bold transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_25px_-10px_rgba(10,186,181,0.5)] ${
+          compact ? 'px-3 h-[26px] text-[12.5px]' : 'px-4 h-11 text-[16px]'
+        }`}
+        style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
+      >
+        {p.name === 'AIX Investment' ? 'AIX' : p.name}
+        <svg width={compact ? 10 : 12} height={compact ? 10 : 12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M9 7h8v8" /></svg>
+      </a>
+    ));
 
   // Close the drawer on Escape and on route change (hash nav).
   useEffect(() => {
@@ -76,6 +97,9 @@ export default function Nav() {
     <div className="w-full bg-white sticky top-0 z-40 border-b border-slate-100">
       <div className="border-b border-slate-100">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-9 flex items-center justify-end gap-6 text-[13px] text-slate-500">
+          {/* With the full nav showing, the logo + seven items + CTA use the
+              whole 1216px row, so the pills sit up here from 1400px. */}
+          <div className="hidden min-[1400px]:flex items-center gap-2">{platformPills(true)}</div>
           <button
             onClick={() => setLang(lang === 'en' ? 'ja' : 'en')}
             aria-label={lang === 'en' ? '日本語に切り替え' : 'Switch to English'}
@@ -101,6 +125,8 @@ export default function Nav() {
             overflowing the header by a few px — this closes that gap.
             See `navItem` above for the per-language sizing. */}
         <nav className="hidden min-[1400px]:flex items-center gap-1" onMouseLeave={() => setOpenMenu(null)}>
+          {/* 09.30 sheet: 会社概要 leads the row, before Solutions. */}
+          <a href="#company-profile" className={`${navItem} flex-shrink-0`}>{t.nav.companyProfile}</a>
           {Object.entries(t.nav.menus).map(([key, menu]) => (
             <div key={key} className="relative flex-shrink-0" onMouseEnter={() => setOpenMenu(key)}>
               <button className={`${navItem} gap-1`}>
@@ -144,27 +170,11 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          {/* The six nav labels fill the row at lg in both languages, so the
-              Equiti/AIX pills step aside for that band only — they return at
-              xl, and below lg the desktop nav is hidden so there is room
-              anyway. Previously the row still overflowed here and the logo
-              (the one shrinkable child) was silently squashed to 0px wide.
-              Both platforms are still linked from the hero and footer. */}
-          <div className="hidden md:flex xl:flex items-center gap-2 flex-shrink-0">
-            {t.products.platforms.map((p) => (
-              <a
-                key={p.name}
-                href={jaOutbound(p.url, lang === 'ja')}
-                title={lang === 'ja' ? JA_PROXY_NOTICE : undefined}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-4 h-11 rounded-full border text-[16px] font-bold transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_25px_-10px_rgba(10,186,181,0.5)]"
-                style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
-              >
-                {p.name === 'AIX Investment' ? 'AIX' : p.name}
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M9 7h8v8" /></svg>
-              </a>
-            ))}
+          {/* Below 1400px the desktop nav is hidden behind the hamburger, so
+              there is room for the pills here; from 1400px they move to the
+              utility bar above (see there). */}
+          <div className="hidden md:flex min-[1400px]:hidden items-center gap-2 flex-shrink-0">
+            {platformPills(false)}
           </div>
           <a
             href="#contact"
@@ -211,6 +221,9 @@ export default function Nav() {
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4">
             <div className="flex flex-col">
+              <a href="#company-profile" onClick={closeMobile} className="min-h-[56px] flex items-center text-[20.5px] font-medium text-slate-900 border-b border-slate-100">
+                {t.nav.companyProfile}
+              </a>
               {Object.entries(t.nav.menus).map(([key, menu]) => {
                 const isOpen = mobileAccordion === key;
                 return (

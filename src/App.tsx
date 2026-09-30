@@ -4,6 +4,7 @@ import Hero from '@/components/Hero';
 import PhotoStrip from '@/components/PhotoStrip';
 import { VideoGallery } from '@/components/VideoTiles';
 import Message from '@/components/Message';
+import CompanyProfile from '@/components/CompanyProfile';
 import Markets from '@/components/Markets';
 import RealEstate from '@/components/RealEstate';
 import PropertiesPage from '@/components/PropertiesPage';
@@ -124,6 +125,7 @@ export default function App() {
           <VideoGallery />
           <PhotoStrip />
           <Message />
+          <CompanyProfile />
           <Markets />
           <RealEstate />
           <Ihg />

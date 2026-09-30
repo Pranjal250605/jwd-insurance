@@ -222,6 +222,7 @@ export const STRINGS = {
       note: 'Links open an external site. CFD trading carries a significant risk of loss. Always review the offering documents before investing.',
     },
     nav: {
+      companyProfile: 'Company Profile',
       contact: 'Contact',
       portfolio: 'Portfolio',
       cta: 'BOOK A CONSULTATION',
@@ -318,6 +319,21 @@ export const STRINGS = {
       company: 'JWD Investment',
       signName: 'Hamit Gurbuz',
       signRole: 'President & CEO',
+    },
+    companyProfile: {
+      eyebrow: 'COMPANY PROFILE',
+      sub: '会社概要',
+      company: 'JWD INVESTMENT L.L.C.',
+      rows: [
+        { label: 'Jurisdiction', value: 'Dubai, United Arab Emirates' },
+        { label: 'Licensing Authority', value: 'Dubai Department of Economy and Tourism (DET)' },
+        { label: 'Established', value: 'September 2022' },
+        { label: 'Business', value: 'Investment / asset management-related activities' },
+        { label: 'Investments stated', value: 'Listed & unlisted equities, bonds, corporate investments, asset-backed investments' },
+        { label: 'Capital', value: 'USD950,000. (JPY 150,000,000)' },
+        { label: 'Representative', value: 'Hamit Gurbuz' },
+        { label: 'Registered address', value: 'Building Name/No MOHAMMAD ABDULLA\nMAHMOOD AZAHED\nLand Area Hor Al Anz\nPlot Number 739-0\nLand DM No (Affection Plan) 127-345' },
+      ],
     },
     markets: {
       eyebrow: 'TRADE WITH EQUITI',
@@ -859,6 +875,7 @@ export const STRINGS = {
       note: 'リンクは外部サイトに移動します。CFD取引には重大な損失リスクがあります。お申し込み前に必ず商品説明書をご確認ください。',
     },
     nav: {
+      companyProfile: '会社概要',
       contact: 'お問い合わせ',
       portfolio: '保有物件',
       cta: 'ご相談のご予約',
@@ -955,6 +972,23 @@ export const STRINGS = {
       company: 'JWD Investment',
       signName: 'Hamit Gurbuz（ハミット・ギュルビュズ）',
       signRole: '代表取締役社長（CEO）',
+    },
+    companyProfile: {
+      eyebrow: '会社概要',
+      sub: 'COMPANY PROFILE',
+      company: 'JWD INVESTMENT L.L.C.',
+      rows: [
+        { label: '所在地', value: 'アラブ首長国連邦 ドバイ' },
+        { label: '許認可機関', value: 'ドバイ経済観光局（DET）' },
+        { label: '設立', value: '2022年9月' },
+        { label: '事業内容', value: '投資・資産運用関連業務' },
+        { label: '投資対象', value: '上場・非上場株式、債券、企業投資、資産担保型投資' },
+        { label: '資本金', value: '950,000米ドル（1億5,000万円）' },
+        { label: '代表者', value: 'Hamit Gurbuz（ハミット・ギュルビュズ）' },
+        // The address stays in English: it is the registered form, and a
+        // transliteration would not match the licence.
+        { label: '登記住所', value: 'Building Name/No MOHAMMAD ABDULLA\nMAHMOOD AZAHED\nLand Area Hor Al Anz\nPlot Number 739-0\nLand DM No (Affection Plan) 127-345' },
+      ],
     },
     markets: {
       eyebrow: 'EQUITIで取引できるマーケット',
