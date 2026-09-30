@@ -99,7 +99,11 @@ Options -Indexes
 
 # ── Force HTTPS ───────────────────────────────────────────────────────────
 # Both hosts issue certificates; uncomment once the certificate is live.
-# Enabling it before the certificate exists locks visitors out of the site.
+# Enabling it before the certificate exists locks visitors out of the site —
+# exactly what took the Family Office site offline on 2026-09-09.
+# Verify first; this must print jwdinvestment.com, not *.onamaeweb.jp:
+#   echo | openssl s_client -connect jwdinvestment.com:443 \
+#     -servername jwdinvestment.com 2>/dev/null | openssl x509 -noout -subject
 # <IfModule mod_rewrite.c>
 #   RewriteEngine On
 #   RewriteCond %{HTTPS} off

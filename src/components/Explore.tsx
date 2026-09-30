@@ -18,7 +18,7 @@ const accentMark = (a: string) => {
 };
 
 /* Same destinations as the matching pillars in Promo. */
-const FEATURE_LINKS = ['#chairman', '#contact', 'https://new-jwd-office.vercel.app/'];
+const FEATURE_LINKS = ['#chairman', '#contact', 'https://worldlinkdwc.com/'];
 
 const FEATURE_IMAGES = [
   'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=800&q=80&auto=format&fit=crop',

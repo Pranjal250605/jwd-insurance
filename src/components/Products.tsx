@@ -22,7 +22,7 @@ const SOLUTION_LINKS = [
   '#properties-section',
   'https://theheartofeurope.emirates.expert/',
   '#/consent',
-  'https://new-jwd-office.vercel.app/',
+  'https://worldlinkdwc.com/',
 ];
 
 /* Every consulting step ends at the consultation form: these are services you

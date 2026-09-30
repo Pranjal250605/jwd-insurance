@@ -16,7 +16,7 @@ const MENU_LINKS: Record<string, string[]> = {
     'https://theheartofeurope.emirates.expert/',  // Heart of Europe
     '#/consent',                                  // Investment Funds — notice first
     '#properties-section',                        // Japan Properties
-    'https://new-jwd-office.vercel.app/',         // Family Office
+    'https://worldlinkdwc.com/',                  // Family Office
   ],
   Insights: [
     '#markets',        // Why Dubai
