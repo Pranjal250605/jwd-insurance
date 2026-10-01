@@ -31,7 +31,7 @@ export default function CompanyProfile() {
             {c.rows.map((r) => (
               <div key={r.label} className="contents">
                 <dt className="font-bold text-[18px] sm:text-[20px] text-slate-900 mt-4 sm:mt-0">{r.label}{lang === 'en' ? ':' : ''}</dt>
-                <dd className="text-[17px] sm:text-[20px] leading-[1.6] text-slate-800 whitespace-pre-line">{r.value}</dd>
+                <dd className="text-[17px] sm:text-[20px] leading-[1.6] text-slate-800 whitespace-pre-line [overflow-wrap:anywhere]">{r.value}</dd>
               </div>
             ))}
           </dl>

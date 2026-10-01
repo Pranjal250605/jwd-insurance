@@ -332,7 +332,7 @@ export const STRINGS = {
         { label: 'Investments stated', value: 'Listed & unlisted equities, bonds, corporate investments, asset-backed investments' },
         { label: 'Capital', value: 'USD950,000. (JPY 150,000,000)' },
         { label: 'Representative', value: 'Hamit Gurbuz' },
-        { label: 'Registered address', value: 'Building Name/No MOHAMMAD ABDULLA\nMAHMOOD AZAHED\nLand Area Hor Al Anz\nPlot Number 739-0\nLand DM No (Affection Plan) 127-345' },
+        { label: 'Registered address', value: 'Property Investment Office 4 - G01\nDubai investment park first 516-0\nP.O. Box24649 Dubai, U.A.E.' },
       ],
     },
     markets: {
@@ -985,9 +985,8 @@ export const STRINGS = {
         { label: '投資対象', value: '上場・非上場株式、債券、企業投資、資産担保型投資' },
         { label: '資本金', value: '950,000米ドル（1億5,000万円）' },
         { label: '代表者', value: 'Hamit Gurbuz（ハミット・ギュルビュズ）' },
-        // The address stays in English: it is the registered form, and a
-        // transliteration would not match the licence.
-        { label: '登記住所', value: 'Building Name/No MOHAMMAD ABDULLA\nMAHMOOD AZAHED\nLand Area Hor Al Anz\nPlot Number 739-0\nLand DM No (Affection Plan) 127-345' },
+        // The address stays in English, exactly as on the CEO's business card.
+        { label: '登記住所', value: 'Property Investment Office 4 - G01\nDubai investment park first 516-0\nP.O. Box24649 Dubai, U.A.E.' },
       ],
     },
     markets: {
