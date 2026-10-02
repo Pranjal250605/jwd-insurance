@@ -64,10 +64,15 @@
   <pre id="log"></pre>
 </section>
 <script>
-  // QR of THIS page's own address, so the same file works on every deploy.
-  const url = location.href.split('#')[0];
+  // QR of THIS page's own address, so the same file works on every deploy -
+  // except a copy opened on the laptop itself (localhost, a file), whose
+  // address means nothing to a phone. Those point at the public test page.
+  const PUBLIC = 'https://jwd-insurance.vercel.app/ar-test/';
+  const local = location.protocol === 'file:' ||
+    /^(localhost|127\.0\.0\.1|\[::1\]|.*\.local)$/.test(location.hostname);
+  const url = local ? PUBLIC : location.href.split('#')[0];
   const qr = qrcode(0, 'M'); qr.addData(url); qr.make();
-  document.getElementById('qr').innerHTML = qr.createSvgTag({ cellSize: 6, margin: 2, scalable: true });
+  document.getElementById('qr').innerHTML = qr.createSvgTag({ cellSize: 6, margin: 4, scalable: true });
   document.getElementById('url').textContent = url;
 
   // Plain-language diagnostics, so a failed AR attempt says why.
