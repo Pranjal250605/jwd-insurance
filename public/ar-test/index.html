@@ -41,11 +41,11 @@
 </header>
 <main>
   <model-viewer id="mv"
-      src="/models/seahorse.glb"
-      ios-src="/models/seahorse.usdz"
+      src="/models/seahorse_ar.glb"
+      ios-src="/models/seahorse_ar.usdz"
       alt="The Floating Seahorse villa"
       ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto"
-      camera-controls auto-rotate shadow-intensity="1" exposure="1">
+      camera-controls autoplay camera-orbit="35deg 68deg 0.95m" camera-target="0m 0.13m 0m" field-of-view="30deg" shadow-intensity="1" exposure="1">
     <button slot="ar-button" class="arbtn">View in AR</button>
   </model-viewer>
   <aside class="qr">
@@ -55,7 +55,7 @@
     <ol>
       <li>iPhone: Camera app → tap the link → <i>View in AR</i>.</li>
       <li>Android: Camera or Lens → open → <i>View in AR</i>.</li>
-      <li>The villa opens at real size (17.8 m). Pinch to shrink it onto a table.</li>
+      <li>It opens table-sized (about 57 cm) and builds itself: seabed, then water, then the villa. Pinch to make it bigger.</li>
     </ol>
   </aside>
 </main>
@@ -86,7 +86,7 @@
   mv.addEventListener('ar-status', e => log('AR status: ' + e.detail.status,
     e.detail.status === 'failed' ? 'bad' : 'ok'));
   // Report the files' sizes and content types - the usual cause of a silent AR failure.
-  for (const f of ['/models/seahorse.glb', '/models/seahorse.usdz']) {
+  for (const f of ['/models/seahorse_ar.glb', '/models/seahorse_ar.usdz']) {
     fetch(f, { method: 'HEAD' }).then(r => log(f + ': HTTP ' + r.status + ', ' +
       (r.headers.get('content-type') || '?') + ', ' +
       Math.round((+r.headers.get('content-length') || 0) / 1024) + ' KB', r.ok ? 'ok' : 'bad'))
