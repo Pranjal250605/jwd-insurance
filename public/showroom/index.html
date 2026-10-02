@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Floating Seahorse — Showroom</title>
+<style>
+  :root {
+    --bg-in: #3b4750; --bg-out: #0d1216;
+    --glass: rgba(255,255,255,0.12); --glass-line: rgba(255,255,255,0.22);
+    --ink: #f3f5f6; --ink-2: rgba(243,245,246,0.68); --accent: #7fd1d0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg-out); color: var(--ink);
+    font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+    overflow: hidden; -webkit-font-smoothing: antialiased; }
+  #stage { position: fixed; inset: 0;
+    background: radial-gradient(ellipse 70% 62% at 50% 52%, var(--bg-in) 0%, var(--bg-out) 100%);
+    transition: background 0.8s; }
+  canvas { display: block; }
+  #labels { position: fixed; inset: 0; pointer-events: none; }
+
+  /* labels: dot on the object, a hairline up to a small frosted card */
+  .lbl { pointer-events: none; transform: translate(-50%, -100%); transition: opacity .4s; }
+  .lbl .card { background: rgba(250,251,251,0.86); color: #12171b; border-radius: 9px;
+    padding: 6px 10px 6px 12px; border-left: 3px solid #1f6f73; white-space: nowrap;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.25); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .lbl .t { font-weight: 600; font-size: 12.5px; letter-spacing: .01em; }
+  .lbl .s { font-size: 11px; color: #4b555c; }
+  .lbl .stem { width: 1px; height: 46px; margin: 0 auto; background: rgba(255,255,255,0.85); }
+  .lbl .dot { width: 8px; height: 8px; margin: 0 auto; border-radius: 50%;
+    background: #fff; box-shadow: 0 0 0 3px rgba(127,209,208,0.45); }
+  .hide-labels .lbl { opacity: 0; }
+
+  /* the control panel: frosted glass, minimal */
+  #panel { position: fixed; left: max(16px, env(safe-area-inset-left)); bottom: max(16px, env(safe-area-inset-bottom));
+    width: 286px; padding: 16px 16px 14px; border-radius: 16px;
+    background: var(--glass); border: 1px solid var(--glass-line);
+    backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.35); }
+  #panel h1 { margin: 0 0 2px; font-size: 15px; font-weight: 600; letter-spacing: .01em; }
+  #panel .sub { margin: 0 0 14px; font-size: 12px; color: var(--ink-2); }
+  .row { display: flex; align-items: center; justify-content: space-between; margin: 10px 0; }
+  .row label { font-size: 12.5px; color: var(--ink-2); }
+  .time { font-variant-numeric: tabular-nums; font-size: 12.5px; }
+  input[type=range] { width: 100%; margin: 4px 0 2px; accent-color: var(--accent); }
+  .scale { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--ink-2); }
+  .switch { position: relative; width: 38px; height: 22px; flex: none; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch span { position: absolute; inset: 0; border-radius: 22px; background: rgba(255,255,255,0.18);
+    transition: background .2s; cursor: pointer; }
+  .switch span::after { content: ""; position: absolute; left: 3px; top: 3px; width: 16px; height: 16px;
+    border-radius: 50%; background: #fff; transition: transform .2s; }
+  .switch input:checked + span { background: var(--accent); }
+  .switch input:checked + span::after { transform: translateX(16px); }
+  .btns { display: flex; gap: 8px; margin-top: 14px; }
+  button, .btn { flex: 1; appearance: none; border: 1px solid var(--glass-line); border-radius: 10px;
+    background: rgba(255,255,255,0.10); color: var(--ink); font: 600 12.5px/1 inherit; padding: 10px 8px;
+    cursor: pointer; text-align: center; text-decoration: none; }
+  button.primary, .btn.primary { background: #e9f6f6; color: #0c2427; border-color: transparent; }
+  button:hover, .btn:hover { filter: brightness(1.08); }
+  #sizeRow { display: none; }
+  .in-ar #sizeRow { display: flex; }
+
+  /* QR for laptops */
+  #qrbox { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom));
+    width: 168px; padding: 12px; border-radius: 16px; text-align: center;
+    background: var(--glass); border: 1px solid var(--glass-line);
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+  #qrbox #qr { background: #fff; border-radius: 10px; padding: 6px; }
+  #qrbox #qr svg { display: block; width: 100%; height: auto; }
+  #qrbox p { margin: 8px 0 0; font-size: 11.5px; color: var(--ink-2); }
+
+  #loading { position: fixed; inset: 0; display: grid; place-items: center; pointer-events: none;
+    font-size: 13px; color: var(--ink-2); transition: opacity .6s; }
+  #loading.done { opacity: 0; }
+  #msg { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); padding: 8px 14px; border-radius: 10px;
+    background: rgba(0,0,0,0.55); font-size: 12.5px; display: none; }
+
+  @media (max-width: 640px) {
+    #panel { left: 12px; right: 12px; bottom: 12px; width: auto; padding: 12px 14px; }
+    #panel .sub { display: none; }
+    #qrbox { display: none; }
+    .lbl .card { padding: 4px 8px 4px 9px; border-radius: 7px; }
+    .lbl .t { font-size: 11px; } .lbl .s { font-size: 9.5px; } .lbl .stem { height: 30px; }
+  }
+  .is-mobile #qrbox { display: none; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+<div id="stage"></div>
+<div id="labels"></div>
+<div id="loading">Loading the Floating Seahorse…</div>
+<div id="msg"></div>
+
+<div id="panel">
+  <h1>The Floating Seahorse</h1>
+  <p class="sub">The Heart of Europe, Dubai</p>
+  <div class="row"><label for="day">Daylight</label><span class="time" id="clock">17:30</span></div>
+  <input id="day" type="range" min="5.5" max="21.5" step="0.05" value="17.5" aria-label="Time of day">
+  <div class="scale"><span>Dawn</span><span>Noon</span><span>Sunset</span><span>Night</span></div>
+  <div class="row"><label for="rain">Rain</label><label class="switch"><input id="rain" type="checkbox"><span></span></label></div>
+  <div class="row"><label for="lbls">Labels</label><label class="switch"><input id="lbls" type="checkbox" checked><span></span></label></div>
+  <div class="row" id="sizeRow"><label for="size">Size</label><input id="size" type="range" min="0.5" max="4" step="0.05" value="1" style="width:60%"></div>
+  <div class="btns">
+    <button id="replay">Replay build</button>
+    <a id="arBtn" class="btn primary" href="#">View in AR</a>
+  </div>
+</div>
+
+<div id="qrbox">
+  <div id="qr"></div>
+  <p>Scan with your phone to see it on your table</p>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { Sky } from 'three/addons/objects/Sky.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+const MODEL = '/models/seahorse_ar.glb', USDZ = '/models/seahorse_ar.usdz';
+const PUBLIC = 'https://jwd-insurance.vercel.app/showroom/';
+// title, subtitle, the side it faces (labels show only from that side)
+const LABELS = [
+  ['Rooftop Jacuzzi', 'Upper deck, open to the sky', [0, 0, 1]],
+  ['Underwater Master Bedroom', 'Panoramic glass below the waterline', [0, 0, 1]],
+  ['Living & Dining', 'Floor-to-ceiling glazing', [0, 0, -1]],
+  ['Sun Deck', 'Loungers beside the jacuzzi', [0, 0, -1]],
+  ['Bow Terrace', 'Net lounge over the water', [1, 0, 0]],
+];
+const LABELS_FROM = 9.4;     // s into the clip: the villa is built, the 3D cards pop in
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isMobile = isIOS || /Android|Mobi/.test(navigator.userAgent);
+if (isMobile) document.body.classList.add('is-mobile');
+
+// ---- QR (laptops): never a local address, which a phone cannot open
+{
+  const local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\]|.*\.local)$/.test(location.hostname);
+  const url = local ? PUBLIC : location.href.split('#')[0];
+  const qr = qrcode(0, 'M'); qr.addData(url); qr.make();
+  document.getElementById('qr').innerHTML = qr.createSvgTag({ cellSize: 5, margin: 4, scalable: true });
+}
+
+// ---- renderer, scene, camera
+const stage = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.NeutralToneMapping;      // keeps the palette's colours true
+renderer.toneMappingExposure = 0.9;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.xr.enabled = true;
+stage.appendChild(renderer.domElement);
+
+const css = new CSS2DRenderer({ element: document.getElementById('labels') });
+css.setSize(innerWidth, innerHeight);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x2a343b, 0.32);       // soft haze at tabletop scale
+const camera = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 0.01, 30);
+const controls = new OrbitControls(camera, renderer.domElement);
+// frame the diorama for the screen's shape: further back on narrow (portrait)
+// screens, and lifted so it sits above the control panel on phones
+function fitCamera() {
+  const a = innerWidth / innerHeight, portrait = a < 1;
+  const dist = 1.42 * Math.max(1, Math.pow(1.15 / a, 0.9));
+  controls.target.set(0, portrait ? 0.03 : 0.12, 0);
+  camera.position.copy(new THREE.Vector3(0.95, 0.62, 0.86).normalize().multiplyScalar(dist)).add(controls.target);
+}
+fitCamera();
+controls.enableDamping = true; controls.dampingFactor = 0.06;
+controls.minDistance = 0.28; controls.maxDistance = 2.2;
+controls.maxPolarAngle = THREE.MathUtils.degToRad(86);
+controls.autoRotate = true; controls.autoRotateSpeed = 0.35;
+controls.addEventListener('start', () => controls.autoRotate = false);
+
+// the "table": receives the diorama's soft shadow, otherwise invisible
+const ground = new THREE.Mesh(new THREE.CircleGeometry(3, 64),
+  new THREE.ShadowMaterial({ opacity: 0.38 }));
+ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+
+// ---- sun + sky-driven environment (reflections, ambient)
+const sun = new THREE.DirectionalLight(0xffffff, 3);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -0.5, right: 0.5, top: 0.5, bottom: -0.5, near: 0.1, far: 4 });
+sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.002; sun.shadow.radius = 4;
+scene.add(sun, sun.target);
+const hemi = new THREE.HemisphereLight(0xbfd8e6, 0x2b2620, 0.25); scene.add(hemi);
+
+const sky = new Sky(); sky.scale.setScalar(100);
+const skyScene = new THREE.Scene(); skyScene.add(sky);
+const pmrem = new THREE.PMREMGenerator(renderer);
+let envRT = null;
+function bakeEnvironment() {
+  if (envRT) envRT.dispose();
+  envRT = pmrem.fromScene(skyScene, 0.02);
+  scene.environment = envRT.texture;
+}
+
+// ---- rain: streaks falling through a cylinder around the diorama
+const RAIN_N = isMobile ? 900 : 1800;
+const rainGeo = new THREE.BufferGeometry();
+{
+  const p = new Float32Array(RAIN_N * 2 * 3), seed = new Float32Array(RAIN_N * 2);
+  for (let i = 0; i < RAIN_N; i++) {
+    const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * 0.42;
+    const x = Math.cos(a) * r, z = Math.sin(a) * r, y = Math.random() * 0.75;
+    p.set([x, y, z, x - 0.002, y - 0.022, z], i * 6);
+    seed[i * 2] = seed[i * 2 + 1] = Math.random();
+  }
+  rainGeo.setAttribute('position', new THREE.BufferAttribute(p, 3));
+  rainGeo.setAttribute('seed', new THREE.BufferAttribute(seed, 1));
+}
+const rainMat = new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false,
+  uniforms: { t: { value: 0 }, op: { value: 0 } },
+  vertexShader: `attribute float seed; uniform float t; varying float vA;
+    void main(){ vec3 p = position; p.y = mod(p.y - t * (1.6 + seed * 0.5), 0.75);
+      vA = smoothstep(0.0, 0.08, p.y) * (1.0 - smoothstep(0.6, 0.75, p.y));
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0); }`,
+  fragmentShader: `uniform float op; varying float vA;
+    void main(){ gl_FragColor = vec4(0.82, 0.88, 0.92, op * 0.55 * vA); }`,
+});
+const rain = new THREE.LineSegments(rainGeo, rainMat);
+rain.frustumCulled = false; rain.visible = false; scene.add(rain);
+
+// ---- load the model (the same GLB phones use)
+const draco = new DRACOLoader().setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/draco/gltf/');
+const loader = new GLTFLoader().setDRACOLoader(draco);
+const model = new THREE.Group(); scene.add(model);
+let mixer = null, buildAction = null;
+const waterMats = [], nightMats = [], interiorLights = [], labelMeshes = [], labelObjs = [];
+
+loader.load(MODEL, (gltf) => {
+  const root = gltf.scene;
+  model.add(root);
+  root.traverse((o) => {
+    if (o.isMesh) {
+      const n = o.material?.name || '';
+      const see = /water|glass|label_card/.test(n);
+      o.castShadow = !see && !/^ar_label/.test(o.name);
+      o.receiveShadow = !see;
+      if (/^ar_label/.test(o.name) || /^ar_label/.test(o.parent?.name || '')) labelMeshes.push(o);
+    }
+  });
+  // water: animated ripples (scrolling its own copy of the ripple normal map)
+  root.traverse((o) => {
+    if (!o.isMesh) return;
+    const n = o.material.name;
+    if (/AR_water_surface|AR_water_swell|AR_water_glint|AR_jacuzzi_water/.test(n) && o.material.normalMap) {
+      const m = o.material.clone();
+      m.normalMap = m.normalMap.clone(); m.normalMap.needsUpdate = true;
+      m.normalMap.wrapS = m.normalMap.wrapT = THREE.RepeatWrapping;
+      m.roughness = 0.04; m.envMapIntensity = 1.4;
+      m.color.multiply(new THREE.Color(0.86, 1.04, 1.06));      // a touch more aqua on the web
+      o.material = m;
+      waterMats.push({ m, speed: n.includes('glint') ? 0.035 : n.includes('swell') ? -0.018 : 0.012 });
+    }
+  });
+  // interior lighting for dusk/night: lamps glow, soft warm point lights
+  const glow = (name) => {
+    const o = root.getObjectByName(name);
+    if (!o) return;
+    o.traverse((c) => { if (c.isMesh) { c.material = c.material.clone();
+      c.material.emissive = new THREE.Color(0xffc98a); c.material.emissiveIntensity = 0; nightMats.push(c.material); } });
+  };
+  ['ceiling_lights', 'deck_lights', 'uw_lamps'].forEach(glow);
+  root.traverse((o) => { if (o.isMesh && o.material.name === 'AR_water_side') {
+    o.material = o.material.clone(); o.material.color.multiply(new THREE.Color(0.86, 1.04, 1.06)); } });
+  // labels: crisp HTML cards on the web; the baked 3D cards are for phone AR
+  for (let k = 0; k < LABELS.length; k++) {
+    const a = root.getObjectByName('ar_label_' + k); if (!a) continue;
+    const el = document.createElement('div'); el.className = 'lbl';
+    el.innerHTML = `<div class="card"><div class="t">${LABELS[k][0]}</div><div class="s">${LABELS[k][1]}</div></div><div class="stem"></div><div class="dot"></div>`;
+    const obj = new CSS2DObject(el);
+    a.getWorldPosition(obj.position); scene.add(obj);
+    obj.userData = { el, face: new THREE.Vector3(...LABELS[k][2]) }; labelObjs.push(obj);
+  }
+  labelMeshes.forEach((m) => m.visible = false);
+  // the build animation, then the long hold - same clip the phones play
+  mixer = new THREE.AnimationMixer(root);
+  if (gltf.animations[0]) { buildAction = mixer.clipAction(gltf.animations[0]); buildAction.play(); }
+  // place the interior lights on the ASSEMBLED villa: before the clip runs,
+  // every part still sits at its fly-in start position
+  mixer.setTime(30); root.updateMatrixWorld(true);
+  const at = (name, dy = 0) => {
+    const o = root.getObjectByName(name); if (!o) return null;
+    const c = new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3()); c.y += dy; return c;
+  };
+  // [anchor object, colour, reach (m at 1:40), height offset, strength]
+  for (const [name, color, dist, dy, k] of [
+      ['main_ceiling', 0xffcf96, 0.30, -0.035, 1.0], ['upper_block', 0xffcf96, 0.18, -0.02, 0.5],
+      ['uw_ceiling', 0xbfe6ff, 0.24, -0.03, 0.8], ['jacuzzi_water', 0x7fe0e6, 0.10, 0.012, 0.35],
+      ['bow_deck', 0xffd6a8, 0.20, 0.04, 0.35]]) {
+    const p = at(name, dy); if (!p) continue;
+    const L = new THREE.PointLight(color, 0, dist, 1.4); L.position.copy(p); L.userData.k = k;
+    scene.add(L); interiorLights.push(L);
+  }
+  mixer.setTime(0);
+
+  document.getElementById('loading').classList.add('done');
+  window.__sh = { THREE, scene, camera, model, mixer, buildAction, controls, applyDaylight, ui, renderer, css, labelObjs,
+    frame(t) { mixer.setTime(t); controls.update(); renderer.render(scene, camera); css.render(scene, camera); },
+    setRain(v) { rainAmt = rainTarget = v; applyDaylight(true); rainMat.uniforms.t.value = 3.7; } };
+  applyDaylight(true);
+}, (e) => {
+  if (e.total) document.getElementById('loading').textContent = `Loading the Floating Seahorse… ${Math.round(e.loaded / e.total * 100)}%`;
+}, (err) => { document.getElementById('loading').textContent = 'Could not load the model.'; console.error(err); });
+
+// ---- daylight + weather
+const ui = { day: document.getElementById('day'), rain: document.getElementById('rain'),
+  lbls: document.getElementById('lbls'), clock: document.getElementById('clock') };
+let rainAmt = 0, rainTarget = 0, lastEnvKey = '';
+const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+const warm = new THREE.Color(1.0, 0.56, 0.32), white = new THREE.Color(1.0, 0.96, 0.9), moon = new THREE.Color(0.55, 0.65, 0.9);
+
+function applyDaylight(force = false) {
+  const h = parseFloat(ui.day.value);
+  ui.clock.textContent = `${String(Math.floor(h)).padStart(2, '0')}:${String(Math.round((h % 1) * 60) % 60).padStart(2, '0')}`;
+  const elev = Math.sin(Math.PI * (h - 6) / 12) * 62;                   // degrees
+  const az = THREE.MathUtils.degToRad(100 + 160 * (h - 6) / 12);
+  const el = THREE.MathUtils.degToRad(elev);
+  const dir = new THREE.Vector3(Math.cos(el) * Math.sin(az), Math.sin(el), Math.cos(el) * Math.cos(az));
+  const day = smooth(-4, 10, elev), night = 1 - smooth(-7, 3, elev);
+  const r = rainAmt;
+  // sun: warm and low at the ends of the day, softened by cloud when raining
+  const lightDir = elev > -2 ? dir : new THREE.Vector3(-0.4, 0.8, 0.45).normalize();   // moonlight
+  sun.position.copy(lightDir).multiplyScalar(2);
+  sun.color.copy(warm).lerp(white, smooth(4, 35, elev)).lerp(moon, night);
+  sun.intensity = (3.2 * day * (1 - 0.75 * r)) + 0.35 * night;
+  sun.shadow.radius = 3 + 10 * r;
+  hemi.intensity = 0.18 + 0.25 * day * (1 - 0.3 * r);
+  // sky -> environment (re-baked only when it visibly changes)
+  const u = sky.material.uniforms;
+  u.turbidity.value = 4 + 12 * r; u.rayleigh.value = 1.2 + 2.2 * (1 - smooth(5, 30, elev)) - 0.6 * r;
+  u.mieCoefficient.value = 0.004 + 0.02 * r; u.mieDirectionalG.value = 0.78;
+  u.sunPosition.value.copy(elev > -6 ? dir : new THREE.Vector3(0, -1, 0));
+  const key = `${h.toFixed(1)}|${r.toFixed(1)}`;
+  if (force || key !== lastEnvKey) { bakeEnvironment(); lastEnvKey = key; }
+  scene.environmentIntensity = (0.9 * day + 0.12) * (1 - 0.35 * r);
+  renderer.toneMappingExposure = 0.92 + 0.35 * night;
+  // interiors come on as the light goes
+  const lamps = smooth(-2, 12, -elev + 8);          // dusk onwards
+  nightMats.forEach((m) => m.emissiveIntensity = 2.2 * lamps);
+  interiorLights.forEach((L) => L.intensity = 1.6 * L.userData.k * lamps);
+  // backdrop and haze darken with the hour and the weather
+  const bgIn = new THREE.Color(0x46535c).lerp(new THREE.Color(0x5a4a44), 1 - smooth(6, 30, elev))
+    .lerp(new THREE.Color(0x10171d), night).lerp(new THREE.Color(0x2a3136), r * 0.6);
+  const bgOut = new THREE.Color(0x0e1418).lerp(new THREE.Color(0x05080b), night);
+  document.documentElement.style.setProperty('--bg-in', '#' + bgIn.getHexString());
+  document.documentElement.style.setProperty('--bg-out', '#' + bgOut.getHexString());
+  scene.fog.color.copy(bgIn).lerp(bgOut, 0.35);
+  scene.fog.density = 0.28 + 0.26 * r + 0.15 * night;
+  rainMat.uniforms.op.value = r; rain.visible = r > 0.01;
+}
+ui.day.addEventListener('input', () => applyDaylight());
+ui.rain.addEventListener('change', () => { rainTarget = ui.rain.checked ? 1 : 0; });
+ui.lbls.addEventListener('change', () => {
+  document.body.classList.toggle('hide-labels', !ui.lbls.checked);
+  if (renderer.xr.isPresenting) labelMeshes.forEach((m) => m.visible = ui.lbls.checked);
+});
+document.getElementById('replay').addEventListener('click', () => { if (buildAction) { buildAction.reset().play(); } });
+
+// ---- AR: Android -> WebXR here (panel stays on screen); iPhone -> Quick Look
+const arBtn = document.getElementById('arBtn');
+const msg = (t) => { const m = document.getElementById('msg'); m.textContent = t; m.style.display = t ? 'block' : 'none'; };
+let xrSupported = false;
+if (navigator.xr) navigator.xr.isSessionSupported('immersive-ar').then((s) => xrSupported = s).catch(() => {});
+if (isIOS) {
+  arBtn.setAttribute('rel', 'ar'); arBtn.href = USDZ;
+  arBtn.appendChild(Object.assign(document.createElement('img'), { alt: '', width: 1, height: 1 }));  // Quick Look needs a child image
+} else {
+  arBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (xrSupported) return startAR();
+    if (!isMobile) { msg('Scan the QR code with your phone to view it in AR.'); setTimeout(() => msg(''), 3500); return; }
+    location.href = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(new URL(MODEL, location.href).href)}&mode=ar_preferred#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;end;`;
+  });
+}
+
+let hitSource = null, placed = false;
+const reticle = new THREE.Mesh(new THREE.RingGeometry(0.06, 0.075, 40).rotateX(-Math.PI / 2),
+  new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85 }));
+reticle.matrixAutoUpdate = false; reticle.visible = false; scene.add(reticle);
+async function startAR() {
+  const session = await navigator.xr.requestSession('immersive-ar', {
+    requiredFeatures: ['hit-test'], optionalFeatures: ['dom-overlay'],
+    domOverlay: { root: document.body } });
+  renderer.xr.setReferenceSpaceType('local');
+  await renderer.xr.setSession(session);
+  document.body.classList.add('in-ar');
+  stage.style.background = 'transparent'; ground.visible = false; scene.fog = null;
+  model.visible = false; placed = false;
+  labelObjs.forEach((o) => o.visible = false);
+  labelMeshes.forEach((m) => m.visible = ui.lbls.checked);
+  msg('Point at a table, then tap to place the villa');
+  const viewer = await session.requestReferenceSpace('viewer');
+  hitSource = await session.requestHitTestSource({ space: viewer });
+  session.addEventListener('select', () => {
+    if (!reticle.visible) return;
+    model.position.setFromMatrixPosition(reticle.matrix); model.visible = true; placed = true;
+    sun.target.position.copy(model.position); msg('');
+    if (buildAction) buildAction.reset().play();
+  });
+  session.addEventListener('end', () => {
+    document.body.classList.remove('in-ar'); hitSource = null; reticle.visible = false;
+    stage.style.background = ''; ground.visible = true; scene.fog = new THREE.FogExp2(0x2a343b, 0.32);
+    model.position.set(0, 0, 0); model.scale.setScalar(1); model.visible = true;
+    labelObjs.forEach((o) => o.visible = true); labelMeshes.forEach((m) => m.visible = false);
+    sun.target.position.set(0, 0, 0); msg(''); applyDaylight(true);
+  });
+}
+document.getElementById('size').addEventListener('input', (e) => model.scale.setScalar(parseFloat(e.target.value)));
+
+// ---- loop
+const clock = new THREE.Clock();
+renderer.setAnimationLoop((t, frame) => {
+  const dt = Math.min(clock.getDelta(), 0.05);
+  if (mixer) mixer.update(dt);
+  if (Math.abs(rainTarget - rainAmt) > 0.001) { rainAmt += (rainTarget - rainAmt) * Math.min(1, dt * 1.5); applyDaylight(); }
+  rainMat.uniforms.t.value = t / 1000;
+  rain.position.copy(model.position); rain.scale.copy(model.scale);
+  for (const w of waterMats) { const k = 1 + 2.2 * rainAmt;
+    w.m.normalMap.offset.x += w.speed * dt * k; w.m.normalMap.offset.y += w.speed * 0.6 * dt * k; }
+  if (frame && hitSource && !placed) {
+    const hits = frame.getHitTestResults(hitSource);
+    if (hits.length) { const pose = hits[0].getPose(renderer.xr.getReferenceSpace());
+      reticle.visible = true; reticle.matrix.fromArray(pose.transform.matrix); } else reticle.visible = false;
+  }
+  if (!renderer.xr.isPresenting) {
+    controls.update();
+    // each label fades in only from its own side, once the villa is built
+    const built = buildAction ? buildAction.time >= LABELS_FROM : true;
+    for (const o of labelObjs) {
+      const v = camera.position.clone().sub(o.position).normalize();
+      const f = built && ui.lbls.checked ? smooth(-0.05, 0.35, v.dot(o.userData.face)) : 0;
+      o.userData.el.style.opacity = f.toFixed(2);
+    }
+  }
+  renderer.render(scene, camera);
+  if (!renderer.xr.isPresenting) css.render(scene, camera);
+});
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight); css.setSize(innerWidth, innerHeight);
+  if (!renderer.xr.isPresenting) fitCamera();
+});
+</script>
+</body>
+</html>
