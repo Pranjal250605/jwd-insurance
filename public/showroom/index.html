@@ -22,15 +22,17 @@
   #labels { position: fixed; inset: 0; pointer-events: none; }
 
   /* labels: dot on the object, a hairline up to a small frosted card */
-  .lbl { pointer-events: none; transform: translate(-50%, -100%); transition: opacity .4s; }
-  .lbl .card { background: rgba(250,251,251,0.86); color: #12171b; border-radius: 9px;
-    padding: 6px 10px 6px 12px; border-left: 3px solid #1f6f73; white-space: nowrap;
-    box-shadow: 0 6px 22px rgba(0,0,0,0.25); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  /* labels: frosted-glass cards floating where the AR cards float, above the
+     villa; the 3D leader line, arrowhead and dot come from the model itself */
+  .lbl { pointer-events: none; transform: translate(-50%, -50%); transition: opacity .4s; }
+  .lbl .card { background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.10));
+    color: #fff; border-radius: 12px; padding: 7px 12px 7px 13px; white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.45); border-left: 3px solid rgba(127,209,208,0.95);
+    backdrop-filter: blur(14px) saturate(1.3); -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.35);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.35); }
   .lbl .t { font-weight: 600; font-size: 12.5px; letter-spacing: .01em; }
-  .lbl .s { font-size: 11px; color: #4b555c; }
-  .lbl .stem { width: 1px; height: 46px; margin: 0 auto; background: rgba(255,255,255,0.85); }
-  .lbl .dot { width: 8px; height: 8px; margin: 0 auto; border-radius: 50%;
-    background: #fff; box-shadow: 0 0 0 3px rgba(127,209,208,0.45); }
+  .lbl .s { font-size: 11px; color: rgba(255,255,255,0.78); }
   .hide-labels .lbl { opacity: 0; }
 
   /* the control panel: frosted glass, minimal */
@@ -83,7 +85,7 @@
     #panel .sub { display: none; }
     #qrbox { display: none; }
     .lbl .card { padding: 4px 8px 4px 9px; border-radius: 7px; }
-    .lbl .t { font-size: 11px; } .lbl .s { font-size: 9.5px; } .lbl .stem { height: 30px; }
+    .lbl .t { font-size: 11px; } .lbl .s { font-size: 9.5px; }
   }
   .is-mobile #qrbox { display: none; }
 </style>
@@ -175,8 +177,9 @@ const controls = new OrbitControls(camera, renderer.domElement);
 // screens, and lifted so it sits above the control panel on phones
 function fitCamera() {
   const a = innerWidth / innerHeight, portrait = a < 1;
-  const dist = 1.42 * Math.max(1, Math.pow(1.15 / a, 0.9));
-  controls.target.set(0, portrait ? 0.03 : 0.12, 0);
+  // the labels float up to ~0.45 m above the table, so frame them in too
+  const dist = 1.62 * Math.max(1, Math.pow(1.15 / a, 0.9));
+  controls.target.set(0, portrait ? 0.10 : 0.17, 0);
   camera.position.copy(new THREE.Vector3(0.95, 0.62, 0.86).normalize().multiplyScalar(dist)).add(controls.target);
 }
 fitCamera();
@@ -242,7 +245,7 @@ const draco = new DRACOLoader().setDecoderPath('https://cdn.jsdelivr.net/npm/thr
 const loader = new GLTFLoader().setDRACOLoader(draco);
 const model = new THREE.Group(); scene.add(model);
 let mixer = null, buildAction = null;
-const waterMats = [], nightMats = [], interiorLights = [], labelMeshes = [], labelObjs = [];
+const waterMats = [], nightMats = [], interiorLights = [], labelMeshes = [], leaderMeshes = [], labelObjs = [];
 
 loader.load(MODEL, (gltf) => {
   const root = gltf.scene;
@@ -253,7 +256,8 @@ loader.load(MODEL, (gltf) => {
       const see = /water|glass|label_card/.test(n);
       o.castShadow = !see && !/^ar_label/.test(o.name);
       o.receiveShadow = !see;
-      if (/^ar_label/.test(o.name) || /^ar_label/.test(o.parent?.name || '')) labelMeshes.push(o);
+      if (/^ar_label_\d+_(card|title|sub|bar)/.test(o.name)) labelMeshes.push(o);   // 3D card: AR only
+      else if (/^ar_label_\d+_(line|head|dot)/.test(o.name)) leaderMeshes.push(o);   // leaders: both
     }
   });
   // water: animated ripples (scrolling its own copy of the ripple normal map)
@@ -280,15 +284,6 @@ loader.load(MODEL, (gltf) => {
   ['ceiling_lights', 'deck_lights', 'uw_lamps'].forEach(glow);
   root.traverse((o) => { if (o.isMesh && o.material.name === 'AR_water_side') {
     o.material = o.material.clone(); o.material.color.multiply(new THREE.Color(0.86, 1.04, 1.06)); } });
-  // labels: crisp HTML cards on the web; the baked 3D cards are for phone AR
-  for (let k = 0; k < LABELS.length; k++) {
-    const a = root.getObjectByName('ar_label_' + k); if (!a) continue;
-    const el = document.createElement('div'); el.className = 'lbl';
-    el.innerHTML = `<div class="card"><div class="t">${LABELS[k][0]}</div><div class="s">${LABELS[k][1]}</div></div><div class="stem"></div><div class="dot"></div>`;
-    const obj = new CSS2DObject(el);
-    a.getWorldPosition(obj.position); scene.add(obj);
-    obj.userData = { el, face: new THREE.Vector3(...LABELS[k][2]) }; labelObjs.push(obj);
-  }
   labelMeshes.forEach((m) => m.visible = false);
   // the build animation, then the long hold - same clip the phones play
   mixer = new THREE.AnimationMixer(root);
@@ -309,11 +304,24 @@ loader.load(MODEL, (gltf) => {
     const L = new THREE.PointLight(color, 0, dist, 1.4); L.position.copy(p); L.userData.k = k;
     scene.add(L); interiorLights.push(L);
   }
+  // labels: glass HTML cards on the web, placed on the 3D cards' positions
+  // (read on the assembled pose, when the label roots are at full scale)
+  for (let k = 0; k < LABELS.length; k++) {
+    const a = root.getObjectByName('ar_label_' + k + '_card'); if (!a) continue;
+    const el = document.createElement('div'); el.className = 'lbl';
+    el.innerHTML = `<div class="card"><div class="t">${LABELS[k][0]}</div><div class="s">${LABELS[k][1]}</div></div>`;
+    const obj = new CSS2DObject(el);
+    a.getWorldPosition(obj.position); scene.add(obj);
+    obj.userData = { el, face: new THREE.Vector3(...LABELS[k][2]) }; labelObjs.push(obj);
+  }
   mixer.setTime(0);
 
   document.getElementById('loading').classList.add('done');
   window.__sh = { THREE, scene, camera, model, mixer, buildAction, controls, applyDaylight, ui, renderer, css, labelObjs,
-    frame(t) { mixer.setTime(t); controls.update(); renderer.render(scene, camera); css.render(scene, camera); },
+    frame(t) { mixer.setTime(t); controls.update(); renderer.render(scene, camera); css.render(scene, camera);
+      for (const o of labelObjs) { const v = camera.position.clone().sub(o.position).normalize();
+        o.userData.el.style.opacity = smooth(-0.05, 0.35, v.dot(o.userData.face)).toFixed(2); }
+      for (let i = 0; i < 30; i++) declutter(); },
     setRain(v) { rainAmt = rainTarget = v; applyDaylight(true); rainMat.uniforms.t.value = 3.7; } };
   applyDaylight(true);
 }, (e) => {
@@ -371,6 +379,7 @@ ui.rain.addEventListener('change', () => { rainTarget = ui.rain.checked ? 1 : 0;
 ui.lbls.addEventListener('change', () => {
   document.body.classList.toggle('hide-labels', !ui.lbls.checked);
   if (renderer.xr.isPresenting) labelMeshes.forEach((m) => m.visible = ui.lbls.checked);
+  leaderMeshes.forEach((m) => m.visible = ui.lbls.checked);
 });
 document.getElementById('replay').addEventListener('click', () => { if (buildAction) { buildAction.reset().play(); } });
 
@@ -425,6 +434,29 @@ async function startAR() {
 }
 document.getElementById('size').addEventListener('input', (e) => model.scale.setScalar(parseFloat(e.target.value)));
 
+// labels never sit on top of each other: a lower card slides down out of the way
+function declutter() {
+  const items = [];
+  for (const o of labelObjs) {
+    const el = o.userData.el, card = el.firstChild;
+    if (parseFloat(el.style.opacity || '1') < 0.05) { card.style.transform = ''; continue; }
+    const off = o.userData.off || 0, r = card.getBoundingClientRect();
+    items.push({ o, card, top: r.top - off, bottom: r.bottom - off, left: r.left, right: r.right });
+  }
+  items.sort((a, b) => a.top - b.top);
+  const placed = [];
+  for (const it of items) {
+    let dy = 0;
+    for (const p of placed) {
+      const h = it.left < p.right + 6 && it.right > p.left - 6;
+      if (h && it.top + dy < p.bottom + 6 && it.bottom + dy > p.top - 6) dy = p.bottom + 6 - it.top;
+    }
+    const prev = it.o.userData.off || 0, next = prev + (dy - prev) * 0.25;   // ease
+    it.o.userData.off = next; it.card.style.transform = `translateY(${next.toFixed(1)}px)`;
+    placed.push({ top: it.top + dy, bottom: it.bottom + dy, left: it.left, right: it.right });
+  }
+}
+
 // ---- loop
 const clock = new THREE.Clock();
 renderer.setAnimationLoop((t, frame) => {
@@ -451,7 +483,7 @@ renderer.setAnimationLoop((t, frame) => {
     }
   }
   renderer.render(scene, camera);
-  if (!renderer.xr.isPresenting) css.render(scene, camera);
+  if (!renderer.xr.isPresenting) { css.render(scene, camera); declutter(); }
 });
 addEventListener('resize', () => {
   camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
