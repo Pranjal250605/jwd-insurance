@@ -34,6 +34,16 @@
   .lbl .t { font-weight: 600; font-size: 12.5px; letter-spacing: .01em; }
   .lbl .s { font-size: 11px; color: rgba(255,255,255,0.78); }
   .hide-labels .lbl { opacity: 0; }
+  /* hotspots: a small glowing glass dot on each place; tap to reveal its label */
+  .hs { pointer-events: auto; width: 22px; height: 22px; border-radius: 50%; padding: 0; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.7); background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 0 0 0 rgba(127,209,208,0.6); animation: pulse 2.4s infinite; transition: opacity .3s, transform .2s; }
+  .hs::after { content: ""; display: block; width: 8px; height: 8px; margin: 6px; border-radius: 50%; background: #fff; }
+  .hs:hover { transform: scale(1.15); }
+  .hs.on { background: rgba(127,209,208,0.85); animation: none; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(127,209,208,0.55); } 70% { box-shadow: 0 0 0 12px rgba(127,209,208,0); } 100% { box-shadow: 0 0 0 0 rgba(127,209,208,0); } }
+  .hint { margin: -4px 0 8px; font-size: 11px; color: var(--ink-2); }
 
   /* the control panel: frosted glass, minimal */
   #panel { position: fixed; left: max(16px, env(safe-area-inset-left)); bottom: max(16px, env(safe-area-inset-bottom));
@@ -110,7 +120,8 @@
   <input id="day" type="range" min="5.5" max="21.5" step="0.05" value="17.85" aria-label="Time of day">
   <div class="scale"><span>Dawn</span><span>Noon</span><span>Sunset</span><span>Night</span></div>
   <div class="row"><label for="rain">Rain</label><label class="switch"><input id="rain" type="checkbox"><span></span></label></div>
-  <div class="row"><label for="lbls">Labels</label><label class="switch"><input id="lbls" type="checkbox" checked><span></span></label></div>
+  <div class="row"><label for="lbls">Hotspots</label><label class="switch"><input id="lbls" type="checkbox" checked><span></span></label></div>
+  <p class="hint">Tap a glowing dot, or any part of the villa, to see what it is.</p>
   <div class="row" id="sizeRow"><label for="size">Size</label><input id="size" type="range" min="0.5" max="4" step="0.05" value="1" style="width:60%"></div>
   <div class="btns">
     <button id="replay">Replay build</button>
@@ -251,6 +262,8 @@ const loader = new GLTFLoader().setDRACOLoader(draco);
 const model = new THREE.Group(); scene.add(model);
 let mixer = null, buildAction = null;
 const waterMats = [], nightMats = [], interiorLights = [], labelMeshes = [], leaderMeshes = [], labelObjs = [];
+const labelRoots = [], hotspots = [], hotspots3D = [], pickables = [];
+let selected = -1;
 
 loader.load(MODEL, (gltf) => {
   const root = gltf.scene;
@@ -292,7 +305,12 @@ loader.load(MODEL, (gltf) => {
   labelMeshes.forEach((m) => m.visible = false);
   // the build animation, then the long hold - same clip the phones play
   mixer = new THREE.AnimationMixer(root);
-  if (gltf.animations[0]) { buildAction = mixer.clipAction(gltf.animations[0]); buildAction.play(); }
+  if (gltf.animations[0]) {
+    const clip = gltf.animations[0];
+    // phone AR plays the labels as a one-at-a-time tour; here taps decide
+    clip.tracks = clip.tracks.filter((t) => !/^ar_label_\d+\./.test(t.name));
+    buildAction = mixer.clipAction(clip); buildAction.play();
+  }
   // place the interior lights on the ASSEMBLED villa: before the clip runs,
   // every part still sits at its fly-in start position
   mixer.setTime(30); root.updateMatrixWorld(true);
@@ -312,20 +330,39 @@ loader.load(MODEL, (gltf) => {
   // labels: glass HTML cards on the web, placed on the 3D cards' positions
   // (read on the assembled pose, when the label roots are at full scale)
   for (let k = 0; k < LABELS.length; k++) {
-    const a = root.getObjectByName('ar_label_' + k + '_card'); if (!a) continue;
+    const lr = root.getObjectByName('ar_label_' + k); if (!lr) continue;
+    lr.scale.setScalar(1); lr.updateMatrixWorld(true); lr.visible = false; labelRoots[k] = lr;
+    const a = root.getObjectByName('ar_label_' + k + '_card');
     const el = document.createElement('div'); el.className = 'lbl';
     el.innerHTML = `<div class="card"><div class="t">${LABELS[k][0]}</div><div class="s">${LABELS[k][1]}</div></div>`;
     const obj = new CSS2DObject(el);
     a.getWorldPosition(obj.position); scene.add(obj);
-    obj.userData = { el }; labelObjs.push(obj);
+    obj.userData = { el, k }; labelObjs.push(obj);
+    // the hotspot sits on the place itself (the label root is at its anchor)
+    const anchor = lr.getWorldPosition(new THREE.Vector3());
+    const b = document.createElement('button'); b.className = 'hs'; b.title = LABELS[k][0];
+    b.setAttribute('aria-label', LABELS[k][0]);
+    b.addEventListener('pointerdown', (e) => e.stopPropagation());
+    b.addEventListener('click', (e) => { e.stopPropagation(); select(k); });
+    const ho = new CSS2DObject(b); ho.position.copy(anchor); scene.add(ho); hotspots[k] = ho;
+    // a 3D twin for WebXR AR, where HTML is not drawn in the world
+    const s3 = new THREE.Mesh(new THREE.SphereGeometry(0.0065, 16, 12),
+      new THREE.MeshBasicMaterial({ color: 0x9fe3e2, transparent: true, opacity: 0.9 }));
+    s3.position.copy(model.worldToLocal(anchor.clone())); s3.visible = false; s3.userData.k = k;
+    model.add(s3); hotspots3D[k] = s3;
   }
+  root.traverse((o) => { if (o.isMesh && !/^ar_label/.test(o.name) &&
+    !/water|glass/.test(o.material?.name || '')) pickables.push(o); });
   mixer.setTime(0);
 
   document.getElementById('loading').classList.add('done');
   window.__sh = { THREE, scene, camera, model, mixer, buildAction, controls, applyDaylight, ui, renderer, css, labelObjs,
     frame(t) { mixer.setTime(t); controls.update(); renderer.render(scene, camera); css.render(scene, camera);
-      for (const o of labelObjs) o.userData.el.style.opacity = '1';
-      for (let i = 0; i < 30; i++) declutter(); },
+      for (const o of labelObjs) o.userData.el.style.opacity = o.userData.k === selected ? '1' : '0';
+      for (const h of hotspots) if (h) h.element.style.opacity = '1';
+      css.render(scene, camera); renderer.render(scene, camera); },
+    select, pick(x, y) { ptr.set(x * 2 - 1, -y * 2 + 1); ray.setFromCamera(ptr, camera);
+      const hit = ray.intersectObjects(pickables, false)[0]; return hit ? [hit.object.name, placeOf(hit)] : null; },
     setRain(v) { rainAmt = rainTarget = v; applyDaylight(true); rainMat.uniforms.t.value = 3.7; } };
   applyDaylight(true);
 }, (e) => {
@@ -382,10 +419,10 @@ ui.day.addEventListener('input', () => applyDaylight());
 ui.rain.addEventListener('change', () => { rainTarget = ui.rain.checked ? 1 : 0; });
 ui.lbls.addEventListener('change', () => {
   document.body.classList.toggle('hide-labels', !ui.lbls.checked);
-  if (renderer.xr.isPresenting) labelMeshes.forEach((m) => m.visible = ui.lbls.checked);
-  leaderMeshes.forEach((m) => m.visible = ui.lbls.checked);
+  if (!ui.lbls.checked && selected >= 0) select(selected);
+  hotspots3D.forEach((h) => h.visible = renderer.xr.isPresenting && ui.lbls.checked);
 });
-document.getElementById('replay').addEventListener('click', () => { if (buildAction) { buildAction.reset().play(); } });
+document.getElementById('replay').addEventListener('click', () => { if (buildAction) { if (selected >= 0) select(selected); buildAction.reset().play(); } });
 
 // ---- AR: Android -> WebXR here (panel stays on screen); iPhone -> Quick Look
 const arBtn = document.getElementById('arBtn');
@@ -418,11 +455,14 @@ async function startAR() {
   stage.style.background = 'transparent'; ground.visible = false; scene.fog = null;
   model.visible = false; placed = false;
   labelObjs.forEach((o) => o.visible = false);
-  labelMeshes.forEach((m) => m.visible = ui.lbls.checked);
+  labelMeshes.forEach((m) => m.visible = true);
+  if (selected >= 0) select(selected);
+  hotspots3D.forEach((h) => h.visible = ui.lbls.checked);
   msg('Point at a table, then tap to place the villa');
   const viewer = await session.requestReferenceSpace('viewer');
   hitSource = await session.requestHitTestSource({ space: viewer });
   session.addEventListener('select', () => {
+    if (placed) return;                                 // placed: taps go to the controller below
     if (!reticle.visible) return;
     model.position.setFromMatrixPosition(reticle.matrix); model.visible = true; placed = true;
     sun.target.position.copy(model.position); msg('');
@@ -433,10 +473,56 @@ async function startAR() {
     stage.style.background = ''; ground.visible = true; scene.fog = new THREE.FogExp2(0x2a343b, 0.32);
     model.position.set(0, 0, 0); model.scale.setScalar(1); model.visible = true;
     labelObjs.forEach((o) => o.visible = true); labelMeshes.forEach((m) => m.visible = false);
+    hotspots3D.forEach((h) => h.visible = false); if (selected >= 0) select(selected);
     sun.target.position.set(0, 0, 0); msg(''); applyDaylight(true);
   });
 }
+const xrCtrl = renderer.xr.getController(0); scene.add(xrCtrl);
+xrCtrl.addEventListener('select', () => {
+  if (!placed || !ui.lbls.checked) return;
+  ray.setFromXRController(xrCtrl);
+  const hit = ray.intersectObjects([...hotspots3D, ...pickables], false)[0];
+  const k = hit ? placeOf(hit) : -1;
+  if (k >= 0) select(k); else if (selected >= 0) select(selected);
+});
 document.getElementById('size').addEventListener('input', (e) => model.scale.setScalar(parseFloat(e.target.value)));
+
+// ---- tap a place -> its label (and connector) pops up; tap again/elsewhere closes
+const PLACES = [  // villa object names -> label index
+  [/^jacuzzi/, 0], [/^uw_(bed|duvet|mattress|pillows|headboard|nightstands|lamps|rug|end_aft)/, 1],
+  [/^(sofa|armchair|coffee_table|rug|curtains|media_unit|tv|dining_)/, 2],
+  [/^upper_(lounger|handrail|balustrade)/, 3],
+  [/^(bow_|deck_net|net_|life_ring|parasol|bistro_table|deck_lights|deck_shower)/, 4],
+  [/^(kitchen_|island_|sink|tap|bar_stools)/, 5], [/^uw_(sofa|tubchair|tables|cushion)/, 6],
+  [/^(external_stair|stair_rail)/, 7], [/^(bathing_platform)/, 8], [/^(solar_array|upper_canopy|mast)/, 9],
+];
+function placeOf(hit) {
+  for (let o = hit.object; o; o = o.parent) {
+    if (o.userData && o.userData.k !== undefined) return o.userData.k;      // a 3D hotspot
+    for (const [re, k] of PLACES) if (re.test(o.name || '')) return k;
+  }
+  let best = -1, bd = 0.06;                                             // else: the nearest place
+  labelRoots.forEach((lr, k) => { if (!lr) return;
+    const d = lr.getWorldPosition(new THREE.Vector3()).distanceTo(hit.point); if (d < bd) { bd = d; best = k; } });
+  return best;
+}
+function select(k) {
+  selected = (k === selected) ? -1 : k;
+  const xr = renderer.xr.isPresenting;
+  labelRoots.forEach((lr, i) => { if (lr) lr.visible = ui.lbls.checked && i === selected; });
+  labelMeshes.forEach((m) => m.visible = xr);                 // 3D cards only in AR; HTML on screen
+  hotspots.forEach((h, i) => h && h.element.classList.toggle('on', i === selected));
+}
+const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(); let downAt = null;
+renderer.domElement.addEventListener('pointerdown', (e) => { downAt = [e.clientX, e.clientY]; });
+renderer.domElement.addEventListener('pointerup', (e) => {
+  if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6 || !ui.lbls.checked) return;
+  ptr.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  ray.setFromCamera(ptr, camera);
+  const hit = ray.intersectObjects(pickables, false)[0];
+  const k = hit ? placeOf(hit) : -1;
+  if (k >= 0) { select(k); controls.autoRotate = false; } else if (selected >= 0) select(selected);
+});
 
 // labels never sit on top of each other: a lower card slides down out of the way
 function declutter() {
@@ -478,9 +564,12 @@ renderer.setAnimationLoop((t, frame) => {
   }
   if (!renderer.xr.isPresenting) {
     controls.update();
-    // every label shows from every side once the villa is built
+    // hotspots once the villa is built; a card only for the tapped place
     const built = buildAction ? buildAction.time >= LABELS_FROM : true;
-    for (const o of labelObjs) o.userData.el.style.opacity = built && ui.lbls.checked ? '1' : '0';
+    for (const o of labelObjs) o.userData.el.style.opacity = built && ui.lbls.checked && o.userData.k === selected ? '1' : '0';
+    for (const h of hotspots) if (h) { h.element.style.opacity = built && ui.lbls.checked ? '1' : '0';
+      h.element.style.pointerEvents = built && ui.lbls.checked ? 'auto' : 'none'; }
+    if (!built && selected >= 0) select(selected);
   }
   renderer.render(scene, camera);
   if (!renderer.xr.isPresenting) { css.render(scene, camera); declutter(); }
