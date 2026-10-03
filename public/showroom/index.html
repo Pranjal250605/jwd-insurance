@@ -133,13 +133,18 @@ import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer
 
 const MODEL = '/models/seahorse_ar.glb', USDZ = '/models/seahorse_ar.usdz';
 const PUBLIC = 'https://jwd-insurance.vercel.app/showroom/';
-// title, subtitle, the side it faces (labels show only from that side)
+// title, subtitle - same order as the model's ar_label_<k> nodes
 const LABELS = [
-  ['Rooftop Jacuzzi', 'Upper deck, open to the sky', [0, 0, 1]],
-  ['Underwater Master Bedroom', 'Panoramic glass below the waterline', [0, 0, 1]],
-  ['Living & Dining', 'Floor-to-ceiling glazing', [0, 0, -1]],
-  ['Sun Deck', 'Loungers beside the jacuzzi', [0, 0, -1]],
-  ['Bow Terrace', 'Net lounge over the water', [1, 0, 0]],
+  ['Rooftop Jacuzzi', 'Upper deck, open to the sky'],
+  ['Underwater Master Bedroom', 'Panoramic glass below the waterline'],
+  ['Living & Dining', 'Floor-to-ceiling glazing'],
+  ['Sun Deck', 'Loungers beside the jacuzzi'],
+  ['Bow Terrace', 'Net lounge over the water'],
+  ['Kitchen', 'Island kitchen beside the dining table'],
+  ['Underwater Lounge', 'Furnished by Bentley Home'],
+  ['Floating Stair', 'From the bow deck up to the sun deck'],
+  ['Swim Platform', 'Step straight down into the sea'],
+  ['Solar Canopy', 'Shade and power for the upper deck'],
 ];
 const LABELS_FROM = 9.4;     // s into the clip: the villa is built, the 3D cards pop in
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -257,7 +262,7 @@ loader.load(MODEL, (gltf) => {
       o.castShadow = !see && !/^ar_label/.test(o.name);
       o.receiveShadow = !see;
       if (/^ar_label_\d+_(card|title|sub|bar)/.test(o.name)) labelMeshes.push(o);   // 3D card: AR only
-      else if (/^ar_label_\d+_(line|head|dot)/.test(o.name)) leaderMeshes.push(o);   // leaders: both
+      else if (/^ar_label_\d+_(line|head|dot|joint)/.test(o.name)) leaderMeshes.push(o);   // leaders: both
     }
   });
   // water: animated ripples (scrolling its own copy of the ripple normal map)
@@ -312,15 +317,14 @@ loader.load(MODEL, (gltf) => {
     el.innerHTML = `<div class="card"><div class="t">${LABELS[k][0]}</div><div class="s">${LABELS[k][1]}</div></div>`;
     const obj = new CSS2DObject(el);
     a.getWorldPosition(obj.position); scene.add(obj);
-    obj.userData = { el, face: new THREE.Vector3(...LABELS[k][2]) }; labelObjs.push(obj);
+    obj.userData = { el }; labelObjs.push(obj);
   }
   mixer.setTime(0);
 
   document.getElementById('loading').classList.add('done');
   window.__sh = { THREE, scene, camera, model, mixer, buildAction, controls, applyDaylight, ui, renderer, css, labelObjs,
     frame(t) { mixer.setTime(t); controls.update(); renderer.render(scene, camera); css.render(scene, camera);
-      for (const o of labelObjs) { const v = camera.position.clone().sub(o.position).normalize();
-        o.userData.el.style.opacity = smooth(-0.05, 0.35, v.dot(o.userData.face)).toFixed(2); }
+      for (const o of labelObjs) o.userData.el.style.opacity = '1';
       for (let i = 0; i < 30; i++) declutter(); },
     setRain(v) { rainAmt = rainTarget = v; applyDaylight(true); rainMat.uniforms.t.value = 3.7; } };
   applyDaylight(true);
@@ -474,13 +478,9 @@ renderer.setAnimationLoop((t, frame) => {
   }
   if (!renderer.xr.isPresenting) {
     controls.update();
-    // each label fades in only from its own side, once the villa is built
+    // every label shows from every side once the villa is built
     const built = buildAction ? buildAction.time >= LABELS_FROM : true;
-    for (const o of labelObjs) {
-      const v = camera.position.clone().sub(o.position).normalize();
-      const f = built && ui.lbls.checked ? smooth(-0.05, 0.35, v.dot(o.userData.face)) : 0;
-      o.userData.el.style.opacity = f.toFixed(2);
-    }
+    for (const o of labelObjs) o.userData.el.style.opacity = built && ui.lbls.checked ? '1' : '0';
   }
   renderer.render(scene, camera);
   if (!renderer.xr.isPresenting) { css.render(scene, camera); declutter(); }
