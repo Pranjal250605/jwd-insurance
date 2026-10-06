@@ -601,7 +601,8 @@ export const STRINGS = {
       done: 'Thank you — we will be in touch shortly.',
       required: 'This field is required',
       invalidEmail: 'Please check the email address format',
-      failed: 'Something went wrong. Please try again, or email us directly.',
+      failed: 'Sorry — your request could not be sent. Please try again in a moment, or email us at',
+      sending: 'Sending…',
     },
     instagram: {
       eyebrow: 'INSTAGRAM',
@@ -1255,7 +1256,8 @@ export const STRINGS = {
       done: 'ありがとうございます。追ってご連絡いたします。',
       required: 'ご入力ください',
       invalidEmail: 'メールアドレスの形式をご確認ください',
-      failed: '送信できませんでした。時間をおいて再度お試しください。',
+      failed: '送信できませんでした。恐れ入りますが、時間をおいて再度お試しいただくか、こちらまでメールでご連絡ください：',
+      sending: '送信中…',
     },
     instagram: {
       eyebrow: 'インスタグラム',

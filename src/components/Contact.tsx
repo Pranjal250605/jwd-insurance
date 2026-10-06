@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { apiUrl } from '@/lib/paths';
+import { apiUrl, asset } from '@/lib/paths';
 import { NO_BACKEND, contactEmail } from '@/lib/runtime';
 import { useT } from '@/i18n';
 
@@ -7,16 +7,17 @@ import { useT } from '@/i18n';
    so the two read as one group. The asset-range chips that site carries are
    deliberately not here — the client asked for them out.
 
-   Posts to /api/contact, which emails the enquiry on. A failure is shown
-   rather than swallowed: unlike the consent record, the reader needs to know
-   whether their message actually went. */
+   Posts to /api/contact on Vercel, or to contact.php beside index.html on
+   the static hosts — both email the enquiry from the server. A failure is
+   shown rather than swallowed, with the address to write to instead: the
+   reader needs to know whether their message actually went. */
 
-interface Enquiry { name: string; email: string; message: string }
+interface Enquiry { name: string; email: string; message: string; website: string }
 
-const EMPTY: Enquiry = { name: '', email: '', message: '' };
+const EMPTY: Enquiry = { name: '', email: '', message: '', website: '' };
 
 export default function Contact() {
-  const { t } = useT();
+  const { lang, t } = useT();
   const c = t.contact;
   const [v, setV] = useState<Enquiry>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof Enquiry, string>>>({});
@@ -36,38 +37,14 @@ export default function Contact() {
     setErrors(next);
     if (Object.keys(next).length) return;
 
-    /* Static hosts (onamae, MilesWeb) run no server to post to, so the
-       enquiry is handed to the visitor's own mail client with the fields
-       already filled in. It leaves their outbox rather than ours, which is
-       the honest limit of a site with no backend — but it does reach us,
-       where a form that always errored would not. */
-    if (NO_BACKEND) {
-      const to = contactEmail();
-      if (!to) {
-        // site-config.js was never filled in. Say so rather than opening a
-        // blank mail window the visitor cannot address.
-        setState('failed');
-        return;
-      }
-      const subject = `${c.submit}: ${v.name.trim()}`;
-      const body = [
-        `${c.name}: ${v.name.trim()}`,
-        `${c.email}: ${v.email.trim()}`,
-        '',
-        v.message.trim(),
-      ].join('\n');
-      window.location.href =
-        `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      setState('sent');
-      return;
-    }
-
     setState('sending');
     try {
-      const res = await fetch(apiUrl('/api/contact'), {
+      // static hosts have no /api — contact.php there sends the mail instead
+      const url = NO_BACKEND ? asset('/contact.php') : apiUrl('/api/contact');
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ ...v, name: v.name.trim(), email: v.email.trim() }),
+        body: JSON.stringify({ ...v, name: v.name.trim(), email: v.email.trim(), lang }),
       });
       if (!res.ok) throw new Error(String(res.status));
       setState('sent');
@@ -111,7 +88,17 @@ export default function Contact() {
               <p className="text-[20px] font-semibold text-slate-800">{c.done}</p>
             </div>
           ) : (
-            <form onSubmit={submit} noValidate className="max-w-[760px] mx-auto">
+            <form onSubmit={submit} noValidate className="relative max-w-[760px] mx-auto">
+              {/* left empty by people; bots fill it and are quietly dropped */}
+              <input
+                value={v.website}
+                onChange={set('website')}
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] w-px h-px opacity-0"
+              />
               <div className="grid sm:grid-cols-2 gap-5">
                 <label className="block">
                   <input
@@ -157,7 +144,15 @@ export default function Contact() {
                 >
                   {c.submit}
                 </button>
-                {state === 'failed' && <p className="text-[16px] text-rose-500">{c.failed}</p>}
+                {state === 'failed' && (
+                  <p role="alert" className="text-[16px] text-rose-500 text-center">
+                    {c.failed}
+                    {contactEmail() && (
+                      <> <a href={`mailto:${contactEmail()}`} className="underline font-semibold">{contactEmail()}</a></>
+                    )}
+                  </p>
+                )}
+                {state === 'sending' && <p className="text-[15.5px] text-slate-500">{c.sending}</p>}
                 <p className="text-[15.5px] text-slate-500 text-center">{c.note}</p>
                 <p className="mt-2 text-[13.5px] leading-relaxed text-slate-500 text-center">{c.privacy}</p>
               </div>

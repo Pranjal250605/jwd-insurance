@@ -7,7 +7,7 @@
  *
  * Rather than let four features fail one by one in front of a visitor, a
  * static build declares itself with VITE_NO_BACKEND=1 and degrades on
- * purpose: the consultation form hands off to the visitor's mail client, and
+ * purpose: the consultation form posts to contact.php (PHP on the host), and
  * the AI advisor — which cannot work without a server holding the API key —
  * is not rendered at all. A chat button that errors on every message is worse
  * than no chat button.
@@ -17,7 +17,8 @@
 export const NO_BACKEND = import.meta.env.VITE_NO_BACKEND === '1';
 
 /**
- * Where the consultation form sends enquiries when there is no backend.
+ * The enquiry address offered to the visitor if sending the form fails
+ * (contact.php decides where the form itself is delivered).
  *
  * Read from site-config.js first — a plain text file sitting next to
  * index.html on the server, editable in cPanel without rebuilding anything.

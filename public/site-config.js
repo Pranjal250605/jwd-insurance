@@ -7,10 +7,9 @@
    ───────────────────────────────────────────────────────────────────────── */
 window.__JWD_CONFIG__ = {
 
-  /* Where the consultation form sends enquiries.
-     On this hosting there is no mail server of our own, so submitting the
-     form opens the visitor's own mail app with the message ready to send.
-     Put the address that should receive enquiries between the quotes. */
+  /* The address shown to visitors if the consultation form fails to send,
+     so they can write to you directly. (Where the form itself is delivered
+     is set at the top of contact.php.) */
   contactEmail: "shiraishi.t@gene-sis.jp",
 
 };

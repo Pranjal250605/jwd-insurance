@@ -76,6 +76,12 @@ if (!existsSync(htaccess)) {
 }
 copyFileSync(htaccess, join(dest, '.htaccess'));
 
+// No-backend builds post the consultation form to contact.php, which mails
+// it from the host itself (PHP); the backed WordPress build uses Vercel.
+if (cfg.env.VITE_NO_BACKEND === '1') {
+  copyFileSync(join(root, 'deploy', 'contact.php'), join(dest, 'contact.php'));
+}
+
 // The upload carries its own instructions. --emptyOutDir wipes the folder on
 // every build, so this is copied in rather than left to survive.
 copyFileSync(join(root, 'deploy', 'README.md'), join(dest, 'README-DEPLOY.md'));
