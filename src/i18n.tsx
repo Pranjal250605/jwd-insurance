@@ -231,7 +231,7 @@ export const STRINGS = {
       menus: {
         Solutions: { label: 'Solutions', sub: 'ソリューション', items: ['Dubai Properties', 'Heart of Europe', 'Investment Funds', 'Japan Properties', 'Family Office'] },
         Insights:  { label: 'Insights',  sub: '市場洞察',       items: ['Why Dubai', 'Knowledge Center', 'Investment Simulator', "Tomo's Stories"] },
-        About:     { label: 'About',     sub: '会社情報',       items: ['Company Overview', 'Mission', 'Vision', 'Leadership', 'Tomo Kawana'] },
+        About:     { label: 'About',     sub: '会社情報',       items: ['Company Overview', 'Mission', 'Vision', 'Leadership', 'Tomoyuki Kawana'] },
         Clients:   { label: 'Consulting', sub: 'コンサルティング', items: ['Company Formation', 'License Acquisition', 'Visa & Emirates ID', 'Corporate & Personal Banking', 'Tax Registration', 'Accounting & Audit'] },
       },
     },
@@ -502,7 +502,7 @@ export const STRINGS = {
       pillars: [
         { title: 'Fluent in both markets', sub: '両市場に精通', body: 'One of the few firms that speaks to both Japan and Dubai — in your language, from one coherent viewpoint.', cta: 'About JWD' },
         { title: 'First-hand as an owner', sub: '当事者の実体験', body: 'Our chairman lives in Dubai with his family — so our advice comes from first-hand experience of life there.', cta: "Tomo's story" },
-        { title: 'One desk for everything', sub: 'ワンストップ', body: 'Property, company and visa, family office — one team walks with you across all of it, not a fresh set of specialists per deal.', cta: 'Our services' },
+        { title: 'One desk for everything', sub: 'ワンストップ', body: 'From property to company formation, visas and family office — one stop, supported consistently throughout.', cta: 'Our services' },
       ],
     },
     products: {
@@ -579,10 +579,10 @@ export const STRINGS = {
         { tag: 'ANNOUNCEMENT', sub: 'お知らせ', title: 'Updated Emirates ID & investor visa application steps', meta: '2025.09.01' },
       ],
       apartEyebrow: 'HOW WE ARE ORGANISED',
-      apartSub: '伴走する専門領域',
+      apartSub: '私たちの専門分野',
       apartTitle: 'A team that speaks from experience on the ground',
       features: [
-        { tag: 'CHAIRMAN / STRATEGY', sub: '川名 智', title: 'Investment Strategy', body: 'Leads the overall Japan–Dubai strategy.', cta: "Tomo's story" },
+        { tag: 'CHAIRMAN / STRATEGY', sub: '川名 智之', title: 'Investment Strategy', body: 'Leads the overall Japan–Dubai strategy.', cta: "Tomo's story" },
         { tag: 'CORPORATE & COMPLIANCE', sub: 'UAE法務ネットワーク', title: 'Corporate & Compliance', body: 'Free-zone and mainland formation, visas and tax registration — backed by deep ties with UAE authorities.', cta: 'Our services' },
         { tag: 'FAMILY OFFICE', sub: '資産・承継設計', title: 'Family Office', body: 'Multi-jurisdiction asset protection and succession, designed across Japanese and Emirati systems.', cta: 'Family office' },
       ],
@@ -626,7 +626,7 @@ export const STRINGS = {
       eyebrow: 'THE FIRST MOVE',
       sub: 'はじめの一歩',
       title: 'Step toward two horizons, together',
-      tagline: 'ご相談はご紹介制です。まずはお問い合わせください。あとは私たちが導きます。',
+      tagline: 'ご相談はご紹介制です。まずはお問い合わせください。その後のご案内は私たちがいたします。',
       body: 'Consultations are by introduction only. Speak with our representative about your goals — property, company and visa, or family office — and we’ll take it from there.',
       ctaPrimary: 'BOOK A CONSULTATION',
       ctaSecondary: 'DOWNLOAD INVESTMENT GUIDE',
@@ -885,7 +885,7 @@ export const STRINGS = {
       menus: {
         Solutions: { label: 'ソリューション', sub: 'Solutions', items: ['ドバイ不動産', 'ハート・オブ・ヨーロッパ', '投資ファンド', '日本不動産', 'ファミリーオフィス'] },
         Insights:  { label: '市場洞察', sub: 'Insights', items: ['なぜドバイか', 'ナレッジセンター', '投資シミュレーター', 'Tomoのストーリー'] },
-        About:     { label: '会社情報', sub: 'About', items: ['会社概要', 'ミッション', 'ビジョン', '経営陣', '川名智プロフィール'] },
+        About:     { label: '会社情報', sub: 'About', items: ['会社概要', 'ミッション', 'ビジョン', '経営陣', '川名智之プロフィール'] },
         Clients:   { label: 'コンサルティング', sub: 'Consulting', items: ['法人設立', 'ライセンス取得', 'VISA・エミレーツID取得', '法人・個人銀行口座開設', '税務署登録', '会計監査'] },
       },
     },
@@ -1024,13 +1024,13 @@ export const STRINGS = {
       eyebrow: '不動産ポートフォリオ',
       sub: 'REAL ESTATE PORTFOLIO',
       title: '投資価値で選び抜く\nドバイ不動産',
-      intro: '数千件の在庫ではなく、投資価値で選び抜いた物件だけを。利回りと立地で見極めた最新のキュレーション。',
+      intro: '数千件の在庫ではなく、投資価値で選び抜いた物件だけを。利回りと立地を基準に厳選した最新の物件をご紹介します。',
       note: 'リンクは外部サイトに移動します。不動産投資にはリスクがあり、資産価値は下落する場合があります。',
       portfolioCta: 'クライアント保有物件を見る',
       items: [
         {
           name: 'ドバイ不動産ポートフォリオ',
-          tag: 'キュレーション',
+          tag: '厳選物件',
           desc: 'ダウンタウン、マリーナ、パーム。投資価値で厳選した都市の物件群。エリア、予算、物件タイプ、利回り、デベロッパーの5つの軸で検索を構造化します。',
           image: 'https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=1200&q=80',
           links: [
@@ -1041,7 +1041,7 @@ export const STRINGS = {
         {
           name: 'ハート・オブ・ヨーロッパ',
           tag: '旗艦プロジェクト',
-          desc: 'ドバイ沖4キロ、人工島群「ザ・ワールド」の中心に、ヨーロッパが立ち上がる。',
+          desc: 'ドバイ沖4キロの人工島群「ザ・ワールド」に、ヨーロッパの街並みをテーマにしたリゾートが誕生します。',
           image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1200&q=80',
           links: [
             { label: '公式サイト', url: 'https://theheartofeurope.emirates.expert/' },
@@ -1155,20 +1155,20 @@ export const STRINGS = {
       whySub: 'WHY PARTNER WITH JWD',
       whyTitle: '二つの市場を、母国語で結ぶ',
       pillars: [
-        { title: '両市場に精通', sub: 'Fluent in both markets', body: '日本とドバイ、その両方を母語で、一貫した視点で語れる数少ない事業者です。', cta: 'JWDについて' },
+        { title: '両市場に精通', sub: 'Fluent in both markets', body: '日本とドバイの両方の市場を、日本語で分かりやすくご説明できる数少ない会社です。', cta: 'JWDについて' },
         { title: '当事者の実体験', sub: 'First-hand as an owner', body: '会長・川名は家族とともにドバイで暮らしています。現地で生活する当事者として、実情に即したアドバイスをお届けします。', cta: '川名のストーリー' },
-        { title: 'ワンストップ', sub: 'One desk for everything', body: '不動産、法人・ビザ、ファミリーオフィスまで、ひとつのチームがまとめてサポートします。', cta: '事業内容を見る' },
+        { title: 'ワンストップ', sub: 'One desk for everything', body: '不動産から法人設立・ビザ取得、ファミリーオフィスまで、ワンストップで一貫してサポートします。', cta: '事業内容を見る' },
       ],
     },
     products: {
       eyebrow: '事業領域',
       sub: 'WHAT WE DO',
       title: '私たちに\nお任せください',
-      intro: 'ドバイ法人設立、不動産取得、ファミリーオフィス設計から、日本側の資産・相続戦略まで。案件ごとに専門家を寄せ集めるのではなく、ひとつのチームとして一貫してサポートします。',
+      intro: 'ドバイ法人設立、不動産取得、ファミリーオフィス設計から、日本側の資産・相続戦略まで。案件ごとに別々の専門家を探していただく必要はありません。ひとつのチームとして一貫してサポートします。',
       aumLabel: '一目でわかる',
       detailCta: '詳しく見る',
       solutions: [
-        { label: 'ドバイ不動産', sub2: 'Dubai Real Estate', tag: 'キュレーション', body: '投資価値で選び抜いた物件。取得から賃貸運用まで伴走します。' },
+        { label: 'ドバイ不動産', sub2: 'Dubai Real Estate', tag: '厳選物件', body: '投資価値の高い物件を厳選し、購入から賃貸運用までサポートします。' },
         { label: 'ハート・オブ・ヨーロッパ', sub2: 'Heart of Europe', tag: '旗艦プロジェクト', body: 'ドバイ沖に誕生する、世界が注目する究極のリゾート「Heart of Europe」。非日常の贅沢を体験。' },
         { label: '投資ファンド', sub2: 'Investment Funds', tag: 'EQUITI · AIX', body: '不動産の先へ。規制下のグローバル市場・実物資産へのアクセス。' },
         { label: 'ファミリーオフィス', sub2: 'Family Office', tag: 'クロスボーダー', body: '日本とUAE双方の制度を踏まえた、資産保全・事業承継の設計。' },
@@ -1199,7 +1199,7 @@ export const STRINGS = {
       reachEyebrow: '日本とドバイ、ひとつのチーム',
       reachSub: 'TWO MARKETS, ONE TEAM',
       reachTitle: '日本に根ざし\nドバイに広がる',
-      reachBody: '日本とドバイの不動産・資産形成をつなぐクロスボーダー・アドバイザリー。案件ごとに専門家を寄せ集めるのではなく、ひとつのチームとして一貫してサポートします。',
+      reachBody: '日本とドバイの不動産・資産形成をつなぐクロスボーダー・アドバイザリー。案件ごとに別々の専門家を探していただく必要はありません。ひとつのチームとして一貫してサポートします。',
       reachBody2: 'A cross-border advisory bridging real estate and wealth creation between Japan and Dubai.',
       reachCta: 'JWDについて',
       hq: '本社',
@@ -1224,8 +1224,8 @@ export const STRINGS = {
     explore: {
       insightsEyebrow: 'ナレッジセンター',
       insightsSub: 'KNOWLEDGE CENTER',
-      insightsTitle: '判断を支える知識を、惜しみなく',
-      insightsBody: 'なぜドバイか、なぜ日本か。税制、相続、ビザ、為替——判断に必要な知識を、惜しみなく共有します。伴走するチーム自身が執筆しています。',
+      insightsTitle: '判断を支える知識を、分かりやすく',
+      insightsBody: 'なぜドバイか、なぜ日本か。税制、相続、ビザ、為替——判断に必要な知識を、分かりやすくお伝えします。記事は私たちのチームが執筆しています。',
       insightsBody2: 'Written by the same team that walks with you through the process.',
       insightsCta: 'ナレッジセンターへ',
       research: [
@@ -1233,11 +1233,11 @@ export const STRINGS = {
         { tag: '規制情報', sub: 'Regulatory Update', title: 'FTAのVAT申告要件改定に伴うコンプライアンス対応を更新', meta: '2025.12.10' },
         { tag: 'お知らせ', sub: 'Announcement', title: 'エミレーツID・投資家ビザの申請手順を更新', meta: '2025.09.01' },
       ],
-      apartEyebrow: '伴走する専門領域',
+      apartEyebrow: '私たちの専門分野',
       apartSub: 'HOW WE ARE ORGANISED',
       apartTitle: '机上の理論ではなく、\n現地での経験で語るチーム',
       features: [
-        { tag: '会長 / 投資戦略', sub: '川名 智', title: '投資戦略', body: '日本とドバイをつなぐ全体戦略を統括します。', cta: '川名のストーリー' },
+        { tag: '会長 / 投資戦略', sub: '川名 智之', title: '投資戦略', body: '日本とドバイをつなぐ全体戦略を統括します。', cta: '川名のストーリー' },
         { tag: '法人・コンプライアンス', sub: 'UAE法務ネットワーク', title: '法人・コンプライアンス', body: 'フリーゾーン・メインランドの設立、ビザ、税務登録をUAE当局との深いネットワークで支えます。', cta: '事業内容を見る' },
         { tag: 'ファミリーオフィス', sub: '資産・承継設計', title: 'ファミリーオフィス', body: '多国籍の資産保全と事業承継を、日本とドバイの双方の制度を踏まえて設計します。', cta: 'ファミリーオフィス' },
       ],
@@ -1246,7 +1246,7 @@ export const STRINGS = {
       eyebrow: 'お問い合わせ',
       sub: 'GET IN TOUCH',
       title: 'まずは、個別相談から。',
-      body: '現状を正しく把握し、一族の資産を次の地平へ運ぶストラクチャーを設計しましょう。',
+      body: '現状を正しく把握し、ご家族の資産を次の世代へつなぐ仕組みを、一緒に考えましょう。',
       name: 'お名前',
       email: 'メールアドレス',
       message: 'ご相談内容（任意）',
@@ -1281,7 +1281,7 @@ export const STRINGS = {
       eyebrow: 'はじめの一歩',
       sub: 'THE FIRST MOVE',
       title: 'ドバイの確実な\n資産運用に踏み出す',
-      tagline: 'ご相談はご紹介制です。まずはお問い合わせください。あとは私たちが導きます。',
+      tagline: 'ご相談はご紹介制です。まずはお問い合わせください。その後のご案内は私たちがいたします。',
       body: 'ご相談は完全紹介制です。不動産、法人・ビザ、ファミリーオフィス——代表があなたの目標を直接お伺いします。',
       ctaPrimary: 'ご相談のご予約',
       ctaSecondary: '投資ガイドをダウンロード',
@@ -1293,7 +1293,7 @@ export const STRINGS = {
       recognition: [
         { award: 'リードを生む', pub: 'ドバイ・日本の不動産購入者、ファミリーオフィスの顧客、ファンド投資家——本当に必要としている人へ機会を届けます。', yr: '' },
         { award: '信頼を築く', pub: '実取引データ、価格推移、利回り、ビザ情報まで、判断に必要な情報を開示します。', yr: '' },
-        { award: '投資家を育てる', pub: 'なぜドバイか、なぜ日本か。判断に必要な知識を惜しみなく共有します。', yr: '' },
+        { award: '投資家を育てる', pub: 'なぜドバイか、なぜ日本か。判断に必要な知識を分かりやすくお伝えします。', yr: '' },
       ],
     },
     advisor: {

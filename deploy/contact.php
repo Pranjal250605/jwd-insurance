@@ -12,6 +12,13 @@
    To change who receives enquiries, edit the settings block and re-upload.
    To check the server can run this file, open  contact.php?check=1  in a
    browser — it reports the PHP version and sends nothing.
+
+   BACKUP: every enquiry is also saved, whether or not the email goes out, to
+   enquiries-log.php in this folder (created on the first enquiry). It is a
+   .php file that only answers "404" in a browser, so nobody can read it from
+   the web — download it with the onamae file manager / FTP and open it in a
+   text editor: one enquiry per line, newest at the bottom, with "mail: sent"
+   or "mail: FAILED". If an email ever goes missing, it is in here.
    ───────────────────────────────────────────────────────────────────────── */
 
 $SETTINGS = [
@@ -145,6 +152,22 @@ $encoded = chunk_split(base64_encode($body));
 // the extra parameter, so try without it before giving up.
 $sent = @mail($SETTINGS['to'], $subject, $encoded, $headers, '-f' . $SETTINGS['from']);
 if (!$sent) $sent = @mail($SETTINGS['to'], $subject, $encoded, $headers);
+
+// Backup copy (see the note at the top). The leading PHP line means a browser
+// requesting the file gets a 404 and never its contents.
+$logFile = __DIR__ . '/enquiries-log.php';
+$guard = "<?php http_response_code(404); exit; ?>\n";
+$entry = json_encode([
+  'received' => date('Y-m-d H:i:s') . ' JST',
+  'mail'     => $sent ? 'sent' : 'FAILED',
+  'name'     => $name,
+  'email'    => $email,
+  'assets'   => $assets,
+  'lang'     => $lang,
+  'message'  => $message,
+], JSON_UNESCAPED_UNICODE) . "\n";
+if (!file_exists($logFile)) @file_put_contents($logFile, $guard, LOCK_EX);
+@file_put_contents($logFile, $entry, FILE_APPEND | LOCK_EX);
 
 if (!$sent) reply(500, ['ok' => false, 'error' => 'send']);
 reply(200, ['ok' => true]);
