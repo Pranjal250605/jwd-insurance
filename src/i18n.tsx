@@ -391,7 +391,7 @@ export const STRINGS = {
           links: [
             { label: 'Official site', url: 'https://theheartofeurope.emirates.expert/' },
             { label: 'The World Islands', url: 'https://thoe.com/' },
-            { label: 'Our exclusive listings', url: 'https://www.jwd-anawak.com/#heart-of-europe' },
+            { label: 'Our exclusive listings', url: 'https://anawak-dubai.com/' },
           ],
         },
       ],
@@ -1046,7 +1046,7 @@ export const STRINGS = {
           links: [
             { label: '公式サイト', url: 'https://theheartofeurope.emirates.expert/' },
             { label: 'ザ・ワールド・アイランズ', url: 'https://thoe.com/' },
-            { label: '弊社独占販売物件', url: 'https://www.jwd-anawak.com/#heart-of-europe' },
+            { label: '弊社独占販売物件', url: 'https://anawak-dubai.com/' },
           ],
         },
       ],
