@@ -386,7 +386,7 @@ export const STRINGS = {
         {
           name: 'The Heart of Europe',
           tag: 'FLAGSHIP PROJECT',
-          desc: 'Four kilometres off the Dubai coast, at the heart of the man-made archipelago "The World," a Europe is rising — the symbolic project our founder Tomo invests in personally.',
+          desc: 'Four kilometres off the Dubai coast, at the heart of the man-made archipelago "The World," a Europe is rising.',
           image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1200&q=80',
           links: [
             { label: 'Official site', url: 'https://theheartofeurope.emirates.expert/' },
@@ -501,7 +501,7 @@ export const STRINGS = {
       whyTitle: 'Two markets, bridged in your language',
       pillars: [
         { title: 'Fluent in both markets', sub: '両市場に精通', body: 'One of the few firms that speaks to both Japan and Dubai — in your language, from one coherent viewpoint.', cta: 'About JWD' },
-        { title: 'First-hand as an owner', sub: '当事者の実体験', body: 'Our founder lives, invests and raises a family in Dubai — authority that comes from his life, not a brochure.', cta: "Tomo's story" },
+        { title: 'First-hand as an owner', sub: '当事者の実体験', body: 'Our chairman lives in Dubai with his family — so our advice comes from first-hand experience of life there.', cta: "Tomo's story" },
         { title: 'One desk for everything', sub: 'ワンストップ', body: 'Property, company and visa, family office — one team walks with you across all of it, not a fresh set of specialists per deal.', cta: 'Our services' },
       ],
     },
@@ -514,7 +514,7 @@ export const STRINGS = {
       detailCta: 'Learn more',
       solutions: [
         { label: 'Dubai Real Estate', sub2: 'ドバイ不動産', tag: 'CURATED, NOT LISTED', body: 'Properties selected for investment merit — acquisition through rental management, hands-on.' },
-        { label: 'Heart of Europe', sub2: 'ハート・オブ・ヨーロッパ', tag: 'FLAGSHIP PROJECT', body: 'The World Islands’ flagship resort — the project our founder invests in personally.' },
+        { label: 'Heart of Europe', sub2: 'ハート・オブ・ヨーロッパ', tag: 'FLAGSHIP PROJECT', body: 'The ultimate resort the world is watching, rising off the coast of Dubai — “Heart of Europe”. Experience extraordinary luxury.' },
         { label: 'Investment Funds', sub2: '投資ファンド', tag: 'EQUITI · AIX', body: 'Regulated access to global markets and real-asset alternatives, beyond real estate alone.' },
         { label: 'Family Office', sub2: 'ファミリーオフィス', tag: 'CROSS-BORDER', body: 'Asset protection, succession and inheritance designed across Japan and UAE systems.' },
       ],
@@ -580,9 +580,9 @@ export const STRINGS = {
       ],
       apartEyebrow: 'HOW WE ARE ORGANISED',
       apartSub: '伴走する専門領域',
-      apartTitle: 'A team that speaks from its own capital and experience',
+      apartTitle: 'A team that speaks from experience on the ground',
       features: [
-        { tag: 'FOUNDER / STRATEGY', sub: '川名 智', title: 'Investment Strategy', body: 'A personal investor in Dubai’s Heart of Europe, leading the overarching Japan–Dubai strategy.', cta: "Tomo's story" },
+        { tag: 'CHAIRMAN / STRATEGY', sub: '川名 智', title: 'Investment Strategy', body: 'Leads the overall Japan–Dubai strategy.', cta: "Tomo's story" },
         { tag: 'CORPORATE & COMPLIANCE', sub: 'UAE法務ネットワーク', title: 'Corporate & Compliance', body: 'Free-zone and mainland formation, visas and tax registration — backed by deep ties with UAE authorities.', cta: 'Our services' },
         { tag: 'FAMILY OFFICE', sub: '資産・承継設計', title: 'Family Office', body: 'Multi-jurisdiction asset protection and succession, designed across Japanese and Emirati systems.', cta: 'Family office' },
       ],
@@ -627,7 +627,7 @@ export const STRINGS = {
       sub: 'はじめの一歩',
       title: 'Step toward two horizons, together',
       tagline: 'ご相談はご紹介制です。まずはお問い合わせください。あとは私たちが導きます。',
-      body: 'Consultations are by introduction only. Speak with our founder about your goals — property, company and visa, or family office — and we’ll take it from there.',
+      body: 'Consultations are by introduction only. Speak with our representative about your goals — property, company and visa, or family office — and we’ll take it from there.',
       ctaPrimary: 'BOOK A CONSULTATION',
       ctaSecondary: 'DOWNLOAD INVESTMENT GUIDE',
       regulatedTitle: 'REACH US WHERE YOU ARE',
@@ -637,7 +637,7 @@ export const STRINGS = {
       ],
       recognition: [
         { award: 'Generate leads', pub: 'We connect real opportunity to the people who genuinely need it — Dubai and Japan property buyers, family-office clients, fund investors.', yr: '' },
-        { award: 'Build trust', pub: 'Real transaction data, price history, yields, visa information — and our founder’s own portfolio, disclosed.', yr: '' },
+        { award: 'Build trust', pub: 'Real transaction data, price history, yields and visa information — everything you need to decide, disclosed.', yr: '' },
         { award: 'Educate investors', pub: 'Why Dubai, why Japan — tax, inheritance, visas, currency, shared generously.', yr: '' },
       ],
     },
@@ -1041,7 +1041,7 @@ export const STRINGS = {
         {
           name: 'ハート・オブ・ヨーロッパ',
           tag: '旗艦プロジェクト',
-          desc: 'ドバイ沖4キロ、人工島群「ザ・ワールド」の中心に、ヨーロッパが立ち上がる。代表・川名が個人として投資する象徴的プロジェクト。',
+          desc: 'ドバイ沖4キロ、人工島群「ザ・ワールド」の中心に、ヨーロッパが立ち上がる。',
           image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1200&q=80',
           links: [
             { label: '公式サイト', url: 'https://theheartofeurope.emirates.expert/' },
@@ -1156,20 +1156,20 @@ export const STRINGS = {
       whyTitle: '二つの市場を、母国語で結ぶ',
       pillars: [
         { title: '両市場に精通', sub: 'Fluent in both markets', body: '日本とドバイ、その両方を母語で、一貫した視点で語れる数少ない事業者です。', cta: 'JWDについて' },
-        { title: '当事者の実体験', sub: 'First-hand as an owner', body: '代表・川名はドバイに住み、投資し、子を育てる。語る資格は暮らしの中にあります。', cta: '川名のストーリー' },
-        { title: 'ワンストップ', sub: 'One desk for everything', body: '不動産、法人・ビザ、ファミリーオフィスまで、ひとつのチームが横断的に伴走します。', cta: '事業内容を見る' },
+        { title: '当事者の実体験', sub: 'First-hand as an owner', body: '会長・川名は家族とともにドバイで暮らしています。現地で生活する当事者として、実情に即したアドバイスをお届けします。', cta: '川名のストーリー' },
+        { title: 'ワンストップ', sub: 'One desk for everything', body: '不動産、法人・ビザ、ファミリーオフィスまで、ひとつのチームがまとめてサポートします。', cta: '事業内容を見る' },
       ],
     },
     products: {
       eyebrow: '事業領域',
       sub: 'WHAT WE DO',
       title: '私たちに\nお任せください',
-      intro: 'ドバイ法人設立、不動産取得、ファミリーオフィス設計から、日本側の資産・相続戦略まで。案件ごとに専門家を寄せ集めるのではなく、ひとつのチームとして横断的に伴走します。',
+      intro: 'ドバイ法人設立、不動産取得、ファミリーオフィス設計から、日本側の資産・相続戦略まで。案件ごとに専門家を寄せ集めるのではなく、ひとつのチームとして一貫してサポートします。',
       aumLabel: '一目でわかる',
       detailCta: '詳しく見る',
       solutions: [
         { label: 'ドバイ不動産', sub2: 'Dubai Real Estate', tag: 'キュレーション', body: '投資価値で選び抜いた物件。取得から賃貸運用まで伴走します。' },
-        { label: 'ハート・オブ・ヨーロッパ', sub2: 'Heart of Europe', tag: '旗艦プロジェクト', body: 'ザ・ワールド諸島の旗艦リゾート。代表が個人として投資する象徴的プロジェクト。' },
+        { label: 'ハート・オブ・ヨーロッパ', sub2: 'Heart of Europe', tag: '旗艦プロジェクト', body: 'ドバイ沖に誕生する、世界が注目する究極のリゾート「Heart of Europe」。非日常の贅沢を体験。' },
         { label: '投資ファンド', sub2: 'Investment Funds', tag: 'EQUITI · AIX', body: '不動産の先へ。規制下のグローバル市場・実物資産へのアクセス。' },
         { label: 'ファミリーオフィス', sub2: 'Family Office', tag: 'クロスボーダー', body: '日本とUAE双方の制度を踏まえた、資産保全・事業承継の設計。' },
       ],
@@ -1199,7 +1199,7 @@ export const STRINGS = {
       reachEyebrow: '日本とドバイ、ひとつのチーム',
       reachSub: 'TWO MARKETS, ONE TEAM',
       reachTitle: '日本に根ざし\nドバイに広がる',
-      reachBody: '日本とドバイの不動産・資産形成をつなぐクロスボーダー・アドバイザリー。案件ごとに専門家を寄せ集めるのではなく、ひとつのチームとして横断的に伴走します。',
+      reachBody: '日本とドバイの不動産・資産形成をつなぐクロスボーダー・アドバイザリー。案件ごとに専門家を寄せ集めるのではなく、ひとつのチームとして一貫してサポートします。',
       reachBody2: 'A cross-border advisory bridging real estate and wealth creation between Japan and Dubai.',
       reachCta: 'JWDについて',
       hq: '本社',
@@ -1235,9 +1235,9 @@ export const STRINGS = {
       ],
       apartEyebrow: '伴走する専門領域',
       apartSub: 'HOW WE ARE ORGANISED',
-      apartTitle: '机上の理論ではなく、自らの\n資金と経験で語るチーム',
+      apartTitle: '机上の理論ではなく、\n現地での経験で語るチーム',
       features: [
-        { tag: '代表 / 投資戦略', sub: '川名 智', title: '投資戦略', body: 'ドバイ・ハートオブヨーロッパへの個人投資家。日本とドバイをつなぐ全体戦略を統括します。', cta: '川名のストーリー' },
+        { tag: '会長 / 投資戦略', sub: '川名 智', title: '投資戦略', body: '日本とドバイをつなぐ全体戦略を統括します。', cta: '川名のストーリー' },
         { tag: '法人・コンプライアンス', sub: 'UAE法務ネットワーク', title: '法人・コンプライアンス', body: 'フリーゾーン・メインランドの設立、ビザ、税務登録をUAE当局との深いネットワークで支えます。', cta: '事業内容を見る' },
         { tag: 'ファミリーオフィス', sub: '資産・承継設計', title: 'ファミリーオフィス', body: '多国籍の資産保全と事業承継を、日本とドバイの双方の制度を踏まえて設計します。', cta: 'ファミリーオフィス' },
       ],
@@ -1292,7 +1292,7 @@ export const STRINGS = {
       ],
       recognition: [
         { award: 'リードを生む', pub: 'ドバイ・日本の不動産購入者、ファミリーオフィスの顧客、ファンド投資家——本当に必要としている人へ機会を届けます。', yr: '' },
-        { award: '信頼を築く', pub: '実取引データ、価格推移、利回り、ビザ情報、そして代表自身のポートフォリオまで開示します。', yr: '' },
+        { award: '信頼を築く', pub: '実取引データ、価格推移、利回り、ビザ情報まで、判断に必要な情報を開示します。', yr: '' },
         { award: '投資家を育てる', pub: 'なぜドバイか、なぜ日本か。判断に必要な知識を惜しみなく共有します。', yr: '' },
       ],
     },
