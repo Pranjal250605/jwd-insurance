@@ -1,11 +1,10 @@
 import { useT } from '@/i18n';
 import { useIsBelowLg } from '@/hooks/useMediaQuery';
 
-// Real presence: Nagoya (HQ) and Dubai only — not the fabricated 5-office
-// network this diagram originally showed.
+// Real presence: Dubai only — there is no Japan office (Ohkubo-san, 10.09),
+// so the Nagoya card and the Nagoya–Dubai arc are gone.
 const OFFICE_POS_DESKTOP = [
-  { rot: -3, x: -150, y: -70, lead: true },
-  { rot: 3, x: 130, y: 90 },
+  { rot: 3, x: 130, y: 90, lead: true },
 ];
 
 // Same relative arrangement, scaled down so the cluster fits inside a
@@ -58,9 +57,8 @@ export default function Money() {
                 {[0,30,60,90,120,150].map((deg) => (
                   <ellipse key={deg} cx="170" cy="170" rx={Math.abs(Math.cos(deg*Math.PI/180))*168} ry="168" fill="none" stroke="white" strokeOpacity="0.14" strokeWidth="1" />
                 ))}
-                {/* Nagoya + Dubai — the two real points on the map, bridged by one arc */}
+                {/* Dubai — the one real point on the map */}
                 {[
-                  { cx: 115, cy: 120, r: 4 },
                   { cx: 225, cy: 220, r: 4 },
                 ].map((p, i) => (
                   <g key={i}>
@@ -68,7 +66,6 @@ export default function Money() {
                     <circle cx={p.cx} cy={p.cy} r={p.r} style={{ fill: 'var(--secondary)' }} />
                   </g>
                 ))}
-                <path d="M115 120 Q170 130 225 220" fill="none" style={{ stroke: 'var(--secondary)' }} strokeOpacity="0.6" strokeWidth="1" strokeDasharray="2 3" />
               </svg>
             </div>
 
