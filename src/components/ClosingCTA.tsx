@@ -44,9 +44,6 @@ export default function ClosingCTA() {
               >
                 {t.closing.ctaPrimary}
               </a>
-              <a href="#contact" data-magnetic className="px-8 py-4 rounded-sm text-[13px] font-bold tracking-[0.14em] text-[#0ABAB5] transition-all hover:bg-[#0ABAB5]/5 border border-[#0ABAB5] inline-flex items-center">
-                {t.closing.ctaSecondary}
-              </a>
             </div>
           </div>
         </div>

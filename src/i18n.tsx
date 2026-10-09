@@ -11,11 +11,14 @@ const STORAGE_KEY = 'jwd-lang';
 
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>(() => {
-    if (typeof window === 'undefined') return 'en';
+    // 10.09: Japanese first. The site is for Japanese clients, and opening in
+    // English made PC browsers offer (or auto-run) machine translation, which
+    // produced the odd Japanese reported — EN stays one click away.
+    if (typeof window === 'undefined') return 'ja';
     const url = new URLSearchParams(window.location.search).get('lang');
     if (url === 'ja' || url === 'en') return url;
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    return saved === 'ja' ? 'ja' : 'en';
+    return saved === 'en' ? 'en' : 'ja';
   });
 
   useEffect(() => {
@@ -687,7 +690,7 @@ export const STRINGS = {
           lines: [
             'Property Investment Office 4 - G01',
             'Dubai Investment Park First 516-0',
-            'P.O. Box 676-598 Dubai, U.A.E.',
+            'P.O. Box 24649 Dubai, U.A.E.',
           ],
         },
         {
@@ -1342,7 +1345,7 @@ export const STRINGS = {
           lines: [
             'Property Investment Office 4 - G01',
             'Dubai Investment Park First 516-0',
-            'P.O. Box 676-598 Dubai, U.A.E.',
+            'P.O. Box 24649 Dubai, U.A.E.',
           ],
         },
         {
