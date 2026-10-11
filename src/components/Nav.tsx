@@ -73,7 +73,7 @@ export default function Nav() {
         }`}
         style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
       >
-        {p.name === 'AIX Investment' ? 'AIX' : p.name}
+        <span translate="no" className="notranslate">{p.name === 'AIX Investment' ? 'AIX' : p.name}</span>
         <svg width={compact ? 10 : 12} height={compact ? 10 : 12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M9 7h8v8" /></svg>
       </a>
     ));
@@ -286,7 +286,7 @@ export default function Nav() {
                     className="flex items-center justify-between min-h-[52px] px-4 rounded-lg border text-[17px] font-bold"
                     style={{ color: 'var(--accent-deep)', borderColor: 'var(--accent-deep)', background: 'var(--accent-soft)' }}
                   >
-                    {p.name}
+                    <span translate="no" className="notranslate">{p.name}</span>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M7 17L17 7M9 7h8v8" /></svg>
                   </a>
                 ))}

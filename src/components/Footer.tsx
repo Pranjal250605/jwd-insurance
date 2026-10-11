@@ -17,9 +17,11 @@ export default function Footer() {
             <p className="text-[17px] text-slate-600 leading-[1.7] max-w-xs mb-3">
               {t.footer.blurb}
             </p>
-            <p className="font-jp text-[16px] text-slate-500 leading-[1.85] tracking-wide max-w-xs mb-7">
-              {t.footer.blurb2}
-            </p>
+            {t.footer.blurb2 && (
+              <p className="font-jp text-[16px] text-slate-500 leading-[1.85] tracking-wide max-w-xs mb-7">
+                {t.footer.blurb2}
+              </p>
+            )}
             <div className="flex flex-col gap-2 mb-7">
               {t.products.platforms.map((p) => (
                 <a
@@ -30,16 +32,16 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="link-underline inline-flex items-center gap-1.5 text-[17px] font-medium text-slate-600 hover:text-slate-900 self-start"
                 >
-                  {p.name}
+                  <span translate="no" className="notranslate">{p.name}</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M9 7h8v8" /></svg>
                 </a>
               ))}
             </div>
             <div className="flex items-center gap-2">
               {[
-                { label: 'LinkedIn', code: 'in' },
-                { label: 'X',        code: 'X' },
-                { label: 'YouTube',  code: '▶' },
+                { label: 'LinkedIn', icon: <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zm7 0h3.8v1.5h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1v5.45h-4v-4.83c0-1.15-.02-2.63-1.6-2.63-1.6 0-1.85 1.25-1.85 2.55v4.91h-4z" /> },
+                { label: 'X',        icon: <path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.32l4.37 5.78zm-1.08 16.18h1.7L7.4 4.73H5.58z" /> },
+                { label: 'YouTube',  icon: <path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.75 15.02V8.98L15.5 12z" /> },
               ].map((s) => (
                 <a
                   key={s.label}
@@ -47,7 +49,7 @@ export default function Footer() {
                   aria-label={s.label}
                   className="w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:border-slate-400 hover:text-slate-900 transition"
                 >
-                  <span className="text-[11.5px] font-bold">{s.code}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">{s.icon}</svg>
                 </a>
               ))}
             </div>
@@ -56,7 +58,7 @@ export default function Footer() {
           {t.footer.cols.map((col, ci) => (
             <div key={col.h}>
               <h4 className="text-[11.5px] font-bold tracking-[0.22em] text-slate-900 uppercase">{col.h}</h4>
-              <div className="font-jp text-[11px] tracking-[0.16em] text-slate-400 mt-1 mb-5">{col.sub}</div>
+              <div className="notranslate font-jp text-[11px] tracking-[0.16em] text-slate-400 mt-1 mb-5" translate="no">{col.sub}</div>
               <ul className="space-y-3">
                 {col.links.map((l, i) => {
                   const href = menuHref(MENU_KEYS[ci] ?? '', i);
@@ -82,10 +84,10 @@ export default function Footer() {
         <div className="pt-10 border-t border-slate-200 flex flex-col gap-6">
           <div>
             <h4 className="text-[11.5px] font-bold tracking-[0.22em] text-slate-900 uppercase">{t.footer.officesLabel}</h4>
-            <div className="font-jp text-[11px] tracking-[0.16em] text-slate-400 mt-1 mb-6">{t.footer.officesSub}</div>
+            <div className="notranslate font-jp text-[11px] tracking-[0.16em] text-slate-400 mt-1 mb-6" translate="no">{t.footer.officesSub}</div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-7">
               {t.footer.offices.map((o) => (
-                <div key={o.name}>
+                <div key={o.name} translate="no" className="notranslate">
                   <div className="text-[13.5px] font-medium text-slate-700 mb-1.5">{o.name}</div>
                   <address className="not-italic text-[12.5px] leading-[1.75] tracking-[0.04em] text-slate-500">
                     {o.lines.map((line) => (
@@ -104,7 +106,7 @@ export default function Footer() {
               {t.footer.links.map((l) => (
                 <a key={l} href="#" className="hover:text-slate-900">{l}</a>
               ))}
-              <span className="text-slate-400">{t.footer.copyright}</span>
+              <span className="notranslate text-slate-400" translate="no">{t.footer.copyright}</span>
             </div>
           </div>
         </div>

@@ -53,7 +53,7 @@ export default function HowToInvest() {
             >
               <span className="min-w-0">
                 <span className="block text-[11px] font-bold tracking-[0.18em] mb-1 opacity-70" style={{ color: 'var(--accent-deep)' }}>{p.tag}</span>
-                <span className="block font-serif text-[24px] font-semibold tracking-tight leading-none" style={{ color: 'var(--accent-deep)' }}>{p.name}</span>
+                <span className="block font-serif text-[24px] font-semibold tracking-tight leading-none" style={{ color: 'var(--accent-deep)' }} translate="no">{p.name}</span>
               </span>
               <span className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ background: 'var(--accent-deep)' }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2"><path d="M7 17L17 7M9 7h8v8" /></svg>

@@ -113,7 +113,7 @@ export default function Products() {
                   <path d="M7 17L17 7M9 7h8v8" />
                 </svg>
               </div>
-              <h3 className="font-serif text-[28px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]">{p.name}</h3>
+              <h3 className="notranslate font-serif text-[28px] font-semibold text-slate-900 mb-3 tracking-[-0.01em]" translate="no">{p.name}</h3>
               <p className="text-[18.5px] leading-[1.6] text-slate-600 mb-7">{p.desc}</p>
               <span className="link-underline text-[16.5px] font-semibold inline-flex items-center gap-1.5 group-hover:gap-2 transition-all" style={{ color: 'var(--accent-deep)' }}>
                 {t.products.platformsVisit}

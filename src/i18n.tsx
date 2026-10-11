@@ -878,7 +878,7 @@ export const STRINGS = {
       closeMenu: 'メニューを閉じる',
       menus: {
         Solutions: { label: 'ソリューション', sub: 'Solutions', items: ['ドバイ不動産', 'ハート・オブ・ヨーロッパ', '投資ファンド', '日本不動産', 'ファミリーオフィス'] },
-        Insights:  { label: '市場洞察', sub: 'Insights', items: ['なぜドバイか', 'ナレッジセンター', '投資シミュレーター', 'Tomoのストーリー'] },
+        Insights:  { label: '市場洞察', sub: 'Insights', items: ['なぜドバイか', 'ナレッジセンター', '投資シミュレーター', '川名のストーリー'] },
         About:     { label: '会社情報', sub: 'About', items: ['会社概要', 'ミッション', 'ビジョン', '経営陣', '川名智之プロフィール'] },
         Clients:   { label: 'コンサルティング', sub: 'Consulting', items: ['法人設立', 'ライセンス取得', 'VISA・エミレーツID取得', '法人・個人銀行口座開設', '税務署登録', '会計監査'] },
       },
@@ -1307,10 +1307,11 @@ export const STRINGS = {
     },
     footer: {
       blurb: 'JWDインベストメント（Japan WorldLink DWC）は、日本とドバイの不動産と資産形成をつなぐ、完全紹介制のクロスボーダー・アドバイザリーです。',
-      blurb2: 'A cross-border advisory bridging real estate and wealth creation between Japan and Dubai.',
+      // 10.11: no English echo in Japanese mode — translation tools mangled it
+      blurb2: '',
       cols: [
         { h: 'ソリューション', sub: 'Solutions', links: ['ドバイ不動産', 'ハート・オブ・ヨーロッパ', '投資ファンド', '日本不動産'] },
-        { h: '市場洞察', sub: 'Insights', links: ['なぜドバイか', 'ナレッジセンター', '投資シミュレーター', 'Tomoのストーリー'] },
+        { h: '市場洞察', sub: 'Insights', links: ['なぜドバイか', 'ナレッジセンター', '投資シミュレーター', '川名のストーリー'] },
         { h: '会社情報', sub: 'Company', links: ['会社概要', '経営陣', 'ファミリーオフィス', 'お問い合わせ'] },
         { h: 'コンサルティング', sub: 'Consulting', links: ['法人設立', 'VISA・エミレーツID', '法人銀行口座', '税務・会計監査'] },
       ],
