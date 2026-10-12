@@ -31,7 +31,15 @@ export default function CompanyProfile() {
             {c.rows.map((r) => (
               <div key={r.label} className="contents">
                 <dt className="font-bold text-[18px] sm:text-[20px] text-slate-900 mt-4 sm:mt-0">{r.label}{lang === 'en' ? ':' : ''}</dt>
-                <dd className="text-[17px] sm:text-[20px] leading-[1.6] text-slate-800 whitespace-pre-line [overflow-wrap:anywhere]">{r.value}</dd>
+                <dd className="text-[17px] sm:text-[20px] leading-[1.6] text-slate-800 whitespace-pre-line [overflow-wrap:anywhere]">
+                  {/* English (and Arabic) values are left exactly as written */}
+                  {'ar' in r ? (
+                    <span translate="no" className="notranslate">
+                      <span lang="en" className="block">{r.value}</span>
+                      <span lang="ar" dir="rtl" className="block text-left mt-0.5 text-slate-600">{r.ar}</span>
+                    </span>
+                  ) : r.value}
+                </dd>
               </div>
             ))}
           </dl>

@@ -328,8 +328,8 @@ export const STRINGS = {
       sub: '会社概要',
       company: 'JWD INVESTMENT L.L.C.',
       rows: [
-        { label: 'Jurisdiction', value: 'Dubai, United Arab Emirates' },
-        { label: 'Licensing Authority', value: 'Dubai Department of Economy and Tourism (DET)' },
+        { label: 'Jurisdiction', value: 'Dubai, United Arab Emirates', ar: 'دبي، الإمارات العربية المتحدة' },
+        { label: 'Licensing Authority', value: 'Dubai Department of Economy and Tourism (DET)', ar: 'دائرة الاقتصاد والسياحة في دبي' },
         { label: 'Established', value: 'September 2022' },
         { label: 'Business', value: 'Investment / asset management-related activities' },
         { label: 'Investments stated', value: 'Listed & unlisted equities, bonds, corporate investments, asset-backed investments' },
@@ -973,8 +973,9 @@ export const STRINGS = {
       sub: 'COMPANY PROFILE',
       company: 'JWD INVESTMENT L.L.C.',
       rows: [
-        { label: '所在地', value: 'アラブ首長国連邦 ドバイ' },
-        { label: '許認可機関', value: 'ドバイ経済観光局（DET）' },
+        // 10.12 (Ohkubo-san's mock): these two values in English, with Arabic beneath
+        { label: '所在地', value: 'Dubai, United Arab Emirates', ar: 'دبي، الإمارات العربية المتحدة' },
+        { label: '許認可機関', value: 'Dubai Department of Economy and Tourism (DET)', ar: 'دائرة الاقتصاد والسياحة في دبي' },
         { label: '設立', value: '2022年9月' },
         { label: '事業内容', value: '投資・資産運用関連業務' },
         { label: '投資対象', value: '上場・非上場株式、債券、企業投資、資産担保型投資' },
