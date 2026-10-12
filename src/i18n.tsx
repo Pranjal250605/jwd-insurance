@@ -252,7 +252,7 @@ export const STRINGS = {
       platformsHeading: 'Grow your assets with\nthe UAE’s top investment firms',
       platformNotes: [
         { lead: '2025', text: '— **no.1** for trading performance across 16 Middle Eastern countries:', brand: 'equiti' },
-        { lead: '', text: 'Based on floors 144 and 146 of the Burj Khalifa, and a Grand Partner of Emirates:', brand: 'AIX' },
+        { lead: '', text: 'Based on floors 144–146 of the Burj Khalifa, and a Grand Partner of Emirates:', brand: 'AIX' },
       ],
       videosLabel: 'VIDEO',
       videos: [
@@ -897,7 +897,7 @@ export const STRINGS = {
       platformsHeading: 'UAEトップの投資会社で\n資産を運用する！',
       platformNotes: [
         { lead: '2025年', text: '中東16カ国で運用実績**No1**の', brand: 'equiti' },
-        { lead: '', text: 'ブルジュハリファ144F, 146Fに拠点を持ちエミレーツ航空とグランドパートナーの', brand: 'AIX' },
+        { lead: '', text: 'ブルジュハリファ 144F〜146Fに拠点を持ちエミレーツ航空とグランドパートナーの', brand: 'AIX' },
       ],
       videosLabel: 'ビデオ',
       videos: [
