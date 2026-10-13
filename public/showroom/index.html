@@ -122,6 +122,7 @@
   <div class="row"><label for="rain">Rain</label><label class="switch"><input id="rain" type="checkbox"><span></span></label></div>
   <div class="row"><label for="lbls">Hotspots</label><label class="switch"><input id="lbls" type="checkbox" checked><span></span></label></div>
   <p class="hint">Tap a glowing dot, or any part of the villa, to see what it is.</p>
+  <p class="hint" id="tierLine"></p>
   <div class="row" id="sizeRow"><label for="size">Size</label><input id="size" type="range" min="0.5" max="4" step="0.05" value="1" style="width:60%"></div>
   <div class="btns">
     <button id="replay">Replay build</button>
@@ -142,7 +143,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { Sky } from 'three/addons/objects/Sky.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
-const MODEL = '/models/seahorse_ar.glb', USDZ = '/models/seahorse_ar.usdz';
+// Full or Lite model, chosen per device (see pickTier below)
+let MODEL = '/models/seahorse_ar.glb', USDZ = '/models/seahorse_ar.usdz', TIER = 'full';
 const PUBLIC = 'https://jwd-insurance.vercel.app/showroom/';
 // title, subtitle - same order as the model's ar_label_<k> nodes
 const LABELS = [
@@ -174,6 +176,23 @@ if (isMobile) document.body.classList.add('is-mobile');
 const stage = document.getElementById('stage');
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+// ---- Full / Lite: the same villa, two weights. Full: 4K atlas, caustics,
+// surface glint (Android 9.5 MB / iPhone 12.9 MB). Lite: 2K/1K textures,
+// fewer layers (5.1 / 8.3 MB). ?tier=full|lite overrides, for testing.
+function pickTier() {
+  const q = new URLSearchParams(location.search).get('tier');
+  if (q === 'full' || q === 'lite') return q;
+  const c = navigator.connection || {};
+  if (c.saveData || /(^|-)(2g|3g)$/.test(c.effectiveType || '')) return 'lite';   // slow / data saver
+  if (renderer.capabilities.maxTextureSize < 4096) return 'lite';                  // weak GPU
+  if (isIOS) return 'full';                                  // iPhones handle the full model well
+  const mem = navigator.deviceMemory, cores = navigator.hardwareConcurrency || 4;
+  if (/Android/.test(navigator.userAgent)) return (mem >= 6 && cores >= 8) ? 'full' : 'lite';
+  return (mem && mem < 4) ? 'lite' : 'full';                 // laptops / desktops
+}
+TIER = pickTier();
+if (TIER === 'lite') { MODEL = '/models/seahorse_ar_lite.glb'; USDZ = '/models/seahorse_ar_lite.usdz'; }
 renderer.setSize(innerWidth, innerHeight);
 renderer.toneMapping = THREE.NeutralToneMapping;      // keeps the palette's colours true
 renderer.toneMappingExposure = 0.9;
@@ -265,6 +284,12 @@ const waterMats = [], nightMats = [], interiorLights = [], labelMeshes = [], lea
 const labelRoots = [], hotspots = [], hotspots3D = [], pickables = [];
 let selected = -1;
 
+{
+  const other = TIER === 'full' ? 'lite' : 'full';
+  const u = new URL(location.href); u.searchParams.set('tier', other);
+  document.getElementById('tierLine').innerHTML =
+    `Quality: <b>${TIER === 'full' ? 'Full' : 'Lite'}</b> · <a href="${u.pathname + u.search}" style="color:var(--accent)">switch to ${other === 'full' ? 'Full' : 'Lite'}</a>`;
+}
 loader.load(MODEL, (gltf) => {
   const root = gltf.scene;
   model.add(root);

@@ -48,6 +48,26 @@
       camera-controls autoplay camera-orbit="35deg 68deg 0.95m" camera-target="0m 0.13m 0m" field-of-view="30deg" shadow-intensity="1" exposure="1">
     <button slot="ar-button" class="arbtn">View in AR</button>
   </model-viewer>
+  <script>
+    // Full or Lite, chosen per device BEFORE <model-viewer> starts loading
+    // (same rule as the showroom; ?tier=full|lite overrides for testing)
+    (function () {
+      var q = new URLSearchParams(location.search).get('tier'), c = navigator.connection || {};
+      var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      var mem = navigator.deviceMemory, cores = navigator.hardwareConcurrency || 4, tier = 'full';
+      if (q === 'full' || q === 'lite') tier = q;
+      else if (c.saveData || /(^|-)(2g|3g)$/.test(c.effectiveType || '')) tier = 'lite';
+      else if (ios) tier = 'full';
+      else if (/Android/.test(navigator.userAgent)) tier = (mem >= 6 && cores >= 8) ? 'full' : 'lite';
+      else if (mem && mem < 4) tier = 'lite';
+      window.SEAHORSE_TIER = tier;
+      if (tier === 'lite') {
+        var mv = document.getElementById('mv');
+        mv.setAttribute('src', '/models/seahorse_ar_lite.glb');
+        mv.setAttribute('ios-src', '/models/seahorse_ar_lite.usdz');
+      }
+    })();
+  </script>
   <aside class="qr">
     <h2>Scan with your phone</h2>
     <div id="qr"></div>
@@ -91,7 +111,8 @@
   mv.addEventListener('ar-status', e => log('AR status: ' + e.detail.status,
     e.detail.status === 'failed' ? 'bad' : 'ok'));
   // Report the files' sizes and content types - the usual cause of a silent AR failure.
-  for (const f of ['/models/seahorse_ar.glb', '/models/seahorse_ar.usdz']) {
+  log('quality tier: ' + (window.SEAHORSE_TIER || 'full') + ' (add ?tier=full or ?tier=lite to switch)', 'ok');
+  for (const f of [mv.getAttribute('src'), mv.getAttribute('ios-src')]) {
     fetch(f, { method: 'HEAD' }).then(r => log(f + ': HTTP ' + r.status + ', ' +
       (r.headers.get('content-type') || '?') + ', ' +
       Math.round((+r.headers.get('content-length') || 0) / 1024) + ' KB', r.ok ? 'ok' : 'bad'))
