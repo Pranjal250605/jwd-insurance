@@ -45,35 +45,83 @@
   @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(127,209,208,0.55); } 70% { box-shadow: 0 0 0 12px rgba(127,209,208,0); } 100% { box-shadow: 0 0 0 0 rgba(127,209,208,0); } }
   .hint { margin: -4px 0 8px; font-size: 11px; color: var(--ink-2); }
 
-  /* the control panel: frosted glass, minimal */
+  /* the control centre - the same sheet as the Unity app: header with live clock,
+     time-of-day presets, a sky-coloured slider, switches, places, actions */
   #panel { position: fixed; left: max(16px, env(safe-area-inset-left)); bottom: max(16px, env(safe-area-inset-bottom));
-    width: 286px; padding: 16px 16px 14px; border-radius: 16px;
-    background: var(--glass); border: 1px solid var(--glass-line);
-    backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.35); }
-  #panel h1 { margin: 0 0 2px; font-size: 15px; font-weight: 600; letter-spacing: .01em; }
-  #panel .sub { margin: 0 0 14px; font-size: 12px; color: var(--ink-2); }
-  .row { display: flex; align-items: center; justify-content: space-between; margin: 10px 0; }
-  .row label { font-size: 12.5px; color: var(--ink-2); }
-  .time { font-variant-numeric: tabular-nums; font-size: 12.5px; }
-  input[type=range] { width: 100%; margin: 4px 0 2px; accent-color: var(--accent); }
-  .scale { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--ink-2); }
-  .switch { position: relative; width: 38px; height: 22px; flex: none; }
+    width: 372px; max-height: calc(100% - 32px); overflow-y: auto; padding: 8px 18px 16px; border-radius: 22px;
+    background: rgba(13,16,20,0.72); border: 1px solid rgba(255,255,255,0.13);
+    backdrop-filter: blur(22px) saturate(1.3); -webkit-backdrop-filter: blur(22px) saturate(1.3);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.45); scrollbar-width: none; }
+  #panel::-webkit-scrollbar { display: none; }
+  .grab { display: block; width: 40px; height: 4px; margin: 2px auto 10px; border-radius: 4px; border: 0; padding: 0;
+    background: rgba(255,255,255,0.3); cursor: pointer; flex: none; }
+  .head { display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; -webkit-user-select: none; }
+  .head .name { flex: 1; min-width: 0; }
+  #panel h1 { margin: 0; font-size: 16px; font-weight: 650; letter-spacing: .005em; }
+  #panel .sub { margin: 1px 0 0; font-size: 12px; color: var(--ink-2); }
+  .clockcol { text-align: right; line-height: 1.1; }
+  .time { font-variant-numeric: tabular-nums; font-size: 22px; font-weight: 650; display: block; }
+  .period { font-size: 11.5px; font-weight: 650; color: var(--accent); }
+  .chev { width: 18px; height: 18px; flex: none; position: relative; transition: transform .25s; }
+  .chev::before, .chev::after { content: ""; position: absolute; top: 8px; width: 9px; height: 2px; border-radius: 2px;
+    background: rgba(255,255,255,0.6); }
+  .chev::before { left: 1px; transform: rotate(40deg); } .chev::after { right: 1px; transform: rotate(-40deg); }
+  #panel:not(.expanded) .chev { transform: rotate(180deg); }
+  .chips { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin: 12px 0 10px; }
+  .chip { appearance: none; border: 1px solid rgba(255,255,255,0.11); background: rgba(255,255,255,0.035); color: var(--ink);
+    border-radius: 11px; padding: 7px 2px 6px; cursor: pointer; font: inherit; display: flex; flex-direction: column;
+    align-items: center; gap: 2px; transition: background .2s, color .2s; }
+  .chip i { width: 8px; height: 8px; border-radius: 50%; display: block; }
+  .chip b { font-size: 11px; font-weight: 650; } .chip small { font-size: 9.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .chip.on { background: var(--accent); border-color: transparent; color: #0a2124; }
+  .chip.on small { color: rgba(10,33,36,0.7); }
+  #day { -webkit-appearance: none; appearance: none; width: 100%; height: 26px; margin: 0; background: transparent; cursor: pointer; }
+  #day::-webkit-slider-runnable-track { height: 8px; border-radius: 8px; background: var(--sky); }
+  #day::-moz-range-track { height: 8px; border-radius: 8px; background: var(--sky); }
+  #day::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -7px; border-radius: 50%;
+    background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.45); border: 0; }
+  #day::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.45); border: 0; }
+  :root { --sky: linear-gradient(90deg, #29335f 0%, #f59e8c 9.4%, #a8d4f5 21.9%, #85c2f2 59.4%, #ff8c47 77.2%, #7357a8 84.4%, #1c244d 100%); }
+  .scale { position: relative; height: 16px; font-size: 10px; color: var(--ink-2); }
+  .scale span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+  .scale span:last-child { transform: translateX(-100%); }
+  .more { margin-top: 6px; }
+  #panel:not(.expanded) .more { display: none; }
+  .divider { height: 1px; background: rgba(255,255,255,0.10); margin: 6px 0 4px; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 10px 0; }
+  .row label { font-size: 13.5px; color: var(--ink); }
+  .row small { display: block; font-size: 11px; color: var(--ink-2); margin-top: 1px; }
+  input[type=range] { accent-color: var(--accent); }
+  .switch { position: relative; width: 44px; height: 26px; flex: none; }
   .switch input { opacity: 0; width: 0; height: 0; }
-  .switch span { position: absolute; inset: 0; border-radius: 22px; background: rgba(255,255,255,0.18);
+  .switch span { position: absolute; inset: 0; border-radius: 26px; background: rgba(255,255,255,0.14);
     transition: background .2s; cursor: pointer; }
-  .switch span::after { content: ""; position: absolute; left: 3px; top: 3px; width: 16px; height: 16px;
-    border-radius: 50%; background: #fff; transition: transform .2s; }
+  .switch span::after { content: ""; position: absolute; left: 2px; top: 2px; width: 22px; height: 22px;
+    border-radius: 50%; background: #fff; transition: transform .22s; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
   .switch input:checked + span { background: var(--accent); }
-  .switch input:checked + span::after { transform: translateX(16px); }
+  .switch input:checked + span::after { transform: translateX(18px); }
+  .cap { font-size: 11px; font-weight: 650; color: var(--ink-2); margin: 12px 0 6px; letter-spacing: .02em; }
+  .places { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .places::-webkit-scrollbar { display: none; }
+  .place { appearance: none; flex: none; border: 1px solid rgba(255,255,255,0.11); background: rgba(255,255,255,0.035);
+    color: var(--ink); border-radius: 999px; padding: 7px 13px; font: 500 12px/1 inherit; cursor: pointer; white-space: nowrap; }
+  .place.on { background: var(--accent); border-color: transparent; color: #0a2124; }
   .btns { display: flex; gap: 8px; margin-top: 14px; }
-  button, .btn { flex: 1; appearance: none; border: 1px solid var(--glass-line); border-radius: 10px;
-    background: rgba(255,255,255,0.10); color: var(--ink); font: 600 12.5px/1 inherit; padding: 10px 8px;
+  button, .btn { flex: 1; appearance: none; border: 1px solid rgba(255,255,255,0.12); border-radius: 12px;
+    background: rgba(255,255,255,0.09); color: var(--ink); font: 650 12.5px/1 inherit; padding: 12px 8px;
     cursor: pointer; text-align: center; text-decoration: none; }
   button.primary, .btn.primary { background: #e9f6f6; color: #0c2427; border-color: transparent; }
   button:hover, .btn:hover { filter: brightness(1.08); }
+  .hint { margin: 10px 0 0; font-size: 11px; color: var(--ink-2); }
   #sizeRow { display: none; }
   .in-ar #sizeRow { display: flex; }
+  #sizeRow input { width: 60%; }
+  /* a hint pill at the top, like the app's */
+  #tip { position: fixed; top: max(14px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%);
+    padding: 8px 15px; border-radius: 999px; font-size: 12.5px; white-space: nowrap; pointer-events: none;
+    background: rgba(13,16,20,0.62); border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transition: opacity .4s; opacity: 0; }
+  #tip.show { opacity: 1; }
 
   /* QR for laptops */
   #qrbox { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom));
@@ -91,8 +139,8 @@
     background: rgba(0,0,0,0.55); font-size: 12.5px; display: none; }
 
   @media (max-width: 640px) {
-    #panel { left: 12px; right: 12px; bottom: 12px; width: auto; padding: 12px 14px; }
-    #panel .sub { display: none; }
+    #panel { left: 10px; right: 10px; bottom: max(10px, env(safe-area-inset-bottom)); width: auto; max-height: 62%; padding: 6px 14px 14px; }
+    #tip { font-size: 11.5px; }
     #qrbox { display: none; }
     .lbl .card { padding: 4px 8px 4px 9px; border-radius: 7px; }
     .lbl .t { font-size: 11px; } .lbl .s { font-size: 9.5px; }
@@ -113,17 +161,26 @@
 <div id="loading">Loading the Floating Seahorse…</div>
 <div id="msg"></div>
 
-<div id="panel">
-  <h1>The Floating Seahorse</h1>
-  <p class="sub">The Heart of Europe, Dubai</p>
-  <div class="row"><label for="day">Daylight</label><span class="time" id="clock">17:51</span></div>
+<div id="tip">Tap a glowing dot, or any part of the villa</div>
+<div id="panel" class="expanded">
+  <button class="grab" id="grab" aria-label="Show or hide the controls"></button>
+  <div class="head" id="head">
+    <div class="name"><h1>The Floating Seahorse</h1><p class="sub">The Heart of Europe, Dubai</p></div>
+    <div class="clockcol"><span class="time" id="clock">17:51</span><span class="period" id="period">Sunset</span></div>
+    <span class="chev" aria-hidden="true"></span>
+  </div>
+  <div class="chips" id="times"></div>
   <input id="day" type="range" min="5.5" max="21.5" step="0.05" value="17.85" aria-label="Time of day">
-  <div class="scale"><span>Dawn</span><span>Noon</span><span>Sunset</span><span>Night</span></div>
-  <div class="row"><label for="rain">Rain</label><label class="switch"><input id="rain" type="checkbox"><span></span></label></div>
-  <div class="row"><label for="lbls">Hotspots</label><label class="switch"><input id="lbls" type="checkbox" checked><span></span></label></div>
-  <p class="hint">Tap a glowing dot, or any part of the villa, to see what it is.</p>
-  <p class="hint" id="tierLine"></p>
-  <div class="row" id="sizeRow"><label for="size">Size</label><input id="size" type="range" min="0.5" max="4" step="0.05" value="1" style="width:60%"></div>
+  <div class="scale"><span style="left:3.1%">Dawn</span><span style="left:40.6%">Noon</span><span style="left:78.1%">Sunset</span><span style="left:100%">Night</span></div>
+  <div class="more">
+    <div class="divider"></div>
+    <div class="row"><div><label for="rain">Rain</label><small>A passing tropical shower</small></div><label class="switch"><input id="rain" type="checkbox"><span></span></label></div>
+    <div class="row"><div><label for="lbls">Hotspots</label><small>Glowing dots on every place</small></div><label class="switch"><input id="lbls" type="checkbox" checked><span></span></label></div>
+    <div class="cap">Places</div>
+    <div class="places" id="places"></div>
+    <div class="row" id="sizeRow"><label for="size">Size</label><input id="size" type="range" min="0.5" max="4" step="0.05" value="1"></div>
+    <p class="hint" id="tierLine"></p>
+  </div>
   <div class="btns">
     <button id="replay">Replay build</button>
     <a id="arBtn" class="btn primary" href="#">View in AR</a>
@@ -142,6 +199,10 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { Sky } from 'three/addons/objects/Sky.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 // Full or Lite model, chosen per device (see pickTier below)
 let MODEL = '/models/seahorse_ar.glb', USDZ = '/models/seahorse_ar.usdz', TIER = 'full';
@@ -202,6 +263,7 @@ renderer.xr.enabled = true;
 stage.appendChild(renderer.domElement);
 
 const css = new CSS2DRenderer({ element: document.getElementById('labels') });
+let composer = null, bloom = null;     // made after the scene/camera (Full tier only)
 css.setSize(innerWidth, innerHeight);
 
 const scene = new THREE.Scene();
@@ -223,6 +285,17 @@ controls.minDistance = 0.28; controls.maxDistance = 2.2;
 controls.maxPolarAngle = THREE.MathUtils.degToRad(86);
 controls.autoRotate = true; controls.autoRotateSpeed = 0.35;
 controls.addEventListener('start', () => controls.autoRotate = false);
+
+// lamp bloom, as in the Unity showcase: only bright things glow (Full tier, on screen)
+if (TIER === 'full') {
+  const rt = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: 4 });
+  composer = new EffectComposer(renderer, rt);
+  composer.addPass(new RenderPass(scene, camera));
+  bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0, 0.55, 0.9);   // strength follows the lamps
+  composer.addPass(bloom);
+  composer.addPass(new OutputPass());
+  composer.setPixelRatio(Math.min(devicePixelRatio, 2)); composer.setSize(innerWidth, innerHeight);
+}
 
 // the "table": receives the diorama's soft shadow, otherwise invisible
 const ground = new THREE.Mesh(new THREE.CircleGeometry(3, 64),
@@ -249,14 +322,14 @@ function bakeEnvironment() {
 }
 
 // ---- rain: streaks falling through a cylinder around the diorama
-const RAIN_N = isMobile ? 900 : 1800;
+const RAIN_N = isMobile ? 600 : 1100;
 const rainGeo = new THREE.BufferGeometry();
 {
   const p = new Float32Array(RAIN_N * 2 * 3), seed = new Float32Array(RAIN_N * 2);
   for (let i = 0; i < RAIN_N; i++) {
     const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * 0.42;
     const x = Math.cos(a) * r, z = Math.sin(a) * r, y = Math.random() * 0.75;
-    p.set([x, y, z, x - 0.002, y - 0.022, z], i * 6);
+    p.set([x, y, z, x - 0.0015, y - 0.016, z], i * 6);
     seed[i * 2] = seed[i * 2 + 1] = Math.random();
   }
   rainGeo.setAttribute('position', new THREE.BufferAttribute(p, 3));
@@ -270,7 +343,7 @@ const rainMat = new THREE.ShaderMaterial({
       vA = smoothstep(0.0, 0.08, p.y) * (1.0 - smoothstep(0.6, 0.75, p.y));
       gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0); }`,
   fragmentShader: `uniform float op; varying float vA;
-    void main(){ gl_FragColor = vec4(0.82, 0.88, 0.92, op * 0.55 * vA); }`,
+    void main(){ gl_FragColor = vec4(0.82, 0.88, 0.92, op * 0.32 * vA); }`,
 });
 const rain = new THREE.LineSegments(rainGeo, rainMat);
 rain.frustumCulled = false; rain.visible = false; scene.add(rain);
@@ -347,7 +420,7 @@ loader.load(MODEL, (gltf) => {
   for (const [name, color, dist, dy, k] of [
       ['main_ceiling', 0xffcf96, 0.30, -0.035, 1.0], ['upper_block', 0xffcf96, 0.18, -0.02, 0.5],
       ['uw_ceiling', 0xbfe6ff, 0.24, -0.03, 0.8], ['jacuzzi_water', 0x7fe0e6, 0.10, 0.012, 0.35],
-      ['bow_deck', 0xffd6a8, 0.20, 0.04, 0.35]]) {
+      ['bow_deck', 0xffd6a8, 0.16, 0.04, 0.12]]) {
     const p = at(name, dy); if (!p) continue;
     const L = new THREE.PointLight(color, 0, dist, 1.4); L.position.copy(p); L.userData.k = k;
     scene.add(L); interiorLights.push(L);
@@ -389,6 +462,13 @@ loader.load(MODEL, (gltf) => {
     select, pick(x, y) { ptr.set(x * 2 - 1, -y * 2 + 1); ray.setFromCamera(ptr, camera);
       const hit = ray.intersectObjects(pickables, false)[0]; return hit ? [hit.object.name, placeOf(hit)] : null; },
     setRain(v) { rainAmt = rainTarget = v; applyDaylight(true); rainMat.uniforms.t.value = 3.7; } };
+  // deep links for sharing a view: ?hour=21&rain=1&place=1&open=1 (place skips to the built villa)
+  const q = new URLSearchParams(location.search);
+  if (q.has('hour')) ui.day.value = Math.min(21.5, Math.max(5.5, parseFloat(q.get('hour')) || 17.85));
+  if (q.get('rain') === '1') { ui.rain.checked = true; rainAmt = rainTarget = 1; }
+  if (q.get('open') === '1') panel.classList.add('expanded');
+  if ((q.has('place') || q.get('built') === '1') && buildAction) buildAction.time = 30;
+  if (q.has('place')) { controls.autoRotate = false; select(parseInt(q.get('place'), 10)); }
   applyDaylight(true);
 }, (e) => {
   if (e.total) document.getElementById('loading').textContent = `Loading the Floating Seahorse… ${Math.round(e.loaded / e.total * 100)}%`;
@@ -396,14 +476,15 @@ loader.load(MODEL, (gltf) => {
 
 // ---- daylight + weather
 const ui = { day: document.getElementById('day'), rain: document.getElementById('rain'),
-  lbls: document.getElementById('lbls'), clock: document.getElementById('clock') };
+  lbls: document.getElementById('lbls'), clock: document.getElementById('clock'), period: document.getElementById('period') };
 let rainAmt = 0, rainTarget = 0, lastEnvKey = '';
 const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 const warm = new THREE.Color(1.0, 0.56, 0.32), white = new THREE.Color(1.0, 0.96, 0.9), moon = new THREE.Color(0.55, 0.65, 0.9);
 
 function applyDaylight(force = false) {
   const h = parseFloat(ui.day.value);
-  ui.clock.textContent = `${String(Math.floor(h)).padStart(2, '0')}:${String(Math.round((h % 1) * 60) % 60).padStart(2, '0')}`;
+  ui.clock.textContent = clockOf(h); ui.period.textContent = periodOf(h);
+  timeChips.forEach((b, i) => b.classList.toggle('on', Math.abs(h - TIMES[i][1]) < 0.12));
   const elev = Math.sin(Math.PI * (h - 6) / 12) * 62;                   // degrees
   const az = THREE.MathUtils.degToRad(100 + 160 * (h - 6) / 12);
   const el = THREE.MathUtils.degToRad(elev);
@@ -414,7 +495,7 @@ function applyDaylight(force = false) {
   const lightDir = elev > -2 ? dir : new THREE.Vector3(-0.4, 0.8, 0.45).normalize();   // moonlight
   sun.position.copy(lightDir).multiplyScalar(2);
   sun.color.copy(warm).lerp(white, smooth(4, 35, elev)).lerp(moon, night);
-  sun.intensity = (3.2 * day * (1 - 0.75 * r)) + 0.35 * night;
+  sun.intensity = (3.2 * day * (1 - 0.75 * r)) + 0.30 * night;           // moonlight: dim and blue
   sun.shadow.radius = 3 + 10 * r;
   hemi.intensity = 0.18 + 0.25 * day * (1 - 0.3 * r);
   // sky -> environment (re-baked only when it visibly changes)
@@ -425,11 +506,12 @@ function applyDaylight(force = false) {
   const key = `${h.toFixed(1)}|${r.toFixed(1)}`;
   if (force || key !== lastEnvKey) { bakeEnvironment(); lastEnvKey = key; }
   scene.environmentIntensity = (0.9 * day + 0.12) * (1 - 0.35 * r);
-  renderer.toneMappingExposure = 0.92 + 0.35 * night;
+  renderer.toneMappingExposure = 0.92 + 0.08 * night;     // night stays night (as in the Unity showcase)
   // interiors come on as the light goes
   const lamps = smooth(-2, 12, -elev + 8);          // dusk onwards
-  nightMats.forEach((m) => m.emissiveIntensity = 2.2 * lamps);
-  interiorLights.forEach((L) => L.intensity = 1.6 * L.userData.k * lamps);
+  nightMats.forEach((m) => m.emissiveIntensity = 1.4 * lamps);               // the bloom adds the glow
+  if (bloom) bloom.strength = 0.26 * lamps;                                  // lamps glow; daylight whites do not
+  interiorLights.forEach((L) => L.intensity = 0.7 * L.userData.k * lamps);
   // backdrop and haze darken with the hour and the weather
   const bgIn = new THREE.Color(0x46535c).lerp(new THREE.Color(0x5a4a44), 1 - smooth(6, 30, elev))
     .lerp(new THREE.Color(0x10171d), night).lerp(new THREE.Color(0x2a3136), r * 0.6);
@@ -438,9 +520,40 @@ function applyDaylight(force = false) {
   document.documentElement.style.setProperty('--bg-out', '#' + bgOut.getHexString());
   scene.fog.color.copy(bgIn).lerp(bgOut, 0.35);
   scene.fog.density = 0.28 + 0.26 * r + 0.15 * night;
-  rainMat.uniforms.op.value = r; rain.visible = r > 0.01;
+  rainMat.uniforms.op.value = r * (0.4 + 0.6 * day); rain.visible = r > 0.01;      // dimmer streaks in the dark
 }
-ui.day.addEventListener('input', () => applyDaylight());
+ui.day.addEventListener('input', () => { easing = null; applyDaylight(); });
+
+// time-of-day presets (eased), places list, fold - the same as the Unity app's control centre
+const TIMES = [['Morning', 8.5, '#ffd694'], ['Afternoon', 14, '#8fc9f5'], ['Sunset', 17.85, '#ff8c4d'],
+  ['Dusk', 18.75, '#8f70c2'], ['Night', 21, '#334585']];
+const clockOf = (h) => `${String(Math.floor(h)).padStart(2, '0')}:${String(Math.round((h % 1) * 60) % 60).padStart(2, '0')}`;
+const periodOf = (h) => h < 7 ? 'Dawn' : h < 11.5 ? 'Morning' : h < 16.8 ? 'Afternoon' : h < 18.3 ? 'Sunset' : h < 19.6 ? 'Dusk' : 'Night';
+let easing = null;
+const timeChips = TIMES.map(([name, h, sky]) => {
+  const b = document.createElement('button'); b.className = 'chip'; b.type = 'button';
+  b.innerHTML = `<i style="background:${sky}"></i><b>${name}</b><small>${clockOf(h)}</small>`;
+  b.addEventListener('click', () => {
+    const from = parseFloat(ui.day.value), t0 = performance.now();
+    easing = () => { const t = Math.min(1, (performance.now() - t0) / 1100), e = t * t * (3 - 2 * t);
+      ui.day.value = from + (h - from) * e; applyDaylight(); if (t >= 1) easing = null; };
+  });
+  document.getElementById('times').appendChild(b); return b;
+});
+const placeChips = LABELS.map(([title], k) => {
+  const b = document.createElement('button'); b.className = 'place'; b.type = 'button'; b.textContent = title;
+  b.addEventListener('click', () => {
+    if (!ui.lbls.checked) { ui.lbls.checked = true; ui.lbls.dispatchEvent(new Event('change')); }
+    if (buildAction && buildAction.time < LABELS_FROM) buildAction.time = LABELS_FROM;    // skip to the built villa
+    select(k); controls.autoRotate = false;
+  });
+  document.getElementById('places').appendChild(b); return b;
+});
+const panel = document.getElementById('panel'), tip = document.getElementById('tip');
+const fold = () => panel.classList.toggle('expanded');
+document.getElementById('head').addEventListener('click', fold);
+document.getElementById('grab').addEventListener('click', fold);
+if (innerWidth <= 640) panel.classList.remove('expanded');      // phones: open with the essentials only
 ui.rain.addEventListener('change', () => { rainTarget = ui.rain.checked ? 1 : 0; });
 ui.lbls.addEventListener('change', () => {
   document.body.classList.toggle('hide-labels', !ui.lbls.checked);
@@ -537,6 +650,8 @@ function select(k) {
   labelRoots.forEach((lr, i) => { if (lr) lr.visible = ui.lbls.checked && i === selected; });
   labelMeshes.forEach((m) => m.visible = xr);                 // 3D cards only in AR; HTML on screen
   hotspots.forEach((h, i) => h && h.element.classList.toggle('on', i === selected));
+  placeChips.forEach((b, i) => b.classList.toggle('on', i === selected));
+  if (selected >= 0) placeChips[selected].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
 }
 const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(); let downAt = null;
 renderer.domElement.addEventListener('pointerdown', (e) => { downAt = [e.clientX, e.clientY]; });
@@ -554,9 +669,12 @@ function declutter() {
   const items = [];
   for (const o of labelObjs) {
     const el = o.userData.el, card = el.firstChild;
-    if (parseFloat(el.style.opacity || '1') < 0.05) { card.style.transform = ''; continue; }
-    const off = o.userData.off || 0, r = card.getBoundingClientRect();
-    items.push({ o, card, top: r.top - off, bottom: r.bottom - off, left: r.left, right: r.right });
+    if (parseFloat(el.style.opacity || '1') < 0.05) { card.style.transform = ''; o.userData.offX = 0; continue; }
+    const off = o.userData.off || 0, ox = o.userData.offX || 0, r = card.getBoundingClientRect();
+    // keep the card on screen: slide it sideways off the edges
+    const left = r.left - ox, right = r.right - ox;
+    o.userData.offX = Math.max(10 - left, 0) - Math.max(right - (innerWidth - 10), 0);
+    items.push({ o, card, top: r.top - off, bottom: r.bottom - off, left: left + o.userData.offX, right: right + o.userData.offX });
   }
   items.sort((a, b) => a.top - b.top);
   const placed = [];
@@ -567,7 +685,7 @@ function declutter() {
       if (h && it.top + dy < p.bottom + 6 && it.bottom + dy > p.top - 6) dy = p.bottom + 6 - it.top;
     }
     const prev = it.o.userData.off || 0, next = prev + (dy - prev) * 0.25;   // ease
-    it.o.userData.off = next; it.card.style.transform = `translateY(${next.toFixed(1)}px)`;
+    it.o.userData.off = next; it.card.style.transform = `translate(${(it.o.userData.offX || 0).toFixed(1)}px, ${next.toFixed(1)}px)`;
     placed.push({ top: it.top + dy, bottom: it.bottom + dy, left: it.left, right: it.right });
   }
 }
@@ -577,6 +695,7 @@ const clock = new THREE.Clock();
 renderer.setAnimationLoop((t, frame) => {
   const dt = Math.min(clock.getDelta(), 0.05);
   if (mixer) mixer.update(dt);
+  if (easing) easing();
   if (Math.abs(rainTarget - rainAmt) > 0.001) { rainAmt += (rainTarget - rainAmt) * Math.min(1, dt * 1.5); applyDaylight(); }
   rainMat.uniforms.t.value = t / 1000;
   rain.position.copy(model.position); rain.scale.copy(model.scale);
@@ -596,12 +715,15 @@ renderer.setAnimationLoop((t, frame) => {
       h.element.style.pointerEvents = built && ui.lbls.checked ? 'auto' : 'none'; }
     if (!built && selected >= 0) select(selected);
   }
-  renderer.render(scene, camera);
+  if (composer && !renderer.xr.isPresenting) composer.render(dt); else renderer.render(scene, camera);
   if (!renderer.xr.isPresenting) { css.render(scene, camera); declutter(); }
+  tip.classList.toggle('show', !renderer.xr.isPresenting && mixer && ui.lbls.checked && selected < 0 && model.visible &&
+    (buildAction ? buildAction.time >= LABELS_FROM : true));
 });
 addEventListener('resize', () => {
   camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight); css.setSize(innerWidth, innerHeight);
+  if (composer) composer.setSize(innerWidth, innerHeight);
   if (!renderer.xr.isPresenting) fitCamera();
 });
 </script>
