@@ -354,6 +354,14 @@ const loader = new GLTFLoader().setDRACOLoader(draco);
 const model = new THREE.Group(); scene.add(model);
 let mixer = null, buildAction = null;
 const waterMats = [], nightMats = [], interiorLights = [], labelMeshes = [], leaderMeshes = [], labelObjs = [];
+// night lightmaps (baked in Blender with the interior lamps, bounced): the villa's
+// two atlases glow with them from dusk, so rooms light up like real interiors
+const nightAtlas = [], NIGHT_K = 1.0;
+const nightTex = {};
+for (const g of ['A', 'B']) {
+  const t = new THREE.TextureLoader().load(`/models/night${g}.jpg`);
+  t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.channel = 0; nightTex[g] = t;
+}
 const labelRoots = [], hotspots = [], hotspots3D = [], pickables = [];
 let selected = -1;
 
@@ -389,6 +397,12 @@ loader.load(MODEL, (gltf) => {
       o.material = m;
       waterMats.push({ m, speed: n.includes('glint') ? 0.035 : n.includes('swell') ? -0.018 : 0.012 });
     }
+  });
+  root.traverse((o) => {
+    const m = o.isMesh && o.material, g = m && /^AR_([AB])_/.exec(m.name);
+    if (!g || m.userData.night) return;
+    m.userData.night = true; m.emissive = new THREE.Color(1, 1, 1); m.emissiveMap = nightTex[g[1]];
+    m.emissiveIntensity = 0; nightAtlas.push(m);
   });
   // interior lighting for dusk/night: lamps glow, soft warm point lights
   const glow = (name) => {
@@ -511,7 +525,8 @@ function applyDaylight(force = false) {
   const lamps = smooth(-2, 12, -elev + 8);          // dusk onwards
   nightMats.forEach((m) => m.emissiveIntensity = 1.4 * lamps);               // the bloom adds the glow
   if (bloom) bloom.strength = 0.26 * lamps;                                  // lamps glow; daylight whites do not
-  interiorLights.forEach((L) => L.intensity = 0.7 * L.userData.k * lamps);
+  interiorLights.forEach((L) => L.intensity = 0.35 * L.userData.k * lamps);   // the baked night light does the rooms
+  nightAtlas.forEach((m) => m.emissiveIntensity = NIGHT_K * lamps);
   // backdrop and haze darken with the hour and the weather
   const bgIn = new THREE.Color(0x46535c).lerp(new THREE.Color(0x5a4a44), 1 - smooth(6, 30, elev))
     .lerp(new THREE.Color(0x10171d), night).lerp(new THREE.Color(0x2a3136), r * 0.6);
