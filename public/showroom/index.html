@@ -182,7 +182,6 @@
     <p class="hint" id="tierLine"></p>
   </div>
   <div class="btns">
-    <button id="replay">Replay build</button>
     <a id="arBtn" class="btn primary" href="#">View in AR</a>
   </div>
 </div>
@@ -220,7 +219,7 @@ const LABELS = [
   ['Swim Platform', 'Step straight down into the sea'],
   ['Solar Canopy', 'Shade and power for the upper deck'],
 ];
-const LABELS_FROM = 9.4;     // s into the clip: the villa is built, the 3D cards pop in
+const LABELS_FROM = 0;       // the villa stands finished from the first frame (no build animation)
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 const isMobile = isIOS || /Android|Mobi/.test(navigator.userAgent);
 if (isMobile) document.body.classList.add('is-mobile');
@@ -239,8 +238,9 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 
 // ---- Full / Lite: the same villa, two weights. Full: 4K atlas, caustics,
-// surface glint (Android 9.5 MB / iPhone 12.9 MB). Lite: 2K/1K textures,
-// fewer layers (5.1 / 8.3 MB). ?tier=full|lite overrides, for testing.
+// surface glint, every downlight lit live (Android 10.1 MB / iPhone 15.1 MB).
+// Lite: 2K/1K textures, fewer layers, only the visible lamps lit live
+// (6.2 / 11.0 MB). ?tier=full|lite overrides, for testing.
 function pickTier() {
   const q = new URLSearchParams(location.search).get('tier');
   if (q === 'full' || q === 'lite') return q;
@@ -356,7 +356,7 @@ let mixer = null, buildAction = null;
 const waterMats = [], nightMats = [], interiorLights = [], labelMeshes = [], leaderMeshes = [], labelObjs = [];
 // night lightmaps (baked in Blender with the interior lamps, bounced): the villa's
 // two atlases glow with them from dusk, so rooms light up like real interiors
-const nightAtlas = [], NIGHT_K = 1.0;
+const nightAtlas = [], NIGHT_K = 1.0, lampGlow = [], glassRefl = [];
 const nightTex = {};
 for (const g of ['A', 'B']) {
   const t = new THREE.TextureLoader().load(`/models/night${g}.jpg`);
@@ -411,7 +411,11 @@ loader.load(MODEL, (gltf) => {
     o.traverse((c) => { if (c.isMesh) { c.material = c.material.clone();
       c.material.emissive = new THREE.Color(0xffc98a); c.material.emissiveIntensity = 0; nightMats.push(c.material); } });
   };
-  ['ceiling_lights', 'deck_lights', 'uw_lamps'].forEach(glow);
+  ['uw_lamps'].forEach(glow);
+  // every lamp lens, globe and diffuser shares one emissive material: softly
+  // on by day (as in the developer's renders), bright from dusk
+  root.traverse((o) => { if (o.isMesh && /^AR_lamp_glow/.test(o.material.name) && !lampGlow.includes(o.material)) lampGlow.push(o.material); });
+  root.traverse((o) => { if (o.isMesh && /^AR_glass(_dark)?_refl/.test(o.material.name) && !glassRefl.includes(o.material)) glassRefl.push(o.material); });
   root.traverse((o) => { if (o.isMesh && o.material.name === 'AR_water_side') {
     o.material = o.material.clone(); o.material.color.multiply(new THREE.Color(0.86, 1.04, 1.06)); } });
   labelMeshes.forEach((m) => m.visible = false);
@@ -426,19 +430,23 @@ loader.load(MODEL, (gltf) => {
   // place the interior lights on the ASSEMBLED villa: before the clip runs,
   // every part still sits at its fly-in start position
   mixer.setTime(30); root.updateMatrixWorld(true);
-  const at = (name, dy = 0) => {
-    const o = root.getObjectByName(name); if (!o) return null;
-    const c = new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3()); c.y += dy; return c;
-  };
-  // [anchor object, colour, reach (m at 1:40), height offset, strength]
-  for (const [name, color, dist, dy, k] of [
-      ['main_ceiling', 0xffcf96, 0.30, -0.035, 1.0], ['upper_block', 0xffcf96, 0.18, -0.02, 0.5],
-      ['uw_ceiling', 0xbfe6ff, 0.24, -0.03, 0.8], ['jacuzzi_water', 0x7fe0e6, 0.10, 0.012, 0.35],
-      ['bow_deck', 0xffd6a8, 0.16, 0.04, 0.12]]) {
-    const p = at(name, dy); if (!p) continue;
-    const L = new THREE.PointLight(color, 0, dist, 1.4); L.position.copy(p); L.userData.k = k;
-    scene.add(L); interiorLights.push(L);
-  }
+  // real lights on the villa's own fixtures (ar_lamp_<kind>_<n> nodes from the
+  // export): narrow warm spots under every recessed downlight, points in the
+  // pendants, the arc lamp, the bedside lamps and the jacuzzi. Each rides its
+  // node, so it follows the model's size; no shadows - the baked night light
+  // carries the pools and scallops, these add the live highlights.
+  // [colour, strength, reach to the lit surface (m at 1:40), spot?]
+  const LAMP = { down: [0xffcc99, 1.0, 0.060, true], soffit: [0xffcc99, 0.9, 0.068, true],
+    upper: [0xffcc99, 0.6, 0.055, true], pend: [0xffc68c, 0.6, 0.018, false],
+    arc: [0xffc890, 1.0, 0.045, true], bed: [0xffc080, 0.35, 0.012, false], jac: [0x7fe0e6, 0.4, 0.010, false] };
+  root.traverse((o) => {
+    const m = /^ar_lamp_([a-z]+)_\d+$/.exec(o.name); if (!m || !LAMP[m[1]]) return;
+    const [color, k, d, spot] = LAMP[m[1]];
+    if (TIER === 'lite' && spot && m[1] !== 'arc') return;          // phones: the lamps you see, not every downlight
+    const L = spot ? new THREE.SpotLight(color, 0, 0, m[1] === 'arc' ? 1.0 : 0.62, 0.6, 2) : new THREE.PointLight(color, 0, 0, 2);
+    if (spot) { const t = new THREE.Object3D(); t.position.set(0, -1, 0); o.add(t); L.target = t; }
+    L.userData.k = k * d * d; o.add(L); interiorLights.push(L);
+  });
   // labels: glass HTML cards on the web, placed on the 3D cards' positions
   // (read on the assembled pose, when the label roots are at full scale)
   for (let k = 0; k < LABELS.length; k++) {
@@ -524,8 +532,11 @@ function applyDaylight(force = false) {
   // interiors come on as the light goes
   const lamps = smooth(-2, 12, -elev + 8);          // dusk onwards
   nightMats.forEach((m) => m.emissiveIntensity = 1.4 * lamps);               // the bloom adds the glow
+  lampGlow.forEach((m) => m.emissiveIntensity = 0.45 + 1.6 * lamps);
+  glassRefl.forEach((m) => m.color.setScalar(0.1 + 0.9 * day));             // the baked sky fades with the light
   if (bloom) bloom.strength = 0.26 * lamps;                                  // lamps glow; daylight whites do not
-  interiorLights.forEach((L) => L.intensity = 0.35 * L.userData.k * lamps);   // the baked night light does the rooms
+  const s2 = model.scale.x * model.scale.x;                                   // 1/d^2: lights follow the size
+  interiorLights.forEach((L) => L.intensity = 1.6 * L.userData.k * s2 * lamps);
   nightAtlas.forEach((m) => m.emissiveIntensity = NIGHT_K * lamps);
   // backdrop and haze darken with the hour and the weather
   const bgIn = new THREE.Color(0x46535c).lerp(new THREE.Color(0x5a4a44), 1 - smooth(6, 30, elev))
@@ -575,7 +586,6 @@ ui.lbls.addEventListener('change', () => {
   if (!ui.lbls.checked && selected >= 0) select(selected);
   hotspots3D.forEach((h) => h.visible = renderer.xr.isPresenting && ui.lbls.checked);
 });
-document.getElementById('replay').addEventListener('click', () => { if (buildAction) { if (selected >= 0) select(selected); buildAction.reset().play(); } });
 
 // ---- AR: Android -> WebXR here (panel stays on screen); iPhone -> Quick Look
 const arBtn = document.getElementById('arBtn');
@@ -638,7 +648,7 @@ xrCtrl.addEventListener('select', () => {
   const k = hit ? placeOf(hit) : -1;
   if (k >= 0) select(k); else if (selected >= 0) select(selected);
 });
-document.getElementById('size').addEventListener('input', (e) => model.scale.setScalar(parseFloat(e.target.value)));
+document.getElementById('size').addEventListener('input', (e) => { model.scale.setScalar(parseFloat(e.target.value)); applyDaylight(); });
 
 // ---- tap a place -> its label (and connector) pops up; tap again/elsewhere closes
 const PLACES = [  // villa object names -> label index
