@@ -7,7 +7,7 @@
 <title>Floating Seahorse — Showroom</title>
 <style>
   :root {
-    --bg-in: #3b4750; --bg-out: #0d1216;
+    --bg-in: #3b4750; --bg-out: #0d1216; --bg-glow: rgba(255,170,95,0); --stars: 0;
     --glass: rgba(255,255,255,0.12); --glass-line: rgba(255,255,255,0.22);
     --ink: #f3f5f6; --ink-2: rgba(243,245,246,0.68); --accent: #7fd1d0;
   }
@@ -16,8 +16,19 @@
     font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
     overflow: hidden; -webkit-font-smoothing: antialiased; }
   #stage { position: fixed; inset: 0;
-    background: radial-gradient(ellipse 70% 62% at 50% 52%, var(--bg-in) 0%, var(--bg-out) 100%);
+    /* night: a moonlit navy, the warm glow of the city on the horizon, faint stars */
+    background: radial-gradient(ellipse 130% 34% at 50% 100%, var(--bg-glow) 0%, rgba(0,0,0,0) 70%),
+                radial-gradient(ellipse 70% 62% at 50% 52%, var(--bg-in) 0%, var(--bg-out) 100%);
     transition: background 0.8s; }
+  #stage::before { content: ""; position: absolute; inset: 0 0 35% 0; pointer-events: none; opacity: var(--stars);
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, #fff 60%, transparent), radial-gradient(1px 1px at 27% 8%, #dfe8ff 60%, transparent),
+      radial-gradient(1.5px 1.5px at 41% 22%, #fff 60%, transparent), radial-gradient(1px 1px at 58% 12%, #fff 60%, transparent),
+      radial-gradient(1px 1px at 73% 27%, #dfe8ff 60%, transparent), radial-gradient(1.5px 1.5px at 86% 9%, #fff 60%, transparent),
+      radial-gradient(1px 1px at 93% 31%, #fff 60%, transparent), radial-gradient(1px 1px at 5% 37%, #dfe8ff 60%, transparent),
+      radial-gradient(1px 1px at 34% 41%, #fff 60%, transparent), radial-gradient(1px 1px at 66% 44%, #fff 60%, transparent);
+    background-size: 640px 420px; mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%); transition: opacity 0.8s; }
   canvas { display: block; }
   #labels { position: fixed; inset: 0; pointer-events: none; }
 
@@ -238,9 +249,9 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 
 // ---- Full / Lite: the same villa, two weights. Full: 4K atlas, caustics,
-// surface glint, every downlight lit live (Android 10.1 MB / iPhone 15.1 MB).
+// surface glint, every downlight lit live (Android 12.1 MB / iPhone 17.3 MB).
 // Lite: 2K/1K textures, fewer layers, only the visible lamps lit live
-// (6.2 / 11.0 MB). ?tier=full|lite overrides, for testing.
+// (7.9 / 13.0 MB). ?tier=full|lite overrides, for testing.
 function pickTier() {
   const q = new URLSearchParams(location.search).get('tier');
   if (q === 'full' || q === 'lite') return q;
@@ -438,13 +449,16 @@ loader.load(MODEL, (gltf) => {
   // [colour, strength, reach to the lit surface (m at 1:40), spot?]
   const LAMP = { down: [0xffcc99, 1.0, 0.060, true], soffit: [0xffcc99, 0.9, 0.068, true],
     upper: [0xffcc99, 0.6, 0.055, true], pend: [0xffc68c, 0.6, 0.018, false],
-    arc: [0xffc890, 1.0, 0.045, true], bed: [0xffc080, 0.35, 0.012, false], jac: [0x7fe0e6, 0.4, 0.010, false] };
+    arc: [0xffc890, 1.0, 0.045, true], bed: [0xffc080, 0.35, 0.012, false], jac: [0x7fe0e6, 0.6, 0.010, false],
+    wash: [0xffcc99, 0.8, 0.030, true], parasol: [0xffc890, 0.3, 0.018, false], net: [0x8ce8ff, 0.45, 0.012, false], fill: [0xffd2a0, 0.5, 0.022, false] };
   root.traverse((o) => {
     const m = /^ar_lamp_([a-z]+)_\d+$/.exec(o.name); if (!m || !LAMP[m[1]]) return;
     const [color, k, d, spot] = LAMP[m[1]];
     if (TIER === 'lite' && spot && m[1] !== 'arc') return;          // phones: the lamps you see, not every downlight
+    if (m[1] === 'wash') o.rotation.set(0, 0, 0);                   // (aimed below, at the slatted wall)
     const L = spot ? new THREE.SpotLight(color, 0, 0, m[1] === 'arc' ? 1.0 : 0.62, 0.6, 2) : new THREE.PointLight(color, 0, 0, 2);
-    if (spot) { const t = new THREE.Object3D(); t.position.set(0, -1, 0); o.add(t); L.target = t; }
+    if (spot) { const t = new THREE.Object3D(); t.position.set(m[1] === 'wash' ? -0.47 : 0, -0.88, 0); o.add(t); L.target = t; }
+    L.position.set(0, 0, 0);                    // (a new SpotLight sits one unit UP by default)
     L.userData.k = k * d * d; o.add(L); interiorLights.push(L);
   });
   // labels: glass HTML cards on the web, placed on the 3D cards' positions
@@ -517,9 +531,12 @@ function applyDaylight(force = false) {
   const lightDir = elev > -2 ? dir : new THREE.Vector3(-0.4, 0.8, 0.45).normalize();   // moonlight
   sun.position.copy(lightDir).multiplyScalar(2);
   sun.color.copy(warm).lerp(white, smooth(4, 35, elev)).lerp(moon, night);
-  sun.intensity = (3.2 * day * (1 - 0.75 * r)) + 0.30 * night;           // moonlight: dim and blue
+  sun.intensity = (3.2 * day * (1 - 0.75 * r)) + 0.55 * night;           // moonlight: soft and blue
   sun.shadow.radius = 3 + 10 * r;
-  hemi.intensity = 0.18 + 0.25 * day * (1 - 0.3 * r);
+  // night is never black on the water: a cool sky fill, warm bounce from the sea and the city
+  hemi.color.set(0xbfd8e6).lerp(new THREE.Color(0x9fb6e2), night);
+  hemi.groundColor.set(0x2b2620).lerp(new THREE.Color(0x3d3128), night);
+  hemi.intensity = 0.18 + 0.25 * day * (1 - 0.3 * r) + 0.32 * night;
   // sky -> environment (re-baked only when it visibly changes)
   const u = sky.material.uniforms;
   u.turbidity.value = 4 + 12 * r; u.rayleigh.value = 1.2 + 2.2 * (1 - smooth(5, 30, elev)) - 0.6 * r;
@@ -527,8 +544,8 @@ function applyDaylight(force = false) {
   u.sunPosition.value.copy(elev > -6 ? dir : new THREE.Vector3(0, -1, 0));
   const key = `${h.toFixed(1)}|${r.toFixed(1)}`;
   if (force || key !== lastEnvKey) { bakeEnvironment(); lastEnvKey = key; }
-  scene.environmentIntensity = (0.9 * day + 0.12) * (1 - 0.35 * r);
-  renderer.toneMappingExposure = 0.92 + 0.08 * night;     // night stays night (as in the Unity showcase)
+  scene.environmentIntensity = (0.9 * day + 0.12 + 0.30 * night) * (1 - 0.35 * r);
+  renderer.toneMappingExposure = 0.92 + 0.16 * night;     // a moonlit night, not a black one
   // interiors come on as the light goes
   const lamps = smooth(-2, 12, -elev + 8);          // dusk onwards
   nightMats.forEach((m) => m.emissiveIntensity = 1.4 * lamps);               // the bloom adds the glow
@@ -540,12 +557,14 @@ function applyDaylight(force = false) {
   nightAtlas.forEach((m) => m.emissiveIntensity = NIGHT_K * lamps);
   // backdrop and haze darken with the hour and the weather
   const bgIn = new THREE.Color(0x46535c).lerp(new THREE.Color(0x5a4a44), 1 - smooth(6, 30, elev))
-    .lerp(new THREE.Color(0x10171d), night).lerp(new THREE.Color(0x2a3136), r * 0.6);
-  const bgOut = new THREE.Color(0x0e1418).lerp(new THREE.Color(0x05080b), night);
+    .lerp(new THREE.Color(0x3a5a86), night).lerp(new THREE.Color(0x2a3136), r * 0.6);
+  const bgOut = new THREE.Color(0x0e1418).lerp(new THREE.Color(0x12223b), night);
   document.documentElement.style.setProperty('--bg-in', '#' + bgIn.getHexString());
   document.documentElement.style.setProperty('--bg-out', '#' + bgOut.getHexString());
+  document.documentElement.style.setProperty('--bg-glow', `rgba(255,170,95,${(0.50 * night * (1 - 0.6 * r)).toFixed(3)})`);
+  document.documentElement.style.setProperty('--stars', (0.85 * night * (1 - r)).toFixed(3));
   scene.fog.color.copy(bgIn).lerp(bgOut, 0.35);
-  scene.fog.density = 0.28 + 0.26 * r + 0.15 * night;
+  scene.fog.density = 0.28 + 0.26 * r + 0.04 * night;
   rainMat.uniforms.op.value = r * (0.4 + 0.6 * day); rain.visible = r > 0.01;      // dimmer streaks in the dark
 }
 ui.day.addEventListener('input', () => { easing = null; applyDaylight(); });
