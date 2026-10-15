@@ -213,6 +213,7 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 
 // Full or Lite model, chosen per device (see pickTier below)
 // Full: the full-quality model (JPEG textures, as delivered). Lite (phones,
@@ -278,7 +279,7 @@ renderer.xr.enabled = true;
 stage.appendChild(renderer.domElement);
 
 const css = new CSS2DRenderer({ element: document.getElementById('labels') });
-let composer = null, bloom = null;     // made after the scene/camera (Full tier only)
+let composer = null, bloom = null, gtao = null;     // made after the scene/camera (Full tier only)
 css.setSize(innerWidth, innerHeight);
 
 const scene = new THREE.Scene();
@@ -306,7 +307,26 @@ if (TIER === 'full') {
   const rt = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: 4 });
   composer = new EffectComposer(renderer, rt);
   composer.addPass(new RenderPass(scene, camera));
-  bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0, 0.55, 0.9);   // strength follows the lamps
+  // soft contact shadows (ambient occlusion): corners, under furniture, where
+  // walls meet ceilings - the depth that makes the rooms read as rooms. Glass,
+  // water and other see-through layers are left out of its depth pass, so the
+  // rooms BEHIND the windows get it too. Half resolution: it is soft anyway.
+  gtao = new GTAOPass(scene, camera, innerWidth, innerHeight);
+  gtao.updateGtaoMaterial({ radius: 0.012, distanceExponent: 1.4, thickness: 0.004, scale: 1.0, samples: 8, distanceFallOff: 1.0 });
+  gtao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 6, rings: 2, samples: 8 });
+  gtao.blendIntensity = 0.85;
+  gtao.overrideVisibility = function () {
+    const cache = this._visibilityCache;
+    this.scene.traverse((o) => {
+      cache.set(o, o.visible);
+      const m = o.material;
+      if (o.isPoints || o.isLine || (o.isMesh && m && (m.transparent || m.transmission > 0 || m.isShadowMaterial))) o.visible = false;
+    });
+  };
+  const gtaoSetSize = gtao.setSize.bind(gtao);
+  gtao.setSize = (w, h) => gtaoSetSize(Math.max(1, Math.round(w / 2)), Math.max(1, Math.round(h / 2)));
+  composer.addPass(gtao);
+  bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0, 0.45, 0.96);   // strength follows the lamps
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
   composer.setPixelRatio(Math.min(devicePixelRatio, 2)); composer.setSize(innerWidth, innerHeight);
@@ -435,12 +455,14 @@ loader.load(MODEL, (gltf) => {
   // frost that softly diffuses what is behind it, a faint green body and the
   // sky in it (phones keep the baked reflection, which costs nothing)
   if (TIER === 'full') {
-    const frosted = new THREE.MeshPhysicalMaterial({ color: 0xf3f8f7, metalness: 0, roughness: 0.075, transmission: 1,
-      thickness: 0.002, ior: 1.5, attenuationColor: new THREE.Color(0xd2ece6), attenuationDistance: 0.03,
-      specularIntensity: 1, envMapIntensity: 1.15, side: THREE.DoubleSide });
+    // (only the main windows: real glass can only show the 3D scene behind it,
+    //  and the page's sky is not in the scene - glass with sky behind it, like
+    //  the top-floor rail, keeps the baked reflection or it turned grey)
+    const frosted = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0, roughness: 0.06, transmission: 1,
+      thickness: 0.002, ior: 1.5, specularIntensity: 1, envMapIntensity: 1.1, side: THREE.DoubleSide });
     frosted.name = 'AR_glass_frosted';
-    root.traverse((o) => { if (o.isMesh && o.material.name === 'AR_glass_refl') { o.material = frosted; o.castShadow = false; } });
-    glassRefl.splice(0, glassRefl.length, ...glassRefl.filter((m) => m.name !== 'AR_glass_refl'));
+    root.traverse((o) => { if (o.isMesh && o.material.name === 'AR_glass_refl' && /^main_glass/.test(o.name || o.parent?.name || ''))
+      { o.material = frosted; o.castShadow = false; } });
   }
   root.traverse((o) => { if (o.isMesh && o.material.name === 'AR_water_side') {
     o.material = o.material.clone(); o.material.color.multiply(new THREE.Color(0.86, 1.04, 1.06)); } });
@@ -462,11 +484,15 @@ loader.load(MODEL, (gltf) => {
   // live light (47 of them) dropped laptops to ~4 fps. Off entirely by day.
   // [colour, strength, reach to the lit surface (m at 1:40)]
   const LAMP = { pend: [0xffc68c, 0.6, 0.018], arc: [0xffc890, 1.0, 0.045], lantern: [0xffb878, 0.35, 0.012],
-    jac: [0x7fe0e6, 0.6, 0.010], fill: [0xffd2a0, 0.5, 0.022] };
+    jac: [0x7fe0e6, 0.6, 0.010], fill: [0xffd2a0, 0.5, 0.022], down: [0xffcc99, 0.55, 0.060] };
+  // downlights given a live light too (Full): the living room's middle row
+  // and the bedroom - live highlights on the floors and furniture people see
+  const LIVE_DOWN = new Set(['down_07', 'down_10', 'down_13', 'down_16', 'down_18', 'down_21']);
   const LITE_LAMPS = new Set(['arc_00', 'jac_00', 'fill_00']);       // phones: three
   root.traverse((o) => {
     const m = /^ar_lamp_([a-z]+)_(\d+)$/.exec(o.name); if (!m || !LAMP[m[1]]) return;
     if (TIER === 'lite' && !LITE_LAMPS.has(m[1] + '_' + m[2])) return;
+    if (m[1] === 'down' && !LIVE_DOWN.has(m[1] + '_' + m[2])) return;
     const [color, k, d] = LAMP[m[1]];
     const L = new THREE.PointLight(color, 0, 0, 2);
     L.userData.k = k * d * d; L.visible = false; o.add(L); interiorLights.push(L);
@@ -557,11 +583,11 @@ function applyDaylight(force = false) {
   scene.environmentIntensity = (0.9 * day + 0.12 + 0.30 * night) * (1 - 0.35 * r);
   renderer.toneMappingExposure = 0.92 + 0.16 * night;     // a moonlit night, not a black one
   // interiors come on as the light goes
-  const lamps = smooth(-2, 12, -elev + 8);          // dusk onwards
+  const lamps = smooth(-4, 9, -elev + 11);          // on from sunset, full by dusk
   nightMats.forEach((m) => m.emissiveIntensity = 1.4 * lamps);               // the bloom adds the glow
   lampGlow.forEach((m) => m.emissiveIntensity = 0.45 + 1.6 * lamps);
   glassRefl.forEach((m) => m.color.setScalar(0.1 + 0.9 * day));             // the baked sky fades with the light
-  if (bloom) bloom.strength = 0.26 * lamps;                                  // lamps glow; daylight whites do not
+  if (bloom) bloom.strength = 0.18 * lamps;                                  // lamps glow; daylight whites do not
   const s2 = model.scale.x * model.scale.x;                                   // 1/d^2: lights follow the size
   interiorLights.forEach((L) => { L.intensity = 1.6 * L.userData.k * s2 * lamps; L.visible = lamps > 0.02; });
   nightAtlas.forEach((m) => m.emissiveIntensity = NIGHT_K * lamps);
