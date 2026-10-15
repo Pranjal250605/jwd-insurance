@@ -215,10 +215,11 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 // Full or Lite model, chosen per device (see pickTier below)
-// the web loads WebP copies of the models (half the download); the phones'
-// own AR viewers keep the JPEG GLB / USDZ. ?v= changes with every model update.
-const MV = '20261016';
-let MODEL = `/models/seahorse_ar_web.glb?v=${MV}`, USDZ = '/models/seahorse_ar.usdz', TIER = 'full';
+// Full: the full-quality model (JPEG textures, as delivered). Lite (phones,
+// slow connections): a WebP copy, half the download. ?v= changes with every
+// model update, so the browser cache never serves an old villa.
+const MV = '20261016b';
+let MODEL = `/models/seahorse_ar.glb?v=${MV}`, USDZ = '/models/seahorse_ar.usdz', TIER = 'full';
 const PUBLIC = 'https://jwd-insurance.vercel.app/showroom/';
 // title, subtitle - same order as the model's ar_label_<k> nodes
 const LABELS = [
@@ -373,7 +374,7 @@ const waterMats = [], nightMats = [], interiorLights = [], labelMeshes = [], lea
 const nightAtlas = [], NIGHT_K = 1.0, lampGlow = [], glassRefl = [];
 const nightTex = {};
 for (const g of ['A', 'B']) {
-  const t = new THREE.TextureLoader().load(`/models/night${g}.webp?v=${MV}`);
+  const t = new THREE.TextureLoader().load(`/models/night${g}.jpg?v=${MV}`);
   t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.channel = 0; nightTex[g] = t;
 }
 const labelRoots = [], hotspots = [], hotspots3D = [], pickables = [];
@@ -430,6 +431,17 @@ loader.load(MODEL, (gltf) => {
   // on by day (as in the developer's renders), bright from dusk
   root.traverse((o) => { if (o.isMesh && /^AR_lamp_glow/.test(o.material.name) && !lampGlow.includes(o.material)) lampGlow.push(o.material); });
   root.traverse((o) => { if (o.isMesh && /^AR_glass(_dark)?_refl/.test(o.material.name) && !glassRefl.includes(o.material)) glassRefl.push(o.material); });
+  // Full: the outside glass is real glass - it refracts, with a very slight
+  // frost that softly diffuses what is behind it, a faint green body and the
+  // sky in it (phones keep the baked reflection, which costs nothing)
+  if (TIER === 'full') {
+    const frosted = new THREE.MeshPhysicalMaterial({ color: 0xf3f8f7, metalness: 0, roughness: 0.075, transmission: 1,
+      thickness: 0.002, ior: 1.5, attenuationColor: new THREE.Color(0xd2ece6), attenuationDistance: 0.03,
+      specularIntensity: 1, envMapIntensity: 1.15, side: THREE.DoubleSide });
+    frosted.name = 'AR_glass_frosted';
+    root.traverse((o) => { if (o.isMesh && o.material.name === 'AR_glass_refl') { o.material = frosted; o.castShadow = false; } });
+    glassRefl.splice(0, glassRefl.length, ...glassRefl.filter((m) => m.name !== 'AR_glass_refl'));
+  }
   root.traverse((o) => { if (o.isMesh && o.material.name === 'AR_water_side') {
     o.material = o.material.clone(); o.material.color.multiply(new THREE.Color(0.86, 1.04, 1.06)); } });
   labelMeshes.forEach((m) => m.visible = false);
