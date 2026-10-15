@@ -215,7 +215,10 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 // Full or Lite model, chosen per device (see pickTier below)
-let MODEL = '/models/seahorse_ar.glb', USDZ = '/models/seahorse_ar.usdz', TIER = 'full';
+// the web loads WebP copies of the models (half the download); the phones'
+// own AR viewers keep the JPEG GLB / USDZ. ?v= changes with every model update.
+const MV = '20261016';
+let MODEL = `/models/seahorse_ar_web.glb?v=${MV}`, USDZ = '/models/seahorse_ar.usdz', TIER = 'full';
 const PUBLIC = 'https://jwd-insurance.vercel.app/showroom/';
 // title, subtitle - same order as the model's ar_label_<k> nodes
 const LABELS = [
@@ -264,7 +267,7 @@ function pickTier() {
   return (mem && mem < 4) ? 'lite' : 'full';                 // laptops / desktops
 }
 TIER = pickTier();
-if (TIER === 'lite') { MODEL = '/models/seahorse_ar_lite.glb'; USDZ = '/models/seahorse_ar_lite.usdz'; }
+if (TIER === 'lite') { MODEL = `/models/seahorse_ar_lite_web.glb?v=${MV}`; USDZ = '/models/seahorse_ar_lite.usdz'; }
 renderer.setSize(innerWidth, innerHeight);
 renderer.toneMapping = THREE.NeutralToneMapping;      // keeps the palette's colours true
 renderer.toneMappingExposure = 0.9;
@@ -370,7 +373,7 @@ const waterMats = [], nightMats = [], interiorLights = [], labelMeshes = [], lea
 const nightAtlas = [], NIGHT_K = 1.0, lampGlow = [], glassRefl = [];
 const nightTex = {};
 for (const g of ['A', 'B']) {
-  const t = new THREE.TextureLoader().load(`/models/night${g}.jpg`);
+  const t = new THREE.TextureLoader().load(`/models/night${g}.webp?v=${MV}`);
   t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.channel = 0; nightTex[g] = t;
 }
 const labelRoots = [], hotspots = [], hotspots3D = [], pickables = [];
@@ -441,25 +444,20 @@ loader.load(MODEL, (gltf) => {
   // place the interior lights on the ASSEMBLED villa: before the clip runs,
   // every part still sits at its fly-in start position
   mixer.setTime(30); root.updateMatrixWorld(true);
-  // real lights on the villa's own fixtures (ar_lamp_<kind>_<n> nodes from the
-  // export): narrow warm spots under every recessed downlight, points in the
-  // pendants, the arc lamp, the bedside lamps and the jacuzzi. Each rides its
-  // node, so it follows the model's size; no shadows - the baked night light
-  // carries the pools and scallops, these add the live highlights.
-  // [colour, strength, reach to the lit surface (m at 1:40), spot?]
-  const LAMP = { down: [0xffcc99, 1.0, 0.060, true], soffit: [0xffcc99, 0.9, 0.068, true],
-    upper: [0xffcc99, 0.6, 0.055, true], pend: [0xffc68c, 0.6, 0.018, false],
-    arc: [0xffc890, 1.0, 0.045, true], bed: [0xffc080, 0.35, 0.012, false], jac: [0x7fe0e6, 0.6, 0.010, false],
-    wash: [0xffcc99, 0.8, 0.030, true], parasol: [0xffc890, 0.3, 0.018, false], net: [0x8ce8ff, 0.45, 0.012, false], fill: [0xffd2a0, 0.5, 0.022, false] };
+  // Live lights only on the lamps you look at - pendants, the arc lamp, the
+  // sun-deck lanterns, the jacuzzi and the porch fill. Every downlight, strip
+  // and wall-washer is already in the baked night lightmap; giving each its own
+  // live light (47 of them) dropped laptops to ~4 fps. Off entirely by day.
+  // [colour, strength, reach to the lit surface (m at 1:40)]
+  const LAMP = { pend: [0xffc68c, 0.6, 0.018], arc: [0xffc890, 1.0, 0.045], lantern: [0xffb878, 0.35, 0.012],
+    jac: [0x7fe0e6, 0.6, 0.010], fill: [0xffd2a0, 0.5, 0.022] };
+  const LITE_LAMPS = new Set(['arc_00', 'jac_00', 'fill_00']);       // phones: three
   root.traverse((o) => {
-    const m = /^ar_lamp_([a-z]+)_\d+$/.exec(o.name); if (!m || !LAMP[m[1]]) return;
-    const [color, k, d, spot] = LAMP[m[1]];
-    if (TIER === 'lite' && spot && m[1] !== 'arc') return;          // phones: the lamps you see, not every downlight
-    if (m[1] === 'wash') o.rotation.set(0, 0, 0);                   // (aimed below, at the slatted wall)
-    const L = spot ? new THREE.SpotLight(color, 0, 0, m[1] === 'arc' ? 1.0 : 0.62, 0.6, 2) : new THREE.PointLight(color, 0, 0, 2);
-    if (spot) { const t = new THREE.Object3D(); t.position.set(m[1] === 'wash' ? -0.47 : 0, -0.88, 0); o.add(t); L.target = t; }
-    L.position.set(0, 0, 0);                    // (a new SpotLight sits one unit UP by default)
-    L.userData.k = k * d * d; o.add(L); interiorLights.push(L);
+    const m = /^ar_lamp_([a-z]+)_(\d+)$/.exec(o.name); if (!m || !LAMP[m[1]]) return;
+    if (TIER === 'lite' && !LITE_LAMPS.has(m[1] + '_' + m[2])) return;
+    const [color, k, d] = LAMP[m[1]];
+    const L = new THREE.PointLight(color, 0, 0, 2);
+    L.userData.k = k * d * d; L.visible = false; o.add(L); interiorLights.push(L);
   });
   // labels: glass HTML cards on the web, placed on the 3D cards' positions
   // (read on the assembled pose, when the label roots are at full scale)
@@ -553,7 +551,7 @@ function applyDaylight(force = false) {
   glassRefl.forEach((m) => m.color.setScalar(0.1 + 0.9 * day));             // the baked sky fades with the light
   if (bloom) bloom.strength = 0.26 * lamps;                                  // lamps glow; daylight whites do not
   const s2 = model.scale.x * model.scale.x;                                   // 1/d^2: lights follow the size
-  interiorLights.forEach((L) => L.intensity = 1.6 * L.userData.k * s2 * lamps);
+  interiorLights.forEach((L) => { L.intensity = 1.6 * L.userData.k * s2 * lamps; L.visible = lamps > 0.02; });
   nightAtlas.forEach((m) => m.emissiveIntensity = NIGHT_K * lamps);
   // backdrop and haze darken with the hour and the weather
   const bgIn = new THREE.Color(0x46535c).lerp(new THREE.Color(0x5a4a44), 1 - smooth(6, 30, elev))
