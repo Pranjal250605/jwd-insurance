@@ -219,7 +219,7 @@ import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 // Full: the full-quality model (JPEG textures, as delivered). Lite (phones,
 // slow connections): a WebP copy, half the download. ?v= changes with every
 // model update, so the browser cache never serves an old villa.
-const MV = '20261016b';
+const MV = '20261016c';
 let MODEL = `/models/seahorse_ar.glb?v=${MV}`, USDZ = '/models/seahorse_ar.usdz', TIER = 'full';
 const PUBLIC = 'https://jwd-insurance.vercel.app/showroom/';
 // title, subtitle - same order as the model's ar_label_<k> nodes
@@ -310,11 +310,11 @@ if (TIER === 'full') {
   // soft contact shadows (ambient occlusion): corners, under furniture, where
   // walls meet ceilings - the depth that makes the rooms read as rooms. Glass,
   // water and other see-through layers are left out of its depth pass, so the
-  // rooms BEHIND the windows get it too. Half resolution: it is soft anyway.
+  // rooms BEHIND the windows get it too. Full resolution: no soft halos at edges.
   gtao = new GTAOPass(scene, camera, innerWidth, innerHeight);
-  gtao.updateGtaoMaterial({ radius: 0.012, distanceExponent: 1.4, thickness: 0.004, scale: 1.0, samples: 8, distanceFallOff: 1.0 });
+  gtao.updateGtaoMaterial({ radius: 0.008, distanceExponent: 1.4, thickness: 0.003, scale: 1.0, samples: 8, distanceFallOff: 1.0 });
   gtao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 6, rings: 2, samples: 8 });
-  gtao.blendIntensity = 0.85;
+  gtao.blendIntensity = 0.75;
   gtao.overrideVisibility = function () {
     const cache = this._visibilityCache;
     this.scene.traverse((o) => {
@@ -323,8 +323,6 @@ if (TIER === 'full') {
       if (o.isPoints || o.isLine || (o.isMesh && m && (m.transparent || m.transmission > 0 || m.isShadowMaterial))) o.visible = false;
     });
   };
-  const gtaoSetSize = gtao.setSize.bind(gtao);
-  gtao.setSize = (w, h) => gtaoSetSize(Math.max(1, Math.round(w / 2)), Math.max(1, Math.round(h / 2)));
   composer.addPass(gtao);
   bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0, 0.45, 0.96);   // strength follows the lamps
   composer.addPass(bloom);
@@ -451,19 +449,12 @@ loader.load(MODEL, (gltf) => {
   // on by day (as in the developer's renders), bright from dusk
   root.traverse((o) => { if (o.isMesh && /^AR_lamp_glow/.test(o.material.name) && !lampGlow.includes(o.material)) lampGlow.push(o.material); });
   root.traverse((o) => { if (o.isMesh && /^AR_glass(_dark)?_refl/.test(o.material.name) && !glassRefl.includes(o.material)) glassRefl.push(o.material); });
-  // Full: the outside glass is real glass - it refracts, with a very slight
-  // frost that softly diffuses what is behind it, a faint green body and the
-  // sky in it (phones keep the baked reflection, which costs nothing)
-  if (TIER === 'full') {
-    // (only the main windows: real glass can only show the 3D scene behind it,
-    //  and the page's sky is not in the scene - glass with sky behind it, like
-    //  the top-floor rail, keeps the baked reflection or it turned grey)
-    const frosted = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0, roughness: 0.06, transmission: 1,
-      thickness: 0.002, ior: 1.5, specularIntensity: 1, envMapIntensity: 1.1, side: THREE.DoubleSide });
-    frosted.name = 'AR_glass_frosted';
-    root.traverse((o) => { if (o.isMesh && o.material.name === 'AR_glass_refl' && /^main_glass/.test(o.name || o.parent?.name || ''))
-      { o.material = frosted; o.castShadow = false; } });
-  }
+  // crisp surfaces at an angle: full anisotropic filtering on every texture
+  // (floors, rugs and walls seen obliquely smeared with plain mipmapping)
+  const aniso = renderer.capabilities.getMaxAnisotropy();
+  root.traverse((o) => { if (!o.isMesh) return; [].concat(o.material).forEach((m) => {
+    ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'emissiveMap', 'aoMap'].forEach((k) => {
+      if (m[k] && m[k].anisotropy !== aniso) { m[k].anisotropy = aniso; m[k].needsUpdate = true; } }); }); });
   root.traverse((o) => { if (o.isMesh && o.material.name === 'AR_water_side') {
     o.material = o.material.clone(); o.material.color.multiply(new THREE.Color(0.86, 1.04, 1.06)); } });
   labelMeshes.forEach((m) => m.visible = false);
