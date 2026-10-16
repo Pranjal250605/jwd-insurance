@@ -137,11 +137,21 @@
 
   /* QR for laptops */
   #qrbox { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom));
-    width: 168px; padding: 12px; border-radius: 16px; text-align: center;
+    width: 420px; padding: 12px; border-radius: 16px; text-align: center;
     background: var(--glass); border: 1px solid var(--glass-line);
     backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
-  #qrbox #qr { background: #fff; border-radius: 10px; padding: 6px; }
-  #qrbox #qr svg { display: block; width: 100%; height: auto; }
+  #qrbox #qrcard { display: block; width: 100%; height: auto; border-radius: 8px; background: #fff; }
+  /* "out of the laptop": camera view on the phone */
+  #cardar { position: fixed; inset: 0; z-index: 30; pointer-events: none; }
+  #cardar[hidden] { display: none; }
+  #cardmsg { position: absolute; top: max(16px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%);
+    padding: 9px 14px; border-radius: 12px; background: rgba(0,0,0,0.55); color: #fff; font-size: 13px; white-space: nowrap; }
+  #cardbar { position: absolute; left: 16px; right: 16px; bottom: max(18px, env(safe-area-inset-bottom)); display: flex; gap: 10px; pointer-events: auto; }
+  #cardbar .btn { flex: 1; text-align: center; }
+  #cardbar #cardClose { flex: 0 0 auto; padding-left: 18px; padding-right: 18px; }
+  body.in-card #panel, body.in-card #tip, body.in-card #qrbox, body.in-card .lbl, body.in-card .hs { display: none !important; }
+  #cardvideo { position: absolute; object-fit: cover; }
+  body.in-card #stage canvas { position: relative; z-index: 1; }
   #qrbox p { margin: 8px 0 0; font-size: 11.5px; color: var(--ink-2); }
 
   #loading { position: fixed; inset: 0; display: grid; place-items: center; pointer-events: none;
@@ -165,7 +175,6 @@
     "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
 } }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 </head>
 <body>
 <div id="stage"></div>
@@ -200,8 +209,16 @@
 </div>
 
 <div id="qrbox">
-  <div id="qr"></div>
-  <p>Scan with your phone to see it on your table</p>
+  <img id="qrcard" src="ar-card.png" alt="QR code: open the villa in AR on your phone">
+  <p>Scan with your phone, then point it at this card: the villa comes out of the screen</p>
+</div>
+
+<div id="cardar" hidden>
+  <div id="cardmsg">Point your phone at the card on the laptop screen</div>
+  <div id="cardbar">
+    <a id="cardTable" class="btn primary" href="#">Put it on your table</a>
+    <button id="cardClose" class="btn" aria-label="Close">Close</button>
+  </div>
 </div>
 
 <script type="module">
@@ -242,14 +259,9 @@ const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platfor
 const isMobile = isIOS || /Android|Mobi/.test(navigator.userAgent);
 if (isMobile) document.body.classList.add('is-mobile');
 
-// ---- QR (laptops): never a local address, which a phone cannot open
-{
-  const local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\]|.*\.local)$/.test(location.hostname);
-  const u = new URL(local ? PUBLIC : location.href.split('#')[0]); u.searchParams.set('via', 'qr');
-  const url = u.href;                                   // via=qr: the phone opened it from the laptop
-  const qr = qrcode(0, 'M'); qr.addData(url); qr.make();
-  document.getElementById('qr').innerHTML = qr.createSvgTag({ cellSize: 5, margin: 4, scalable: true });
-}
+// ---- QR (laptops): the card ar-card.png carries the QR for
+// https://jwd-insurance.vercel.app/showroom/?via=qr and is also the image the
+// phone tracks (ar-card.mind, compiled from the same picture with MindAR)
 
 // ---- renderer, scene, camera
 const stage = document.getElementById('stage');
@@ -640,18 +652,17 @@ ui.lbls.addEventListener('change', () => {
 const arBtn = document.getElementById('arBtn');
 const msg = (t) => { const m = document.getElementById('msg'); m.textContent = t; m.style.display = t ? 'block' : 'none'; };
 let xrSupported = false;
-// From the laptop's QR on an Android phone: the villa first sails out of the
-// laptop screen, then the visitor looks away at a table and taps to put it
-// there. (iPhone's Quick Look cannot do this - Apple supports image/screen
-// anchoring only inside an app - so iPhones keep the normal table placement;
-// opening the showroom directly on a phone is unchanged everywhere.)
+// Opened from the laptop's card (via=qr) on a phone: "Bring it out of your
+// laptop" - the phone camera finds the card on the laptop screen (MindAR image
+// tracking, in the browser, iPhone and Android) and the villa sails out of it,
+// standing upright, perpendicular to the screen; "Put it on your table" then
+// opens the normal AR. Opening the showroom directly on a phone is unchanged.
 const viaQR = new URLSearchParams(location.search).get('via') === 'qr';
 const outBtn = document.getElementById('outBtn');
-if (navigator.xr) navigator.xr.isSessionSupported('immersive-ar').then((s) => {
-  xrSupported = s;
-  if (s && viaQR && isMobile && !isIOS) outBtn.hidden = false;
-}).catch(() => {});
-outBtn.addEventListener('click', (e) => { e.preventDefault(); startAR('screen'); });
+if (viaQR && isMobile && navigator.mediaDevices?.getUserMedia) outBtn.hidden = false;
+outBtn.addEventListener('click', (e) => { e.preventDefault(); startCardAR().catch((err) => {
+  console.error(err); stopCardAR(); msg('The camera could not start: ' + (err.message || err)); setTimeout(() => msg(''), 4000); }); });
+if (navigator.xr) navigator.xr.isSessionSupported('immersive-ar').then((s) => xrSupported = s).catch(() => {});
 if (isIOS) {
   arBtn.setAttribute('rel', 'ar'); arBtn.href = USDZ;
   arBtn.appendChild(Object.assign(document.createElement('img'), { alt: '', width: 1, height: 1 }));  // Quick Look needs a child image
@@ -668,9 +679,7 @@ let hitSource = null, placed = false;
 const reticle = new THREE.Mesh(new THREE.RingGeometry(0.06, 0.075, 40).rotateX(-Math.PI / 2),
   new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85 }));
 reticle.matrixAutoUpdate = false; reticle.visible = false; scene.add(reticle);
-const SCREEN_SCALE = 0.45;                 // beside a laptop: ~1:90, the villa ~20 cm long
-let screenMode = false, screenState = 0, screenT0 = 0, sail = null;
-async function startAR(mode) {
+async function startAR() {
   const session = await navigator.xr.requestSession('immersive-ar', {
     requiredFeatures: ['hit-test'], optionalFeatures: ['dom-overlay'],
     domOverlay: { root: document.body } });
@@ -683,15 +692,10 @@ async function startAR(mode) {
   labelMeshes.forEach((m) => m.visible = true);
   if (selected >= 0) select(selected);
   hotspots3D.forEach((h) => h.visible = ui.lbls.checked);
-  screenMode = mode === 'screen'; screenState = 0; screenT0 = performance.now();
-  msg(screenMode ? 'Point your phone at the laptop screen' : 'Point at a table, then tap to place the villa');
+  msg('Point at a table, then tap to place the villa');
   const viewer = await session.requestReferenceSpace('viewer');
   hitSource = await session.requestHitTestSource({ space: viewer });
   session.addEventListener('select', () => {
-    if (screenMode && screenState === 2 && reticle.visible) {     // out of the laptop -> onto the table
-      model.position.setFromMatrixPosition(reticle.matrix); model.scale.setScalar(1);
-      sun.target.position.copy(model.position); reticle.visible = false; screenMode = false; msg(''); return;
-    }
     if (placed) return;                                 // placed: taps go to the controller below
     if (!reticle.visible) return;
     model.position.setFromMatrixPosition(reticle.matrix); model.visible = true; placed = true;
@@ -699,7 +703,7 @@ async function startAR(mode) {
     if (buildAction) buildAction.reset().play();
   });
   session.addEventListener('end', () => {
-    document.body.classList.remove('in-ar'); hitSource = null; reticle.visible = false; screenMode = false;
+    document.body.classList.remove('in-ar'); hitSource = null; reticle.visible = false;
     stage.style.background = ''; ground.visible = true; scene.fog = new THREE.FogExp2(0x2a343b, 0.32);
     model.position.set(0, 0, 0); model.scale.setScalar(1); model.visible = true;
     labelObjs.forEach((o) => o.visible = true); labelMeshes.forEach((m) => m.visible = false);
@@ -782,44 +786,102 @@ function declutter() {
   }
 }
 
-// ---- "out of the laptop" (Android, from the laptop's QR)
-const _m = new THREE.Matrix4(), _p = new THREE.Vector3(), _n = new THREE.Vector3();
-function hitFrame(h, ref) { _m.fromArray(h.getPose(ref).transform.matrix);
-  return { pos: new THREE.Vector3().setFromMatrixPosition(_m), n: new THREE.Vector3(0, 1, 0).transformDirection(_m), m: _m.clone() }; }
-function updateScreenMode(frame) {
-  const ref = renderer.xr.getReferenceSpace(), vp = frame.getViewerPose(ref); if (!vp) return;
-  const cam = new THREE.Matrix4().fromArray(vp.transform.matrix);
-  const camPos = new THREE.Vector3().setFromMatrixPosition(cam);
-  const fwd = new THREE.Vector3(0, 0, -1).transformDirection(cam);
-  const hits = frame.getHitTestResults(hitSource).map((h) => hitFrame(h, ref));
-  if (screenState === 0) {
-    // the laptop screen: a vertical surface straight ahead; screens are glossy
-    // and often go undetected, so after a moment the villa comes out ~55 cm ahead
-    let hit = hits.find((h) => Math.abs(h.n.y) < 0.35 && h.pos.distanceTo(camPos) < 1.5);
-    if (!hit && performance.now() - screenT0 < 2500) return;
-    let target, normal;
-    if (hit) { target = hit.pos; normal = hit.n.clone(); normal.y = 0; normal.normalize();
-      if (normal.dot(camPos.clone().sub(target)) < 0) normal.negate(); }
-    else { const f = fwd.clone(); f.y = 0; f.normalize(); normal = f.clone().negate();
-      target = camPos.clone().addScaledVector(f, 0.55); target.y = camPos.y - 0.08; }
-    // it sails out of the screen and settles upright 12 cm in front of it
-    const end = target.clone().addScaledVector(normal, 0.12); end.y = target.y - 0.07;
-    const start = target.clone(); start.y = end.y;
-    sail = { start, end, t0: performance.now() };
-    model.rotation.set(0, Math.atan2(normal.x, normal.z) + 0.6, 0);   // toward the viewer, three-quarter
-    model.position.copy(start); model.scale.setScalar(SCREEN_SCALE * 0.2);
-    model.visible = true; placed = true; reticle.visible = false; screenState = 1; msg('');
-    sun.target.position.copy(end);
-  } else if (screenState === 1) {
-    const u = Math.min(1, (performance.now() - sail.t0) / 1700), e = 1 - Math.pow(1 - u, 3);
-    model.position.lerpVectors(sail.start, sail.end, e); model.scale.setScalar(SCREEN_SCALE * (0.2 + 0.8 * e));
-    if (u >= 1) { screenState = 2; msg('Look at a table and tap to place it there'); }
-  } else {
-    // looking away from the villa at a table: the ring appears; a tap moves it there
-    const away = model.position.clone().sub(camPos).normalize().dot(fwd) < Math.cos(THREE.MathUtils.degToRad(28));
-    const floor = hits.find((h) => h.n.y > 0.8);
-    reticle.visible = away && !!floor; if (reticle.visible) reticle.matrix.copy(floor.m);
-  }
+// ---- "out of the laptop": the phone camera tracks the card on the laptop ------
+// MindAR's tracker (its three.js helper needs an older three.js, so the tracker
+// is driven directly, as the helper does). The card's frame: origin at its
+// centre, 1 unit = the card's width, +Y up the card, +Z out of the screen.
+let cardAR = null;
+async function startCardAR() {
+  if (cardAR) return;
+  const ov = document.getElementById('cardar'), cmsg = document.getElementById('cardmsg');
+  ov.hidden = false; document.body.classList.add('in-card');
+  const video = document.createElement('video');
+  video.id = 'cardvideo'; video.setAttribute('playsinline', ''); video.muted = true; video.autoplay = true;
+  stage.prepend(video);
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: false,
+    video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } });
+  video.srcObject = stream;
+  await new Promise((r) => video.readyState >= 1 ? r() : video.addEventListener('loadedmetadata', r, { once: true }));
+  await video.play();
+  video.setAttribute('width', video.videoWidth); video.setAttribute('height', video.videoHeight);
+  cmsg.textContent = 'Point your phone at the card on the laptop screen';
+  const { Controller } = await import('./vendor/mind-ar-1.2.5/mindar-image.prod.js');
+
+  // the villa, standing upright in front of the card, three-quarter to the viewer
+  const anchor = new THREE.Group(); anchor.matrixAutoUpdate = false; anchor.visible = false; scene.add(anchor);
+  const holder = new THREE.Group(); anchor.add(holder);
+  const saved = { parent: model.parent, pos: model.position.clone(), rot: model.rotation.clone(), scale: model.scale.clone(),
+    fog: scene.fog, shadows: renderer.shadowMap.enabled };
+  holder.add(model); model.position.set(0, 0, 0); model.rotation.set(0, THREE.MathUtils.degToRad(35), 0); model.scale.setScalar(1);
+  const K = 1.8;                            // the plinth ~1.1 card widths across: ~10 cm beside the laptop card
+  const CARD_H = 630 / 1200, Z_OUT = 0.296 * K + 0.08;
+  holder.position.set(0, -CARD_H / 2, 0); holder.scale.setScalar(0.001);
+  scene.fog = null; ground.visible = false; rain.visible = false;
+  renderer.shadowMap.enabled = false; stage.style.background = 'transparent';
+
+  const cam = new THREE.PerspectiveCamera();
+  let post = null, foundAt = 0, lastSeen = 0;
+  const ctrl = new Controller({ inputWidth: video.videoWidth, inputHeight: video.videoHeight,
+    filterMinCF: 0.0001, filterBeta: 0.001, warmupTolerance: 5, missTolerance: 8, maxTrack: 1,
+    onUpdate: (d) => {
+      if (d.type !== 'updateMatrix' || !post) return;
+      if (d.worldMatrix) {
+        const m = new THREE.Matrix4(); m.elements = [...d.worldMatrix]; m.multiply(post);
+        anchor.matrix.copy(m); anchor.matrixWorldNeedsUpdate = true; anchor.visible = true;
+        lastSeen = performance.now(); if (!foundAt) foundAt = lastSeen;
+      } else anchor.visible = performance.now() - lastSeen < 400 && !!foundAt;
+    } });
+  const { dimensions } = await ctrl.addImageTargets('ar-card.mind');
+  const [tw, th] = dimensions[0];
+  post = new THREE.Matrix4().compose(new THREE.Vector3(tw / 2, tw / 2 + (th - tw) / 2, 0), new THREE.Quaternion(),
+    new THREE.Vector3(tw, tw, tw));
+  const fit = () => {                       // video cover-fit, and a camera matching the tracker's projection
+    const vw = video.videoWidth, vh = video.videoHeight, cw = innerWidth, ch = innerHeight;
+    const va = vw / vh, ca = cw / ch; let w, h;
+    if (va > ca) { h = ch; w = h * va; } else { w = cw; h = w / va; }
+    const p = ctrl.getProjectionMatrix(), ia = ctrl.inputWidth / ctrl.inputHeight;
+    const H = ia > ca ? ch : cw / ctrl.inputWidth * ctrl.inputHeight;
+    cam.fov = 2 * Math.atan(1 / p[5] * (ch / H)) * 180 / Math.PI;
+    cam.near = p[14] / (p[10] - 1); cam.far = p[14] / (p[10] + 1); cam.aspect = cw / ch; cam.updateProjectionMatrix();
+    Object.assign(video.style, { top: -(h - ch) / 2 + 'px', left: -(w - cw) / 2 + 'px', width: w + 'px', height: h + 'px' });
+  };
+  fit(); addEventListener('resize', fit);
+  await ctrl.dummyRun(video);
+  ctrl.processVideo(video);
+
+  cardAR = {
+    cam, video, stream, ctrl, anchor, saved, fit,
+    tick() {
+      if (!foundAt) return;
+      // it sails out of the screen: from inside the card to standing in front of it
+      const u = Math.min(1, (performance.now() - foundAt) / 1700), e = 1 - Math.pow(1 - u, 3);
+      holder.position.z = Z_OUT * e; holder.scale.setScalar(K * (0.2 + 0.8 * e));
+      const lost = performance.now() - lastSeen > 1200;
+      cmsg.textContent = lost ? 'Look at a table, then tap "Put it on your table"'
+                              : u < 1 ? 'Here it comes…' : 'Move around it. Tap "Put it on your table" when ready';
+    },
+  };
+}
+function stopCardAR() {
+  document.getElementById('cardar').hidden = true; document.body.classList.remove('in-card');
+  const c = cardAR; cardAR = null;
+  if (!c) { document.getElementById('cardvideo')?.remove(); return; }
+  try { c.ctrl.stopProcessVideo(); } catch (e) {}
+  c.stream.getTracks().forEach((t) => t.stop()); c.video.remove(); removeEventListener('resize', c.fit);
+  const s0 = c.saved; s0.parent.add(model); model.position.copy(s0.pos); model.rotation.copy(s0.rot); model.scale.copy(s0.scale);
+  scene.remove(c.anchor); scene.fog = s0.fog; ground.visible = true; renderer.shadowMap.enabled = s0.shadows;
+  stage.style.background = ''; applyDaylight(true);
+}
+document.getElementById('cardClose').addEventListener('click', () => stopCardAR());
+{
+  const t = document.getElementById('cardTable');
+  if (isIOS) {                            // iPhone: Quick Look, the normal table placement
+    t.setAttribute('rel', 'ar'); t.href = USDZ;
+    t.appendChild(Object.assign(document.createElement('img'), { alt: '', width: 1, height: 1 }));
+    t.addEventListener('click', () => setTimeout(stopCardAR, 300));
+  } else t.addEventListener('click', (e) => { e.preventDefault(); stopCardAR();
+    if (xrSupported) startAR();
+    else location.href = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(new URL(MODEL, location.href).href)}&mode=ar_preferred#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;end;`; });
 }
 
 // ---- loop
@@ -833,8 +895,8 @@ renderer.setAnimationLoop((t, frame) => {
   rain.position.copy(model.position); rain.scale.copy(model.scale);
   for (const w of waterMats) { const k = 1 + 2.2 * rainAmt;
     w.m.normalMap.offset.x += w.speed * dt * k; w.m.normalMap.offset.y += w.speed * 0.6 * dt * k; }
-  if (frame && hitSource && screenMode) updateScreenMode(frame);
-  else if (frame && hitSource && !placed) {
+  if (cardAR) { cardAR.tick(); renderer.render(scene, cardAR.cam); return; }
+  if (frame && hitSource && !placed) {
     const hits = frame.getHitTestResults(hitSource);
     if (hits.length) { const pose = hits[0].getPose(renderer.xr.getReferenceSpace());
       reticle.visible = true; reticle.matrix.fromArray(pose.transform.matrix); } else reticle.visible = false;
