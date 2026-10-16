@@ -840,15 +840,35 @@ async function startCardAR() {
   const K = 1.6;                            // the villa's plinth ~0.95 card widths: it sits well inside the platform
   let userScale = 1;
   fold.scale.set(1, 1, 0.001); villaG.scale.setScalar(0.001);
-  // pinch to size (and a slider), both on the platform and the villa together
+  // gestures: pinch (or the slider) sizes stage + villa together; one finger
+  // dragged sideways, or a two-finger twist, turns the villa on its stage
   const sizeEl = document.getElementById('cardSize'); sizeEl.value = 1;
   sizeEl.oninput = () => { userScale = parseFloat(sizeEl.value); };
-  const ovl = document.getElementById('cardar'); let pinch0 = 0, scale0 = 1;
+  const ovl = document.getElementById('cardar');
+  let userRot = 0, pinch0 = 0, scale0 = 1, ang0 = 0, rot0 = 0, dragX = null;
   const dist = (t) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
-  ovl.ontouchstart = (e) => { if (e.touches.length === 2) { pinch0 = dist(e.touches); scale0 = userScale; } };
-  ovl.ontouchmove = (e) => { if (e.touches.length === 2 && pinch0) { e.preventDefault();
-    userScale = Math.min(3, Math.max(0.4, scale0 * dist(e.touches) / pinch0)); sizeEl.value = userScale; } };
-  ovl.ontouchend = () => { pinch0 = 0; };
+  const angle = (t) => Math.atan2(t[1].clientY - t[0].clientY, t[1].clientX - t[0].clientX);
+  const onBar = (e) => !!e.target.closest?.('#cardbar');
+  const onStart = (e) => {
+    if (onBar(e)) return;
+    if (e.touches.length === 2) { pinch0 = dist(e.touches); scale0 = userScale; ang0 = angle(e.touches); rot0 = userRot; dragX = null; }
+    else if (e.touches.length === 1) { dragX = e.touches[0].clientX; rot0 = userRot; }
+  };
+  const onMove = (e) => {
+    if (onBar(e)) return;
+    if (e.touches.length === 2 && pinch0) { e.preventDefault();
+      userScale = Math.min(3, Math.max(0.4, scale0 * dist(e.touches) / pinch0)); sizeEl.value = userScale;
+      userRot = rot0 - (angle(e.touches) - ang0); }
+    else if (e.touches.length === 1 && dragX !== null) { e.preventDefault();
+      userRot = rot0 + (e.touches[0].clientX - dragX) * 0.012; }
+  };
+  const onEnd = (e) => { if (e.touches.length < 2) pinch0 = 0;
+    if (e.touches.length === 1) { dragX = e.touches[0].clientX; rot0 = userRot; } else if (!e.touches.length) dragX = null; };
+  // real listeners (passive: false, so Safari lets the gesture stop the page
+  // from scrolling); a previous session's are removed first
+  if (ovl._gest) for (const [t, f] of ovl._gest) ovl.removeEventListener(t, f);
+  ovl._gest = [['touchstart', onStart], ['touchmove', onMove], ['touchend', onEnd], ['touchcancel', onEnd]];
+  for (const [t, f] of ovl._gest) ovl.addEventListener(t, f, { passive: false });
   scene.fog = null; ground.visible = false; rain.visible = false;
   renderer.shadowMap.enabled = false; stage.style.background = 'transparent';
 
@@ -892,11 +912,11 @@ async function startCardAR() {
       fold.scale.set(1, 1, Math.max(0.001, a));
       villaG.scale.setScalar(Math.max(0.001, K * (0.15 + 0.85 * b))); villaG.position.y = -0.25 * (1 - b);
       villaG.visible = b > 0;
-      stageG.scale.setScalar(userScale);
+      stageG.scale.setScalar(userScale); villaG.rotation.y = userRot;
       const u = Math.min(1, t / 1.85);
       const lost = performance.now() - lastSeen > 1200;
       cmsg.textContent = lost ? 'Look at a table, then tap "Put it on your table"'
-                              : u < 1 ? 'Here it comes…' : 'Pinch to resize · tap "Put it on your table" when ready';
+                              : u < 1 ? 'Here it comes…' : 'Drag to turn · pinch to resize';
     },
   };
 }
