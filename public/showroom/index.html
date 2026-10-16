@@ -118,6 +118,7 @@
     color: var(--ink); border-radius: 999px; padding: 7px 13px; font: 500 12px/1 inherit; cursor: pointer; white-space: nowrap; }
   .place.on { background: var(--accent); border-color: transparent; color: #0a2124; }
   .btns { display: flex; gap: 8px; margin-top: 14px; }
+  #outBtn[hidden] { display: none; }
   button, .btn { flex: 1; appearance: none; border: 1px solid rgba(255,255,255,0.12); border-radius: 12px;
     background: rgba(255,255,255,0.09); color: var(--ink); font: 650 12.5px/1 inherit; padding: 12px 8px;
     cursor: pointer; text-align: center; text-decoration: none; }
@@ -193,6 +194,7 @@
     <p class="hint" id="tierLine"></p>
   </div>
   <div class="btns">
+    <button id="outBtn" class="btn primary" hidden>Bring it out of your laptop</button>
     <a id="arBtn" class="btn primary" href="#">View in AR</a>
   </div>
 </div>
@@ -243,7 +245,8 @@ if (isMobile) document.body.classList.add('is-mobile');
 // ---- QR (laptops): never a local address, which a phone cannot open
 {
   const local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\]|.*\.local)$/.test(location.hostname);
-  const url = local ? PUBLIC : location.href.split('#')[0];
+  const u = new URL(local ? PUBLIC : location.href.split('#')[0]); u.searchParams.set('via', 'qr');
+  const url = u.href;                                   // via=qr: the phone opened it from the laptop
   const qr = qrcode(0, 'M'); qr.addData(url); qr.make();
   document.getElementById('qr').innerHTML = qr.createSvgTag({ cellSize: 5, margin: 4, scalable: true });
 }
@@ -637,7 +640,18 @@ ui.lbls.addEventListener('change', () => {
 const arBtn = document.getElementById('arBtn');
 const msg = (t) => { const m = document.getElementById('msg'); m.textContent = t; m.style.display = t ? 'block' : 'none'; };
 let xrSupported = false;
-if (navigator.xr) navigator.xr.isSessionSupported('immersive-ar').then((s) => xrSupported = s).catch(() => {});
+// From the laptop's QR on an Android phone: the villa first sails out of the
+// laptop screen, then the visitor looks away at a table and taps to put it
+// there. (iPhone's Quick Look cannot do this - Apple supports image/screen
+// anchoring only inside an app - so iPhones keep the normal table placement;
+// opening the showroom directly on a phone is unchanged everywhere.)
+const viaQR = new URLSearchParams(location.search).get('via') === 'qr';
+const outBtn = document.getElementById('outBtn');
+if (navigator.xr) navigator.xr.isSessionSupported('immersive-ar').then((s) => {
+  xrSupported = s;
+  if (s && viaQR && isMobile && !isIOS) outBtn.hidden = false;
+}).catch(() => {});
+outBtn.addEventListener('click', (e) => { e.preventDefault(); startAR('screen'); });
 if (isIOS) {
   arBtn.setAttribute('rel', 'ar'); arBtn.href = USDZ;
   arBtn.appendChild(Object.assign(document.createElement('img'), { alt: '', width: 1, height: 1 }));  // Quick Look needs a child image
@@ -654,7 +668,9 @@ let hitSource = null, placed = false;
 const reticle = new THREE.Mesh(new THREE.RingGeometry(0.06, 0.075, 40).rotateX(-Math.PI / 2),
   new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85 }));
 reticle.matrixAutoUpdate = false; reticle.visible = false; scene.add(reticle);
-async function startAR() {
+const SCREEN_SCALE = 0.45;                 // beside a laptop: ~1:90, the villa ~20 cm long
+let screenMode = false, screenState = 0, screenT0 = 0, sail = null;
+async function startAR(mode) {
   const session = await navigator.xr.requestSession('immersive-ar', {
     requiredFeatures: ['hit-test'], optionalFeatures: ['dom-overlay'],
     domOverlay: { root: document.body } });
@@ -667,10 +683,15 @@ async function startAR() {
   labelMeshes.forEach((m) => m.visible = true);
   if (selected >= 0) select(selected);
   hotspots3D.forEach((h) => h.visible = ui.lbls.checked);
-  msg('Point at a table, then tap to place the villa');
+  screenMode = mode === 'screen'; screenState = 0; screenT0 = performance.now();
+  msg(screenMode ? 'Point your phone at the laptop screen' : 'Point at a table, then tap to place the villa');
   const viewer = await session.requestReferenceSpace('viewer');
   hitSource = await session.requestHitTestSource({ space: viewer });
   session.addEventListener('select', () => {
+    if (screenMode && screenState === 2 && reticle.visible) {     // out of the laptop -> onto the table
+      model.position.setFromMatrixPosition(reticle.matrix); model.scale.setScalar(1);
+      sun.target.position.copy(model.position); reticle.visible = false; screenMode = false; msg(''); return;
+    }
     if (placed) return;                                 // placed: taps go to the controller below
     if (!reticle.visible) return;
     model.position.setFromMatrixPosition(reticle.matrix); model.visible = true; placed = true;
@@ -678,7 +699,7 @@ async function startAR() {
     if (buildAction) buildAction.reset().play();
   });
   session.addEventListener('end', () => {
-    document.body.classList.remove('in-ar'); hitSource = null; reticle.visible = false;
+    document.body.classList.remove('in-ar'); hitSource = null; reticle.visible = false; screenMode = false;
     stage.style.background = ''; ground.visible = true; scene.fog = new THREE.FogExp2(0x2a343b, 0.32);
     model.position.set(0, 0, 0); model.scale.setScalar(1); model.visible = true;
     labelObjs.forEach((o) => o.visible = true); labelMeshes.forEach((m) => m.visible = false);
@@ -761,6 +782,46 @@ function declutter() {
   }
 }
 
+// ---- "out of the laptop" (Android, from the laptop's QR)
+const _m = new THREE.Matrix4(), _p = new THREE.Vector3(), _n = new THREE.Vector3();
+function hitFrame(h, ref) { _m.fromArray(h.getPose(ref).transform.matrix);
+  return { pos: new THREE.Vector3().setFromMatrixPosition(_m), n: new THREE.Vector3(0, 1, 0).transformDirection(_m), m: _m.clone() }; }
+function updateScreenMode(frame) {
+  const ref = renderer.xr.getReferenceSpace(), vp = frame.getViewerPose(ref); if (!vp) return;
+  const cam = new THREE.Matrix4().fromArray(vp.transform.matrix);
+  const camPos = new THREE.Vector3().setFromMatrixPosition(cam);
+  const fwd = new THREE.Vector3(0, 0, -1).transformDirection(cam);
+  const hits = frame.getHitTestResults(hitSource).map((h) => hitFrame(h, ref));
+  if (screenState === 0) {
+    // the laptop screen: a vertical surface straight ahead; screens are glossy
+    // and often go undetected, so after a moment the villa comes out ~55 cm ahead
+    let hit = hits.find((h) => Math.abs(h.n.y) < 0.35 && h.pos.distanceTo(camPos) < 1.5);
+    if (!hit && performance.now() - screenT0 < 2500) return;
+    let target, normal;
+    if (hit) { target = hit.pos; normal = hit.n.clone(); normal.y = 0; normal.normalize();
+      if (normal.dot(camPos.clone().sub(target)) < 0) normal.negate(); }
+    else { const f = fwd.clone(); f.y = 0; f.normalize(); normal = f.clone().negate();
+      target = camPos.clone().addScaledVector(f, 0.55); target.y = camPos.y - 0.08; }
+    // it sails out of the screen and settles upright 12 cm in front of it
+    const end = target.clone().addScaledVector(normal, 0.12); end.y = target.y - 0.07;
+    const start = target.clone(); start.y = end.y;
+    sail = { start, end, t0: performance.now() };
+    model.rotation.set(0, Math.atan2(normal.x, normal.z) + 0.6, 0);   // toward the viewer, three-quarter
+    model.position.copy(start); model.scale.setScalar(SCREEN_SCALE * 0.2);
+    model.visible = true; placed = true; reticle.visible = false; screenState = 1; msg('');
+    sun.target.position.copy(end);
+  } else if (screenState === 1) {
+    const u = Math.min(1, (performance.now() - sail.t0) / 1700), e = 1 - Math.pow(1 - u, 3);
+    model.position.lerpVectors(sail.start, sail.end, e); model.scale.setScalar(SCREEN_SCALE * (0.2 + 0.8 * e));
+    if (u >= 1) { screenState = 2; msg('Look at a table and tap to place it there'); }
+  } else {
+    // looking away from the villa at a table: the ring appears; a tap moves it there
+    const away = model.position.clone().sub(camPos).normalize().dot(fwd) < Math.cos(THREE.MathUtils.degToRad(28));
+    const floor = hits.find((h) => h.n.y > 0.8);
+    reticle.visible = away && !!floor; if (reticle.visible) reticle.matrix.copy(floor.m);
+  }
+}
+
 // ---- loop
 const clock = new THREE.Clock();
 renderer.setAnimationLoop((t, frame) => {
@@ -772,7 +833,8 @@ renderer.setAnimationLoop((t, frame) => {
   rain.position.copy(model.position); rain.scale.copy(model.scale);
   for (const w of waterMats) { const k = 1 + 2.2 * rainAmt;
     w.m.normalMap.offset.x += w.speed * dt * k; w.m.normalMap.offset.y += w.speed * 0.6 * dt * k; }
-  if (frame && hitSource && !placed) {
+  if (frame && hitSource && screenMode) updateScreenMode(frame);
+  else if (frame && hitSource && !placed) {
     const hits = frame.getHitTestResults(hitSource);
     if (hits.length) { const pose = hits[0].getPose(renderer.xr.getReferenceSpace());
       reticle.visible = true; reticle.matrix.fromArray(pose.transform.matrix); } else reticle.visible = false;
